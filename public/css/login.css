@@ -1,0 +1,15 @@
+body{
+
+}
+
+#lb{
+    height: 40px;
+}
+#lbl{
+    background: rgba(200, 50, 50, 0.9);
+    padding: 10px;
+    display: none;
+    margin: auto;
+    text-align: center;
+    color: #fff;  
+}
