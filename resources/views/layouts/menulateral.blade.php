@@ -11,25 +11,23 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item" id="bEglise">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#dash_drp">
-                        <span class="feather-icon"><i data-feather="home"></i></span>
-                        <span class="nav-link-text">Pimis</span>
+
+                <li class="nav-item" id="bFile">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#fichier_drp">
+                        <span class="feather-icon"><i data-feather="user"></i></span>
+                        <span class="nav-link-text">Agent</span>
                     </a>
-                    <ul id="dash_drp" class="nav flex-column collapse collapse-level-1" >
+                    <ul id="fichier_drp" class="nav flex-column collapse collapse-level-1" >
                         <li class="nav-item" >
                             <ul class="nav flex-column">
-                                <li class="nav-item" id="pres">
-                                    <a class="nav-link" href="#" id="button-pres" data-active="pres" data-open="bEglise" data-section="pres">Présentation</a>
+                                <li class="nav-item" id="etBes">
+                                    <a class="nav-link" href="#" id="button-etBes" data-active="etBes" data-open="bFile" data-section="etBes">Etat de besoin</a>
                                 </li>
-                                <li class="nav-item" id="resp">
-                                    <a class="nav-link" href="#" id="button-resp" data-active="resp" data-open="bEglise" data-section="resp">Responsables</a>
+                                <li class="nav-item" id="usMvmt">
+                                    <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" data-open="bFile" data-section="usMvmt">Mouvement</a>
                                 </li>
-                                <li class="nav-item" id="agen" >
-                                    <a class="nav-link" href="#" id="button-agen" data-active="agen" data-open="bEglise" data-section="agen">Agenda</a>
-                                </li>
-                                <li class="nav-item" id="serv">
-                                    <a class="nav-link" href="#" id="button-serv" data-active="serv" data-open="bEglise" data-section="serv">Services</a>
+                                <li class="nav-item" id="contr">
+                                    <a class="nav-link" href="#" id="button-contr" data-active="contr" data-open="bFile" data-section="contr">Contrat</a>
                                 </li>
 
                             </ul>
@@ -37,19 +35,71 @@
                     </ul>
                 </li>
 
-                <li class="nav-item" id="bMedia">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#autht_drp">
-                        <span class="feather-icon"><i data-feather="user"></i></span>
-                        <span class="nav-link-text">Utilisateurs</span>
+                <li class="nav-item" id="bPimis">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#pimis_drp">
+                        <span class="feather-icon"><i data-feather="home"></i></span>
+                        <span class="nav-link-text">Pimis</span>
                     </a>
-                    <ul id="autht_drp" class="nav flex-column collapse collapse-level-1">
+                    <ul id="pimis_drp" class="nav flex-column collapse collapse-level-1" >
+                        <li class="nav-item" >
+                            <ul class="nav flex-column">
+                                <li class="nav-item" id="pres">
+                                    <a class="nav-link" href="#" id="button-pres" data-active="pres" data-open="bPimis" data-section="pres">Présentation</a>
+                                </li>
+                                <li class="nav-item" id="userB">
+                                    <a class="nav-link" href="#" id="button-userB" data-active="userB" data-open="bPimis" data-section="userB">Utilisateurs</a>
+                                </li>
+                                <li class="nav-item" id="serv">
+                                    <a class="nav-link" href="#" id="button-serv" data-active="serv" data-open="bPimis" data-section="serv">Services & Projets</a>
+                                </li>
+                                <li class="nav-item" id="resp">
+                                    <a class="nav-link" href="#" id="button-resp" data-active="resp" data-open="bPimis" data-section="resp">Bailleurs</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" id="bRH">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#RH_drp">
+                        <span class="feather-icon"><i data-feather="users"></i></span>
+                        <span class="nav-link-text">Resources humaines</span>
+                    </a>
+                    <ul id="RH_drp" class="nav flex-column collapse collapse-level-1">
                         <li class="nav-item">
                             <ul class="nav flex-column">
-                                <li class="nav-item" id="banner">
-                                    <a class="nav-link" href="#" id="button-banner" data-active="banner" data-open="bMedia" data-section="banner">Utilisateurs</a>
-                                </li>
                                 <li class="nav-item" id="art">
-                                    <a class="nav-link" href="#" id="button-art" data-active="art" data-open="bMedia" data-section="art">Agents</a>
+                                    <a class="nav-link" href="#" id="button-art" data-active="art" data-open="bRH" data-section="art">Agents</a>
+                                </li>
+                                <li class="nav-item" id="aff">
+                                    <a class="nav-link" href="#" id="button-aff" data-active="aff" data-open="bRH" data-section="aff">Affectations</a>
+                                </li>
+                                <li class="nav-item" id="mvmt">
+                                    <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" data-open="bRH" data-section="mvmt">Mouvements agents</a>
+                                </li>
+                                <li class="nav-item" id="recrut">
+                                    <a class="nav-link" href="#" id="button-recrut" data-active="recrut" data-open="bRH" data-section="recrut">Recrutement</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" id="bCompt">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#compt">
+                        <span class="feather-icon"><i data-feather="user"></i></span>
+                        <span class="nav-link-text">Comptabilite</span>
+                    </a>
+                    <ul id="compt" class="nav flex-column collapse collapse-level-1">
+                        <li class="nav-item">
+                            <ul class="nav flex-column">
+                                <li class="nav-item" id="">
+                                    <a class="nav-link" href="#" id="button-banner" data-active="banner" data-open="bCompt" data-section="banner">Comptabilite</a>
+                                </li>
+                                <li class="nav-item" id="">
+                                    <a class="nav-link" href="#" id="button-art" data-active="art" data-open="bCompt" data-section="art">kkk</a>
                                 </li>
 
                             </ul>

@@ -12,9 +12,6 @@
           <div>
             <h3 class="hk-pg-title font-weight-600 mb-10">Presentation</h3>
           </div>
-          <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15"><span class="icon-label"><i class="fa fa-print"></i> </span><span class="btn-text">Print </span></button>
-          </div>
         </div>
     <!-- /Title -->
 
@@ -127,6 +124,65 @@
 </section>
 
 
+<section id="userB-section" class="section js-section u-category-media">
+
+    <!-- Content Wrapper. Contains page content -->
+     <div class="container">
+
+       <!-- Title -->
+           <div class="hk-pg-header align-items-top">
+             <div>
+               <h3 class="hk-pg-title font-weight-600 mb-10">Utilisateurs</h3>
+             </div>
+             <div class="d-flex">
+               <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nUserModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+             </div>
+           </div>
+       <!-- /Title -->
+
+       <!-- Main content -->
+       <!-- Row -->
+       <div class="row">
+           <div class="col-sm">
+               <div class="table-wrap">
+                   <div class="table-responsive">
+                       <table id="userTab" class="table table-hover w-100 display pb-30">
+                           <thead>
+                               <tr>
+                                   <th>Nom complet</th>
+                                   <th>Email</th>
+                                   <th>Role</th>
+                                   <th>Status</th>
+                                   <th>Action</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               @foreach ($users as $user)
+
+
+                                   <tr>
+                                       <td>{{$user->name}}</td>
+                                       <td>{{$user->email}}</td>
+                                       <td>{{$user->role}}</td>
+                                       <td>{{$user->active}}</td>
+                                       <td>
+                                           <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Detail"> <i class="icon-eye"></i> </a>
+                                           <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                           <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                       </td>
+                                   </tr>
+                               @endforeach
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+    </div>
+</section>
+
+
 
 
 
@@ -136,100 +192,73 @@
 
 
 <section id="resp-section" class="section js-section u-category-media">
-
-
  <!-- Content Wrapper. Contains page content -->
-  <div class="container">
+ <div class="container">
+
+
+
 
     <!-- Title -->
         <div class="hk-pg-header align-items-top">
           <div>
-            <h3 class="hk-pg-title font-weight-600 mb-10">Responsable</h3>
+            <h3 class="hk-pg-title font-weight-600 mb-10">Bailleurs</h3>
           </div>
           <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nResponsableModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15"><span class="icon-label"><i class="fa fa-print"></i> </span><span class="btn-text">Print </span></button>
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
           </div>
         </div>
     <!-- /Title -->
 
     <!-- Main content -->
     <!-- Row -->
-      <div class="row"></div>
+    <div class="row">
 
     </div>
-</section>
+    <!-- /Row -->
 
-
-
-
-
-
-
-
-<section id="agen-section" class="section js-section u-category-media">
-
- <!-- Content Wrapper. Contains page content -->
-  <div class="">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Agenda</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Agenda</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
   </div>
 </section>
+
+
+
+
+
+
+
+
 
 
 
 
 <section id="serv-section" class="section js-section u-category-media">
+<!-- Content Wrapper. Contains page content -->
+ <div class="container">
 
- <!-- Content Wrapper. Contains page content -->
-  <div class="">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Services</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Services</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+
+
+
+    <!-- Title -->
+        <div class="hk-pg-header align-items-top">
+          <div>
+            <h3 class="hk-pg-title font-weight-600 mb-10">Services & Projets</h3>
+          </div>
+
+          <div class="d-flex">
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+          </div>
+        </div>
+    <!-- /Title -->
 
     <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
+    <!-- Row -->
+    <div class="row">
 
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    </div>
+    <!-- /Row -->
+
   </div>
+
+
 </section>
 
 
@@ -347,6 +376,93 @@
           </div>
       </div>
   </div>
+
+
+
+
+  <!-- Modal User -->
+  <div class="modal fade" id="nUserModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditor" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Nouvel Utilisateur</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <form  id="registerUser" >
+              <div class="modal-body">
+
+                  <div id="messageErrUs"></div>
+
+                  <div class="from-row">
+                      <div class="col-md-12 mb-10">
+                          <label for="agent">Selectionner agent</label>
+                          <select class="form-control select2" name="agent"  required>
+                              <option value=""></option>
+
+                              @foreach ($agents as $agent)
+                                  <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname.' '.$agent->middlename}}</option>
+                              @endforeach
+                          </select>
+                          <div class="invalid-feedback">
+                              Selectionner une option
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="from-row">
+                      <div class="col-md-12 mb-10">
+                          <label for="role">Selectionner role</label>
+                          <select class="form-control select2" name="role" required>
+                              <option value=""></option>
+                              <option value="PERS">PERS</option>
+                              <option value="SECU">SECU</option>
+                              <option value="MAG">MAG</option>
+                              <option value="LOG">LOG</option>
+                              <option value="CAISS">CAISS</option>
+                              <option value="COMPT">COMPT</option>
+                              <option value="A.I">A.I</option>
+                              <option value="R.H">R.H</option>
+                              <option value="C.P">C.P</option>
+                              <option value="D.P">D.P</option>
+                              <option value="D.A.F">D.A.F</option>
+                              <option value="S.E">S.E</option>
+                              <option value="ADMIN">ADMIN</option>
+                          </select>
+                          <div class="invalid-feedback">
+                              Selectionner une option
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="from-row">
+                      <div class="col-md-12 mb-10">
+                          <label for="username">Nom d'utilisateur</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text" id="inputGroupPrepend"><i class="icon-user"></i></span>
+                              </div>
+                              <input type="text" class="form-control" name="username" placeholder="Nom d'utilisateur" aria-describedby="inputGroupPrepend" required>
+                              <div class="invalid-feedback">
+                                  Le nom d'utilisateur est obligatoire
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+              </div>
+              <div class="modal-footer">
+                  <button class="btn btn-primary" id="btnUs" type="submit">Valider</button>
+                  <div class="loader-pendulums" id="prldUs" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+
 
 
 
