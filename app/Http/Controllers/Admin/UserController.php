@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Agent;
+use App\Models\Bailleur;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -36,6 +37,7 @@ class UserController extends Controller
             'lieuN' => ['required', 'string', 'max:255'],
             'dateN' => ['required', 'date', 'max:255'],
             'genre' => ['required', 'string', 'max:255'],
+            'service' => ['required', 'string', 'max:255'],
             'etatcivil' => ['required', 'string', 'max:255'],
         ]);
     }
@@ -58,6 +60,7 @@ class UserController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'lieu' => $data['lieuN'],
+            'service' => $data['service'],
             'birthdate' => $data['dateN'],
             'adress' => $data['adresse'],
             'country' => $data['pays'],
@@ -66,4 +69,7 @@ class UserController extends Controller
             'etatcivil' => $data['etatcivil'],
         ]);
     }
+
+
+
 }

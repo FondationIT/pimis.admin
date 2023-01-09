@@ -14,19 +14,15 @@ function messageErr(data){
     return message
 }
 
-//setInterval(notification, 3000);
-//setInterval(message, 3000);
-
-
 
 /* ***************************
 
-        REGISTER AGENT
+        REGISTER BAILLEUR
 
 ******************************/
 
 
-$('#registerAgent').on('submit', function(e) {
+$('#registerBailleur').on('submit', function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -34,7 +30,7 @@ $('#registerAgent').on('submit', function(e) {
     });
      e.preventDefault();
      $(this).add('was-validated');
-    var x = $('#registerAgent').serializeArray();
+    var x = $('#registerBailleur').serializeArray();
     var formData = {};
 
     $.each(x, function(i, field){
@@ -54,24 +50,24 @@ $('#registerAgent').on('submit', function(e) {
 
     //console.log(formData)
 
-   registerAgent(formData)
+   registerBailleur(formData)
 })
-function registerAgent(data){
+function registerBailleur(data){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "/agentReg",
+        url: "/bailleurReg",
         dataType: 'json',
 
         data: JSON.stringify(data),
         beforeSend: function() {
-            $('#btnAg').hide();
-            $('#prldAg').show();
+            $('#btnBail').hide();
+            $('#prldBail').show();
         },
         success: function(data, textStatus, jqXHR){
 
-                $('#prldAg').hide();
-                $('#btnAg').show();
+                $('#prldBail').hide();
+                $('#btnBail').show();
                 $('.close').click()
                 location.reload();
 
@@ -89,25 +85,22 @@ function registerAgent(data){
 
         },
         error: function(jqXHR, textStatus, data){
-            $('#prldAg').hide();
-            $('#btnAg').show();
-            $('#messageErr').html(messageErr(data))
+            $('#prldBail').hide();
+            $('#btnBail').show();
+            $('#messageErrBailleur').html(messageErr(data))
         }
     });
 }
 
 
-
-
-
 /* ***************************
 
-        REGISTER USER
+        REGISTER PROJET
 
 ******************************/
 
 
-$('#registerUser').on('submit', function(e) {
+$('#registerProjet').on('submit', function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -115,8 +108,9 @@ $('#registerUser').on('submit', function(e) {
     });
      e.preventDefault();
      $(this).add('was-validated');
-    var x = $('#registerUser').serializeArray();
-    var formData = {};
+    var x = $('#registerProjet').serializeArray();
+    contexte = tinymce.get('contexteProjet').getContent();
+    var formData = {contexte:contexte};
 
     $.each(x, function(i, field){
         if(field.value.trim() != ""){
@@ -135,24 +129,24 @@ $('#registerUser').on('submit', function(e) {
 
     //console.log(formData)
 
-   registerUser(formData)
+   registerProjet(formData)
 })
-function registerUser(data){
+function registerProjet(data){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "/userReg",
+        url: "/projetReg",
         dataType: 'json',
 
         data: JSON.stringify(data),
         beforeSend: function() {
-            $('#btnUs').hide();
-            $('#prldUs').show();
+            $('#btnPjt').hide();
+            $('#prldPjt').show();
         },
         success: function(data, textStatus, jqXHR){
 
-                $('#prldUs').hide();
-                $('#btnUs').show();
+                $('#prldPjt').hide();
+                $('#btnPjt').show();
                 $('.close').click()
                 location.reload();
 
@@ -170,9 +164,9 @@ function registerUser(data){
 
         },
         error: function(jqXHR, textStatus, data){
-            $('#prldUs').hide();
-            $('#btnUs').show();
-            $('#messageErrUs').html(messageErr(data))
+            $('#prldPjt').hide();
+            $('#btnPjt').show();
+            $('#messageErrProjet').html(messageErr(data))
         }
     });
 }

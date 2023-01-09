@@ -204,7 +204,7 @@
             <h3 class="hk-pg-title font-weight-600 mb-10">Bailleurs</h3>
           </div>
           <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nBailleursModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
           </div>
         </div>
     <!-- /Title -->
@@ -212,7 +212,40 @@
     <!-- Main content -->
     <!-- Row -->
     <div class="row">
+        <div class="col-sm">
+            <div class="table-wrap">
+                <div class="table-responsive">
+                    <table id="bailleurTab" class="table table-hover w-100 display pb-30">
+                        <thead>
+                            <tr>
+                                <th>Nom </th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($bailleurs as $bailleur)
 
+
+                                <tr>
+                                    <td>{{$bailleur->name}}</td>
+                                    <td>{{$bailleur->email}}</td>
+                                    <td>{{$bailleur->phone}}</td>
+                                    <td>{{$bailleur->active}}</td>
+                                    <td>
+                                        <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Detail"> <i class="icon-eye"></i> </a>
+                                        <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                        <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /Row -->
 
@@ -240,11 +273,11 @@
     <!-- Title -->
         <div class="hk-pg-header align-items-top">
           <div>
-            <h3 class="hk-pg-title font-weight-600 mb-10">Services & Projets</h3>
+            <h3 class="hk-pg-title font-weight-600 mb-10">Projets</h3>
           </div>
 
           <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nProjectModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
           </div>
         </div>
     <!-- /Title -->
@@ -252,7 +285,40 @@
     <!-- Main content -->
     <!-- Row -->
     <div class="row">
+        <div class="col-sm">
+            <div class="table-wrap">
+                <div class="table-responsive">
+                    <table id="projetTab" class="table table-hover w-100 display pb-30">
+                        <thead>
+                            <tr>
+                                <th>Nom </th>
+                                <th>Date debut</th>
+                                <th>Date fin</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($projets as $projet)
 
+
+                                <tr>
+                                    <td>{{$projet->name}}</td>
+                                    <td>{{$projet->dateD}}</td>
+                                    <td>{{$projet->dateF}}</td>
+                                    <td>{{$projet->active}}</td>
+                                    <td>
+                                        <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Detail"> <i class="icon-eye"></i> </a>
+                                        <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                        <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /Row -->
 
@@ -466,46 +532,171 @@
 
 
 
-   <!-- Modal Nouvel responsable -->
-  <div class="modal fade" id="nResponsableModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalForms" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Responsable</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
-              </div>
-              <form id="form-responsable">
+
+
+
+  <!-- Modal Project -->
+  <div class="modal fade" id="nProjectModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditor" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Nouveau projet</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <form  id="registerProjet" class="needs-validation">
+
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">Nom complet</label>
-                        <input type="text" class="form-control" id="" placeholder="Nane" required>
+
+                    <div id="messageErrPojet"></div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="nameAg">Nom du projet *</label>
+                            <input type="text" class="form-control" name="name" placeholder="Nom du projet" required>
+                            <div class="invalid-feedback">
+                                Le nom est obligatoire
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Adresse mail</label>
-                        <input type="mail" class="form-control" id="" placeholder="Nane" required>
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="email">Date Debut *</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend"><i class="icon-calender"></i></span>
+                                </div>
+                                <input type="date" class="form-control" name="dateD" placeholder="Date debut" aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Preciser la date du debut
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <label for="email">Date Fin</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend"><i class="icon-calender"></i></span>
+                                </div>
+                                <input type="date" class="form-control" name="dateF" placeholder="Date fin" aria-describedby="inputGroupPrepend">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Fonction</label>
-                        <select class="form-control custom-select  mt-15" required>
-                            <option selected>Select</option>
-                            <option value="1">Super Admin</option>
-                            <option value="2">Admin</option>
-                            <option value="3">Associé</option>
-                        </select>
+
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="domaine">Domaine d'intervention *</label>
+                            <select class="form-control" name="domaine" placeholder="" required>
+                                <option value=""></option>
+                                <option value="Masculin">Sante</option>
+                                <option value="Feminin">Securite allimentaire</option>
+                                <option value="Autre">Education</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Selectionner une option
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <label for="bailleur">Bailleur *</label>
+                            <select class="form-control" name="bailleur" placeholder="" required>
+                                <option value=""></option>
+
+                                @foreach ($bailleurs as $bailleur)
+                                    <option value="{{$bailleur->id}}">{{$bailleur->name}}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback">
+                                Selectionner une option
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Detail</label>
-                        <textarea class="form-control" required ></textarea>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="contexte">Contexte</label>
+                            <div class="tinymce-wrap">
+                                <textarea class="tinymce" id="contexteProjet" ></textarea>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                    <button type="button" type="submit" class="btn btn-primary">Enregistrer</button>
+                <button class="btn btn-primary" id="btnPjt" type="submit">Valider</button>
+                <div class="loader-pendulums" id="prldPjt" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
                 </div>
-              </form>
-          </div>
-      </div>
-  </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+
+
+
+
+<!-- Modal Bailleurs -->
+<div class="modal fade" id="nBailleursModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditor" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Nouveau projet</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <form  id="registerBailleur" class="needs-validation">
+
+                <div class="modal-body">
+
+                    <div id="messageErrBailleur"></div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="name">Nom du bailleur *</label>
+                            <input type="text" class="form-control" name="name" placeholder="Nom du bailleur" required>
+                            <div class="invalid-feedback">
+                                Le nom est obligatoire
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="email">Adresse mail *</label>
+                            <input type="email" class="form-control" name="email" placeholder="Adresse mail" required>
+                            <div class="invalid-feedback">
+                                Adresse mail incorrecte
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="phone">Numero de telephone *</label>
+                            <input type="text" class="form-control" name="phone" placeholder="Numero de telephone" required>
+                            <div class="invalid-feedback">
+                                Numero de telephone incorrecte
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="adresse">Adresse *</label>
+                            <input type="text" class="form-control" name="adresse" placeholder="Adresse">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                <button class="btn btn-primary" id="btnBail" type="submit">Valider</button>
+                <div class="loader-pendulums" id="prldBail" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

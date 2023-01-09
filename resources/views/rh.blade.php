@@ -158,7 +158,7 @@
               <form id="registerAgent" class="needs-validation" >
                 <div class="modal-body">
 
-                    <div id="messageErr"></div>
+                    <div id="messageErrAgent"></div>
 
                     <div class="form-row">
                         <div class="col-md-4 mb-10">
@@ -178,6 +178,20 @@
                         <div class="col-md-4 mb-10">
                             <label for="nameAg3">Prenom</label>
                             <input type="text" class="form-control" name="name3" placeholder="Prenon">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="service">Service</label>
+                            <select class="form-control" name="service" placeholder="Service" required>
+                                <option value=""></option>
+                                <option value="Administration et finance">Administration et finance</option>
+                                <option value="Feminin">Programme</option>
+                                <option value="Audit interne">Audit interne</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Selectionner une service
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">

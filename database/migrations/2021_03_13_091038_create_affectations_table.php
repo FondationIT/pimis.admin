@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('etatBes', function (Blueprint $table) {
+        Schema::create('affectations', function (Blueprint $table) {
             $table->id();
-            $table->string('numero')->unique();
             $table->string('agent')->constrained()->onDelete('cascade');
-            $table->string('ligne')->nullable();
-            $table->text('comment')->nullable();
-            $table->boolean('niv1')->default(false);
-            $table->boolean('niv2')->default(false);
-            $table->boolean('niv3')->default(false);
-            $table->boolean('active')->default(true);
+            $table->string('projet')->constrained()->onDelete('cascade');
+            $table->string('poste');
+            $table->string('lieu');
+            $table->text('description')->nullable();
+            $table->boolean('statut')->default(false);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('etatBes');
+        Schema::dropIfExists('affectations');
     }
 };

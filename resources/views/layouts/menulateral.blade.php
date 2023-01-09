@@ -50,7 +50,7 @@
                                     <a class="nav-link" href="#" id="button-userB" data-active="userB" data-open="bPimis" data-section="userB">Utilisateurs</a>
                                 </li>
                                 <li class="nav-item" id="serv">
-                                    <a class="nav-link" href="#" id="button-serv" data-active="serv" data-open="bPimis" data-section="serv">Services & Projets</a>
+                                    <a class="nav-link" href="#" id="button-serv" data-active="serv" data-open="bPimis" data-section="serv">Projets</a>
                                 </li>
                                 <li class="nav-item" id="resp">
                                     <a class="nav-link" href="#" id="button-resp" data-active="resp" data-open="bPimis" data-section="resp">Bailleurs</a>

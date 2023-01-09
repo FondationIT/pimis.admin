@@ -3,7 +3,7 @@
 @section('content')
 
  @include('dash')
- @include('fichier')
+ @include('agent')
  @include('pimis')
  @include('event')
  @include('rh')
