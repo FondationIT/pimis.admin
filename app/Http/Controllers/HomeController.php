@@ -37,7 +37,7 @@ class HomeController extends Controller
         $agents = Agent::where('active', '0')->get();
         $bailleurs = Bailleur::where('active', '0')->get();
         $projets = Projet::where('active', '1')->get();
-        $products = Product::where('active', '0')->get();
+        $products = Product::where('active', '1')->get();
         $productOders = ProductOder::where('active', '0')->get();
         $affectations = Affectation::where('active', '0')->get();
         $etBes = EtBes::where('active', '0')->get();

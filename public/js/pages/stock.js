@@ -14,17 +14,19 @@ function messageErr(data){
     return message
 }
 
+//setInterval(notification, 3000);
+//setInterval(message, 3000);
 
 
 
 /* ***************************
 
-        REGISTER USER
+        REGISTER CATEGORIE
 
 ******************************/
 
 
-$('#registerUser').on('submit', function(e) {
+$('#registerCategorie').on('submit', function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -32,7 +34,7 @@ $('#registerUser').on('submit', function(e) {
     });
      e.preventDefault();
      $(this).add('was-validated');
-    var x = $('#registerUser').serializeArray();
+    var x = $('#registerCategorie').serializeArray();
     var formData = {};
 
     $.each(x, function(i, field){
@@ -52,24 +54,24 @@ $('#registerUser').on('submit', function(e) {
 
     //console.log(formData)
 
-   registerUser(formData)
+   registerCategorie(formData)
 })
-function registerUser(data){
+function registerCategorie(data){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "/userReg",
+        url: "/categorieReg",
         dataType: 'json',
 
         data: JSON.stringify(data),
         beforeSend: function() {
-            $('#btnUs').hide();
-            $('#prldUs').show();
+            $('#btnCat').hide();
+            $('#prldCat').show();
         },
         success: function(data, textStatus, jqXHR){
 
-                $('#prldUs').hide();
-                $('#btnUs').show();
+                $('#prldCat').hide();
+                $('#btnCat').show();
                 $('.close').click()
                 location.reload();
 
@@ -87,26 +89,23 @@ function registerUser(data){
 
         },
         error: function(jqXHR, textStatus, data){
-            $('#prldUs').hide();
-            $('#btnUs').show();
-            $('#messageErrUs').html(messageErr(data))
+            $('#prldCat').hide();
+            $('#btnCat').show();
+            $('#messageErrCat').html(messageErr(data))
         }
     });
 }
 
 
 
-
-
-
 /* ***************************
 
-        REGISTER BAILLEUR
+        REGISTER PRODUCT
 
 ******************************/
 
 
-$('#registerBailleur').on('submit', function(e) {
+$('#registerProduct').on('submit', function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -114,7 +113,7 @@ $('#registerBailleur').on('submit', function(e) {
     });
      e.preventDefault();
      $(this).add('was-validated');
-    var x = $('#registerBailleur').serializeArray();
+    var x = $('#registerProduct').serializeArray();
     var formData = {};
 
     $.each(x, function(i, field){
@@ -134,24 +133,24 @@ $('#registerBailleur').on('submit', function(e) {
 
     //console.log(formData)
 
-   registerBailleur(formData)
+   registerProduct(formData)
 })
-function registerBailleur(data){
+function registerProduct(data){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "/bailleurReg",
+        url: "/productReg",
         dataType: 'json',
 
         data: JSON.stringify(data),
         beforeSend: function() {
-            $('#btnBail').hide();
-            $('#prldBail').show();
+            $('#btnProd').hide();
+            $('#prldProd').show();
         },
         success: function(data, textStatus, jqXHR){
 
-                $('#prldBail').hide();
-                $('#btnBail').show();
+                $('#prldProd').hide();
+                $('#btnProd').show();
                 $('.close').click()
                 location.reload();
 
@@ -169,90 +168,9 @@ function registerBailleur(data){
 
         },
         error: function(jqXHR, textStatus, data){
-            $('#prldBail').hide();
-            $('#btnBail').show();
-            $('#messageErrBailleur').html(messageErr(data))
+            $('#prldProd').hide();
+            $('#btnProd').show();
+            $('#messageErrProd').html(messageErr(data))
         }
     });
 }
-
-
-/* ***************************
-
-        REGISTER PROJET
-
-******************************/
-
-
-$('#registerProjet').on('submit', function(e) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-     e.preventDefault();
-     $(this).add('was-validated');
-    var x = $('#registerProjet').serializeArray();
-    contexte = tinymce.get('contexteProjet').getContent();
-    var formData = {contexte:contexte};
-
-    $.each(x, function(i, field){
-        if(field.value.trim() != ""){
-            if(formData[field.name] != undefined){
-                var val = formData[field.name];
-                if(!Array.isArray(val)){
-                     arr = [val];
-                }
-                arr.push(field.value.trim());
-                formData[field.name] = arr;
-            }else{
-              formData[field.name] = field.value;
-            }
-        }
-    });
-
-    //console.log(formData)
-
-   registerProjet(formData)
-})
-function registerProjet(data){
-    $.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: "/projetReg",
-        dataType: 'json',
-
-        data: JSON.stringify(data),
-        beforeSend: function() {
-            $('#btnPjt').hide();
-            $('#prldPjt').show();
-        },
-        success: function(data, textStatus, jqXHR){
-
-                $('#prldPjt').hide();
-                $('#btnPjt').show();
-                $('.close').click()
-                location.reload();
-
-                $.toast().reset('all');
-                $.toast({
-                    text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
-                    position: 'top-center',
-                    loaderBg:'#7a5449',
-                    class: 'jq-has-icon jq-toast-success',
-                    hideAfter: 3500,
-                    stack: 6,
-                    showHideTransition: 'fade'
-                    });
-
-
-        },
-        error: function(jqXHR, textStatus, data){
-            $('#prldPjt').hide();
-            $('#btnPjt').show();
-            $('#messageErrProjet').html(messageErr(data))
-        }
-    });
-}
-
-

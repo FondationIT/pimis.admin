@@ -102,12 +102,12 @@ function registerAgent(data){
 
 /* ***************************
 
-        REGISTER USER
+        REGISTER AFFECTATION
 
 ******************************/
 
 
-$('#registerUser').on('submit', function(e) {
+$('#registerAffectation').on('submit', function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -115,7 +115,7 @@ $('#registerUser').on('submit', function(e) {
     });
      e.preventDefault();
      $(this).add('was-validated');
-    var x = $('#registerUser').serializeArray();
+    var x = $('#registerAffectation').serializeArray();
     var formData = {};
 
     $.each(x, function(i, field){
@@ -135,24 +135,24 @@ $('#registerUser').on('submit', function(e) {
 
     //console.log(formData)
 
-   registerUser(formData)
+   registerAffectation(formData)
 })
-function registerUser(data){
+function registerAffectation(data){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
-        url: "/userReg",
+        url: "/affectationReg",
         dataType: 'json',
 
         data: JSON.stringify(data),
         beforeSend: function() {
-            $('#btnUs').hide();
-            $('#prldUs').show();
+            $('#btnAff').hide();
+            $('#prldAff').show();
         },
         success: function(data, textStatus, jqXHR){
 
-                $('#prldUs').hide();
-                $('#btnUs').show();
+                $('#prldAff').hide();
+                $('#btnAff').show();
                 $('.close').click()
                 location.reload();
 
@@ -170,9 +170,9 @@ function registerUser(data){
 
         },
         error: function(jqXHR, textStatus, data){
-            $('#prldUs').hide();
-            $('#btnUs').show();
-            $('#messageErrUs').html(messageErr(data))
+            $('#prldAff').hide();
+            $('#btnAff').show();
+            $('#messageErrAff').html(messageErr(data))
         }
     });
 }

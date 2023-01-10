@@ -146,7 +146,7 @@
            <div class="col-sm">
                <div class="table-wrap">
                    <div class="table-responsive">
-                       <table id="userTab" class="table table-hover w-100 display pb-30">
+                       <table id="userTab" class="table table-hover w-100 pb-30">
                            <thead>
                                <tr>
                                    <th>Nom complet</th>
@@ -215,7 +215,7 @@
         <div class="col-sm">
             <div class="table-wrap">
                 <div class="table-responsive">
-                    <table id="bailleurTab" class="table table-hover w-100 display pb-30">
+                    <table id="bailleurTab" class="table table-hover w-100 pb-30">
                         <thead>
                             <tr>
                                 <th>Nom </th>
@@ -288,7 +288,7 @@
         <div class="col-sm">
             <div class="table-wrap">
                 <div class="table-responsive">
-                    <table id="projetTab" class="table table-hover w-100 display pb-30">
+                    <table id="projetTab" class="table table-hover w-100 pb-30">
                         <thead>
                             <tr>
                                 <th>Nom </th>
@@ -462,7 +462,7 @@
 
                   <div id="messageErrUs"></div>
 
-                  <div class="from-row">
+                  <div class="form-row">
                       <div class="col-md-12 mb-10">
                           <label for="agent">Selectionner agent</label>
                           <select class="form-control select2" name="agent"  required>
@@ -478,7 +478,7 @@
                       </div>
                   </div>
 
-                  <div class="from-row">
+                  <div class="form-row">
                       <div class="col-md-12 mb-10">
                           <label for="role">Selectionner role</label>
                           <select class="form-control select2" name="role" required>
@@ -503,7 +503,7 @@
                       </div>
                   </div>
 
-                  <div class="from-row">
+                  <div class="form-row">
                       <div class="col-md-12 mb-10">
                           <label for="username">Nom d'utilisateur</label>
                           <div class="input-group">
@@ -642,7 +642,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">Nouveau projet</h6>
+                <h6 class="modal-title">Nouveau bailleur</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>

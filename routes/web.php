@@ -18,6 +18,9 @@ Route::post('/agentReg', [App\Http\Controllers\Admin\UserController::class, 'cre
 Route::post('/userReg', [App\Http\Controllers\UserController::class, 'create'])->name('userReg');
 Route::post('/bailleurReg', [App\Http\Controllers\BailleurController::class, 'create'])->name('bailleurReg');
 Route::post('/projetReg', [App\Http\Controllers\ProjetController::class, 'create'])->name('projetReg');
+Route::post('/affectationReg', [App\Http\Controllers\AffectationController::class, 'create'])->name('affectationReg');
+Route::post('/categorieReg', [App\Http\Controllers\ProductController::class, 'createCat'])->name('categorieReg');
+Route::post('/productReg', [App\Http\Controllers\ProductController::class, 'createProd'])->name('productReg');
 
 Auth::routes();
 

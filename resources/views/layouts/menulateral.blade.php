@@ -87,31 +87,21 @@
                     </ul>
                 </li>
 
-                <li class="nav-item" id="bCompt">
-                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#compt">
-                        <span class="feather-icon"><i data-feather="user"></i></span>
-                        <span class="nav-link-text">Comptabilite</span>
+               <li class="nav-item" id="bStock">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
+                        <span class="feather-icon"><i data-feather="package"></i></span>
+                        <span class="nav-link-text">Stock</span>
                     </a>
-                    <ul id="compt" class="nav flex-column collapse collapse-level-1">
+                    <ul id="stock" class="nav flex-column collapse collapse-level-1">
                         <li class="nav-item">
                             <ul class="nav flex-column">
-                                <li class="nav-item" id="">
-                                    <a class="nav-link" href="#" id="button-banner" data-active="banner" data-open="bCompt" data-section="banner">Comptabilite</a>
-                                </li>
-                                <li class="nav-item" id="">
-                                    <a class="nav-link" href="#" id="button-art" data-active="art" data-open="bCompt" data-section="art">kkk</a>
+                                <li class="nav-item" id="catPrix">
+                                    <a class="nav-link" href="#" id="button-catPrix" data-active="catPrix" data-open="bStock" data-section="catPrix">Catalogue de prix</a>
                                 </li>
 
                             </ul>
                         </li>
                     </ul>
-                </li>
-
-                <li class="nav-item" id="bEvent">
-                    <a class="nav-link" href="#" id="button-encour" data-active="encour" data-open="bEvent" data-section="encour">
-                        <span class="feather-icon"><i data-feather="zap"></i></span>
-                        <span class="nav-link-text">Evenement</span>
-                    </a>
                 </li>
             </ul>
             <hr class="nav-separator">

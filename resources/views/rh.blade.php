@@ -22,7 +22,7 @@
         <div class="col-sm">
             <div class="table-wrap">
                 <div class="table-responsive">
-                    <table id="agentTab" class="table table-hover w-100 display pb-30">
+                    <table id="agentTab" class="table table-hover w-100 pb-30">
                         <thead>
                             <tr>
                                 <th>Nom complet</th>
@@ -68,7 +68,7 @@
               </div>
 
               <div class="d-flex">
-                <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nAffectationModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
               </div>
             </div>
         <!-- /Title -->
@@ -76,7 +76,39 @@
         <!-- Main content -->
         <!-- Row -->
         <div class="row">
+            <div class="col-sm">
+                <div class="table-wrap">
+                    <div class="table-responsive">
+                        <table id="agentTab" class="table table-hover w-100 pb-30">
+                            <thead>
+                                <tr>
+                                    <th>Nom agent</th>
+                                    <th>Projet</th>
+                                    <th>Poste</th>
+                                    <th>Lieu d'affectation</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($affectations as $aff)
 
+
+                                    <tr>
+                                        <td>{{App\Models\Agent::firstWhere('id', $aff->agent)->firstname.' '.App\Models\Agent::firstWhere('id', $aff->agent)->lastname}}</td>
+                                        <td>{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</td>
+                                        <td>{{$aff->poste}}</td>
+                                        <td>{{$aff->lieu}}</td>
+                                        <td>
+                                            <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                            <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /Row -->
 
@@ -214,7 +246,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroupPrepend"><i class="icon-phone"></i></span>
                                 </div>
-                                <input type="tel" class="form-control" name="phone" placeholder="Numero de telephone" aria-describedby="inputGroupPrepend" pattern="[0-9]{10}" required>
+                                <input type="text" class="form-control" name="phone" placeholder="Numero de telephone" aria-describedby="inputGroupPrepend" required>
                                 <div class="invalid-feedback">
                                     Entrez un numero de telephone valide
                                 </div>
@@ -297,4 +329,97 @@
 
       </div>
   </div>
+
+
+    <!-- Modal Affectation -->
+    <div class="modal fade" id="nAffectationModalForms" tabindex="-1" role="dialog" aria-labelledby="exampleModalEditor" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Nouvel Affectation</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <form  id="registerAffectation" >
+                  <div class="modal-body">
+
+                      <div id="messageErrAff"></div>
+
+                      <div class="form-row">
+                          <div class="col-md-12 mb-10">
+                              <label for="agent">Selectionner agent</label>
+                              <select class="form-control select2" name="agent"  required>
+                                  <option value=""></option>
+
+                                  @foreach ($agents as $agent)
+                                      <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname.' '.$agent->middlename}}</option>
+                                  @endforeach
+                              </select>
+                              <div class="invalid-feedback">
+                                  Selectionner une option
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-row">
+                          <div class="col-md-12 mb-10">
+                              <label for="projet">Selectionner projet</label>
+                              <select class="form-control select2" name="projet" required>
+                                <option value=""></option>
+
+                                @foreach ($projets as $projet)
+                                    <option value="{{$projet->id}}">{{$projet->name}}</option>
+                                @endforeach
+                              </select>
+                              <div class="invalid-feedback">
+                                  Selectionner une option
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-row">
+                          <div class="col-md-12 mb-10">
+                              <label for="poste">Poste</label>
+                              <div class="input-group">
+                                  <input type="text" class="form-control" name="poste" placeholder="Poste" aria-describedby="inputGroupPrepend" required>
+                                  <div class="invalid-feedback">
+                                      Preciser le poste
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-row">
+                          <div class="col-md-12 mb-10">
+                              <label for="lieu">Lieu d'affectation</label>
+                              <div class="input-group">
+                                  <input type="text" class="form-control" name="lieu" placeholder="Lieu d'affectation" aria-describedby="inputGroupPrepend" required>
+                                  <div class="invalid-feedback">
+                                      Preciser le lieu
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="description">Description</label>
+                            <div class="input-group">
+                                <textarea class="form-control" name="description"></textarea>
+                            </div>
+                        </div>
+                      </div>
+
+
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-primary" id="btnAff" type="submit">Valider</button>
+                      <div class="loader-pendulums" id="prldAff" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
 

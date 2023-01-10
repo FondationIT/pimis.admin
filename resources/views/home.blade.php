@@ -5,6 +5,6 @@
  @include('dash')
  @include('agent')
  @include('pimis')
- @include('event')
+ @include('stock')
  @include('rh')
 @endsection
