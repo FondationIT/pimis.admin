@@ -65,7 +65,7 @@ $(document).ready(function() {
 		}
 	} );
 
-    $('#AffectationTab').DataTable( {
+    $('#affectationTab').DataTable( {
 		dom: 'Bfrtip',
 		responsive: true,
         lengthChange: false,

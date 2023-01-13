@@ -89,9 +89,56 @@
             </div>
             <form id="registerEtBes" class="needs-validation" >
               <div class="modal-body">
+                <div id="messageErrEtBes"></div>
 
-                  <div id="messageErrEtBes"></div>
+                <div class="form-row">
+                    <div class="col-md-12 mb-10">
+                        <input type="text" class="form-control" id="agentEB" disabled value="{{ Auth::user()->name }}" >
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="text"  id="allProdPlus" hidden value="{{$products}}" >
+                    <div class="col-md-3 mb-10">
+                        <label for="product">Produit</label>
+                          <select class="form-control select2 prodEB" id="prodEB1" name="product" onchange="afficheEBChoix(this.value,1)" required>
 
+                          </select>
+                          <div class="invalid-feedback">
+                              Selectionner un produit
+                          </div>
+                    </div>
+                    <div class="col-md-3 mb-10">
+                        <label for="username">Quantité</label>
+                          <div class="input-group">
+                              <input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required>
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="unite-1"></span>
+                              </div>
+                              <div class="invalid-feedback">
+                                  Le nom d'utilisateur est obligatoire
+                              </div>
+                          </div>
+                    </div>
+                    <div class="col-md-5 mb-10">
+                        <label for="description">Aspects spécifiques</label>
+                        <textarea class="form-control descEB" name="description" id="prodE1"></textarea>
+                    </div>
+
+
+                    <div class="col-md-1 mb-10">
+
+                    </div>
+                </div>
+                <div id="autreEB">
+                </div>
+                <button class="button btn btn-primary" id="eBAdd" style="float: right;">+</button>
+
+                <div class="form-row">
+                    <div class="col-md-12 mb-10">
+                        <label for="commentEB">Commentaire</label>
+                        <textarea class="form-control" name="commentEB" id="commentEB"></textarea>
+                    </div>
+                </div>
 
             </div>
             <div class="modal-footer">

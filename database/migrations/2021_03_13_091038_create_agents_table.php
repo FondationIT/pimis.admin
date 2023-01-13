@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
-            $table->string('matricule');
+            $table->string('matricule')->unique();
             $table->string('firstname');
             $table->string('lastname');
             $table->string('middlename')->nullable();

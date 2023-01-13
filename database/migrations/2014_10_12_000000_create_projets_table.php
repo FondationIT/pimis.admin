@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('projets', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('name');
             $table->date('dateD');
             $table->date('dateF')->nullable();

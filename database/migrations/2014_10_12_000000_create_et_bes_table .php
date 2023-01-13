@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('et_bes', function (Blueprint $table) {
             $table->id();
-            $table->string('numero')->unique();
+            $table->string('reference')->unique();
             $table->string('agent')->constrained()->onDelete('cascade');
             $table->string('ligne')->nullable();
             $table->text('comment')->nullable();

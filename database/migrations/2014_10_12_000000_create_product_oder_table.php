@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('product')->constrained()->onDelete('cascade');
             $table->string('etatBes')->constrained()->onDelete('cascade');
             $table->integer('quantite');
+            $table->integer('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

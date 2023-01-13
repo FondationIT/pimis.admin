@@ -51,11 +51,13 @@ class UserController extends Controller
      */
     public function create(Request $data)
     {
+
+        $matricule = 'FP-'.substr($data['name'], 0, 1).''.rand(1000,9999).''.substr($data['name2'], 0, 1);
         return Agent::create([
             'firstname' => $data['name'],
             'lastname' => $data['name2'],
             'middlename' => $data['name3'],
-            'matricule' => 'FP-44568',
+            'matricule' => $matricule,
             'gender' => $data['genre'],
             'email' => $data['email'],
             'phone' => $data['phone'],

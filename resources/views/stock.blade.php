@@ -21,83 +21,65 @@
             <div class="col-sm">
                 <div class="row">
                     <div class="col-md-4 col-sm-12">
-                        <div class="card card-refresh">
-                            <div class="refresh-container">
-                                <div class="la-anim-1"></div>
-                            </div>
-                                <h6 class="card-header">
-                                    Categories
-                                </h6>
-                            <div class="card-body pa-0">
-                                <div class="table-wrap">
-                                    <div class="table-responsive">
-                                        <table id="cateorieTab" class="table table-hover w-100 pb-30">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nom </th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($categories as $cat)
+                        <h4>Categories</h4>
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="cateorieTab" class="table table-hover w-100 pb-30">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($categories as $cat)
 
 
-                                                    <tr>
-                                                        <td>{{$cat->name}}</td>
-                                                        <td>
-                                                            <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
-                                                            <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                            <tr>
+                                                <td>{{$cat->name}}</td>
+                                                <td>
+                                                    <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                                    <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-8 col-sm-12">
-                        <div class="card card-refresh">
-                            <div class="refresh-container">
-                                <div class="la-anim-1"></div>
-                            </div>
-                                <h6 class="card-header">
-                                    Produits
-                                </h6>
-                            <div class="card-body pa-0">
-                                <div class="table-wrap w-95">
-                                    <div class="table-responsive">
-                                        <table id="productTab" class="table table-hover w-100 pb-30">
-                                            <thead>
-                                                <tr>
-                                                    <th>Produit</th>
-                                                    <th>Categrie</th>
-                                                    <th>Unité</th>
-                                                    <th>Prix</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($products as $prod)
+                        <h4>Produits</h4>
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table id="productTab" class="table table-hover w-100 pb-30">
+                                    <thead>
+                                        <tr>
+                                            <th>Produit</th>
+                                            <th>Categrie</th>
+                                            <th>Unité</th>
+                                            <th>Prix</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($products as $prod)
 
 
-                                                    <tr>
-                                                        <td>{{$prod->designation}}</td>
-                                                        <td>{{App\Models\Categorie::firstWhere('id', $prod->categorie)->name}}</td>
-                                                        <td>{{'1 '.$prod->unite}}</td>
-                                                        <td>{{'$'.$prod->prix}}</td>
-                                                        <td>
-                                                            <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
-                                                            <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                            <tr>
+                                                <td>{{$prod->designation}}</td>
+                                                <td>{{App\Models\Categorie::firstWhere('id', $prod->categorie)->name}}</td>
+                                                <td>{{'1 '.$prod->unite}}</td>
+                                                <td>{{'$'.$prod->prix}}</td>
+                                                <td>
+                                                    <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                                    <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -79,7 +79,7 @@
             <div class="col-sm">
                 <div class="table-wrap">
                     <div class="table-responsive">
-                        <table id="agentTab" class="table table-hover w-100 pb-30">
+                        <table id="affectationTab" class="table table-hover w-100 pb-30">
                             <thead>
                                 <tr>
                                     <th>Nom agent</th>

@@ -16,6 +16,7 @@ class Projet extends Model
      */
     protected $fillable = [
         'name',
+        'reference',
         'dateD',
         'dateF',
         'contex',

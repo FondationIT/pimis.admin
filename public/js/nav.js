@@ -68,14 +68,13 @@ function displayAbout () {
 
 // Default to the view that was active the last time the app was open
 const sectionId = localStorage.getItem('activeSectionButtonId')
-console.log(sectionId)
 if (sectionId) {
   //showMainContent()
   Promise.resolve(sectionId).then(function(v){
     const section = document.getElementById(v)
     if (section) section.click()
   })
-  
+
 } else {
   const sections = document.querySelectorAll('.js-section.is-shown')
   Array.prototype.forEach.call(sections, (section) => {
@@ -83,6 +82,6 @@ if (sectionId) {
   })
   hideAllModals ()
   activateDefaultSection ()
-  
+
 }
 
