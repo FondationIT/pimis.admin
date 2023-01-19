@@ -47,6 +47,7 @@ class UserController extends Controller
     public function create(Request $data)
     {
         $agents = Agent::where('id', $data['agent'])->get();
+
         return User::create([
             'name' => $agents[0]->firstname.' '.$agents[0]->lastname,
             'agent' => $data['agent'],

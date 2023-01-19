@@ -587,19 +587,7 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="col-md-6 mb-10">
-                            <label for="domaine">Domaine d'intervention *</label>
-                            <select class="form-control" name="domaine" placeholder="" required>
-                                <option value=""></option>
-                                <option value="Masculin">Sante</option>
-                                <option value="Feminin">Securite allimentaire</option>
-                                <option value="Autre">Education</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Selectionner une option
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-10">
+                        <div class="col-md-12 mb-10">
                             <label for="bailleur">Bailleur *</label>
                             <select class="form-control" name="bailleur" placeholder="" required>
                                 <option value=""></option>

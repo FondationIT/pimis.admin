@@ -57,8 +57,6 @@
 
 
 
-    <!-- Inbox CSS -->
-    <link href="{{ asset('dist/css/inbox.css')}}" rel="stylesheet" type="text/css">
 
     <link href="{{ asset('css/nav.css')}}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->

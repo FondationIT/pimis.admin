@@ -1,6 +1,6 @@
 /*Dashboard Init*/
- 
-"use strict"; 
+
+"use strict";
 
 /*****Ready function start*****/
 $(document).ready(function(){
@@ -37,16 +37,16 @@ $(document).ready(function(){
         fillOpacity: 0,
 		lineWidth:2,
 		pointFillColors:['#fff'],
-		pointStrokeColors:['#ab26aa'],
+		pointStrokeColors:['#d3a403'],
 		behaveLikeLine: true,
 		hideHover: 'auto',
 		gridLineColor: 'transparent',
-		lineColors: ['#ab26aa'],
+		lineColors: ['#d3a403'],
 		resize: true,
 		smooth:false,
 		gridTextColor:'#5e7d8a',
 		gridTextFamily:"Inherit"
-        
+
     });
 	if( $('#m_chart_4').length > 0 ){
 		// Line Chart
@@ -55,7 +55,7 @@ $(document).ready(function(){
 				  { y: '300', a: 20, b: 40, c: 50},
 				  { y: '400', a: 50, b: 70, c: 90},
 				  { y: '500', a: 10, b: 40, c: 100},
-				  
+
 				];
 		var lineChart = Morris.Line({
 				element: 'm_chart_4',
@@ -73,8 +73,8 @@ $(document).ready(function(){
 				pointSize:3,
 				lineWidth:2,
 				pointFillColors:['#fff','#fff','#fff'],
-				pointStrokeColors: ['#ab26aa','#ababab','#bdbdbd'],
-				lineColors: ['#ab26aa','#ababab','#bdbdbd'],
-			});	
+				pointStrokeColors: ['#d3a403','#ababab','#bdbdbd'],
+				lineColors: ['#d3a403','#ababab','#bdbdbd'],
+			});
 	}
 });

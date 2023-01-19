@@ -1,6 +1,6 @@
 /*Sparkline Init*/
 "use strict";
-var sparklineLogin = function() { 
+var sparklineLogin = function() {
 	if( $('#sparkline_1').length > 0 ){
 		$("#sparkline_1").sparkline([2,4,4,6,8,5,6,4,8,6,6,2 ], {
 			type: 'line',
@@ -8,16 +8,16 @@ var sparklineLogin = function() {
 			height: '50',
 			resize: true,
 			lineWidth: '1',
-			lineColor: '#ab26aa',
-			fillColor: '#ab26aa',
-			spotColor:'#ab26aa',
+			lineColor: '#d3a403',
+			fillColor: '#d3a403',
+			spotColor:'#d3a403',
 			spotRadius:'2',
-			minSpotColor: '#ab26aa',
-			maxSpotColor: '#ab26aa',
+			minSpotColor: '#d3a403',
+			maxSpotColor: '#d3a403',
 			highlightLineColor: 'rgba(0, 0, 0, 0)',
-			highlightSpotColor: '#ab26aa'
+			highlightSpotColor: '#d3a403'
 		});
-	}	
+	}
 	if( $('#sparkline_2').length > 0 ){
 		$("#sparkline_2").sparkline([0,2,8,6,8,5,6,4,8,6,6,2 ], {
 			type: 'bar',
@@ -26,17 +26,17 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#ab26aa',	
-			highlightSpotColor: '#ab26aa'
+			barColor: '#d3a403',
+			highlightSpotColor: '#d3a403'
 		});
-	}	
+	}
 	if( $('#sparkline_3').length > 0 ){
 		$("#sparkline_3").sparkline([20,4,4], {
 			type: 'pie',
 			width: '50',
 			height: '50',
 			resize: true,
-			sliceColors: ['#ab26aa', '#BDBDBD', '#cecece']
+			sliceColors: ['#d3a403', '#BDBDBD', '#cecece']
 		});
 	}
 	if( $('#sparkline_7').length > 0 ){
@@ -47,14 +47,14 @@ var sparklineLogin = function() {
 			chartRangeMax: 50,
 			resize: true,
 			lineWidth: '1',
-			lineColor: '#ab26aa',
-			fillColor: '#ab26aa',
-			spotColor:'#ab26aa',
+			lineColor: '#d3a403',
+			fillColor: '#d3a403',
+			spotColor:'#d3a403',
 			spotRadius:'2',
-			minSpotColor: '#ab26aa',
-			maxSpotColor: '#ab26aa',
+			minSpotColor: '#d3a403',
+			maxSpotColor: '#d3a403',
 			highlightLineColor: 'rgba(0, 0, 0, 0)',
-			highlightSpotColor: '#ab26aa'
+			highlightSpotColor: '#d3a403'
 		});
 		$('#sparkline_7').sparkline([0, 13, 10, 14, 15, 10, 18, 20, 0], {
 			type: 'line',
@@ -72,10 +72,10 @@ var sparklineLogin = function() {
 			highlightLineColor: 'rgba(0, 0, 0, 0)',
 			highlightSpotColor: '#BDBDBD'
 		});
-	}	
+	}
 }
 sparklineLogin();
- 
+
 var sparkResize;
 $(window).on("resize",function(){
 	clearTimeout(sparkResize);

@@ -21,6 +21,7 @@ Route::post('/projetReg', [App\Http\Controllers\ProjetController::class, 'create
 Route::post('/affectationReg', [App\Http\Controllers\AffectationController::class, 'create'])->name('affectationReg');
 Route::post('/categorieReg', [App\Http\Controllers\ProductController::class, 'createCat'])->name('categorieReg');
 Route::post('/productReg', [App\Http\Controllers\ProductController::class, 'createProd'])->name('productReg');
+Route::post('/etBesReg', [App\Http\Controllers\EtatBesoinController::class, 'create'])->name('etBesReg');
 
 Auth::routes();
 

@@ -9,7 +9,7 @@ $(function() {
 			"IN": 2000000,
 			"GB": 120,
 		};
-	
+
 	if( $('#world_map_marker_1').length > 0 ){
 		$('#world_map_marker_1').vectorMap(
 		{
@@ -26,44 +26,44 @@ $(function() {
 							r: 12,
 							'fill': '#fff',
 							'fill-opacity':1,
-							'stroke': '#ab26aa',
+							'stroke': '#d3a403',
 							'stroke-width' : 2,
 							'stroke-opacity': 1
 						},
 				hover: {
 					r: 10,
-					'fill': '#ab26aa',
+					'fill': '#d3a403',
 					'fill-opacity':1,
-					'stroke': '#ab26aa',
+					'stroke': '#d3a403',
 					'stroke-width' : 1,
 					'stroke-opacity': 1
 				},
 			},
-		   
+
 			markers : [{
 				latLng : [21.00, 78.00],
 				name : 'INDIA : 350'
-			  
+
 			  },
 			  {
 				latLng : [-33.00, 151.00],
 				name : 'Australia : 250'
-				
+
 			  },
 			  {
 				latLng : [36.77, -119.41],
 				name : 'USA : 250'
-			  
+
 			  },
 			  {
 				latLng : [55.37, -3.41],
 				name : 'UK   : 250'
-			  
+
 			  },
 			  {
 				latLng : [25.20, 55.27],
 				name : 'UAE : 250'
-			  
+
 			  }],
 
 			series: {
@@ -183,7 +183,7 @@ $(function() {
 		map_2.setSelectedRegions( JSON.parse( window.localStorage.getItem('jvectormap-selected-regions') || '[]' ) );
 		map_2.setSelectedMarkers( JSON.parse( window.localStorage.getItem('jvectormap-selected-markers') || '[]' ) );
 	}
-	if( $('#random_colors').length > 0 ){ 
+	if( $('#random_colors').length > 0 ){
 		var palette = ['#ff936d', '#c66cc5', '#52bbac', '#ffd477', '#798cca'];
 		var generateColors = function(){
 		var colors = {},
@@ -207,14 +207,14 @@ $(function() {
 		});
 		function generateColor() {
 			map.series.regions[0].setValues(generateColors());
-		}	
+		}
 		generateColor();
-		setInterval(function(){ 
+		setInterval(function(){
 			map.series.regions[0].setValues(generateColors());
 		}, 1500);
 
 	}
-	if( $('#reverse_projection').length > 0 ){ 
+	if( $('#reverse_projection').length > 0 ){
 			var map_1,
 			markerIndex = 0,
 			markersCoords = {};
@@ -252,7 +252,7 @@ $(function() {
 						'stroke-opacity': 1
 					}
 				},
-			   
+
 				container: $('#reverse_projection'),
 				onMarkerTipShow: function(e, label, code){
 					map_1.tip.text(markersCoords[code].lat.toFixed(2)+', '+markersCoords[code].lng.toFixed(2));
@@ -278,7 +278,7 @@ $(function() {
 		  });
 
 	}
-	if( $('#region_labels').length > 0 ){ 
+	if( $('#region_labels').length > 0 ){
 		new jvm.Map({
 			map: 'us_aea_en',
 			backgroundColor: 'transparent',
@@ -456,4 +456,3 @@ $(function() {
 		});
 	}
 });
- 

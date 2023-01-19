@@ -16,7 +16,44 @@
         <!-- Main content -->
         <!-- Row -->
         <div class="row">
+            <div class="col-sm">
+                <div class="table-wrap">
+                    <div class="table-responsive">
+                        <table id="etBesTab" class="table table-hover w-100 pb-30">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($etBe as $etB)
 
+
+                                    <tr>
+                                        <td>{{$etB->reference}}</td>
+                                        <td>{{$etB->created_at}}</td>
+                                        @if($etB->niv3 == 0)
+                                        <td><span class="badge badge-info">En cours</span></td>
+                                        @elseif ($etB->niv3 == 1)
+                                        <td><span class="badge badge-success">Approuvé</span></td>
+                                        @elseif ($etB->niv3 == 2)
+                                        <td><span class="badge badge-danger">Refusé</span></td>
+                                        @endif
+
+                                        <td>
+                                            <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
+                                            <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /Row -->
 
@@ -66,9 +103,7 @@
 
         <!-- Main content -->
         <!-- Row -->
-        <div class="row">
 
-        </div>
         <!-- /Row -->
 
     </div>
@@ -82,7 +117,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nouvel Etat de besoin</h5>
+                <h5 class="modal-title">Etat de besoin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -93,7 +128,21 @@
 
                 <div class="form-row">
                     <div class="col-md-12 mb-10">
-                        <input type="text" class="form-control" id="agentEB" disabled value="{{ Auth::user()->name }}" >
+                        <input type="text" class="form-control"  disabled value="{{ Auth::user()->name }}" >
+                        <input type="text" class="form-control" id="agentEB" hidden value="{{ Auth::user()->id }}" >
+                    </div>
+                </div>
+                <div class="col-md-12 mb-10">
+                    <label for="projet">Selectionner projet</label>
+                    <select class="form-control select2" id="projetEB" required>
+                      <option value=""></option>
+
+                      @foreach ($affectation as $aff)
+                          <option value="{{$aff->projet}}">{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</option>
+                      @endforeach
+                    </select>
+                    <div class="invalid-feedback">
+                        Selectionner une option
                     </div>
                 </div>
                 <div class="form-row">

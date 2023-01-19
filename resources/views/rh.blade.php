@@ -217,8 +217,12 @@
                             <label for="service">Service</label>
                             <select class="form-control" name="service" placeholder="Service" required>
                                 <option value=""></option>
-                                <option value="Administration et finance">Administration et finance</option>
-                                <option value="Feminin">Programme</option>
+                                <option value="Administration">Administration</option>
+                                <option value="Programme">Programme</option>
+                                <option value="Resources humaines">Resources humaines</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Logistiaue">Logistiaue</option>
+                                <option value="IT">IT</option>
                                 <option value="Audit interne">Audit interne</option>
                             </select>
                             <div class="invalid-feedback">

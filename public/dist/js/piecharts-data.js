@@ -1,9 +1,9 @@
 /*Pie Charts Init*/
- 
-"use strict"; 
+
+"use strict";
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		var option = {
@@ -28,7 +28,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius : '55%',
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -46,7 +46,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_2').length > 0 ){
 		var eChart_2 = echarts.init(document.getElementById('e_chart_2'));
-		
+
 		var option1 = {
 			tooltip: {
 				show: true,
@@ -62,14 +62,14 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [
 				{
 					name:'',
 					type:'pie',
 					radius : '55%',
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -80,7 +80,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -90,7 +90,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_3').length > 0 ){
 		var eChart_3 = echarts.init(document.getElementById('e_chart_3'));
-		
+
 		var option2 = {
 			tooltip: {
 				show: true,
@@ -106,14 +106,14 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [
 				{
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -131,7 +131,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_4').length > 0 ){
 		var eChart_4 = echarts.init(document.getElementById('e_chart_4'));
-		
+
 		var option3 = {
 			tooltip: {
 				show: true,
@@ -154,7 +154,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:'a'},
 						{value:679, name:''},
@@ -165,7 +165,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -175,7 +175,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_5').length > 0 ){
 		var eChart_5 = echarts.init(document.getElementById('e_chart_5'));
-		
+
 		var option4 = {
 			tooltip: {
 				show: true,
@@ -198,7 +198,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -285,7 +285,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [{
 					name: 'Line 1',
@@ -304,7 +304,7 @@ var echartsConfig = function() {
 							name: 'b',
 							itemStyle: {
 								normal: {
-									color: '#ab26aa'
+									color: '#d3a403'
 								}
 							}
 						},
@@ -332,7 +332,7 @@ var echartsConfig = function() {
 							name: 'a',
 							itemStyle: {
 								normal: {
-									color: '#ab26aa'
+									color: '#d3a403'
 								}
 							}
 						},
@@ -353,7 +353,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_7').length > 0 ){
 		var eChart_7 = echarts.init(document.getElementById('e_chart_7'));
-		
+
 		var option6 = {
 			tooltip: {
 				show: true,
@@ -376,7 +376,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['40%', '50%'],
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -387,7 +387,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -397,7 +397,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_8').length > 0 ){
 		var eChart_8 = echarts.init(document.getElementById('e_chart_8'));
-		
+
 		var option7 = {
 			tooltip: {
 				show: true,
@@ -413,14 +413,14 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [
 				{
 					name:'',
 					type:'pie',
 					radius: ['45%', '50%'],
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -431,7 +431,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -441,7 +441,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_9').length > 0 ){
 		var eChart_9 = echarts.init(document.getElementById('e_chart_9'));
-		
+
 		var option8 = {
 			tooltip: {
 				show: true,
@@ -466,7 +466,7 @@ var echartsConfig = function() {
 					radius : '60%',
 					center : ['50%', '50%'],
 					roseType : 'radius',
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -484,7 +484,7 @@ var echartsConfig = function() {
 	}
 	if( $('#e_chart_10').length > 0 ){
 		var eChart_10 = echarts.init(document.getElementById('e_chart_10'));
-		
+
 		var option9 = {
 			tooltip: {
 				show: true,
@@ -500,7 +500,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [
 				{
@@ -509,7 +509,7 @@ var echartsConfig = function() {
 					radius : '60%',
 					center : ['50%', '50%'],
 					roseType : 'radius',
-					color: ['#ab26aa', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:735, name:''},
 						{value:479, name:''},
@@ -520,7 +520,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -539,7 +539,7 @@ $(window).on("resize", function () {
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
 
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

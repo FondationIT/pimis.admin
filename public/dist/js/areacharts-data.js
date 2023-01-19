@@ -1,8 +1,8 @@
 /*Dashboard Init*/
- 
-"use strict"; 
+
+"use strict";
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_3').length > 0 ){
 		var e_chart_3 = echarts.init(document.getElementById('e_chart_3'));
 		var option3 = {
@@ -21,7 +21,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			xAxis: {
 				type: 'category',
@@ -71,14 +71,14 @@ var echartsConfig = function() {
 					type: 'line',
 					symbolSize: 6,
 					itemStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 					},
 					lineStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 						width:2,
 					},
 					areaStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 					},
 				}
 			]
@@ -104,7 +104,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			xAxis: {
 				type: 'category',
@@ -155,14 +155,14 @@ var echartsConfig = function() {
 					stack: 'a',
 					symbolSize: 6,
 					itemStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 					},
 					lineStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 						width:2,
 					},
 					areaStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 					},
 				},
 				{
@@ -220,7 +220,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			xAxis: {
 				type: 'category',
@@ -270,17 +270,17 @@ var echartsConfig = function() {
 					type: 'line',
 					symbolSize: 6,
 					lineStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 						width:2,
 					},
 					itemStyle: {
-						color: '#ab26aa',
+						color: '#d3a403',
 					},
 					areaStyle: {
 						normal: {
 							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
 								offset: 0,
-								color: '#ab26aa'
+								color: '#d3a403'
 							}, {
 								offset: 1,
 								color: '#bdbdbd'
@@ -300,7 +300,7 @@ $(window).on("resize", function () {
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

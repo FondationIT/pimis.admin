@@ -6,12 +6,13 @@
               <div>
                 <h3 class="hk-pg-title font-weight-600 mb-10">Catalogue de prix</h3>
               </div>
+              @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                <div class="d-flex">
+                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nProductModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Produit </span></button>
 
-              <div class="d-flex">
-                <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nProductModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Produit </span></button>
-
-                <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nCategorieModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Categorie </span></button>
-              </div>
+                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nCategorieModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Categorie </span></button>
+                </div>
+              @endif
             </div>
         <!-- /Title -->
 
@@ -20,6 +21,7 @@
         <div class="row">
             <div class="col-sm">
                 <div class="row">
+                    @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                     <div class="col-md-4 col-sm-12">
                         <h4>Categories</h4>
                         <div class="table-wrap">
@@ -50,6 +52,11 @@
                     </div>
 
                     <div class="col-md-8 col-sm-12">
+                    @else
+                    <div class="col-md-12 col-sm-12">
+                    @endif
+
+
                         <h4>Produits</h4>
                         <div class="table-wrap">
                             <div class="table-responsive">
@@ -60,7 +67,9 @@
                                             <th>Categrie</th>
                                             <th>Unité</th>
                                             <th>Prix</th>
+                                            @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                             <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -72,10 +81,12 @@
                                                 <td>{{App\Models\Categorie::firstWhere('id', $prod->categorie)->name}}</td>
                                                 <td>{{'1 '.$prod->unite}}</td>
                                                 <td>{{'$'.$prod->prix}}</td>
+                                                @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                                 <td>
                                                     <a href="#" class="mr-25" data-toggle="tooltip" data-original-title="Edit"> <i class="icon-pencil"></i> </a>
                                                     <a href="#" data-toggle="tooltip" data-original-title="Delete"> <i class="icon-trash txt-danger"></i> </a>
                                                 </td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>

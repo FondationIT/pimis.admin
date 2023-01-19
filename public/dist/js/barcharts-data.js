@@ -1,9 +1,9 @@
 /*Dashboard3 Init*/
- 
-"use strict"; 
+
+"use strict";
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		var option = {
@@ -25,7 +25,7 @@ var echartsConfig = function() {
 					fontSize: 12
 				}
 			},
-			
+
 			xAxis: [{
 				type: 'category',
 				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -102,7 +102,7 @@ var echartsConfig = function() {
 					fontSize: 12
 				}
 			},
-			
+
 			xAxis: [{
 				type: 'value',
 				axisLine: {
@@ -161,7 +161,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_3').length > 0 ){
 		var eChart_3 = echarts.init(document.getElementById('e_chart_3'));
 		var option2 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#ab26aa'],		
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -177,9 +177,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			grid: {
 				top: '3%',
 				left: '3%',
@@ -268,7 +268,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_4').length > 0 ){
 		var eChart_4 = echarts.init(document.getElementById('e_chart_4'));
 		var option3 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#ab26aa'],		
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -286,7 +286,7 @@ var echartsConfig = function() {
 					fontSize: 12
 				}
 			},
-			
+
 			grid: {
 				top: '3%',
 				left: '3%',
@@ -295,9 +295,9 @@ var echartsConfig = function() {
 				containLabel: true
 			},
 			xAxis : [
-				{	
+				{
 					type : 'value',
-					
+
 					axisLine: {
 						show:false
 					},
@@ -376,7 +376,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_5').length > 0 ){
 		var eChart_5 = echarts.init(document.getElementById('e_chart_5'));
 		var option4 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#ab26aa'],		
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -394,7 +394,7 @@ var echartsConfig = function() {
 					fontSize: 12
 				}
 			},
-			
+
 			grid: {
 				top: '3%',
 				left: '3%',
@@ -494,7 +494,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_6').length > 0 ){
 		var eChart_6 = echarts.init(document.getElementById('e_chart_6'));
 		var option5 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#ab26aa'],		
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -512,7 +512,7 @@ var echartsConfig = function() {
 					fontSize: 12
 				}
 			},
-			
+
 			grid: {
 				top: '3%',
 				left: '3%',
@@ -629,9 +629,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			xAxis: [{
 				type: 'category',
 				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -718,9 +718,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			xAxis: [{
 				type: 'value',
 				axisLine: {
@@ -807,9 +807,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			xAxis: [{
 				type: 'value',
 				axisLine: {
@@ -898,9 +898,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			xAxis: [{
 				type: 'value',
 				axisLine: {
@@ -934,7 +934,7 @@ var echartsConfig = function() {
 						color: '#5e7d8a'
 					}
 				}
-			},	
+			},
 			grid: {
 				top: '3%',
 				left: '3%',
@@ -1001,9 +1001,9 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
-			
+
 			xAxis: [{
 				type: 'category',
 				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -1074,7 +1074,7 @@ $(window).on("resize", function () {
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

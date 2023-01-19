@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique();
             $table->string('agent')->constrained()->onDelete('cascade');
+            $table->string('projet')->constrained()->onDelete('cascade');
             $table->string('ligne')->nullable();
             $table->text('comment')->nullable();
             $table->boolean('niv1')->default(false);

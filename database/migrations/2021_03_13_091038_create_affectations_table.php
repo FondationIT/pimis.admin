@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('poste');
             $table->string('lieu');
             $table->text('description')->nullable();
-            $table->boolean('statut')->default(false);
-            $table->boolean('active')->default(false);
+            $table->boolean('statut')->default(true);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

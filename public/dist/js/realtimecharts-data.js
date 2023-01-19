@@ -1,6 +1,6 @@
 /*Dashboard Init*/
- 
-"use strict"; 
+
+"use strict";
 var data = [],
 	totalPoints = 300;
 
@@ -35,9 +35,9 @@ var data = [],
 
 		return res;
 	}
-	
+
 	/***Filled Line Chart***/
-	if( $('#flot_line_chart_moving').length > 0 ){	
+	if( $('#flot_line_chart_moving').length > 0 ){
 		/*Defining Option*/
 		var fill_line_chartop = {
 			series:{
@@ -52,7 +52,7 @@ var data = [],
 				borderWidth: 0,
 				backgroundColor: 'transparent'
 			},
-			colors: ["#ab26aa"],
+			colors: ["#d3a403"],
 			tooltip: true,
 			tooltipOpts: {
 				content: "Y: %y",
@@ -67,7 +67,7 @@ var data = [],
 				show: false
 			}
 		};
-		
+
 		/*Defining Data*/
 		var fill_line_chart_data = {
 			data: getRandomData(),
@@ -75,18 +75,18 @@ var data = [],
 
 		/*Chart Plot*/
 		$.plot($("#flot_line_chart_moving"), [fill_line_chart_data], fill_line_chartop);
-		
+
 		/*Realtime Data*/
 		setInterval(function updateRandom() {
 			fill_line_chart_data = getRandomData();
 			$.plot($("#flot_line_chart_moving"), [fill_line_chart_data], fill_line_chartop)
-		}, 40);	
+		}, 40);
 	}
 
 	/***Line Chart***/
-	
+
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_1').length > 0 ){
 		var eChart_1 = echarts.init(document.getElementById('e_chart_1'));
 		var option = {
@@ -105,7 +105,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			grid: {
 				top: '3%',
@@ -114,7 +114,7 @@ var echartsConfig = function() {
 				bottom: '3%',
 				containLabel: true
 			},
-			color: ['#ab26aa', '#cecece'],		
+			color: ['#d3a403', '#cecece'],
 			legend: {
 				show : false,
 				data:['Latest transaction price', 'Order'],
@@ -261,7 +261,7 @@ var echartsConfig = function() {
 				fontStyle: 'normal',
 				fontWeight: 'normal',
 			},
-			
+
 		};
 		var app = [];
 		app.count = 11;
@@ -344,28 +344,28 @@ var echartsConfig = function() {
 							color: '#324148',
 							fontFamily: '"Nunito", sans-serif',
 							fontSize: 12
-						}	
+						}
 					},
 					autoPlay: true,
 					currentIndex: 6,
 					playInterval: 1000,
 					 checkpointStyle: {
 						color: 'transparent',
-						borderColor: '#ab26aa'
+						borderColor: '#d3a403'
 					},
 					itemStyle: {
 						normal: {
-							color: '#ab26aa'
+							color: '#d3a403'
 						},
 						emphasis: {
-							color: '#ab26aa'
+							color: '#d3a403'
 						}
 					},
 					controlStyle: {
 						show:false
 					},
 					lineStyle: {
-						color: '#ab26aa'
+						color: '#d3a403'
 					},
 					label: {
 						normal: {
@@ -396,7 +396,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			grid: [{
 					show: false,
@@ -603,10 +603,10 @@ var echartsConfig = function() {
 						},
 						itemStyle: {
 							normal: {
-								color: '#ab26aa',
+								color: '#d3a403',
 							},
 							emphasis: {
-								color: '#ab26aa',
+								color: '#d3a403',
 							},
 						},
 						data: databeauty[timeLineData[i]],
@@ -643,7 +643,7 @@ var echartsConfig = function() {
 						color: '#324148',
 						fontFamily: '"Nunito", sans-serif',
 						fontSize: 12
-					}	
+					}
 				},
 				calculable: true,
 				grid: {
@@ -660,7 +660,7 @@ var echartsConfig = function() {
 							color: '#324148',
 							fontFamily: '"Nunito", sans-serif',
 							fontSize: 12
-						}	
+						}
 					},
 					axisLine: {
 						show:false
@@ -717,14 +717,14 @@ var echartsConfig = function() {
 					symbolSize: 6,
 					itemStyle: {
 						normal: {
-							color: '#ab26aa'
+							color: '#d3a403'
 						}
 					},
 					areaStyle: {
 						normal: {
 							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
 								offset: 0,
-								color: '#ab26aa'
+								color: '#d3a403'
 							}, {
 								offset: 1,
 								color: '#cecece'
@@ -802,7 +802,7 @@ var echartsConfig = function() {
 						fontSize: 12
 					}
 				}
-				
+
 			},
 			yAxis: {
 				splitLine: {show: false},
@@ -865,7 +865,7 @@ var echartsConfig = function() {
 			loopIndex = (loopIndex + 1) % barGaps.length;
 
 		}, 2000);
-		
+
 		eChart_4.setOption(option4);
 		eChart_4.resize();
 	}
@@ -877,7 +877,7 @@ $(window).on("resize", function () {
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/

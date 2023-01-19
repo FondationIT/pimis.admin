@@ -1,19 +1,9 @@
 /*Dashboard3 Init*/
- 
-"use strict"; 
+
+"use strict";
 $(document).ready(function() {
-	/*Toaster Alert*/
-	$.toast({
-		heading: 'Oh snap!',
-		text: '<p>Change a few things and try submitting again.</p>',
-		position: 'bottom-right',
-		loaderBg:'#88c241',
-		class: 'jq-toast-danger',
-		hideAfter: 3500, 
-		stack: 6,
-		showHideTransition: 'fade'
-	});
-	
+
+
 	if($('#morris_extra_line_chart').length > 0)
 		Morris.Line({
         element: 'morris_extra_line_chart',
@@ -60,18 +50,18 @@ $(document).ready(function() {
         pointSize: 3,
         fillOpacity: 0.5,
 		lineWidth:2,
-		pointStrokeColors:['#ab26aa', '#e2e2e2', '#bdbdbd'],
+		pointStrokeColors:['#d3a403', '#e2e2e2', '#bdbdbd'],
 		behaveLikeLine: true,
 		grid: true,
 		gridLineColor: '#eee',
 		hideHover: 'auto',
-		lineColors: ['#ab26aa', '#e2e2e2', '#bdbdbd'],
+		lineColors: ['#d3a403', '#e2e2e2', '#bdbdbd'],
 		resize: true,
 		gridTextColor:'#878787',
 		gridTextFamily:"Poppins"
-        
+
     });
-	
+
 	if($('#morris_area_chart').length > 0)
 		// Area Chart
 		Morris.Area({
@@ -87,7 +77,7 @@ $(document).ready(function() {
 				ipad: 2294,
 				itouch: 2441
 			}, {
-				period: '2010 Q3',	
+				period: '2010 Q3',
 				iphone: 4912,
 				ipad: 1969,
 				itouch: 2501
@@ -133,20 +123,20 @@ $(document).ready(function() {
 			pointSize: 0,
 			lineWidth:0,
 			fillOpacity: 1,
-			pointStrokeColors:['#ab26aa', '#ababab', '#cecece'],
+			pointStrokeColors:['#d3a403', '#ababab', '#cecece'],
 			behaveLikeLine: true,
 			grid: true,
 			gridLineColor: '#eee',
 			hideHover: 'auto',
-			lineColors: ['#ab26aa', '#ababab', '#cecece'],
+			lineColors: ['#d3a403', '#ababab', '#cecece'],
 			resize: true,
 			redraw: true,
 			smooth: true,
 			gridTextColor:'#878787',
 			gridTextFamily:"Poppins",
 		});
-	
-	
+
+
 	var data = [],
 	totalPoints = 300;
 
@@ -181,9 +171,9 @@ $(document).ready(function() {
 
 		return res;
 	}
-	
+
 	/***Filled Line Chart***/
-	if( $('#flot_line_chart_moving').length > 0 ){	
+	if( $('#flot_line_chart_moving').length > 0 ){
 		/*Defining Option*/
 		var fill_line_chartop = {
 			series:{
@@ -198,7 +188,7 @@ $(document).ready(function() {
 				borderWidth: 0,
 				backgroundColor: 'transparent'
 			},
-			colors: ["#ab26aa"],
+			colors: ["#d3a403"],
 			tooltip: true,
 			tooltipOpts: {
 				content: "Y: %y",
@@ -213,7 +203,7 @@ $(document).ready(function() {
 				show: false
 			}
 		};
-		
+
 		/*Defining Data*/
 		var fill_line_chart_data = {
 			data: getRandomData(),
@@ -221,12 +211,12 @@ $(document).ready(function() {
 
 		/*Chart Plot*/
 		$.plot($("#flot_line_chart_moving"), [fill_line_chart_data], fill_line_chartop);
-		
+
 		/*Realtime Data*/
 		setInterval(function updateRandom() {
 			fill_line_chart_data = getRandomData();
 			$.plot($("#flot_line_chart_moving"), [fill_line_chart_data], fill_line_chartop)
-		}, 40);	
+		}, 40);
 	}
 
 	/***Line Chart***/
@@ -243,13 +233,13 @@ $(document).ready(function() {
 			easing: 'swing', // animation transition easing function
 			checkbox: null, // the checkbox to toggle (for use in forms)
 			clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
-			
+
 			type: 'compact' // if this is set to 'select' then the select style toggle will be used
 		});
 });
 
 /*****E-Charts function start*****/
-var echartsConfig = function() { 
+var echartsConfig = function() {
 	if( $('#e_chart_4').length > 0 ){
 		var eChart_4 = echarts.init(document.getElementById('e_chart_4'));
 		var option4 = {
@@ -269,7 +259,7 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			grid: {
 				top: '3%',
@@ -327,10 +317,10 @@ var echartsConfig = function() {
 		eChart_4.setOption(option4);
 		eChart_4.resize();
 	}
-	
+
 	if( $('#e_chart_10').length > 0 ){
 		var e_chart_10 = echarts.init(document.getElementById('e_chart_10'));
-		
+
 		var option9 = {
 			tooltip: {
 				show: true,
@@ -346,14 +336,14 @@ var echartsConfig = function() {
 					color: '#324148',
 					fontFamily: '"Nunito", sans-serif',
 					fontSize: 12
-				}	
+				}
 			},
 			series: [
 				{
 					name:'',
 					type:'pie',
 					radius: ['0', '50%'],
-					color: ['#ab26aa', '#e2e2e2', '#bdbdbd'],
+					color: ['#d3a403', '#e2e2e2', '#bdbdbd'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -363,7 +353,7 @@ var echartsConfig = function() {
 						normal: {
 							formatter: '{b}\n{d}%'
 						},
-				  
+
 					}
 				}
 			]
@@ -380,7 +370,7 @@ $(window).on("resize", function () {
 	/*E-Chart Resize*/
 	clearTimeout(echartResize);
 	echartResize = setTimeout(echartsConfig, 200);
-}).resize(); 
+}).resize();
 /*****Resize function end*****/
 
 /*****Function Call start*****/
