@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/home', [App\Http\Controllers\HomeController::class, 'select'])->name('home');
 Route::post('/agentReg', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('agentReg');
 Route::post('/userReg', [App\Http\Controllers\UserController::class, 'create'])->name('userReg');
 Route::post('/bailleurReg', [App\Http\Controllers\BailleurController::class, 'create'])->name('bailleurReg');

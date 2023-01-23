@@ -76,6 +76,7 @@
     <script src="{{  asset('js/moment.min.js.map')}}"></script>
     <script src="{{  asset('dist/js/validation-data.js')}}"></script>
     <script src="{{  asset('js/nav.js')}}"></script>
+    <script src="{{  asset('js/admin.js')}}"></script>
     <script src="{{  asset('js/pages/rh.js')}}"></script>
     <script src="{{  asset('js/pages/pimis.js')}}"></script>
     <script src="{{  asset('js/pages/agent.js')}}"></script>
