@@ -3,6 +3,19 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+window.addEventListener('formSuccess', event => {
+    $('.close').click()
+    $.toast().reset('all');
+    $.toast({
+        text: '<i class="jq-toast-icon ti-location-pin"></i><p>Effectué</p>',
+        position: 'top-center',
+        loaderBg:'#7a5449',
+        class: 'jq-has-icon jq-toast-success',
+        hideAfter: 3500,
+        stack: 6,
+        showHideTransition: 'fade'
+    });
+});
 
 function messageErr(data){
     message = '<div class="alert alert-danger alert-wth-icon alert-dismissible fade show" role="alert" aria-hidden="true">'
@@ -71,7 +84,6 @@ function registerUser(data){
                 $('#prldUs').hide();
                 $('#btnUs').show();
                 $('.close').click()
-                location.reload();
 
                 $.toast().reset('all');
                 $.toast({

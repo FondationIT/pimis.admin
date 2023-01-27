@@ -3,7 +3,7 @@
 "use strict";
 
 $(document).ready(function() {
-	/*PIMIS DataTable*/
+	/*PIMIS DataTable
 	$('#agentTab').DataTable( {
 		dom: 'Bfrtip',
 		responsive: true,
@@ -121,5 +121,5 @@ $(document).ready(function() {
 
     $('#button').click( function () {
         table.row('.selected').remove().draw( false );
-    } );
+    } );*/
 } );

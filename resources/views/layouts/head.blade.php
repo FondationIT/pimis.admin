@@ -18,6 +18,9 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
+    @livewireStyles
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"  crossorigin="anonymous" />
+
 
 
 	<link href="{{  asset('vendors/dropzone/dist/dropzone.css') }}" rel="stylesheet" type="text/css"/>
@@ -39,8 +42,6 @@
     <!-- Pickr CSS -->
     <link href="{{  asset('vendors/pickr-widget/dist/pickr.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{  asset('vendors/datatables.net-dt/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{  asset('vendors/datatables.net-responsive-dt/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
 
     <!-- Daterangepicker CSS -->
     <link href="{{  asset('vendors/daterangepicker/daterangepicker.css') }}" rel="stylesheet" type="text/css" />
@@ -61,6 +62,10 @@
     <link href="{{ asset('css/nav.css')}}" rel="stylesheet" type="text/css">
     <!-- Custom CSS -->
     <link href="{{ asset('dist/css/style.css') }}" rel="stylesheet" type="text/css">
+
+
+
+
 
 </head>
 
