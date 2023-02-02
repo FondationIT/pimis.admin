@@ -22,6 +22,7 @@ class Projet extends Model
         'contex',
         'bailleur',
         'domaine',
+        'active',
 
     ];
 }

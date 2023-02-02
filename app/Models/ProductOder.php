@@ -19,5 +19,6 @@ class ProductOder extends Model
         'etatBes',
         'quantite',
         'description',
+        'active',
     ];
 }

@@ -143,18 +143,18 @@
                <h3 class="hk-pg-title font-weight-600 mb-10">Utilisateurs</h3>
              </div>
              <div class="d-flex">
-               <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nUserModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+               <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" wire:click="$emit('userForm')" data-toggle="modal" data-target="#nUserModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
              </div>
            </div>
        <!-- /Title -->
 
        <!-- Main content -->
        <!-- Row -->
-       <div class="row">
-        <div class="col-sm">
-            <livewire:pimis.users-table />
-        </div>
-       </div>
+       <livewire:pimis.users-table
+        model="App\Models\User"
+        searchable="name"
+        exportable
+        />
     </div>
 </section>
 
@@ -180,18 +180,18 @@
             <h3 class="hk-pg-title font-weight-600 mb-10">Bailleurs</h3>
           </div>
           <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nBailleursModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('bailleurForm')" data-target="#nBailleursModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
           </div>
         </div>
     <!-- /Title -->
 
     <!-- Main content -->
     <!-- Row -->
-    <div class="row">
-        <div class="col-sm">
-            <livewire:pimis.bailleurs-table />
-        </div>
-    </div>
+    <livewire:pimis.bailleurs-table
+    model="App\Models\Bailleur"
+    searchable="name"
+    exportable
+    />
     <!-- /Row -->
 
   </div>
@@ -222,27 +222,30 @@
           </div>
 
           <div class="d-flex">
-            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nProjectModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('projectForm')" data-target="#nProjectModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
           </div>
         </div>
     <!-- /Title -->
 
     <!-- Main content -->
     <!-- Row -->
-    <div class="row">
-        <div class="col-sm">
-            <livewire:pimis.projects-table />
-        </div>
-    </div>
+    <livewire:pimis.projects-table
+    model="App\Models\Projet"
+    searchable="name"
+    exportable
+    />
     <!-- /Row -->
 
   </div>
 
 
 </section>
-<livewire:pimis.user-form />
-<livewire:pimis.bailleur-form />
-<livewire:pimis.project-form />
+
+
+
+    <livewire:pimis.user-form />
+    <livewire:pimis.bailleur-form />
+    <livewire:pimis.project-form />
 </div>
 
 

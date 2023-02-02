@@ -33,6 +33,7 @@ class Agent extends Authenticatable
         'region',
         'description',
         'etatcivil',
+        'active',
     ];
 
 

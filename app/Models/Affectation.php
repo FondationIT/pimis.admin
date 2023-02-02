@@ -20,5 +20,6 @@ class Affectation extends Model
         'poste',
         'lieu',
         'description',
+        'active',
     ];
 }

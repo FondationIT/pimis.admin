@@ -18,6 +18,7 @@ class Bailleur extends Model
         'name',
         'email',
         'phone',
+        'active',
     ];
 
 }

@@ -11,14 +11,14 @@
                    <h3 class="hk-pg-title font-weight-600 mb-10">Agents</h3>
                  </div>
                  <div class="d-flex">
-                   <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nAgentModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                   <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('agentForm')" data-target="#nAgentModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
                  </div>
                </div>
            <!-- /Title -->
 
            <!-- Main content -->
            <!-- Row -->
-                <livewire:agent-datatables
+                <livewire:rh.agents-table
                 model="App\Models\Agent"
                 searchable="firstname, email, matricule"
                 exportable
@@ -39,18 +39,18 @@
                      </div>
 
                      <div class="d-flex">
-                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#nAffectationModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('affectationForm')" data-target="#nAffectationModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
                      </div>
                    </div>
                <!-- /Title -->
 
                <!-- Main content -->
                <!-- Row -->
-               <div class="row">
-                   <div class="col-sm">
-
-                   </div>
-               </div>
+               <livewire:rh.affectations-table
+                model="App\Models\Affectation"
+                searchable="agent, projet, lieu"
+                exportable
+                />
                <!-- /Row -->
 
            </div>
@@ -68,7 +68,7 @@
                      </div>
 
                      <div class="d-flex">
-                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
                      </div>
                    </div>
                <!-- /Title -->
@@ -94,7 +94,7 @@
                      </div>
 
                      <div class="d-flex">
-                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                       <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" data-target="#"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
                      </div>
                    </div>
                <!-- /Title -->

@@ -1,3 +1,4 @@
+<div>
 <!-- Modal Bailleurs -->
 <div class="modal fade" id="nBailleursModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -18,9 +19,9 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="name">Nom du bailleur *</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="state.name" name="name" placeholder="Nom du bailleur" >
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.defer="state.name" name="name" placeholder="Nom du bailleur" >
                             @error('name')
-                                <span class="error" >
+                                <span class="text-red-600" role="alert" >
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -29,9 +30,9 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="email">Adresse mail *</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model="state.email" name="email" placeholder="Adresse mail" >
+                            <input type="email" class="form-control @error('email') is-invalid @enderror" wire:model.defer="state.email" name="email" placeholder="Adresse mail" >
                             @error('email')
-                                <span class="error" >
+                                <span class="text-red-600" role="alert" >
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -41,9 +42,9 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="phone">Numero de telephone *</label>
-                            <input type="text" class="form-control @error('phone') is-invalid @enderror" wire:model="state.phone" name="phone" placeholder="Numero de telephone" >
+                            <input type="text" class="form-control @error('phone') is-invalid @enderror" wire:model.defer="state.phone" name="phone" placeholder="Numero de telephone" >
                             @error('phone')
-                                <span class="error" >
+                                <span class="text-red-600" role="alert" >
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -53,7 +54,7 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" wire:model="state.adresse" name="adresse" placeholder="Adresse">
+                            <input type="text" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="Adresse">
                         </div>
                     </div>
 
@@ -65,4 +66,5 @@
             </form>
         </div>
     </div>
+</div>
 </div>

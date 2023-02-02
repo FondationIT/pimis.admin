@@ -1,4 +1,4 @@
-@livewireScripts
+
 <!-- jQuery -->
 <script src="{{  asset('vendors/jquery/dist/jquery.min.js')}}"></script>
 <!-- jQuery -->
@@ -67,4 +67,20 @@
 
     <script src="{{  asset('js/pages/agent.js')}}"></script>
     <script src="{{  asset('js/pages/stock.js')}}"></script>
+    @livewireScripts
 
+    <script>
+        window.addEventListener('formSuccess', event => {
+            $('.close').click()
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+            });
+        });
+    </script>

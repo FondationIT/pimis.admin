@@ -14,7 +14,7 @@
 
                 <form wire:submit.prevent='submit' >
                 <div class="modal-body">
-
+                    
                     <div id="messageErrUs"></div>
 
                     <div class="form-row">
@@ -28,7 +28,7 @@
                                 @endforeach
                             </select>
                             @error('agent')
-                                <span class="error">
+                                <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -55,7 +55,7 @@
                                 <option value="ADMIN">ADMIN</option>
                             </select>
                             @error('role')
-                                <span class="error" >
+                                <span class="text-red-600" role="alert" >
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -73,7 +73,7 @@
 
                             </div>
                             @error('email')
-                                <span class="text-red-600"role="alert">
+                                <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
                             @enderror

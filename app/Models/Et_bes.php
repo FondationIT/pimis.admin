@@ -20,5 +20,6 @@ class Et_bes extends Model
         'projet',
         'ligne',
         'comment',
+        'active',
     ];
 }

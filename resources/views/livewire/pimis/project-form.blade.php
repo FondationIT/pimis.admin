@@ -1,3 +1,4 @@
+<div>
  <!-- Modal Project -->
  <div class="modal fade" id="nProjectModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -20,7 +21,7 @@
                             <label for="name">Nom du projet *</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.defer="state.name" name="name" placeholder="Nom du projet">
                             @error('name')
-                                <span class="error" role="alert">
+                                <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -36,7 +37,7 @@
                                 </div>
                                 <input type="date" class="form-control @error('dateD') is-invalid @enderror" wire:model.defer="state.dateD" name="dateD" placeholder="Date debut" aria-describedby="inputGroupPrepend">
                                 @error('dateD')
-                                    <span class="error" role="alert">
+                                    <span class="text-red-600" role="alert">
                                         {{ $message }}
                                     </span>
                                 @enderror
@@ -64,7 +65,7 @@
                                 @endforeach
                             </select>
                             @error('bailleur')
-                                <span class="error" role="alert">
+                                <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -75,7 +76,7 @@
                         <div class="col-md-12 mb-10">
                             <label for="contexte">Contexte</label>
                             <div class="tinymce-wrap">
-                                <textarea class="tinymce" wire:model="state.contexte" name="contexte"  ></textarea>
+                                <textarea class="form-control" wire:model.defer="state.contexte" name="contexte"  ></textarea>
                             </div>
                         </div>
                     </div>
@@ -87,5 +88,6 @@
             </form>
         </div>
     </div>
+ </div>
 </div>
 

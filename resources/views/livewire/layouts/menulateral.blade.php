@@ -49,13 +49,13 @@
                                             <a class="nav-link" href="#" id="button-pres" data-active="pres" wire:click="$emit('allUpdated')" data-open="bPimis" data-section="pres">Présentation</a>
                                         </li>
                                         <li class="nav-item" id="userB">
-                                            <a class="nav-link" href="#" id="button-userB" data-active="userB" wire:click="$emit('allUpdated')" data-open="bPimis" data-section="userB">Utilisateurs</a>
+                                            <a class="nav-link" href="#" id="button-userB" data-active="userB" wire:click="$emit('usersUpdated')" data-open="bPimis" data-section="userB">Utilisateurs</a>
                                         </li>
                                         <li class="nav-item" id="serv">
-                                            <a class="nav-link" href="#" id="button-serv" data-active="serv" wire:click="$emit('allUpdated')" data-open="bPimis" data-section="serv">Projets</a>
+                                            <a class="nav-link" href="#" id="button-serv" data-active="serv" wire:click="$emit('projectUpdated')" data-open="bPimis" data-section="serv">Projets</a>
                                         </li>
                                         <li class="nav-item" id="resp">
-                                            <a class="nav-link" href="#" id="button-resp" data-active="resp" wire:click="$emit('allUpdated')" data-open="bPimis" data-section="resp">Bailleurs</a>
+                                            <a class="nav-link" href="#" id="button-resp" data-active="resp" wire:click="$emit('bailleurUpdated')" data-open="bPimis" data-section="resp">Bailleurs</a>
                                         </li>
 
                                     </ul>
@@ -75,16 +75,16 @@
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
                                         <li class="nav-item" id="art">
-                                            <a class="nav-link" href="#" id="button-art" data-active="art" wire:click="$emit('allUpdated')" data-open="bRH" data-section="art">Agents</a>
+                                            <a class="nav-link" href="#" id="button-art" data-active="art" wire:click="$emit('agentUpdated')" data-open="bRH" data-section="art">Agents</a>
                                         </li>
                                         <li class="nav-item" id="aff">
-                                            <a class="nav-link" href="#" id="button-aff" data-active="aff" wire:click="$emit('allUpdated')" data-open="bRH" data-section="aff">Affectations</a>
+                                            <a class="nav-link" href="#" id="button-aff" data-active="aff" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="aff">Affectations</a>
                                         </li>
                                         <li class="nav-item" id="mvmt">
-                                            <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" wire:click="$emit('allUpdated')" data-open="bRH" data-section="mvmt">Mouvements agents</a>
+                                            <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmt">Mouvements agents</a>
                                         </li>
                                         <li class="nav-item" id="recrut">
-                                            <a class="nav-link" href="#" id="button-recrut" data-active="recrut" wire:click="$emit('allUpdated')" data-open="bRH" data-section="recrut">Recrutement</a>
+                                            <a class="nav-link" href="#" id="button-recrut" data-active="recrut" wire:click="$emit('recrutementUpdated')" data-open="bRH" data-section="recrut">Recrutement</a>
                                         </li>
 
                                     </ul>
