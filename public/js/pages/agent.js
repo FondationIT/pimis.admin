@@ -2,23 +2,16 @@ function afficheEBChoix(texte,id){
     texte = JSON.parse(texte)
     $('#unite-'+id).html('');
     if(texte){
-        $('#unite-'+id).html(texte.unite);
+        $('#unite-'+id).html(texte.item.unite);
     }
 }
 prodEB = '<option value=""  ></option>';
 prod = $('#allProdPlus').val()
 prod = JSON.parse(prod)
-$.each(prod, function(i, item) {
+
+$.each(prod.bad, function(i, item) {
     item1= item.designation;
-
-
-
-
-
-
-
-
-    prodEB += '<option value='+JSON.stringify(item).split()+'  >'+item1+'</option>';
+    prodEB += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
 
 });
 $('#prodEB1').html(prodEB);
@@ -35,7 +28,7 @@ $('#eBAdd').on('click', function(e){
 
     aBPlus += '<div class="col-md-5 mb-10"><textarea class="form-control descEB" name="description" id="prodE'+count+'"></textarea></div>'
 
-    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><button type="button" name="remove" data-row="form-row'+count+'" class="button btn btn-danger removeEB">-</button></div></div>'
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-row'+count+'" class="removeEB text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
 
     $('#autreEB').append(aBPlus);
@@ -79,7 +72,8 @@ commForm.onsubmit = function(e) {
    var projet = $('#projetEB').val()
 
    $('.prodEB').each(function(){
-    produit.push(JSON.parse($(this).val()).id);
+    item = JSON.parse($(this).val())
+    produit.push(item.item.id);
    });
    $('.QteEB').each(function(){
     qte.push($(this).val());
@@ -106,7 +100,8 @@ commForm.onsubmit = function(e) {
             $('#prldEtBes').hide();
             $('#btnEtBes').show();
             $('.close').click()
-            location.reload();
+
+            Livewire.emit('ebUpdated')
 
             $.toast().reset('all');
             $.toast({
@@ -140,5 +135,20 @@ commForm.onsubmit = function(e) {
      "projet": projet,
      "comment": comment
    };
+ }
+
+ $("#btnPrintBr").click(function () {
+    $("#printBr").print();
+});
+
+function imprimer(divName) {
+
+    var printContents = document.getElementById(divName).innerHTML;
+    var originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    return false;
+
  }
 

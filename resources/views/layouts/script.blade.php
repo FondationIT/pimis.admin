@@ -1,3 +1,4 @@
+
 <!-- jQuery -->
 <script src="{{  asset('vendors/jquery/dist/jquery.min.js')}}"></script>
 <!-- jQuery -->
@@ -59,25 +60,26 @@
     <script src="{{  asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{  asset('dist/js/select2-data.js')}}"></script>
 
-    <!-- Data Table JavaScript -->
-    <script src="{{  asset('vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-dt/js/dataTables.dataTables.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-buttons/js/buttons.flash.min.js')}}"></script>
-    <script src="{{  asset('vendors/jszip/dist/jszip.min.js')}}"></script>
-    <script src="{{  asset('vendors/pdfmake/build/pdfmake.min.js')}}"></script>
-    <script src="{{  asset('vendors/pdfmake/build/vfs_fonts.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-buttons/js/buttons.html5.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-buttons/js/buttons.print.min.js')}}"></script>
-    <script src="{{  asset('vendors/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
-    <script src="{{  asset('dist/js/dataTables-data.js')}}"></script>
+
     <script src="{{  asset('js/moment.min.js.map')}}"></script>
-    <script src="{{  asset('dist/js/validation-data.js')}}"></script>
     <script src="{{  asset('js/nav.js')}}"></script>
-    <script src="{{  asset('js/admin.js')}}"></script>
-    <script src="{{  asset('js/pages/rh.js')}}"></script>
-    <script src="{{  asset('js/pages/pimis.js')}}"></script>
+
+
     <script src="{{  asset('js/pages/agent.js')}}"></script>
-    <script src="{{  asset('js/pages/stock.js')}}"></script>
+    @livewireScripts
+
+    <script>
+        window.addEventListener('formSuccess', event => {
+            $('.close').click()
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+            });
+        });
+    </script>

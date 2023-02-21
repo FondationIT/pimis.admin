@@ -21,5 +21,7 @@ class Product extends Model
         'unite',
         'prix',
         'description',
+        'active',
+        'signature',
     ];
 }

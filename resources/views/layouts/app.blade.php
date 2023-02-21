@@ -20,18 +20,16 @@
     <!-- HK Wrapper -->
   <div class="hk-wrapper hk-vertical-nav">
     {{-- menu horizontal  --}}
-    @include('layouts.menu');
+    <livewire:layouts.menu />
     {{-- fin menu horizontal --}}
     {{-- menu verital  --}}
-    @include('layouts.menulateral');
+    <livewire:layouts.menulateral />
     {{-- fin menu verital  --}}
 
     <!-- Main Content -->
     <div class="hk-pg-wrapper">
 
         @yield('content')
-        @include('layouts.footerinclude')
-
 
     </div>
   </div>

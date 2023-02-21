@@ -6,11 +6,11 @@
 <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
 
 <!-- Toastr JS -->
-    <script src="{{  asset('vendors/jquery-toast-plugin/dist/jquery.toast.min.js')}}"></script>
+<script src="{{  asset('vendors/jquery-toast-plugin/dist/jquery.toast.min.js')}}"></script>
 <script src="{{asset('js/slick.min.js')}}"></script>
 <script src="{{asset('js/nouislider.min.js')}}"></script>
 
 
 <script src="{{asset('js/main.js')}}"></script>
 
-<script src="{{asset('js/login.js')}}"></script>
+

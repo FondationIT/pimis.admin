@@ -133,7 +133,7 @@ strong{
 
 body {
 	color: $light_70;
-	font-size: 1rem;
+	font-size: 0.9rem;
 	font-style: normal;
 	font-weight:400;
 	font-family:"Nunito", sans-serif;
@@ -195,7 +195,7 @@ h1,h2,h3,h4,h5,h6,.h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .h6, h6 {
-    font-size: 1rem;
+    font-size: 0.9rem;
 	font-weight:700;
 	line-height: 1.4;
 }
@@ -5403,11 +5403,11 @@ label {
 		width: 100%;
 		height: calc(2.25rem + 4px);
 		padding: .375rem .75rem;
-		font-size: 1rem;
+		font-size: 0.9rem;
 		line-height: 1.5;
 		color: $dark;
 		background-color: #fff;
-		border: 2px solid $light_15;
+		border: 1px solid $light_15;
 		border-radius: .25rem;
 		transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 		&:focus {
@@ -9891,7 +9891,7 @@ table.dataTable {
 }
 /*Avatar*/
 .avatar {
-    font-size: 1rem;
+    font-size: 0.9rem;
     position: relative;
     display: inline-block;
     width: 3.875rem;
