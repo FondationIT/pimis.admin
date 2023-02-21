@@ -17,9 +17,11 @@ class Affectation extends Model
     protected $fillable = [
         'agent',
         'projet',
+        'cath',
         'poste',
         'lieu',
         'description',
         'active',
+        'signature',
     ];
 }

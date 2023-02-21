@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('bailleurs', function (Blueprint $table) {
             $table->id();
+            $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('email')->unique();

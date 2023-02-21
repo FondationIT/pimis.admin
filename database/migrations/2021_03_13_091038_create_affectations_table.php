@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('affectations', function (Blueprint $table) {
             $table->id();
+            $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('agent')->constrained()->onDelete('cascade');
             $table->string('projet')->constrained()->onDelete('cascade');
+            $table->string('cath');
             $table->string('poste');
             $table->string('lieu');
             $table->text('description')->nullable();

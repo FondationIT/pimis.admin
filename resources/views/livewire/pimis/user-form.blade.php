@@ -14,8 +14,8 @@
 
                 <form wire:submit.prevent='submit' >
                 <div class="modal-body">
-                    
-                    <div id="messageErrUs"></div>
+
+                    <div hidden>{{$modelId}}</div>
 
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
@@ -43,9 +43,11 @@
                                 <option value="PERS">PERS</option>
                                 <option value="SECU">SECU</option>
                                 <option value="MAG">MAG</option>
-                                <option value="LOG">LOG</option>
+                                <option value="LOG2">LOG 2</option>
+                                <option value="LOG1">LOG 1</option>
                                 <option value="CAISS">CAISS</option>
-                                <option value="COMPT">COMPT</option>
+                                <option value="COMPT2">COMPT 2</option>
+                                <option value="COMPT1">COMPT 1</option>
                                 <option value="A.I">A.I</option>
                                 <option value="R.H">R.H</option>
                                 <option value="C.P">C.P</option>

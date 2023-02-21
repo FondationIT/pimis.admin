@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pimis;
 use App\Models\User;
 use App\Models\Agent;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class UserForm extends Component
 {
     public $state = [];
+    public $modelId = null;
     protected $listeners = [
         'userForm',
         'editUser',

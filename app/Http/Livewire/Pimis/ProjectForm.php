@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pimis;
 use App\Models\Bailleur;
 use App\Models\Projet;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -86,6 +87,7 @@ class ProjectForm extends Component
                     'dateF' => $this->state['dateF'],
                     'contex' => $this->state['contexte'],
                     'bailleur' => $this->state['bailleur'],
+                    'signature' => Auth::user()->id,
                 ]);
 
                 DB::commit();

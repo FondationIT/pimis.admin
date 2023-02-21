@@ -13,7 +13,7 @@
                 <form  wire:submit.prevent='submit' >
                   <div class="modal-body">
 
-                      <div id="messageErrAff"></div>
+                      <div hidden>{{$modelId}}</div>
 
                       <div class="form-row">
                           <div class="col-md-12 mb-10">
@@ -52,8 +52,25 @@
                       </div>
 
                       <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="cath">Role</label>
+                            <select class="form-control select2 @error('cath') is-invalid @enderror" wire:model.defer="state.cath" name="cath">
+                              <option value=""></option>
+                              <option value="1">Chef Projet</option>
+                              <option value="2">Appuis Projet</option>
+
+                            </select>
+                            @error('projet')
+                              <span class="text-red-600" role="alert">
+                                  {{ $message }}
+                              </span>
+                          @enderror
+                        </div>
+                     </div>
+
+                      <div class="form-row">
                           <div class="col-md-12 mb-10">
-                              <label for="poste">Poste</label>
+                              <label for="poste">Intituler du poste</label>
                               <div class="input-group">
                                   <input type="text" class="form-control @error('poste') is-invalid @enderror" wire:model.defer="state.poste" name="poste" placeholder="Poste" aria-describedby="inputGroupPrepend">
                               </div>

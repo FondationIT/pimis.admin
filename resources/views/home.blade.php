@@ -8,7 +8,7 @@
     @include('pimis')
  @endif
 
- @if (Auth::user()->role == 'MAG' || Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+ @if (Auth::user()->role == 'MAG' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('stock')
  @endif
 
@@ -16,7 +16,11 @@
     @include('rh')
  @endif
 
- @if (Auth::user()->role == 'CAISS' || Auth::user()->role == 'COMPT' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+ @if (Auth::user()->role == 'CAISS' || Auth::user()->role == 'COMPT1'|| Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('finance')
+ @endif
+
+ @if (Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+    @include('projet')
  @endif
 @endsection

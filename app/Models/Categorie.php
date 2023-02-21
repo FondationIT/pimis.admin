@@ -18,5 +18,6 @@ class Categorie extends Model
         'name',
         'description',
         'active',
+        'signature',
     ];
 }

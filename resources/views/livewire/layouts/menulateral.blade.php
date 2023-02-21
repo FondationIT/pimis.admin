@@ -8,7 +8,7 @@
                 <ul class="navbar-nav flex-column">
                     <li class="nav-item" id="dash">
                         <a class="nav-link" href="#" id="button-dash" data-active="dash" data-activ="" data-section="dash">
-                            <span class="feather-icon"><i data-feather="activity"></i></span>
+                            <span class="feather-icon"><i data-feather="map"></i></span>
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
@@ -21,11 +21,20 @@
                         <ul id="fichier_drp" class="nav flex-column collapse collapse-level-1" >
                             <li class="nav-item" >
                                 <ul class="nav flex-column">
+                                    <li class="nav-item" id="aCatPrix">
+                                        <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
+                                    </li>
                                     <li class="nav-item" id="etBes">
-                                        <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('allUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
+                                        <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
                                     </li>
                                     <li class="nav-item" id="usMvmt">
                                         <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
+                                    </li>
+                                    <li class="nav-item" id="usTrans">
+                                        <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
+                                    </li>
+                                    <li class="nav-item" id="usConge">
+                                        <a class="nav-link" href="#" id="button-usConge" data-active="usConge" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usConge">Conge</a>
                                     </li>
                                     <li class="nav-item" id="contr">
                                         <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('allUpdated')" data-open="bFile" data-section="contr">Contrat</a>
@@ -83,6 +92,12 @@
                                         <li class="nav-item" id="mvmt">
                                             <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmt">Mouvements agents</a>
                                         </li>
+                                        <li class="nav-item" id="miss">
+                                            <a class="nav-link" href="#" id="button-miss" data-active="miss" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="miss">Missions</a>
+                                        </li>
+                                        <li class="nav-item" id="conge">
+                                            <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="conge">Conges</a>
+                                        </li>
                                         <li class="nav-item" id="recrut">
                                             <a class="nav-link" href="#" id="button-recrut" data-active="recrut" wire:click="$emit('recrutementUpdated')" data-open="bRH" data-section="recrut">Recrutement</a>
                                         </li>
@@ -93,7 +108,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bStock">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
                                 <span class="feather-icon"><i data-feather="package"></i></span>
@@ -102,10 +117,7 @@
                             <ul id="stock" class="nav flex-column collapse collapse-level-1">
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
-                                        <li class="nav-item" id="catPrix">
-                                            <a class="nav-link" href="#" id="button-catPrix" data-active="catPrix" data-open="bStock" data-section="catPrix">Catalogue de prix</a>
-                                        </li>
-                                        @if (Auth::user()->role == 'LOG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                             <li class="nav-item" id="bonReqS">
                                                 <a class="nav-link" href="#" id="button-bonReqS" data-active="bonReqS" data-open="bStock" data-section="bonReqS">Bons de réquisition</a>
                                             </li>
@@ -135,7 +147,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'COMPT' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bFinance">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#finance">
                                 <span class="feather-icon"><i data-feather="pocket"></i></span>
@@ -152,6 +164,31 @@
                                         </li>
                                         <li class="nav-item" id="bonpayF">
                                             <a class="nav-link" href="#" id="button-bonpayF" data-active="bonpayF" data-open="bFinance" data-section="bonpayF">Bons de payement</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+
+                    @if (Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                        <li class="nav-item" id="bProjet">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#projet">
+                                <span class="feather-icon"><i data-feather="activity"></i></span>
+                                <span class="nav-link-text">Projet</span>
+                            </a>
+                            <ul id="projet" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item" id="bonReqP">
+                                            <a class="nav-link" href="#" id="button-bonReqP" data-active="bonReqP" data-open="bProjet" data-section="bonReqP">Bons de réquisition</a>
+                                        </li>
+                                        <li class="nav-item" id="demAchP">
+                                            <a class="nav-link" href="#" id="button-demAchP" data-active="demAchP" data-open="bProjet" data-section="demAchP">Demandes d'achat</a>
+                                        </li>
+                                        <li class="nav-item" id="bonpayF">
+                                            <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" data-open="bProjet" data-section="bonpayP">Demandes de congé</a>
                                         </li>
 
                                     </ul>

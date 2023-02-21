@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('agents', function (Blueprint $table) {
             $table->id();
+            $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('matricule')->unique();
             $table->string('firstname');
             $table->string('lastname');

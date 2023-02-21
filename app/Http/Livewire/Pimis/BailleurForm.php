@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pimis;
 use App\Models\Bailleur;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -42,9 +43,6 @@ class BailleurForm extends Component
             DB::beginTransaction();
             try {
 
-                $ref = 'PJ-'.substr($this->state['name'], 0, 1).''.rand(1000,9999);
-
-
                 Bailleur::find($this->modelId)->update([
                     'name' => $this->state['name'],
                     'email' => $this->state['email'],
@@ -74,6 +72,7 @@ class BailleurForm extends Component
                     'name' => $this->state['name'],
                     'email' => $this->state['email'],
                     'phone' => $this->state['phone'],
+                    'signature' => Auth::user()->id,
                 ]);
 
                 DB::commit();

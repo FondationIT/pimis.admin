@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Rh;
 use App\Models\Agent;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -11,6 +13,7 @@ use Livewire\Component;
 class AgentForm extends Component
 {
     public $state = [];
+    public $modelId = null;
     protected $listeners = [
         'agentForm',
         'editAgent',
@@ -123,6 +126,7 @@ class AgentForm extends Component
                     'region' => $this->state['region'],
                     'description' => $this->state['description'],
                     'etatcivil' => $this->state['etatcivil'],
+                    'signature' => Auth::user()->id,
                 ]);
                 DB::commit();
                 $this->reset('state');

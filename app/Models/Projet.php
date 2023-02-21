@@ -23,6 +23,7 @@ class Projet extends Model
         'bailleur',
         'domaine',
         'active',
+        'signature',
 
     ];
 }

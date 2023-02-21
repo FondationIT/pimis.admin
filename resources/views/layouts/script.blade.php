@@ -66,7 +66,6 @@
 
 
     <script src="{{  asset('js/pages/agent.js')}}"></script>
-    <script src="{{  asset('js/pages/stock.js')}}"></script>
     @livewireScripts
 
     <script>

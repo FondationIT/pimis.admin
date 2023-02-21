@@ -25,7 +25,7 @@ return [
     */
 
     'default_time_start' => '0000-00-00',
-    'default_time_end' => '9999-12-31',
+    'default_time_end' => '31-12-9999',
 
     // Defaults that work with smalldatetime in SQL Server
     //  'default_time_start' => '1900-01-01',

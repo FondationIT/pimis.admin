@@ -232,6 +232,7 @@
     <livewire:pimis.projects-table
     model="App\Models\Projet"
     searchable="name"
+    dates="dateD|d-m-Y,dateF|d-m-Y"
     exportable
     />
     <!-- /Row -->

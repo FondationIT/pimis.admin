@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Rh;
 
 use Livewire\Component;
 use App\Models\Affectation;
+use App\Models\Agent;
+use App\Models\Projet;
 use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
@@ -45,14 +47,17 @@ class AffectationsTable extends LivewireDatatable
     public function columns()
     {
         return [
-            Column::name('agent')
-                ->label('Agent'),
+
+            Column::callback(['agent'], function ($agent) {
+                return Agent::find($agent)->firstname.' '.Agent::find($agent)->lastname;
+            })->label('Agent'),
 
             Column::name('poste')
                 ->label('Poste'),
 
-            Column::name('projet')
-                ->label('Projet'),
+            Column::callback(['projet'], function ($projet) {
+                return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
+            })->label('Projet'),
 
             Column::name('lieu')
                 ->label('Lieu d\'affectation'),

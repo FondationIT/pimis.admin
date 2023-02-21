@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Projet;
 use App\Models\Agent;
 use App\Models\Affectation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,7 @@ class AffectationsForm extends Component
 
 
     public $state = [];
+    public $modelId = null;
     protected $listeners = [
         'affectationForm',
         'editAffectation',
@@ -30,6 +32,7 @@ class AffectationsForm extends Component
         $model = Affectation::find($this->modelId);
         $this->state['agent'] = $model->agent;
         $this->state['projet'] = $model->projet;
+        $this->state['cath'] = $model->cath;
         $this->state['poste'] = $model->poste;
         $this->state['lieu'] = $model->lieu;
         $this->state['description'] = $model->description;
@@ -44,89 +47,69 @@ class AffectationsForm extends Component
 
         if ($this->modelId != null) {
 
+            //$this->validate();
             $validator = Validator::make($this->state, [
-                'name' => ['required', 'max:255','unique:bailleurs'],
+                'agent' => ['required', 'string', 'max:255'],
+                'projet' => ['required', 'string', 'max:255'],
+                'poste' => ['required', 'string', 'max:255'],
+                'lieu' => ['required', 'string', 'max:255'],
+                'cath' => ['required', 'string', 'max:255'],
             ])->validate();
 
             DB::beginTransaction();
             try {
 
-                $ref = 'PJ-'.substr($this->state['name'], 0, 1).''.rand(1000,9999);
-
-
-                Bailleur::find($this->modelId)->update([
-                    'name' => $this->state['name'],
-                    'email' => $this->state['email'],
-                    'phone' => $this->state['phone'],
+                Affectation::find($this->modelId)->update([
+                    'agent' => $this->state['agent'],
+                    'projet' => $this->state['projet'],
+                    'cath' => $this->state['cath'],
+                    'poste' => $this->state['poste'],
+                    'lieu' => $this->state['lieu'],
+                    'description' => $this->state['description'],
                 ]);
-
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('bailleurUpdated');
+                $this->emit('affectationUpdated');
+
             } catch (\Throwable $th) {
                 DB::rollBack();
             }
 
         }else{
 
+            //$this->validate();
             $validator = Validator::make($this->state, [
-                'name' => ['required', 'max:255','unique:bailleurs'],
-                'email' => ['required', 'string', 'max:255', 'unique:bailleurs'],
-                'phone' => ['required', 'string', 'max:20','unique:bailleurs'],
+                'agent' => ['required', 'string', 'max:255'],
+                'projet' => ['required', 'string', 'max:255'],
+                'cath' => ['required', 'string', 'max:255'],
+                'poste' => ['required', 'string', 'max:255'],
+                'lieu' => ['required', 'string', 'max:255'],
             ])->validate();
 
+            // Execution doesn't reach here if validation fails.
             DB::beginTransaction();
             try {
 
-                $data_create = Bailleur::create([
-                    'name' => $this->state['name'],
-                    'email' => $this->state['email'],
-                    'phone' => $this->state['phone'],
+                $data_create = Affectation::create([
+                    'agent' => $this->state['agent'],
+                    'projet' => $this->state['projet'],
+                    'cath' => $this->state['cath'],
+                    'poste' => $this->state['poste'],
+                    'lieu' => $this->state['lieu'],
+                    'description' => $this->state['description'],
+                    'signature' => Auth::user()->id,
                 ]);
-
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('bailleurUpdated');
+                $this->emit('affectationUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
             }
         }
 
-
-
-
-
-
-        //$this->validate();
-        $validator = Validator::make($this->state, [
-            'agent' => ['required', 'string', 'max:255'],
-            'projet' => ['required', 'string', 'max:255'],
-            'poste' => ['required', 'string', 'max:255'],
-            'lieu' => ['required', 'string', 'max:255'],
-        ])->validate();
-
-        // Execution doesn't reach here if validation fails.
-        DB::beginTransaction();
-        try {
-
-            $data_create = Affectation::create([
-                'agent' => $this->state['agent'],
-                'projet' => $this->state['projet'],
-                'poste' => $this->state['poste'],
-                'lieu' => $this->state['lieu'],
-                'description' => $this->state['description'],
-            ]);
-            DB::commit();
-            $this->reset('state');
-            $this->dispatchBrowserEvent('formSuccess');
-            $this->emit('affectationUpdated');
-
-        } catch (\Throwable $th) {
-            DB::rollBack();
-        }
     }
 
     public function render()
