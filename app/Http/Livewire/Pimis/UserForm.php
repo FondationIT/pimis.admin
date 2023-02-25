@@ -38,7 +38,6 @@ class UserForm extends Component
     {
         // Execution doesn't reach here if validation fails.
 
-
         if ($this->modelId != null) {
 
             $validator = Validator::make($this->state, [

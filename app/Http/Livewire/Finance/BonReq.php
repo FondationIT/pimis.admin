@@ -28,6 +28,11 @@ class BonReq extends LivewireDatatable
         $this->emit('printEb',$this->modelId );
     }
 
+    public function formDA($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formDA',$this->modelId );
+    }
+
     public function apprEb($modelId){
         $this->modelId = $modelId;
         Et_bes::find($this->modelId)->update([
@@ -200,7 +205,7 @@ class BonReq extends LivewireDatatable
 
                     $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
 
-                        return '<div class="flex space-x-1 justify-around">'. $delete .'<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a></div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $delete .'<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formDA('.$id.')" data-toggle="modal" data-target="#daModalForms"><span class="badge badge-info">Faire un D.A</span></a></div>'; ;
                 })->unsortable(),
             ];
         }else {
