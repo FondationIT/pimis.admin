@@ -15,7 +15,7 @@
                             <div class="col-md-3 mb-10">
                                 <label for="description">Reference</label>
                                 @if ($eb)
-                                <input type="text" class="form-control" name="name"value="{{$eb[0]->reference}}" readonly>
+                                <input type="text" class="form-control" value="{{$eb[0]->reference}}" readonly>
                                 @endif
 
                             </div>
@@ -27,13 +27,18 @@
                             </div>
                             <div class="col-md-3 mb-10">
                                 <label for="description">Montant Total</label>
-                                <input type="text" class="form-control" name="name" value="{{$somme}}" readonly>
+                                <input type="text" class="form-control" name="name" value="${{$somme}}" readonly>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-md-12 mb-10">
                                 <label for="description">Motif</label>
                                 <input type="text" class="form-control @error('motif') is-invalid @enderror" wire:model.defer="state.motif" name="motif" placeholder="Motif">
+                                @error('motif')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
                             </div>
                         </div>
                         <div class="form-row">

@@ -5,6 +5,7 @@ use App\Models\Et_bes;
 use App\Models\Projet;
 use App\Models\Affectation;
 use App\Models\User;
+use App\Models\DemAch;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -205,7 +206,12 @@ class BonReq extends LivewireDatatable
 
                     $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
 
-                        return '<div class="flex space-x-1 justify-around">'. $delete .'<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formDA('.$id.')" data-toggle="modal" data-target="#daModalForms"><span class="badge badge-info">Faire un D.A</span></a></div>'; ;
+                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formDA('.$id.')" data-toggle="modal" data-target="#daModalForms"><span class="badge badge-info">Faire un D.A</span></a>';
+                    if (DemAch::where("eb", $id)->exists()) {
+                        $dsa = '<a><span class="badge badge-success">D.A deja faite</span></a>';
+                    }
+
+                        return '<div class="flex space-x-1 justify-around">'. $delete . $dsa .'</div>';
                 })->unsortable(),
             ];
         }else {
