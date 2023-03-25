@@ -36,11 +36,15 @@
 
                     <div class="row">
                         @if ($ebs)
-                            <div class="col-lg-12" style="text-align: left">
-                                <p>Nom du demandeur : <strong>{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</strong></p>
-                                <p>Projet du demandeur : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
-                                <p>Date : <strong>{{$ebs[0]->created_at->format('d/m/Y')}}</strong></p>
-                                <p>Ligne bidgetaire (Ppale/Sec) : </p>
+                            <div class="col-lg-6" style="text-align: left">
+                                <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
+                                <p>Compte : <strong></strong></p>
+                                <p>Motif : </p>
+                                <p>Ligne : </p>
+                            </div>
+                            <div class="col-lg-6" style="text-align: right">
+                                <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
+                                <p>Date : <strong>{{$das[0]->created_at->format('d/m/Y')}}</strong></p>
                             </div>
                         @endif
 
@@ -51,12 +55,12 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>N<sup>o</sup></strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>Designation</strong></th><th><strong>Detail</strong></th>
+                                    <th><strong>N<sup>o</sup></strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
                                 </tr>
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation}}</td><td>{{$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.$prod->description}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix * $prod->quantite }}</td>
                                         </tr>
                                     @endforeach
 
@@ -65,18 +69,20 @@
 
                         </div>
                     </div>
-                    <hr>
+                    <hr style="padding:0px;margin:0px">
+                        <span style="font-size: 12px;padding:0px;margin:0px">Adresse de Livraison/ Contact/ Instructions Spéciales - L'achat s'effectuera si le coût réel ne dépasse pas soit le coût estimatif de plus de 10% soit 2000 $. Au-delà, la DA doit être revue et approuvée à nouveau.</span>
+                    <hr style="padding:0px;margin:0px">
                     <div class="row">
 
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Etabli par</strong></th><th><strong>Verifier par</strong></th><th><strong>Approuver par</strong></th>
+                                    <th><strong>Demmandeur</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>Logistique</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
                                         @if ($ebs)
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</p><br><br><br><br>
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $das[0]->signature)->name}}</p><br><br><br><br>
                                             <p class="center">Le {{$ebs[0]->created_at->format('d/m/Y')}}</p>
                                         @endif
                                     </td>
@@ -88,6 +94,12 @@
                                         @endif
                                     </td>
 
+                                    <td>
+                                        @if ($ebs)
+                                            <p class="center">Le Chef projet</p><br><br><br><br>
+                                            <p class="center">Le {{$ebs[0]->updated_at->format('d/m/Y')}}</p>
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($ebs)
                                             <p class="center">Le Chef projet</p><br><br><br><br>

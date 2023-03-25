@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->string('image')->nullable();
+            $table->string('signature')->nullable();
             $table->boolean('active')->default(true);
             $table->rememberToken();
             $table->timestamps();

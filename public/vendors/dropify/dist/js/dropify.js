@@ -41,24 +41,24 @@ function Dropify(element, options) {
         showErrors: true,
         errorTimeout: 3000,
         errorsPosition: 'overlay',
-        imgFileExtensions: ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
-        maxFileSizePreview: "5M",
+        imgFileExtensions: ['png', 'jpg', 'jpeg'],
+        maxFileSizePreview: "1M",
         allowedFormats: ['portrait', 'square', 'landscape'],
-        allowedFileExtensions: ['*'],
+        allowedFileExtensions: ['png', 'jpg', 'jpeg'],
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': 'Glisser-déposer ou cliquer pour charger la signature',
+            'replace': 'Glisser-déposer ou cliquer pour remplacer',
+            'remove':  'Retirer',
+            'error':   'Oups, quelque chose s\'est mal passé.'
         },
         error: {
-            'fileSize': 'The file size is too big ({{ value }} max).',
-            'minWidth': 'The image width is too small ({{ value }}}px min).',
-            'maxWidth': 'The image width is too big ({{ value }}}px max).',
-            'minHeight': 'The image height is too small ({{ value }}}px min).',
-            'maxHeight': 'The image height is too big ({{ value }}px max).',
-            'imageFormat': 'The image format is not allowed ({{ value }} only).',
-            'fileExtension': 'The file is not allowed ({{ value }} only).'
+            'fileSize': 'La taille du fichier est trop grande ({{ value }} max).',
+            'minWidth': 'La largeur de l\'image est trop petite ({{ value }}}px min).',
+            'maxWidth': 'La largeur de l\'image est trop grande ({{ value }}}px max).',
+            'minHeight': 'La hauteur de l\'image est trop petite ({{ value }}}px min).',
+            'maxHeight': 'La hauteur de l\'image est trop grande ({{ value }}px max).',
+            'imageFormat': 'Le format d\'image n\'est pas autorisé ({{ value }} only).',
+            'fileExtension': 'Le fichier n\'est pas autorisé ({{ value }} only).'
         },
         tpl: {
             wrap:            '<div class="dropify-wrapper"></div>',
@@ -557,7 +557,7 @@ Dropify.prototype.clearErrors = function()
  * @param  {String} errorKey
  */
 Dropify.prototype.showError = function(errorKey)
-{
+{m
     if (typeof this.errorsContainer !== "undefined") {
         this.errorsContainer.children('ul').append('<li>' + this.getError(errorKey) + '</li>');
     }

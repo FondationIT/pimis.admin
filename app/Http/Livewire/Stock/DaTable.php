@@ -27,6 +27,11 @@ class DaTable extends LivewireDatatable
         $this->emit('printDa',$this->modelId );
     }
 
+    public function printEb($modelId){
+        $this->modelId = $modelId;
+        $this->emit('printEb',$this->modelId );
+    }
+
     public function builder()
     {
         return DemAch::query()->orderBy("id", "DESC");
@@ -40,7 +45,7 @@ class DaTable extends LivewireDatatable
                 ->label('D.A Ref'),
 
             Column::callback(['eb'], function ($eb) {
-                return Et_bes::find($eb)->reference;
+                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
             })->label('B.R Ref'),
 
             Column::name('created_at')

@@ -23,10 +23,9 @@
 
 
 
-	<link href="{{  asset('vendors/dropzone/dist/dropzone.css') }}" rel="stylesheet" type="text/css"/>
 
 	<!-- Bootstrap Dropzone CSS -->
-	<link href="{{  asset('vendors/dropify/dist/css/dropify.min.css') }}" rel="stylesheet" type="text/css"/>
+	<link href="{{  asset('vendors/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css"/>
 
     <!-- Toggles CSS -->
     <link href="{{  asset('vendors/jquery-toggles/css/toggles.css') }}" rel="stylesheet" type="text/css">
@@ -50,6 +49,7 @@
     <link href="{{ asset('dist/css/lightgallery.css') }}" rel="stylesheet" type="text/css">
     <!-- Morris Charts CSS -->
     <link href="{{ asset('vendors/morris.js/morris.css') }}" rel="stylesheet" type="text/css">
+
 
     <!-- Toastr CSS -->
     <link href="{{ asset('vendors/jquery-toast-plugin/dist/jquery.toast.min.css')}}" rel="stylesheet" type="text/css">

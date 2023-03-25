@@ -7,6 +7,8 @@
     <script src="{{  asset('vendors/popper.js/dist/umd/popper.min.js')}}"></script>
     <script src="{{  asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 
+
+
     <!-- Slimscroll JavaScript -->
     <script src="{{  asset('dist/js/jquery.slimscroll.js')}}"></script>
   <!-- Tinymce JavaScript -->
@@ -59,6 +61,7 @@
     <!-- Select2 JavaScript -->
     <script src="{{  asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{  asset('dist/js/select2-data.js')}}"></script>
+
 
 
     <script src="{{  asset('js/moment.min.js.map')}}"></script>
