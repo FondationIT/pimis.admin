@@ -84,7 +84,7 @@ class UserForm extends Component
 
                 $agents = Agent::where('id', $this->state['agent'])->get();
                 //$image_name= $agents[0]->matricule;
-                $image_name = $this->state['photo']->store('signatures', 'public');
+                $image_name = $this->state['photo']->store('img/signatures','public');
                 User::create([
                     'name' => $agents[0]->firstname.' '.$agents[0]->lastname,
                     'agent' => $this->state['agent'],

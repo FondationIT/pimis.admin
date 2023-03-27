@@ -76,7 +76,8 @@
                                 <tr>
                                     <td>
                                         @if ($ebs)
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</p><br><br><br><br>
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</p>
+                                            <img src="{{ asset('storage/'.App\Models\User::firstWhere('id', $ebs[0]->agent)->signature)}}" style="position: relative;width:250px;text-align: center;margin:auto" /><br><br><br>
                                             <p class="center">Le {{$ebs[0]->created_at->format('d/m/Y')}}</p>
                                         @endif
                                     </td>
