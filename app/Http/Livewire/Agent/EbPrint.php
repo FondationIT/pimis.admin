@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Agent;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
+use App\Models\ValidEb;
 
 use Livewire\Component;
 
@@ -10,7 +11,9 @@ class EbPrint extends Component
 {
     public $modelId;
     public $products;
-    public $ebs;
+    public $ebs=[];
+    public $valid1=[];
+    public $valid2=[];
     public $i = 1;
 
     protected $listeners = [
@@ -22,6 +25,8 @@ class EbPrint extends Component
 
         $this->products = ProductOder::where("etatBes", $this->modelId)->orderBy("id", "DESC")->get();
         $this->ebs = Et_bes::where("id", $this->modelId)->get();
+        $this->valid1 = ValidEb::where("eb", $this->modelId)->where("niv", 1)->get();
+        $this->valid2 = ValidEb::where("eb", $this->modelId)->where("niv", 2)->get();
     }
 
 

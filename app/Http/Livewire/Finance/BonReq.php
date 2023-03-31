@@ -6,6 +6,7 @@ use App\Models\Projet;
 use App\Models\Affectation;
 use App\Models\User;
 use App\Models\DemAch;
+use App\Models\ValidEb;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use Illuminate\Support\Facades\DB;
 
 
 class BonReq extends LivewireDatatable
@@ -35,16 +37,47 @@ class BonReq extends LivewireDatatable
     }
 
     public function apprEb($modelId){
-        $this->modelId = $modelId;
-        Et_bes::find($this->modelId)->update([
-            'niv1' => 1,
-        ]);
+        DB::beginTransaction();
+        try {
+            $this->modelId = $modelId;
+            Et_bes::find($this->modelId)->update([
+                'niv1' => 1,
+            ]);
+            ValidEb::create([
+                'user' => Auth::user()->id,
+                'eb' => $this->modelId,
+                'resp' => true,
+                'niv' => 1,
+                'motif' => 'Tout es prevu',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+        }
+
     }
     public function cApprEb($modelId){
-        $this->modelId = $modelId;
-        Et_bes::find($this->modelId)->update([
-            'niv2' => 1,
-        ]);
+        DB::beginTransaction();
+        try {
+            $this->modelId = $modelId;
+            Et_bes::find($this->modelId)->update([
+                'niv2' => 1,
+            ]);
+            ValidEb::create([
+                'user' => Auth::user()->id,
+                'eb' => $this->modelId,
+                'resp' => true,
+                'niv' => 2,
+                'motif' => 'Tout es prevu',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+        }
     }
 
     public function refEb($modelId){
