@@ -21,5 +21,10 @@ class DemAch extends Model
         'eb',
         'amount',
         'signature',
+        'niv1',
+        'niv2',
+        'niv3',
+        'niv4',
+        'active',
     ];
 }

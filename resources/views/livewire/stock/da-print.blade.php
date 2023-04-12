@@ -77,33 +77,59 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Demmandeur</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>Logistique</strong></th>
+                                    <th><strong>Demmandeur</strong></th><th><strong>Finance</strong></th><th><strong>Logistique</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        @if ($ebs)
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $das[0]->signature)->name}}</p><br><br><br><br>
-                                            <p class="center">Le {{$ebs[0]->created_at->format('d/m/Y')}}</p>
+                                        <span>Agent</span><br><br>
+                                        @if (isset($das[0]) && !empty($das[0]))
+
+                                            <p class="center" >{{ App\Models\User::firstWhere('id', $das[0]->signature)->name}}<br>
+                                            Le {{$das[0]->created_at->format('d/m/Y')}}</p>
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $das[0]->signature)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+
                                         @endif
                                     </td>
 
                                     <td>
-                                        @if ($ebs)
-                                            <p class="center">Le Comptable</p><br><br><br><br>
-                                            <p class="center">Le {{$ebs[0]->updated_at->format('d/m/Y')}}</p>
+                                        <span>Comptable</span><br><br>
+                                        @if (isset($valid1[0]) && !empty($valid1[0]))
+
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
+                                            Le {{$valid1[0]->updated_at->format('d/m/Y')}}</p>
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+
                                         @endif
                                     </td>
 
                                     <td>
-                                        @if ($ebs)
-                                            <p class="center">Le Chef projet</p><br><br><br><br>
-                                            <p class="center">Le {{$ebs[0]->updated_at->format('d/m/Y')}}</p>
+                                        <span>Logistique</span><br><br>
+                                        @if (isset($valid2[0]) && !empty($valid2[0]))
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
+                                                Le {{$valid2[0]->updated_at->format('d/m/Y')}}
+                                            </p>
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid2[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
                                         @endif
                                     </td>
+
                                     <td>
-                                        @if ($ebs)
-                                            <p class="center">Le Chef projet</p><br><br><br><br>
-                                            <p class="center">Le {{$ebs[0]->updated_at->format('d/m/Y')}}</p>
+                                        <span>Chef Projet</span><br><br>
+                                        @if (isset($valid3[0]) && !empty($valid3[0]))
+
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
+                                            Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+
+                                        @endif
+                                    </td>
+
+                                    <td>
+                                        <span>DAF</span><br><br>
+                                        @if (isset($valid4[0]) && !empty($valid4[0]))
+                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid4[0]->user)->name}}<br>
+                                                Le {{$valid4[0]->updated_at->format('d/m/Y')}}
+                                            </p>
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid4[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
                                         @endif
                                     </td>
                                 </tr>

@@ -81,10 +81,25 @@ class BonReq extends LivewireDatatable
     }
 
     public function refEb($modelId){
-        $this->modelId = $modelId;
-        Et_bes::find($this->modelId)->update([
-            'active' => 0,
-        ]);
+        DB::beginTransaction();
+        try {
+            $this->modelId = $modelId;
+            Et_bes::find($this->modelId)->update([
+                'active' => 0,
+            ]);
+            ValidEb::create([
+                'user' => Auth::user()->id,
+                'eb' => $this->modelId,
+                'resp' => false,
+                'niv' => 3,
+                'motif' => 'Nop a refaire',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+        }
     }
 
     public function builder()
@@ -120,8 +135,10 @@ class BonReq extends LivewireDatatable
     {
         if(Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2'){
             return [
-                Column::name('reference')
-                    ->label('Reference'),
+
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
@@ -148,7 +165,6 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
 
                     if ($active == true && $niv1 == true && $niv2 == true) {
                         $edit = '';
@@ -165,15 +181,16 @@ class BonReq extends LivewireDatatable
                         $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }
 
-                        return '<div class="flex space-x-1 justify-around">'. $edit . $delete . $edit2 .'</div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
             ];
         }elseif (Auth::user()->role == 'C.P') {
 
 
             return [
-                Column::name('reference')
-                    ->label('Reference'),
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
@@ -200,9 +217,8 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
-
                     if ($active == true && $niv1 == true && $niv2 == true) {
+
                         $edit = '';
                         $edit2 = '';
                     }elseif($active == false){
@@ -214,15 +230,16 @@ class BonReq extends LivewireDatatable
                         $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }
 
-                        return '<div class="flex space-x-1 justify-around">'. $edit . $delete . $edit2 .'</div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
             ];
         }elseif (Auth::user()->role == 'LOG2') {
 
 
             return [
-                Column::name('reference')
-                    ->label('Reference'),
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
@@ -237,21 +254,21 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['id'], function ($id) {
 
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
 
                     $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formDA('.$id.')" data-toggle="modal" data-target="#daModalForms"><span class="badge badge-info">Faire un D.A</span></a>';
                     if (DemAch::where("eb", $id)->exists()) {
                         $dsa = '<a><span class="badge badge-success">D.A deja faite</span></a>';
                     }
 
-                        return '<div class="flex space-x-1 justify-around">'. $delete . $dsa .'</div>';
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
                 })->unsortable(),
             ];
         }else {
 
             return [
-                Column::name('reference')
-                    ->label('Reference'),
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';

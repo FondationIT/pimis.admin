@@ -58,6 +58,52 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="adresse">Achat directe</label>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-10">
+
+                                De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                                <div class="col-md-6 mb-10">
+                                A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="adresse">Achat par la comparaison </label>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-10">
+
+                                   De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                                <div class="col-md-6 mb-10">
+                                   A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="adresse">Appel d’Offres </label>
+
+                            <div class="form-row">
+                                <div class="col-md-6 mb-10">
+
+                                   De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                                <div class="col-md-6 mb-10">
+                                   A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </div>
                 <div class="modal-footer">

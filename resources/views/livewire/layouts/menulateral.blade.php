@@ -73,7 +73,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'R.H' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'R.H' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bRH">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#RH_drp">
                                 <span class="feather-icon"><i data-feather="users"></i></span>
@@ -108,7 +108,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bStock">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
                                 <span class="feather-icon"><i data-feather="package"></i></span>
@@ -124,12 +124,16 @@
                                             <li class="nav-item" id="demAchS">
                                                 <a class="nav-link" href="#" id="button-demAchS" data-active="demAchS" data-open="bStock" data-section="demAchS">Demandes d'achat</a>
                                             </li>
+                                        @endif
+
+                                        @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+
                                             <li class="nav-item" id="bonComS">
                                                 <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" data-section="bonComS">Bons de commande</a>
                                             </li>
                                         @endif
 
-                                        @if (Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                             <li class="nav-item" id="entreeS">
                                                 <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" data-section="entreeS">Entrées</a>
                                             </li>
@@ -147,7 +151,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bFinance">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#finance">
                                 <span class="feather-icon"><i data-feather="pocket"></i></span>
