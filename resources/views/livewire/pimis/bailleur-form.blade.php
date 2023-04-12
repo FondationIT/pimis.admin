@@ -94,7 +94,6 @@
 
                             <div class="form-row">
                                 <div class="col-md-6 mb-10">
-
                                    De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
                                 </div>
                                 <div class="col-md-6 mb-10">
