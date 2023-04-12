@@ -82,6 +82,28 @@
                         </div>
                     </div>
 
+                    <div class="form-row">
+                        <div class="col-md-12 mb-4">
+                            <label for="">Signature</label>
+                            <div style="width:350px;">
+                                <div class="col-sm" wire:ignore>
+                                    <input type="file" id="input-file-now" wire:model.defer="state.photo" accept="image/png" class="dropify" />
+                                </div>
+
+                                @error('photo')
+                                    <span class="text-red-600" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
 
                 </div>
                 <div class="modal-footer">
@@ -92,4 +114,15 @@
             </div>
         </div>
     </div>
+
+
+    <!-- jQuery -->
+    <script src="{{  asset('vendors/jquery/dist/jquery.min.js')}}"></script>
+    <!-- jQuery -->
+
+    <!-- Dropify JavaScript -->
+	<script src="{{  asset('vendors/dropify/dist/js/dropify.js')}}"></script>
+
+	<!-- Form Flie Upload Data JavaScript -->
+	<script src="{{  asset('dist/js/form-file-upload-data.js')}}"></script>
 </div>

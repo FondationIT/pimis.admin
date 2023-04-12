@@ -43,7 +43,7 @@ a:hover { /* Suppression du soulignÃ© */
 
 p { /* Modifications : alignement du texte - marges - unitÃ© des marges, police et taille de la police */
   text-align:justify;
-  margin:2pt 1pt 6pt 0;
+  margin:2pt 1pt 2pt 0;
   font-size:14pt;
   color:#000;
 }
@@ -77,16 +77,22 @@ p { /* Modifications : alignement du texte - marges - unitÃ© des marges, polic
 }
 
 img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
-  float:left;
+  float:center;
   margin:3pt 6pt 3pt 6pt;
   padding:8pt;
-  background:#fff;
   width: 300px;
+  opacity: 1;
   position: fixed;
 
 }
+.signn{
+    top:-40px;
+    padding: 0px;
+    opacity: 1;
+}
 table, tr, th, td{
     border: 1px solid rgb(145, 145, 145);
+    padding: none;
 }
 
 img.droite {

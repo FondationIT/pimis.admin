@@ -7,13 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithFileUploads;
 
 use Livewire\Component;
 
 class UserForm extends Component
 {
+    use WithFileUploads;
     public $state = [];
     public $modelId = null;
+    public $fileName;
     protected $listeners = [
         'userForm',
         'editUser',
@@ -37,7 +40,6 @@ class UserForm extends Component
     public function submit()
     {
         // Execution doesn't reach here if validation fails.
-
 
         if ($this->modelId != null) {
 
@@ -75,17 +77,20 @@ class UserForm extends Component
                 'agent' => ['required', 'max:255'],
                 'email' => ['required', 'string', 'max:255', 'unique:users'],
                 'role' => ['required', 'string', 'max:20'],
+                'photo' => ['required', 'image', 'mimes:png,jpg', 'max:1024'],
             ])->validate();
-            DB::beginTransaction();
+            DB::beginTransaction(8);
             try {
 
                 $agents = Agent::where('id', $this->state['agent'])->get();
-
+                //$image_name= $agents[0]->matricule;
+                $image_name = $this->state['photo']->store('img/signatures','public');
                 User::create([
                     'name' => $agents[0]->firstname.' '.$agents[0]->lastname,
                     'agent' => $this->state['agent'],
                     'email' => $this->state['email'],
                     'role' => $this->state['role'],
+                    'signature' => $image_name,
                     'password' => Hash::make('password'),
                 ]);
 

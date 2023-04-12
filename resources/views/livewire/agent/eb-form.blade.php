@@ -15,13 +15,12 @@
                     <div id="messageErrEtBes"></div>
 
                     <div class="form-row">
-                        <div class="col-md-12 mb-10">
-                            <input type="text" class="form-control"  disabled value="{{ Auth::user()->name }}" >
+                        <div class="col-md-6 mb-10">
+                            <label for="projet">Nom de l'agent</label>
+                            <input type="text" class="form-control"  readonly value="{{ Auth::user()->name }}" >
                             <input type="text" class="form-control" id="agentEB" hidden value="{{ Auth::user()->id }}" >
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12 mb-10">
+                        <div class="col-md-6 mb-10">
                             <label for="projet">Selectionner projet</label>
                             <select class="form-control select2" id="projetEB" required>
                                 <option value=""></option>
@@ -35,6 +34,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
                     <div class="form-row">
                         <input type="text"  id="allProdPlus" hidden value='{"bad":{{json_encode($products)}} }' >
                         <div class="col-md-3 mb-10">
@@ -71,7 +71,7 @@
                     <div id="autreEB">
                     </div>
                     <a href="#" id="eBAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
-
+                    <hr>
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="commentEB">Commentaire</label>

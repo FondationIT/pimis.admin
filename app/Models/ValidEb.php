@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DemAch extends Model
+class ValidEb extends Model
 {
     use HasFactory;
 
@@ -15,16 +15,10 @@ class DemAch extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'reference',
-        'comment',
-        'motif',
+        'user',
         'eb',
-        'amount',
-        'signature',
-        'niv1',
-        'niv2',
-        'niv3',
-        'niv4',
-        'active',
+        'resp',
+        'niv',
+        'motif',
     ];
 }

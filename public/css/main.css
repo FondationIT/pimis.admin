@@ -4,7 +4,7 @@
 /* Mobile Layout: 320px */
 /* Wide Mobile Layout: 480px */
 /* =================================== */
-/*  Basic Style 
+/*  Basic Style
 /* =================================== */
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
@@ -747,7 +747,7 @@ td, th {
 }
 
 b, i, sup, sub, u, del {
-  color: #3e69fe;
+  color: #d3a403;
 }
 
 h1 {
@@ -805,7 +805,7 @@ header {
 .page-title { margin-top:20px; font-weight:300; }
 
 .menu-bar {
-  
+
 }
 
 .menu-bar span {
@@ -817,12 +817,12 @@ header {
 
 .main-menubar {
   position: relative;
-  
+
 }
 .log {padding: 0px 10px;}
 .main-menubar .bt { border:1px solid rgba(255, 255, 255, .2); margin-left:5px; margin-top:5px; padding:10px; color:rgba(255, 255, 255,1); }
 
- .main-menubar a.bt:focus, 
+ .main-menubar a.bt:focus,
  .main-menubar a.bt:hover  { border:1px solid rgba(255,255,255,.6); }
 
 nav {
@@ -844,7 +844,7 @@ nav {
     cursor: pointer;
     border: 1px white solid;
   }
- 
+
   nav {
     position: fixed;
     right: 0;
@@ -853,7 +853,7 @@ nav {
     width: 100%;
     text-align: left;
     z-index: 5;
-    
+
     background: #16223c;
   }nav a{
     position: relative;
@@ -876,13 +876,13 @@ nav a {
   text-transform: uppercase;
   color: rgba(255,255,255,0.5);
   margin: 0 12px;
-  
+
 }
 
 @media (max-width: 767px) {
   nav a {
     margin: 15px 45px;
-    
+
   }
 }
 
@@ -996,8 +996,8 @@ nav a:hover {
 
 .p1-gradient-bg, .primary-btn:after, .story-area {
 
-  
-  
+
+
 }
 
 .p1-gradient-color, .single-work-process .work-icon-box span, .single-feature .primary-btn:hover span, .single-remark .primary-btn span {
@@ -1063,7 +1063,7 @@ nav a:hover {
   .banner-area .banner-content p br {
     display: none;
   }
-  
+
 }
 
 .hero-area:after {
@@ -1083,7 +1083,7 @@ nav a:hover {
     height: 50%;
 
   }
-  
+
 }
 
 @media (max-width: 775px) {
@@ -1338,7 +1338,7 @@ transition: 0.3s width;
 
 
 .highlight { margin-top:40px; }
-  .h-caption { text-align: center; } 
+  .h-caption { text-align: center; }
   .h-caption i { display:block; font-size: 54px; color:#382526; margin-bottom:36px; }
   .h-caption h4 { color:#382526; font-size: 16px; font-weight: bold; margin-bottom:20px; }
   .h-body { }
@@ -1388,7 +1388,7 @@ footer{
 
 
 .footer {
-  
+
   margin-top: 100px;
   padding: 10px 0;
    background: rgba(2,10,25,0.9); color: #777; font-size: 12px;
@@ -1397,7 +1397,7 @@ footer{
 
 
 .footer .copy-right-text {
-  
+
 }
 
 @media (max-width: 991px) {
@@ -1419,7 +1419,7 @@ footer{
 
 .footer-social a {
   display: inline-block;
- 
+
   width: 40px;
   height: 40px;
   border: 1px solid transparent;

@@ -137,4 +137,5 @@
 
     <livewire:agent.eb-form />
     <livewire:agent.eb-print />
+    <livewire:stock.da-print />
 </div>
