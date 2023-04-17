@@ -57,7 +57,7 @@
                             <input type="text" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="Adresse">
                         </div>
                     </div>
-
+<!--
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="adresse">Achat directe</label>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-
+                -->
 
                 </div>
                 <div class="modal-footer">
