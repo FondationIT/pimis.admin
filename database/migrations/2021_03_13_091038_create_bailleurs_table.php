@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('email')->unique();
+            $table->float('min1', 20, 2);
+            $table->float('min2', 20, 2);
+            $table->float('min3', 20, 2);
+            $table->float('max1', 20, 2);
+            $table->float('max2', 20, 2);
+            $table->float('max', 20, 2);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
