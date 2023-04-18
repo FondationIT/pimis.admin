@@ -29,6 +29,12 @@ class BailleurForm extends Component
         $this->state['name'] = $model->name;
         $this->state['email'] = $model->email;
         $this->state['phone'] = $model->phone;
+        $this->state['min1'] = $model->min1;
+        $this->state['max1'] = $model->max1;
+        $this->state['min2'] = $model->min2;
+        $this->state['max2'] = $model->max2;
+        $this->state['min3'] = $model->min3;
+        $this->state['max3'] = $model->max;
     }
 
     public function submit()
@@ -38,6 +44,12 @@ class BailleurForm extends Component
 
             $validator = Validator::make($this->state, [
                 'name' => ['required', 'max:255','unique:bailleurs'],
+                'min1' => ['required','numeric'],
+                'max1' => ['required','numeric'],
+                'min2' => ['required','numeric'],
+                'max2' => ['required','numeric'],
+                'min3' => ['required','numeric'],
+                'max3' => ['required','numeric'],
             ])->validate();
 
             DB::beginTransaction();
@@ -47,6 +59,12 @@ class BailleurForm extends Component
                     'name' => $this->state['name'],
                     'email' => $this->state['email'],
                     'phone' => $this->state['phone'],
+                    'min1' => $this->state['min1'],
+                    'max1' => $this->state['max1'],
+                    'min2' => $this->state['min2'],
+                    'max2' => $this->state['max2'],
+                    'min3' => $this->state['min3'],
+                    'max' => $this->state['max3'],
                 ]);
 
                 DB::commit();
@@ -63,6 +81,12 @@ class BailleurForm extends Component
                 'name' => ['required', 'max:255','unique:bailleurs'],
                 'email' => ['required', 'string', 'max:255', 'unique:bailleurs'],
                 'phone' => ['required', 'string', 'max:20','unique:bailleurs'],
+                'min1' => ['required','numeric'],
+                'max1' => ['required','numeric'],
+                'min2' => ['required','numeric'],
+                'max2' => ['required','numeric'],
+                'min3' => ['required','numeric'],
+                'max3' => ['required','numeric'],
             ])->validate();
 
             DB::beginTransaction();
@@ -72,6 +96,12 @@ class BailleurForm extends Component
                     'name' => $this->state['name'],
                     'email' => $this->state['email'],
                     'phone' => $this->state['phone'],
+                    'min1' => (float)$this->state['min1'],
+                    'max1' => (float)$this->state['max1'],
+                    'min2' => (float)$this->state['min2'],
+                    'max2' => (float)$this->state['max2'],
+                    'min3' => (float)$this->state['min3'],
+                    'max' => (float)$this->state['max3'],
                     'signature' => Auth::user()->id,
                 ]);
 

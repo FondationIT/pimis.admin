@@ -20,6 +20,12 @@ class Bailleur extends Model
         'phone',
         'active',
         'signature',
+        'min1',
+        'max1',
+        'min2',
+        'max2',
+        'min3',
+        'max3',
 
     ];
 

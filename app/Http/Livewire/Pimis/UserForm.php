@@ -94,6 +94,8 @@ class UserForm extends Component
                     'password' => Hash::make('password'),
                 ]);
 
+                
+
                 DB::commit();
                 $this->reset('state');
                 $this->modelId = null;
