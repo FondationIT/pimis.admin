@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('affectations', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('agent')->constrained()->onDelete('cascade');
             $table->string('projet')->constrained()->onDelete('cascade');

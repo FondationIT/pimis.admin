@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('valid_ebs', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('user')->constrained()->onDelete('cascade');
             $table->string('eb')->constrained()->onDelete('cascade');
             $table->boolean('resp');

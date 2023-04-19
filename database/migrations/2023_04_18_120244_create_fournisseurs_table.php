@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('fournisseurs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('categorie')->constrained()->onDelete('cascade');
-            $table->string('designation');
-            $table->string('marque');
-            $table->string('model');
+            $table->string('catProduct')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('adresse');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('tva')->nullable();
+            $table->string('secteur');
+            $table->string('type');
             $table->string('description')->nullable();
-            $table->string('unite');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('fournisseurs');
     }
 };

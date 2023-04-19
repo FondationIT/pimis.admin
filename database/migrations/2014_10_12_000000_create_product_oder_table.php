@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('product_oders', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('product')->constrained()->onDelete('cascade');
             $table->string('etatBes')->constrained()->onDelete('cascade');
             $table->integer('quantite');

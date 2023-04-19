@@ -25,7 +25,7 @@ class Bailleur extends Model
         'min2',
         'max2',
         'min3',
-        'max3',
+        'maxx3',
 
     ];
 

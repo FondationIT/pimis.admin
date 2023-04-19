@@ -15,16 +15,17 @@ return new class extends Migration
     {
         Schema::create('bailleurs', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('phone')->unique();
             $table->string('email')->unique();
-            $table->float('min1', 20, 2);
-            $table->float('min2', 20, 2);
-            $table->float('min3', 20, 2);
-            $table->float('max1', 20, 2);
-            $table->float('max2', 20, 2);
-            $table->float('max', 20, 2);
+            $table->float('min1', 25, 2);
+            $table->float('min2', 25, 2);
+            $table->float('min3', 25, 2);
+            $table->float('max1', 25, 2);
+            $table->float('max2', 25, 2);
+            $table->float('max3', 25, 2);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
