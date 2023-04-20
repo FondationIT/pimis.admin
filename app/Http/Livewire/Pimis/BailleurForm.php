@@ -34,7 +34,7 @@ class BailleurForm extends Component
         $this->state['min2'] = $model->min2;
         $this->state['max2'] = $model->max2;
         $this->state['min3'] = $model->min3;
-        $this->state['max3'] = $model->maxx3;
+        $this->state['max3'] = $model->max3;
     }
 
     public function submit()
@@ -64,7 +64,7 @@ class BailleurForm extends Component
                     'min2' => $this->state['min2'],
                     'max2' => $this->state['max2'],
                     'min3' => $this->state['min3'],
-                    'maxx3' => $this->state['max3'],
+                    'max3' => $this->state['max3'],
                 ]);
 
                 DB::commit();
@@ -101,7 +101,7 @@ class BailleurForm extends Component
                     'min2' => (float)$this->state['min2'],
                     'max2' => (float)$this->state['max2'],
                     'min3' => (float)$this->state['min3'],
-                    'maxx3' => (float)$this->state['max3'],
+                    'max3' => (float)$this->state['max3'],
                     'signature' => Auth::user()->id,
                 ]);
 

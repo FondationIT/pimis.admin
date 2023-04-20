@@ -131,6 +131,12 @@
                                             <li class="nav-item" id="bonComS">
                                                 <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" data-section="bonComS">Bons de commande</a>
                                             </li>
+                                            <li class="nav-item" id="fournS">
+                                                <a class="nav-link" href="#" id="button-fournS" data-active="fournS" data-open="bStock" data-section="fournS">Fournisseurs</a>
+                                            </li>
+                                            <li class="nav-item" id="contPrixS">
+                                                <a class="nav-link" href="#" id="button-contPrixS" data-active="contPrixS" data-open="bStock" data-section="contPrixS">Contrat & Prix</a>
+                                            </li>
                                         @endif
 
                                         @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')

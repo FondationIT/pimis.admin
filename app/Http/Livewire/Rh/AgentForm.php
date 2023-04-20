@@ -109,7 +109,7 @@ class AgentForm extends Component
             try {
 
                 $matricule = 'FP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
-
+                
                 $data_create = Agent::create([
                     'firstname' => $this->state['name'],
                     'lastname' => $this->state['name2'],

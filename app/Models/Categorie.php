@@ -15,6 +15,7 @@ class Categorie extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'reference',
         'name',
         'description',
         'active',

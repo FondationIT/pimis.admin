@@ -33,7 +33,7 @@ class ProductForm extends Component
         $this->state['categorie'] = $model->categorie;
         $this->state['model'] = $model->model;
         $this->state['unite'] = $model->unite;
-        $this->state['prix'] = $model->prix;
+        $this->state['marque'] = $model->marque;
         $this->state['description'] = $model->description;
     }
 
@@ -45,6 +45,7 @@ class ProductForm extends Component
             'designation' => ['required', 'string', 'max:255'],
             'categorie' => ['required', 'string', 'max:255'],
             'model' => ['required', 'string', 'max:255'],
+            'marque' => ['required', 'string', 'max:255'],
             'unite' => ['required', 'string', 'max:255'],
         ])->validate();
 
@@ -59,7 +60,7 @@ class ProductForm extends Component
                     'categorie' => $this->state['categorie'],
                     'model' => $this->state['model'],
                     'unite' => $this->state['unite'],
-                    'prix' => $this->state['prix'],
+                    'marque' => $this->state['marque'],
                     'description' => $this->state['description'],
                 ]);
                 DB::commit();
@@ -76,12 +77,14 @@ class ProductForm extends Component
             DB::beginTransaction();
             try {
 
+                $reference = 'PRD-'.substr($this->state['designation'], 0, 1).''.$this->state['categorie'].''.Auth::user()->id.''.rand(100000,999999).''.substr($this->state['marque'], 0, 1);
                 $data_create = Product::create([
+                    'reference' => $reference,
                     'designation' => $this->state['designation'],
                     'categorie' => $this->state['categorie'],
                     'model' => $this->state['model'],
                     'unite' => $this->state['unite'],
-                    'prix' => $this->state['prix'],
+                    'marque' => $this->state['marque'],
                     'description' => $this->state['description'],
                     'signature' => Auth::user()->id,
                 ]);

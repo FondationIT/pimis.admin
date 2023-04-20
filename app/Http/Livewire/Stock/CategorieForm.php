@@ -68,8 +68,10 @@ class CategorieForm extends Component
 
             DB::beginTransaction();
             try {
+                $reference = 'CAT-'.substr($this->state['name'], 0, 1).''.Auth::user()->id.''.rand(100000,999999);
 
                 $data_create = Categorie::create([
+                    'reference' => $reference,
                     'name' => $this->state['name'],
                     'description' => $this->state['description'],
                     'signature' => Auth::user()->id,

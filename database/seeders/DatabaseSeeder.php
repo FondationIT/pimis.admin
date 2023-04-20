@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'David Tino',
+            'reference' => 'US-ST000000D',
             'email' => 'test@panzi.com',
             'role' => 'Sup',
         ]);

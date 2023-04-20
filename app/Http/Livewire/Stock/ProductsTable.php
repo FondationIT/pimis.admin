@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Stock;
 
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Price;
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
@@ -56,8 +57,13 @@ class ProductsTable extends LivewireDatatable
                 Column::name('unite')
                     ->label('Unite'),
 
-                Column::name('prix')
-                    ->label('prix'),
+                Column::callback(['id'], function ($id) {
+                    $today = date('Y-m-d');
+                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->exists()) {
+                        $delete = '200';
+                    }
+                        return '0';
+                })->label('Prix'),
 
                 BooleanColumn::name('active')
                     ->label('State'),
