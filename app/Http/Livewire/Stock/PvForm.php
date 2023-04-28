@@ -7,29 +7,24 @@ use App\Models\Et_bes;
 use App\Models\DemAch;
 use App\Models\Price;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
-class DaForm extends Component
+class PvForm extends Component
 {
     public $state = [];
     public $modelId = null;
     public $somme = 0;
-    public $eb;
+    public $da;
     protected $listeners = [
-        'formDA',
+        'formPV',
     ];
-    public function formDA($modelId){
+    public function formPV($modelId){
         $this->modelId = $modelId;
-        $this->somme  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
-            ->selectRaw("prices.prix * product_oders.quantite as price")
-            ->where('product_oders.etatBes', $this->modelId)
-            ->get('price')
-            ->sum('price');
 
-        $this->eb =Et_bes::where("id", $this->modelId)->get();
+        $this->da =DemAch::where("id", $this->modelId)->get();
+
+       
+
     }
 
     public function submit()
@@ -65,6 +60,6 @@ class DaForm extends Component
 
     public function render()
     {
-        return view('livewire.stock.da-form');
+        return view('livewire.stock.pv-form');
     }
 }

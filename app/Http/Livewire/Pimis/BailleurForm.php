@@ -92,7 +92,9 @@ class BailleurForm extends Component
             DB::beginTransaction();
             try {
 
+                $reference = 'BLL-'.substr($this->state['name'], 0, 1).''.Auth::user()->id.''.rand(100000,999999).''.substr($this->state['name'], 0, 2);
                 $data_create = Bailleur::create([
+                    'reference' => $reference,
                     'name' => $this->state['name'],
                     'email' => $this->state['email'],
                     'phone' => $this->state['phone'],

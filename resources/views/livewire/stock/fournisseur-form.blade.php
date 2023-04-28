@@ -62,6 +62,7 @@
                             <div class="col-md-6 mb-10">
                                 <label for="secteur">Secteur d'activite *</label>
                                 <select class="form-control select2 @error('secteur') is-invalid @enderror" wire:model.defer="state.secteur" name="secteur">
+                                    <option value="">Selectioner un secteur d'activite</option>
                                     <option value="Fournisseurs commerciaux">Fournisseurs commerciaux</option>
                                     <option value="OSC nationales">OSC nationales</option>
                                     <option value="Organismes gouvernementaux nationaux">Organismes gouvernementaux nationaux</option>
@@ -80,6 +81,7 @@
                             <div class="col-md-6 mb-10">
                                 <label for="type">Type de business *</label>
                                 <select class="form-control select2 @error('type') is-invalid @enderror" wire:model.defer="state.type" name="type">
+                                    <option value="">Selectioner un type de business</option>
                                     <option value="Production/fabrication directe">Production/fabrication directe</option>
                                     <option value="Revete/distribution/fourniture de services">Revete/distribution/fourniture de services</option>
                                     <option value="Autre">Autre</option>
@@ -93,19 +95,21 @@
 
                         </div>
 
-                        <div class="col-md-12 mb-10">
-                            <label for="categorie">Categorie de produit *</label>
-                            <select class="form-control select2 @error('categorie') is-invalid @enderror" wire:model.defer="state.categorie" name="categorie">
-                                <option value=""></option>
-                                @foreach ($categories as $cat)
-                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
-                                @endforeach
-                            </select>
-                            @error('categorie')
-                                <span class="text-red-600" role="alert">
-                                    {{ $message }}
-                                </span>
-                            @enderror
+                        <div class="form-row">
+                            <div class="col-md-12 mb-10">
+                                <label for="categorie">Categorie de produit *</label>
+                                <select class="form-control select2 @error('categorie') is-invalid @enderror" wire:model.defer="state.categorie" name="categorie">
+                                    <option value=""></option>
+                                    @foreach ($categories as $cat)
+                                        <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('categorie')
+                                    <span class="text-red-600" role="alert">
+                                        {{ $message }}
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
 
 

@@ -21,12 +21,15 @@ class EtatBesoinController extends Controller
             'reference' => $ref,
             'agent' => $data['agent'],
             'projet' => $data['projet'],
+            'categorie' => $data['categorie'],
             'comment' => $data['comment'],
         ]);
         $etB = Et_bes::firstWhere('reference', $ref )->id;
         for($count = 0; $count<count($data['product']); $count++)
          {
+            $ref = 'CMD-'.rand(10000,99999).''.$count;
             ProductOder::create([
+                'reference' => $ref,
                 'product' => $data['product'][$count],
                 'etatBes' => $etB,
                 'quantite' => $data['quantite'][$count],

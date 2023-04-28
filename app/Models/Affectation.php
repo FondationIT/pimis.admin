@@ -15,6 +15,7 @@ class Affectation extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'reference',
         'agent',
         'projet',
         'cath',

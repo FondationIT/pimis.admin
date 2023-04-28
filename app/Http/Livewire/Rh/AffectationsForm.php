@@ -91,7 +91,10 @@ class AffectationsForm extends Component
             DB::beginTransaction();
             try {
 
+                $reference = 'AFCT-'.substr($this->state['agent'], 0, 1).''.Auth::user()->id.''.rand(100000,999999).''.substr($this->state['projet'], 0, 1);
+
                 $data_create = Affectation::create([
+                    'reference' => $reference,
                     'agent' => $this->state['agent'],
                     'projet' => $this->state['projet'],
                     'cath' => $this->state['cath'],

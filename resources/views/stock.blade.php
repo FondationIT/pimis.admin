@@ -6,6 +6,7 @@
 <livewire:stock.da-form />
 <livewire:stock.fournisseur-form />
 <livewire:stock.prix-form />
+<livewire:stock.pv-form />
 
 
 

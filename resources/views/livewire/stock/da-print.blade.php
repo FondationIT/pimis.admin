@@ -60,7 +60,7 @@
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.$prod->description}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix * $prod->quantite }}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.App\Models\Product::firstWhere('id', $prod->product)->marque.' '.App\Models\Product::firstWhere('id', $prod->product)->model.' '.$prod->description}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>$ {{ App\Models\Price::firstWhere('product', $prod->product)->prix}}</td><td>$ {{ App\Models\Price::firstWhere('product', $prod->product)->prix * $prod->quantite }}</td>
                                         </tr>
                                     @endforeach
 
@@ -77,7 +77,7 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Demmandeur</strong></th><th><strong>Finance</strong></th><th><strong>Logistique</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
+                                    <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -92,7 +92,7 @@
                                     </td>
 
                                     <td>
-                                        <span>Comptable</span><br><br>
+                                        <span>Logistique</span><br><br>
                                         @if (isset($valid1[0]) && !empty($valid1[0]))
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
@@ -103,7 +103,7 @@
                                     </td>
 
                                     <td>
-                                        <span>Logistique</span><br><br>
+                                        <span>Comptable</span><br><br>
                                         @if (isset($valid2[0]) && !empty($valid2[0]))
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
                                                 Le {{$valid2[0]->updated_at->format('d/m/Y')}}

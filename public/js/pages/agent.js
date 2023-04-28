@@ -5,26 +5,43 @@ function afficheEBChoix(texte,id){
         $('#unite-'+id).html(texte.item.unite);
     }
 }
-prodEB = '<option value=""  ></option>';
+
 prod = $('#allProdPlus').val()
 prod = JSON.parse(prod)
 
-$.each(prod.bad, function(i, item) {
-    item1= item.designation;
-    prodEB += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
+function afficheCatChoix(id){
 
-});
-$('#prodEB1').html(prodEB);
+    $('.uniteC').html('')
+    $('.prodEB').val('')
+    $('#prodEB1').val('')
+    $('.QteEB').val('')
+    $('.descEB').val('')
+    $('.form-row-all').remove();
+    pr = prod.bad
+    var prr = pr.filter(function(v) {
+        return v.categorie == id;
+
+     });
+     prodEB = '<option value=""  ></option>';
+     $.each(prr, function(i, item) {
+        item1= item.designation;
+        prodEB += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
+
+    });
+    $('#prodEB1').html(prodEB);
+}
+
+
 
 var count = 1;
 $('#eBAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control select2 prodEB" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
+    aBPlus += '<div class="form-row form-row-all" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control select2 prodEB" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
-    aBPlus +='<div class="col-md-3 mb-10"><div class="input-group"><input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text" id="unite-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
+    aBPlus +='<div class="col-md-3 mb-10"><div class="input-group"><input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteC" id="unite-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
 
     aBPlus += '<div class="col-md-5 mb-10"><textarea class="form-control descEB" name="description" id="prodE'+count+'"></textarea></div>'
 
@@ -70,6 +87,7 @@ commForm.onsubmit = function(e) {
    var agent = $('#agentEB').val()
    var comment = $('#commentEB').val()
    var projet = $('#projetEB').val()
+   var categorie = $('#catEB').val()
 
    $('.prodEB').each(function(){
     item = JSON.parse($(this).val())
@@ -90,7 +108,7 @@ commForm.onsubmit = function(e) {
     url: "/etBesReg",
     dataType: 'json',
 
-    data: JSON.stringify(etatBesFormToJSON(produit,qte,descr,agent,projet,comment)),
+    data: JSON.stringify(etatBesFormToJSON(produit,qte,descr,agent,projet,categorie,comment)),
     beforeSend: function() {
         $('#btnEtBes').hide();
         $('#prldEtBes').show();
@@ -126,13 +144,14 @@ commForm.onsubmit = function(e) {
  }
 
 //
- function etatBesFormToJSON(produit,qte,descr,agent,projet,comment) {
+ function etatBesFormToJSON(produit,qte,descr,agent,projet,categorie,comment) {
    return {
      "product":produit,
      "quantite": qte,
      "description": descr,
      "agent": agent,
      "projet": projet,
+     "categorie": categorie,
      "comment": comment
    };
  }

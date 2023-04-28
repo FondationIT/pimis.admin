@@ -21,7 +21,7 @@ class DaTable extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'ebUpdated' => '$refresh'
+        'demAchUpdated' => '$refresh'
     ];
 
     public function printDa($modelId){
@@ -34,18 +34,23 @@ class DaTable extends LivewireDatatable
         $this->emit('printEb',$this->modelId );
     }
 
+    public function formPV($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formPV',$this->modelId );
+    }
+
     public function fApprDa($modelId){
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
             DemAch::find($this->modelId)->update([
-                'niv1' => 1,
+                'niv2' => 1,
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
-                'niv' => 1,
+                'niv' => 2,
                 'motif' => 'Tout es prevu',
             ]);
 
@@ -60,13 +65,13 @@ class DaTable extends LivewireDatatable
         try {
             $this->modelId = $modelId;
             DemAch::find($this->modelId)->update([
-                'niv2' => 1,
+                'niv1' => 1,
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
-                'niv' => 2,
+                'niv' => 1,
                 'motif' => 'Tout es prevu',
             ]);
 
@@ -131,11 +136,10 @@ class DaTable extends LivewireDatatable
     public function builder()
     {
 
-        if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'COMPT1' || Auth::user()->role == 'Sup'|| Auth::user()->role == 'D.A.F'){
+        if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'|| Auth::user()->role == 'D.A.F'){
             return DemAch::query()->orderBy("id", "DESC");
         }elseif(Auth::user()->role == 'LOG1'){
             return DemAch::query()
-            ->where('niv1', true)
             ->orderBy("id", "DESC");
         }elseif (Auth::user()->role == 'C.P') {
 
@@ -150,7 +154,14 @@ class DaTable extends LivewireDatatable
 
             $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
             ->join('affectations', 'affectations.projet', '=', 'et_bes.projet')
-            ->where('affectations.agent', Auth::user()->agent);
+            ->where('affectations.agent', Auth::user()->agent)
+            ->where('dem_aches.niv1', true);
+            return $das;
+        }elseif (Auth::user()->role == 'COMPT1') {
+
+            $das = DemAch::query()
+            ->where('dem_aches.niv1', true)
+            ->orderBy("id", "DESC");
             return $das;
         }
     }
@@ -172,7 +183,7 @@ class DaTable extends LivewireDatatable
                 Column::name('created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv1')
+                BooleanColumn::name('niv2')
                     ->label('Comptable'),
 
                 Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
@@ -187,9 +198,9 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv1'], function ($id,$active,$niv1) {
+                Column::callback(['id','active','niv2'], function ($id,$active,$niv2) {
 
-                    if ($active == true && $niv1 == true) {
+                    if ($active == true && $niv2 == true) {
                         $edit = '';
                         $edit2 = '';
                     }elseif($active == false){
@@ -221,10 +232,10 @@ class DaTable extends LivewireDatatable
                     ->label('Date'),
 
                 BooleanColumn::name('niv1')
-                    ->label('Comptable'),
+                    ->label('Logistique'),
 
                 BooleanColumn::name('niv2')
-                    ->label('Logistique'),
+                    ->label('Comptable'),
 
                 BooleanColumn::name('niv3')
                     ->label('Chef Projet'),
@@ -260,7 +271,7 @@ class DaTable extends LivewireDatatable
                 Column::name('created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv2')
+                BooleanColumn::name('niv1')
                     ->label('Logistique'),
 
                 Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
@@ -275,9 +286,17 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv2'], function ($id,$active,$niv2) {
+                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
-                    if ($active == true && $niv2 == true) {
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
+                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un P.V</span></a>';
+
+                        if (DemAch::where("eb", $id)->exists()) {
+                            $dsa = '<a><span class="badge badge-success">P.V deja faite</span></a>';
+                        }
+                        $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
+                        return $edit;
+                    }else if ($active == true && $niv1 == true) {
                         $edit = '';
                         $edit2 = '';
                     }elseif($active == false){

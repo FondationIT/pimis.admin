@@ -23,7 +23,7 @@ class BonReq extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'ebUpdated' => '$refresh'
+        'bonReqUpdated' => '$refresh'
     ];
 
     public function printEb($modelId){

@@ -22,22 +22,22 @@
                             <li class="nav-item" >
                                 <ul class="nav flex-column">
                                     <li class="nav-item" id="aCatPrix">
-                                        <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
+                                        <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('catPrixUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
                                     </li>
                                     <li class="nav-item" id="etBes">
                                         <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
                                     </li>
                                     <li class="nav-item" id="usMvmt">
-                                        <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
+                                        <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('mvtUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
                                     </li>
                                     <li class="nav-item" id="usTrans">
-                                        <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
+                                        <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('dtUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
                                     </li>
                                     <li class="nav-item" id="usConge">
-                                        <a class="nav-link" href="#" id="button-usConge" data-active="usConge" wire:click="$emit('allUpdated')" data-open="bFile" data-section="usConge">Conge</a>
+                                        <a class="nav-link" href="#" id="button-usConge" data-active="usConge" wire:click="$emit('congeUpdated')" data-open="bFile" data-section="usConge">Conge</a>
                                     </li>
                                     <li class="nav-item" id="contr">
-                                        <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('allUpdated')" data-open="bFile" data-section="contr">Contrat</a>
+                                        <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('contratUpdated')" data-open="bFile" data-section="contr">Contrat</a>
                                     </li>
 
                                 </ul>
@@ -96,7 +96,7 @@
                                             <a class="nav-link" href="#" id="button-miss" data-active="miss" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="miss">Missions</a>
                                         </li>
                                         <li class="nav-item" id="conge">
-                                            <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="conge">Conges</a>
+                                            <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('congeUpdated')" data-open="bRH" data-section="conge">Conges</a>
                                         </li>
                                         <li class="nav-item" id="recrut">
                                             <a class="nav-link" href="#" id="button-recrut" data-active="recrut" wire:click="$emit('recrutementUpdated')" data-open="bRH" data-section="recrut">Recrutement</a>
@@ -119,10 +119,10 @@
                                     <ul class="nav flex-column">
                                         @if (Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                             <li class="nav-item" id="bonReqS">
-                                                <a class="nav-link" href="#" id="button-bonReqS" data-active="bonReqS" data-open="bStock" data-section="bonReqS">Bons de réquisition</a>
+                                                <a class="nav-link" href="#" id="button-bonReqS" data-active="bonReqS" wire:click="$emit('bonReqUpdated')" data-open="bStock" data-section="bonReqS">Bons de réquisition</a>
                                             </li>
                                             <li class="nav-item" id="demAchS">
-                                                <a class="nav-link" href="#" id="button-demAchS" data-active="demAchS" data-open="bStock" data-section="demAchS">Demandes d'achat</a>
+                                                <a class="nav-link" href="#" id="button-demAchS" data-active="demAchS" wire:click="$emit('demAchUpdated')" data-open="bStock" data-section="demAchS">Demandes d'achat</a>
                                             </li>
                                         @endif
 
@@ -132,7 +132,7 @@
                                                 <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" data-section="bonComS">Bons de commande</a>
                                             </li>
                                             <li class="nav-item" id="fournS">
-                                                <a class="nav-link" href="#" id="button-fournS" data-active="fournS" data-open="bStock" data-section="fournS">Fournisseurs</a>
+                                                <a class="nav-link" href="#" id="button-fournS" data-active="fournS" wire:click="$emit('fournisseurUpdated')" data-open="bStock" data-section="fournS">Fournisseurs</a>
                                             </li>
                                             <li class="nav-item" id="contPrixS">
                                                 <a class="nav-link" href="#" id="button-contPrixS" data-active="contPrixS" data-open="bStock" data-section="contPrixS">Contrat & Prix</a>
@@ -167,10 +167,10 @@
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
                                         <li class="nav-item" id="bonReqF">
-                                            <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>
+                                            <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" wire:click="$emit('bonReqUpdated')" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>
                                         </li>
                                         <li class="nav-item" id="demAchF">
-                                            <a class="nav-link" href="#" id="button-demAchF" data-active="demAchF" data-open="bFinance" data-section="demAchF">Demandes d'achat</a>
+                                            <a class="nav-link" href="#" id="button-demAchF" data-active="demAchF" wire:click="$emit('demAchUpdated')" data-open="bFinance" data-section="demAchF">Demandes d'achat</a>
                                         </li>
                                         <li class="nav-item" id="bonpayF">
                                             <a class="nav-link" href="#" id="button-bonpayF" data-active="bonpayF" data-open="bFinance" data-section="bonpayF">Bons de payement</a>
@@ -192,10 +192,10 @@
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
                                         <li class="nav-item" id="bonReqP">
-                                            <a class="nav-link" href="#" id="button-bonReqP" data-active="bonReqP" data-open="bProjet" data-section="bonReqP">Bons de réquisition</a>
+                                            <a class="nav-link" href="#" id="button-bonReqP" data-active="bonReqP" wire:click="$emit('bonReqUpdated')" data-open="bProjet" data-section="bonReqP">Bons de réquisition</a>
                                         </li>
                                         <li class="nav-item" id="demAchP">
-                                            <a class="nav-link" href="#" id="button-demAchP" data-active="demAchP" data-open="bProjet" data-section="demAchP">Demandes d'achat</a>
+                                            <a class="nav-link" href="#" id="button-demAchP" data-active="demAchP" wire:click="$emit('demAchUpdated')" data-open="bProjet" data-section="demAchP">Demandes d'achat</a>
                                         </li>
                                         <li class="nav-item" id="bonpayF">
                                             <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" data-open="bProjet" data-section="bonpayP">Demandes de congé</a>

@@ -20,6 +20,7 @@ class Et_bes extends Model
         'projet',
         'ligne',
         'comment',
+        'categorie',
         'niv1',
         'niv2',
         'active',

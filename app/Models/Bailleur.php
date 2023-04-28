@@ -16,6 +16,7 @@ class Bailleur extends Model
      */
     protected $fillable = [
         'name',
+        'reference',
         'email',
         'phone',
         'active',
@@ -25,7 +26,7 @@ class Bailleur extends Model
         'min2',
         'max2',
         'min3',
-        'maxx3',
+        'max3',
 
     ];
 

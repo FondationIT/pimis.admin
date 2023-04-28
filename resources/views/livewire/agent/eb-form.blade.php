@@ -28,6 +28,22 @@
                                 @foreach ($affectation as $aff)
                                     <option value="{{$aff->projet}}">{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</option>
                                 @endforeach
+
+                            </select>
+                            <div class="invalid-feedback">
+                                Selectionner une option
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-10">
+                            <label for="cat">Categorie de produit</label>
+                            <select class="form-control select2" id="catEB" onchange="afficheCatChoix(this.value)" required>
+                                <option value=""></option>
+
+                                @foreach ($categories as $cat)
+                                    <option value="{{$cat->id}}">{{$cat->name}}</option>
+                                @endforeach
                             </select>
                             <div class="invalid-feedback">
                                 Selectionner une option
@@ -39,7 +55,7 @@
                         <input type="text"  id="allProdPlus" hidden value='{"bad":{{json_encode($products)}} }' >
                         <div class="col-md-3 mb-10">
                             <label for="product">Produit</label>
-                            <select class="form-control select2 prodEB" id="prodEB1" name="product" onchange="afficheEBChoix(this.value,1)" required>
+                            <select class="form-control prodEB" id="prodEB1" name="product" onchange="afficheEBChoix(this.value,1)" required>
 
                             </select>
                             <div class="invalid-feedback">
@@ -51,7 +67,7 @@
                             <div class="input-group">
                                 <input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required>
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="unite-1"></span>
+                                    <span class="input-group-text uniteC" id="unite-1"></span>
                                 </div>
                                 <div class="invalid-feedback">
                                     Le nom d'utilisateur est obligatoire

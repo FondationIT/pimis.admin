@@ -59,10 +59,12 @@ class ProductsTable extends LivewireDatatable
 
                 Column::callback(['id'], function ($id) {
                     $today = date('Y-m-d');
-                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->exists()) {
-                        $delete = '200';
+                    $delete = '<span class="badge badge-danger">Expiré</span>';
+                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
+                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
+                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
                     }
-                        return '0';
+                    return $delete;
                 })->label('Prix'),
 
                 BooleanColumn::name('active')
@@ -88,9 +90,16 @@ class ProductsTable extends LivewireDatatable
 
                 Column::name('unite')
                     ->label('Unite'),
+                Column::callback(['id'], function ($id) {
+                    $today = date('Y-m-d');
+                    $delete = '<span class="badge badge-danger">Expiré</span>';
+                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
+                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
+                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
+                    }
+                    return $delete;
+                })->label('Prix'),
 
-                Column::name('prix')
-                    ->label('prix'),
             ];
 
         }
