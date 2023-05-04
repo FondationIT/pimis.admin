@@ -1,5 +1,13 @@
 <div>
     <section id="bonReqP-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Projet</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bons de réquisitions</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -29,6 +37,14 @@
 
 
     <section id="demAchP-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Projet</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Demandes d'achat</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->

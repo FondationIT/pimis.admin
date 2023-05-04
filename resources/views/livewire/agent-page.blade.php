@@ -1,6 +1,15 @@
 <div>
 
     <section id="aCatPrix-section" class="section js-section u-category-media">
+
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Catalogue de prix</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
         <div class="container">
             <!-- Title -->
@@ -60,6 +69,13 @@
 
 
     <section id="etBes-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Etat de besoin</li>
+            </ol>
+        </nav>
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -88,6 +104,14 @@
 
 
     <section id="usMvmt-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mouvement</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -113,6 +137,14 @@
     </section>
 
     <section id="contr-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contrat</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->

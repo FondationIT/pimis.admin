@@ -7830,8 +7830,7 @@ button.close {
     -webkit-justify-content: space-between;
     -ms-flex-pack: space-between;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-bottom: 25px; }
+    flex-wrap: wrap; }
     .hk-pg-wrapper .hk-pg-header .hk-pg-title {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -7847,7 +7846,7 @@ button.close {
         display: -ms-flexbox;
         display: flex; }
     .hk-pg-wrapper .hk-pg-header > div:first-child, .hk-pg-wrapper .hk-pg-header > div:last-child {
-      margin-bottom: 15px; }
+      margin-bottom: 0px; }
 
 /*Navigation*/
 /*------------------------------------------------------------------
@@ -9398,7 +9397,7 @@ Project:	Marvin
   border-bottom: 1px solid;
   border-radius: 0;
   padding: 12px 15px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   border-color: rgba(50, 65, 72, 0.05); }
   .hk-breadcrumb .breadcrumb .breadcrumb-item {
     font-size: 14px; }

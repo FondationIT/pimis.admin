@@ -1,5 +1,13 @@
 <div>
     <section id="bonReqS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bons de réquisitions</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -24,6 +32,14 @@
     </section>
 
     <section id="demAchS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Demandes d'achat</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -48,6 +64,14 @@
     </section>
 
     <section id="fournS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Fournisseurs</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
@@ -74,6 +98,14 @@
     </section>
 
     <section id="contPrixS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contrat & Prix</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->

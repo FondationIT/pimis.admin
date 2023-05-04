@@ -1,6 +1,6 @@
 
   {{-- entete de page  --}}
-  @include('layouts.head');
+  @include('layouts.head')
 {{-- fin entete de page  --}}
 
 
@@ -34,6 +34,6 @@
     </div>
   </div>
   {{-- entete de page  --}}
-      @include('layouts.script');
+      @include('layouts.script')
     {{-- fin entete de page  --}}
 </body>

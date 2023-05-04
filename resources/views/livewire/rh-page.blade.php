@@ -1,6 +1,15 @@
 <div >
     <section id="art-section" class="section js-section u-category-media">
 
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Resources humaines</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Agents</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+
 
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
@@ -30,6 +39,14 @@
 
 
        <section id="aff-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Resources humaines</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Affectations agents</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
            <!-- Content Wrapper. Contains page content -->
             <div class="container">
                <!-- Title -->
@@ -59,6 +76,14 @@
 
 
        <section id="mvmt-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Resources humaines</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Mouvements agents</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
            <!-- Content Wrapper. Contains page content -->
             <div class="container">
                <!-- Title -->
@@ -85,6 +110,14 @@
 
 
        <section id="recrut-section" class="section js-section u-category-media">
+         <!-- Breadcrumb -->
+         <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Resources humaines</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Recrutements agents</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
            <!-- Content Wrapper. Contains page content -->
             <div class="container">
                <!-- Title -->
