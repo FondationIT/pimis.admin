@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Stock;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
 use App\Models\DemAch;
+use App\Models\Price;
 use App\Models\ValidDa;
 
 use Livewire\Component;
@@ -14,6 +15,8 @@ class DaPrint extends Component
     public $products;
     public $ebs;
     public $das;
+    public $some;
+    public $bailleur;
     public $i = 1;
 
     protected $listeners = [
@@ -30,6 +33,14 @@ class DaPrint extends Component
         $this->valid2 = ValidDa::where("da", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidDa::where("da", $this->modelId)->where("niv", 3)->get();
         $this->valid4 = ValidDa::where("da", $this->modelId)->where("niv", 4)->get();
+
+
+        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
+            ->selectRaw("prices.prix * product_oders.quantite as price")
+            ->where('product_oders.etatBes', $this->das[0]->eb)
+            ->whereDate('prices.debut','<=', $this->das[0]->created_at)->whereDate('prices.fin','>=', $this->das[0]->created_at)
+            ->get('price')
+            ->sum('price');
     }
 
     public function render()

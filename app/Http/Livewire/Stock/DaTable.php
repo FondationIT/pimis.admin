@@ -6,6 +6,8 @@ use App\Models\Et_bes;
 use App\Models\Projet;
 use App\Models\DemAch;
 use App\Models\ValidDa;
+use App\Models\Fournisseur;
+use App\Models\Proforma;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +38,8 @@ class DaTable extends LivewireDatatable
 
     public function formPV($modelId){
         $this->modelId = $modelId;
-        $this->emit('formPV',$this->modelId );
+        $this->emit('formProforma',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
     }
 
     public function fApprDa($modelId){
@@ -152,7 +155,7 @@ class DaTable extends LivewireDatatable
             return $das;
         }elseif (Auth::user()->role == 'COMPT2') {
 
-            $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
+           $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
             ->join('affectations', 'affectations.projet', '=', 'et_bes.projet')
             ->where('affectations.agent', Auth::user()->agent)
             ->where('dem_aches.niv1', true);
@@ -289,11 +292,23 @@ class DaTable extends LivewireDatatable
                 Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
-                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un P.V</span></a>';
 
-                        if (DemAch::where("eb", $id)->exists()) {
-                            $dsa = '<a><span class="badge badge-success">P.V deja faite</span></a>';
+                        $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
+                        ->where("dem_aches.id", $id)->get();
+
+                        $fournisseurs =Fournisseur::where("catProduct", $das[0]->categorie)->get();
+                        $bb = json_encode( $fournisseurs);
+
+                        //$bb = '{"bad":'.$bb.'}';
+
+
+                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+
+                        if (Proforma::where("da", $id)->exists()) {
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
                         }
+
+
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
                         return $edit;
                     }else if ($active == true && $niv1 == true) {

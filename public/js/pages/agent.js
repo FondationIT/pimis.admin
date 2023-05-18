@@ -8,7 +8,6 @@ function afficheEBChoix(texte,id){
 
 prod = $('#allProdPlus').val()
 prod = JSON.parse(prod)
-
 function afficheCatChoix(id){
 
     $('.uniteC').html('')
@@ -18,6 +17,7 @@ function afficheCatChoix(id){
     $('.descEB').val('')
     $('.form-row-all').remove();
     pr = prod.bad
+
     var prr = pr.filter(function(v) {
         return v.categorie == id;
 

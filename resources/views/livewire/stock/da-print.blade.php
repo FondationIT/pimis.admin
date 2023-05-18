@@ -60,9 +60,20 @@
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.App\Models\Product::firstWhere('id', $prod->product)->marque.' '.App\Models\Product::firstWhere('id', $prod->product)->model.' '.$prod->description}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>$ {{ App\Models\Price::firstWhere('product', $prod->product)->prix}}</td><td>$ {{ App\Models\Price::firstWhere('product', $prod->product)->prix * $prod->quantite }}</td>
+                                            
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.App\Models\Product::firstWhere('id', $prod->product)->marque.' '.App\Models\Product::firstWhere('id', $prod->product)->model.' '.$prod->description}}</td>
+
+                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td>
+
+                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+
+                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
                                         </tr>
+
                                     @endforeach
+                                    <tr>
+                                        <td>Total</td><td>{{$some}}</td>
+                                    </tr>
 
                                 @endif
                             </table>

@@ -7,6 +7,8 @@
 <livewire:stock.fournisseur-form />
 <livewire:stock.prix-form />
 <livewire:stock.pv-form />
+<livewire:stock.proforma-form />
+
 
 
 

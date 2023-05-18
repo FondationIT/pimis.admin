@@ -23,7 +23,7 @@ class PvForm extends Component
 
         $this->da =DemAch::where("id", $this->modelId)->get();
 
-       
+
 
     }
 
