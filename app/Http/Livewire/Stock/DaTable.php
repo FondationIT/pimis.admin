@@ -36,9 +36,15 @@ class DaTable extends LivewireDatatable
         $this->emit('printEb',$this->modelId );
     }
 
-    public function formPV($modelId){
+    public function formProforma($modelId){
         $this->modelId = $modelId;
         $this->emit('formProforma',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
+    }
+
+    public function formPV($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formPV',$this->modelId );
         //$this->dispatchBrowserEvent('formProforma');
     }
 
@@ -302,7 +308,7 @@ class DaTable extends LivewireDatatable
                         //$bb = '{"bad":'.$bb.'}';
 
 
-                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formProforma('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
 
                         if (Proforma::where("da", $id)->exists()) {
                             $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';

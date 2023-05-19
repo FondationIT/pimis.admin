@@ -8,67 +8,123 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form wire:submit.prevent='submit'>
+                <form id="registerPv" class="needs-validation">
                     <div class="modal-body">
+                        <div id="messageErrPv"></div>
+
+                        <div class="form-row">
+                            <div class="col-md-4 mb-10">
+                                <label for="description">Reference DA</label>
+                                @if ($da)
+                                <input type="text" class="form-control" value="{{$da[0]->reference}}" readonly>
+                                <input type="text" id="daPv" class="form-control" value="{{$da[0]->id}}" hidden>
+                                @endif
+
+                            </div>
+                            <div class="col-md-8 mb-10">
+                                <label>Titre PV</label>
+                                <input type="text" class="form-control" id="titrePv" required>
+
+                            </div>
+                        </div>
+                        <hr>
                         <div class="col-sm">
                             <div class="table-wrap">
-                                <div class="table-responsive">
-                                    <table id="edit_datable_1" class="table  table-bordered table-striped mb-0">
+                                <div class="table-responsive" >
+                                    <table class="table  table-bordered table-striped mb-0">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Cost</th>
-                                                <th>Profit</th>
-                                                <th>Fun</th>
+                                                <th>Unite</th>
+                                                @foreach ($proforma as $prof)
+                                                <th>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</th>
+                                                @endforeach
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Car</td>
-                                                <td>100</td>
-                                                <td>200</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bike</td>
-                                                <td>330</td>
-                                                <td>240</td>
-                                                <td>1</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Plane</td>
-                                                <td>430</td>
-                                                <td>540</td>
-                                                <td>3</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Yacht</td>
-                                                <td>100</td>
-                                                <td>200</td>
-                                                <td>0</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Segway</td>
-                                                <td>330</td>
-                                                <td>240</td>
-                                                <td>1</td>
-                                            </tr>
+                                            @foreach ($product as $prod)
+                                                <tr>
+
+                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->designation}}</td>
+                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->unite}}</td>
+                                                    @foreach ($proforma as $prof)
+                                                    <td>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text" id="inputGroupPrepend">$</span>
+                                                            </div>
+                                                            <input type="number" id="prixPv" min="0" class="form-control prixPv" required>
+                                                            <input type="text" id="profPv" class="profPv"  value="{{$prof->id}}" hidden>
+                                                            <input type="text" id="prodPv" class="prodPv" value="{{$prod->id}}" hidden>
+
+                                                        </div>
+                                                    </td>
+                                                    @endforeach
+
+                                                </tr>
+
+                                            @endforeach
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th><strong>TOTAL</strong></th>
-                                                <th></th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
+
                                 </div>
                             </div>
+                        </div><hr>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-10">
+                                <label>Fournisseur selectione</label>
+                                <select class="form-control" id="fournPv" required>
+                                    <option value=""></option>
+                                    @foreach ($proforma as $prof)
+                                        <option value="{{$prof->id}}">{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-10">
+                                <label>Date de cloture</label>
+                                <input type="date" class="form-control" id="datePv" required>
+                            </div>
                         </div>
+                        <div class="form-row">
+                            <input id="allPartPVPlus" value="{{$agents}}" hidden>
+                            <div class="col-md-6 mb-10">
+                                <label>Observation</label>
+                                <textarea type="" class="form-control" id="obsPv" required></textarea>
+                            </div>
+
+                            <div class="col-md-6 mb-10">
+                                <label>Justificatiom</label>
+                                <textarea type="" class="form-control" id="justPv" required></textarea>
+                            </div>
+                        </div><hr>
+
+                        <div class="form-row">
+                            <div class="col-md-3 mb-10">
+
+                            </div>
+
+                            <div class="col-md-6 mb-10">
+                                <label>Les participants</label>
+                                <select class="form-control fournPartPV" id="agPv1" required>
+                                    <option value=""></option>
+                                    @foreach ($agents as $agent)
+                                        <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-10">
+
+                            </div>
+                        </div>
+                        <div id="autrePartPV">
+                        </div>
+                        <a href="#" id="partPVAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
                     </div>
+
                     <div class="modal-footer">
-                        <button class="btn btn-primary" wire:loading.attr='disabled' id="btnCat" type="submit">Valider</button>
+                        <button class="btn btn-primary" id="btnPv" type="submit">Valider</button>
+                        <div class="loader-pendulums" id="prldPv" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
                     </div>
                 </form>
             </div>

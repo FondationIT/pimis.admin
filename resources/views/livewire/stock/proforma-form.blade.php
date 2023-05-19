@@ -184,11 +184,8 @@
 
                         <div id="autreProf">
                         </div>
-                        @if ($bailleur)
 
-                            <a href="#" id="profAdd" style="float: right;" @if ($bailleur[0]->min1 <= $some && $some <= $bailleur[0]->max1) hidden @endif><i class="icon-plus txt-danger"></i></a>
-
-                        @endif
+                        <a href="#" id="profAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
 
                     </div>
                     <div class="modal-footer">

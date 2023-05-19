@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Et_bes;
 use App\Models\ProductOder;
 use App\Models\Proforma;
+use App\Models\Pv;
+use App\Models\prixPv;
+use App\Models\signaturePv;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +63,57 @@ class EtatBesoinController extends Controller
                 'signature' => Auth::user()->id,
                 'fournisseur' => $data['fournisseur'][$count],
                 'numero' => $data['reference'][$count],
+            ]);
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+    public function pv(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        $ref = 'PV-'.rand(10000,99999).'-FP'.rand(100,999);
+        Pv::create([
+            'reference' => $ref,
+            'da' => $data['daPv'],
+            'titre' => $data['titrePv'],
+            'fournisseur' => $data['fournPv'],
+            'dateC' => $data['datePv'],
+            'observation' => $data['obsPv'],
+            'justification' => $data['justPv'],
+            'signature' => Auth::user()->id,
+
+        ]);
+
+        $pv = Pv::firstWhere('reference', $ref )->id;
+
+        //$data = json_decode($data->getBody());
+        for($count = 0; $count<count($data['agPv']); $count++)
+         {
+            $ref = 'AGPV-'.rand(10000,99999).'-FP'.rand(100,999);
+            signaturePv::create([
+                'reference' => $ref,
+                'pv' => $pv,
+                'signature' => Auth::user()->id,
+                'agent' => $data['agPv'][$count],
+            ]);
+         }
+
+         for($count = 0; $count<count($data['prixPv']); $count++)
+         {
+            $ref = 'PRPV-'.rand(10000,99999).'-FP'.rand(100,999);
+            prixPv::create([
+                'reference' => $ref,
+                'pv' => $pv,
+                'signature' => Auth::user()->id,
+                'produit' => $data['profPv'][$count],
+                'proforma' => $data['prodPv'][$count],
+                'prix' => $data['rixPv'][$count],
             ]);
          }
 

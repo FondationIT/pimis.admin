@@ -21,10 +21,10 @@ $('#profAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-rowP'+count+'"><div class="col-md-5 mb-10"><label for="fournisseur">Fournisseur</label><select class="form-control fournProf" id="fournP'+count+'" name="fournisseur" required></select><div class="invalid-feedback">Selectionner un fournisseur</div></div>'
+    aBPlus += '<div class="form-row form-row-all" id="form-rowP'+count+'"><div class="col-md-1 mb-10"></div><div class="col-md-5 mb-10"><label for="fournisseur">Fournisseur</label><select class="form-control fournProf" id="fournP'+count+'" name="fournisseur" required></select><div class="invalid-feedback">Selectionner un fournisseur</div></div>'
 
 
-    aBPlus +='<div class="col-md-6 mb-10"><label for="reference">Reference proforma</label><input type="text" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
+    aBPlus +='<div class="col-md-5 mb-10"><label for="reference">Reference proforma</label><input type="text" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
 
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowP'+count+'" class="removeProf text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
@@ -43,11 +43,15 @@ $('#profAdd').on('click', function(e){
 
 });
 
+
+
+
 ///////////////////////////////////////////////////////////////////////
 
            //   VALIDATION FORMULAIRE PROFRMA  //
 
 //////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -88,7 +92,7 @@ commForm.onsubmit = function(e) {
             $('#btnProforma').show();
             $('.close').click()
 
-            Livewire.emit('proformaUpdated')
+            Livewire.emit('demAchUpdated')
 
             $.toast().reset('all');
             $.toast({
@@ -126,3 +130,167 @@ commForm.onsubmit = function(e) {
 });
 
 
+
+
+
+///////////////////////////////////////////////////////////////////////
+                            /////////////////////
+                    /////////////////////////////////////
+
+
+
+
+                            //  SCRIPT PV  //
+
+
+
+           /////////////////////////////////////////////
+                      ///////////////////////
+//////////////////////////////////////////////////////////////////////
+
+var pr = $('#allPartPVPlus').val();
+    pr =JSON.parse(pr)
+
+var count = 1;
+$('#partPVAdd').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+
+    aBPlus +='<div class="form-row form-row-all" id="form-rowPV'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartPV" id="agPv'+count+'" required></select></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowPV'+count+'" class="removePartPV text-red-600"><i class="icon-close txt-danger"></i></a></div><div class="col-md-2 mb-10"></div></div>'
+
+    partPv = '<option value=""  ></option>';
+    $.each(pr, function(i, item) {
+
+        item1= item.firstname;
+        item2= item.lastname;
+        partPv += '<option value='+item.id+'>'+item1+' '+item2+'.</option>';
+        //$('#fournP1').html(fournP);
+    });
+
+    $('#autrePartPV').append(aBPlus);
+    $('#agPv'+count).html(partPv);
+
+
+    $('.removePartPV').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE PV  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+var comm1Form = document.getElementById('registerPv');
+comm1Form.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+   var agPv = [];
+   var prixPv = [];
+   var profPv = [];
+   var prodPv = [];
+   var daPv = $('#daPv').val()
+   var titrePv = $('#titrePv').val()
+   var fournPv = $('#fournPv').val()
+   var datePv = $('#datePv').val()
+   var obsPv = $('#obsPv').val()
+   var justPv = $('#justPv').val()
+
+   $('.fournPartPV').each(function(){
+    agPv.push($(this).val());
+   });
+   $('.prixPv').each(function(){
+    prixPv.push($(this).val());
+   });
+   $('.profPv').each(function(){
+    profPv.push($(this).val());
+   });
+   $('.prodPv').each(function(){
+    prodPv.push($(this).val());
+   });
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/pvReg",
+    dataType: 'json',
+
+    data: JSON.stringify(pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+    beforeSend: function() {
+        $('#btnPv').hide();
+        $('#prldPv').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldPv').hide();
+            $('#btnPv').show();
+            $('.close').click()
+
+            Livewire.emit('demAchUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldPv').hide();
+        $('#btnPv').show();
+        $('#messageErrPv').html(messageErr(data))
+    }
+});
+
+ }
+
+
+
+
+
+
+
+
+function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
+    return {
+      "titrePv":titrePv,
+      "fournPv": fournPv,
+      "daPv": daPv,
+      "datePv":datePv,
+      "obsPv": obsPv,
+      "justPv": justPv,
+      "agPv":agPv,
+      "prixPv": prixPv,
+      "profPv": profPv,
+      "prodPv": prodPv
+    };
+  }

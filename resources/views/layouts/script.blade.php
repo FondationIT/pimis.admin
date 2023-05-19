@@ -62,14 +62,15 @@
     <script src="{{  asset('vendors/select2/dist/js/select2.full.min.js')}}"></script>
     <script src="{{  asset('dist/js/select2-data.js')}}"></script>
 
-    <!-- Editable Table JavaScript -->
-    <script src="vendors/editable-table/mindmup-editabletable.js"></script>
-    <script src="vendors/editable-table/numeric-input-example.js"></script>
-    <script src="dist/js/editable-table-data.js"></script>
+
 
 
     <script src="{{  asset('js/moment.min.js.map')}}"></script>
     <script src="{{  asset('js/nav.js')}}"></script>
+
+
+ 
+
 
 
 
