@@ -95,25 +95,26 @@ class EtatBesoinController extends Controller
         //$data = json_decode($data->getBody());
         for($count = 0; $count<count($data['agPv']); $count++)
          {
-            $ref = 'AGPV-'.rand(10000,99999).'-FP'.rand(100,999);
+            $ref1 = 'AGPV-'.rand(10000,99999).'-FP'.rand(100,999);
             signaturePv::create([
-                'reference' => $ref,
+                'reference' => $ref1,
                 'pv' => $pv,
                 'signature' => Auth::user()->id,
                 'agent' => $data['agPv'][$count],
             ]);
          }
 
+
          for($count = 0; $count<count($data['prixPv']); $count++)
          {
-            $ref = 'PRPV-'.rand(10000,99999).'-FP'.rand(100,999);
+            $ref2 = 'PRPV-'.rand(10000,99999).'-FP'.rand(100,999);
             prixPv::create([
-                'reference' => $ref,
+                'reference' => $ref2,
                 'pv' => $pv,
                 'signature' => Auth::user()->id,
-                'produit' => $data['profPv'][$count],
-                'proforma' => $data['prodPv'][$count],
-                'prix' => $data['rixPv'][$count],
+                'produit' => $data['prodPv'][$count],
+                'proforma' => $data['profPv'][$count],
+                'prix' => $data['prixPv'][$count],
             ]);
          }
 

@@ -8,6 +8,8 @@ use App\Models\DemAch;
 use App\Models\ValidDa;
 use App\Models\Fournisseur;
 use App\Models\Proforma;
+use App\Models\Pv;
+use App\Models\Bc;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +47,12 @@ class DaTable extends LivewireDatatable
     public function formPV($modelId){
         $this->modelId = $modelId;
         $this->emit('formPV',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
+    }
+
+    public function formBC($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formBC',$this->modelId );
         //$this->dispatchBrowserEvent('formProforma');
     }
 
@@ -145,7 +153,7 @@ class DaTable extends LivewireDatatable
     public function builder()
     {
 
-        if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'|| Auth::user()->role == 'D.A.F'){
+        if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'){
             return DemAch::query()->orderBy("id", "DESC");
         }elseif(Auth::user()->role == 'LOG1'){
             return DemAch::query()
@@ -172,6 +180,12 @@ class DaTable extends LivewireDatatable
             ->where('dem_aches.niv1', true)
             ->orderBy("id", "DESC");
             return $das;
+        }else {
+            return DemAch::query()->orderBy("id", "DESC")
+            ->where('dem_aches.niv1', true)
+            ->where('dem_aches.niv2', true)
+            ->where('dem_aches.niv3', true)
+            ->where('dem_aches.niv4', true);
         }
     }
 
@@ -225,7 +239,7 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }if(Auth::user()->role == 'LOG2'){
+        }else if(Auth::user()->role == 'LOG2'){
 
             return [
 
@@ -265,7 +279,7 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }if(Auth::user()->role == 'LOG1'){
+        }else if(Auth::user()->role == 'LOG1'){
 
             return [
 
@@ -314,6 +328,14 @@ class DaTable extends LivewireDatatable
                             $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
                         }
 
+                        if (Pv::where("da", $id)->exists()) {
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
+                        }
+
+                        if (Bc::where("da", $id)->exists()) {
+                            $dsa = '<span class="badge badge-success">Fini</span>';
+                        }
+
 
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
                         return $edit;
@@ -333,7 +355,7 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }if(Auth::user()->role == 'C.P'){
+        }else if(Auth::user()->role == 'C.P'){
 
             return [
 
@@ -381,8 +403,7 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }
-        if(Auth::user()->role == 'D.A.F'){
+        }else if(Auth::user()->role == 'D.A.F'){
 
             return [
 
@@ -433,7 +454,7 @@ class DaTable extends LivewireDatatable
 ////////////////////////ADMIN AND SUPER //////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
-        if(Auth::user()->role == 'Sup'){
+        else if(Auth::user()->role == 'S.E' || Auth::user()->role == 'Sup'){
 
             return [
 
@@ -461,6 +482,32 @@ class DaTable extends LivewireDatatable
                 })->unsortable()
 
 
+            ];
+        }else{
+            return [
+
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
+                })->label('D.A Ref'),
+
+                Column::callback(['eb'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                })->label('B.R Ref'),
+
+                Column::name('created_at')
+                    ->label('Date'),
+
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
+                        $delete = '<span class="badge badge-success">Approuvé</span>';
+                    }elseif($active == false){
+                        $delete = '<span class="badge badge-danger">Refusé</span>';
+                    }else{
+                        $delete = '<span class="badge badge-info">En cours</span>';
+                    }
+                        return $delete ;
+                })->unsortable()
             ];
         }
     }

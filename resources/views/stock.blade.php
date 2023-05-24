@@ -8,6 +8,10 @@
 <livewire:stock.prix-form />
 <livewire:stock.pv-form />
 <livewire:stock.proforma-form />
+<livewire:stock.bc-form />
+
+<livewire:stock.bc-print />
+<livewire:stock.pv-print />
 
 
 

@@ -1,3 +1,4 @@
+@import url(../../vendors/bootstrap/dist/css/bootstrap.min.css);
 /* Tuto Alsacreations : Faites bonne impression - Feuille styles css imprimante */
 
 body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© utilisÃ©e pour la taille de la police  */
@@ -79,8 +80,6 @@ p { /* Modifications : alignement du texte - marges - unitÃ© des marges, polic
 img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
   float:center;
   margin:3pt 6pt 3pt 6pt;
-  padding:8pt;
-  width: 300px;
   opacity: 1;
   position: fixed;
 
@@ -90,11 +89,44 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
     padding: 0px;
     opacity: 1;
 }
-table, tr, th, td{
-    border: 1px solid rgb(145, 145, 145);
+.cache{
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    padding: 0px;
+    opacity: 1;
+}
+.prodT th,.prodT td{
+    border: 1px solid rgba(145, 145, 145, 0.317);
     padding: none;
 }
 
 img.droite {
   float:right;
 }
+div.droite {
+    position: absolute;
+    width: 100%;
+    text-align: right;
+    float:right;
+    margin: auto;
+    right: 0;
+  }
+  div.droite p{
+
+    text-align: right;
+  }
+
+  footer{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+
+  footer p{
+    font-size:10pt;
+  }

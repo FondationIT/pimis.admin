@@ -63,6 +63,67 @@
         </div>
     </section>
 
+
+
+
+    <section id="pvS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">PV d'analyse</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+        <!-- Content Wrapper. Contains page content -->
+         <div class="container">
+            <!-- Title -->
+                <div class="hk-pg-header align-items-top">
+                  <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">PV d'analyse</h3>
+                  </div>
+                </div>
+            <!-- /Title -->
+
+            <!-- Main content -->
+            <!-- Row -->
+            <livewire:stock.pv-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <!-- /Row -->
+
+        </div>
+    </section>
+
+
+
+
+
+    <section id="bonComS-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bons de commande</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+        <!-- Content Wrapper. Contains page content -->
+         <div class="container">
+            <!-- Title -->
+                <div class="hk-pg-header align-items-top">
+                  <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Bons de commande</h3>
+                  </div>
+                </div>
+            <!-- /Title -->
+
+            <!-- Main content -->
+            <!-- Row -->
+            <livewire:stock.bc-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <!-- /Row -->
+
+        </div>
+    </section>
+
     <section id="fournS-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">

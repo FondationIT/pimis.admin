@@ -49,7 +49,7 @@
                     <div class="row">
 
                         <div class="col-lg-12" style="text-align: center">
-                            <table class="table table-striped table-border mb-0">
+                            <table class="table table-striped table-border mb-0 prodT">
                                 <tr>
                                     <th><strong>N<sup>o</sup></strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>Designation</strong></th><th><strong>Detail</strong></th>
                                 </tr>
@@ -110,6 +110,19 @@
 
                         </div>
                     </div>
+
+
+                    <footer >
+                        <hr>
+                        <p>
+                            <strong>Fondation Panzi</strong><br>
+                            Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
+                            Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
+                            <a href="fondationpanzirdc.org">fondationpanzirdc.org</a>
+                            <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
+
+                        </p>
+                    </footer>
 
 
 

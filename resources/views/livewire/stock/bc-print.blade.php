@@ -1,16 +1,17 @@
 <div>
 
-    <div class="modal fade" id="pDaModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
+    <div class="modal fade" id="pBcModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Demmande d'achat</h5>
+                    <h5 class="modal-title">Bon de commande</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
 
-                <div class="modal-body" id="printDa">
+                <div class="modal-body" id="printBc">
+
                     <div class="row">
 
                         <div class="col-lg-3 fix" style="text-align: center">
@@ -20,9 +21,9 @@
                         <div class="col-lg-6 fix" style="text-align: center">
                             <div>
                                 <br>
-                                <h3>DEMMANDE D'ACHAT</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($ebs)
-                                    {{$das[0]->reference}}
+                                <h3>BON DE COMMANDE</h3>
+                                <p class="center">N<sup>o</sup> : <b>@if ($bcs)
+                                    {{$bcs[0]->reference}}
                                 @endif</b></p>
                             </div>
                         </div>
@@ -34,22 +35,27 @@
 
                     <hr class="mbtm">
 
-                    <div class="row" >
-                        @if ($ebs)
+
+                    <div class="row">
+                        @if ($pvs)
                             <div class="col-lg-6" style="text-align: left">
+                                <p>Fournisseur : <strong>{{ App\Models\Fournisseur::firstWhere('id', $pvs[0]->fournisseur)->name}}</strong></p>
                                 <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
-                                <p>Compte : <strong></strong></p>
-                                <p>Motif : </p>
-                                <p>Ligne : </p>
+                                <p>Personne de contact : <strong>{{$bcs[0]->personne}}</strong></p>
+                                <p>Lieu de livraison : <strong>{{$bcs[0]->lieu}}</strong></p>
+                                <p>Delai de livraison : <strong>{{$bcs[0]->delai}}</strong></p>
                             </div>
                             <div class="col-lg-6 droite" style="text-align: right">
-                                <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
-                                <p>Date : <strong>{{$das[0]->created_at->format('d/m/Y')}}</strong></p>
+                                <p>DA-Ref : <strong>{{ $das[0]->reference}}</strong></p>
+                                <p>Date : <strong>{{$bcs[0]->created_at->format('d/m/Y')}}</strong></p>
                             </div>
                         @endif
 
                     </div>
                     <hr>
+
+
+
                     <div class="row">
 
                         <div class="col-lg-12" style="text-align: center">
@@ -61,16 +67,17 @@
                                     @foreach ($products as $prod)
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.App\Models\Product::firstWhere('id', $prod->product)->marque.' '.App\Models\Product::firstWhere('id', $prod->product)->model.' '.$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->produit)->designation.' '.App\Models\Product::firstWhere('id', $prod->produit)->marque.' '.App\Models\Product::firstWhere('id', $prod->produit)->model.' '.$prod->description}}</td>
 
-                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td>
+                                            <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('product', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->produit)->unite}}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+                                            <td>$ {{ $prod->prix }}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+                                            <td>$ {{ $prod->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('product', $prod->produit)->get()[0]->quantite }}</td>
                                         </tr>
 
                                     @endforeach
+
                                     <tr>
                                         <th><strong>Total</strong></th>
                                         <th></th>
@@ -85,30 +92,24 @@
 
                         </div>
                     </div>
-                    <hr style="padding:0px;margin:0px">
-                        <span style="font-size: 12px;padding:0px;margin:0px">Adresse de Livraison/ Contact/ Instructions Spéciales - L'achat s'effectuera si le coût réel ne dépasse pas soit le coût estimatif de plus de 10% soit 2000 $. Au-delà, la DA doit être revue et approuvée à nouveau.</span>
-                    <hr style="padding:0px;margin:0px">
+                    <hr>
+
+
+
+
+
+
+
                     <div class="row">
 
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
+                                    <th><strong>Directeur Administratif etFinancier</strong></th><th><strong>Secrétaire Exécutif(-ve)</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span>Agent</span><br><br>
-                                        @if (isset($das[0]) && !empty($das[0]))
-
-                                            <p class="center" >{{ App\Models\User::firstWhere('id', $das[0]->signature)->name}}<br>
-                                            Le {{$das[0]->created_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $das[0]->signature)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
-
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        <span>Logistique</span><br><br>
+                                        <span></span><br><br>
                                         @if (isset($valid1[0]) && !empty($valid1[0]))
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
@@ -119,40 +120,28 @@
                                     </td>
 
                                     <td>
-                                        <span>Comptable</span><br><br>
+                                        <span></span><br><br>
                                         @if (isset($valid2[0]) && !empty($valid2[0]))
+
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
-                                                Le {{$valid2[0]->updated_at->format('d/m/Y')}}
-                                            </p>
+                                            Le {{$valid2[0]->updated_at->format('d/m/Y')}}</p>
                                             <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid2[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
-                                        @endif
-                                    </td>
 
-                                    <td>
-                                        <span>Chef Projet</span><br><br>
-                                        @if (isset($valid3[0]) && !empty($valid3[0]))
-
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
-                                            Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
-
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        <span>DAF</span><br><br>
-                                        @if (isset($valid4[0]) && !empty($valid4[0]))
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid4[0]->user)->name}}<br>
-                                                Le {{$valid4[0]->updated_at->format('d/m/Y')}}
-                                            </p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid4[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
                                         @endif
                                     </td>
                                 </tr>
                             </table>
 
                         </div>
+                        <div class="col-lg-12" style="text-align: center">
+                            @if (isset($valid2[0]) && !empty($valid2[0]))
+
+                            <img class="cache" src="{{ asset('storage/img/cache/fondation.png')}}" style="text-align: center;float:center;margin:auto;margin-top:-80px;width:200px;height:200px" />
+
+                            @endif
+                        </div>
                     </div>
+
 
 
                     <footer >
@@ -167,12 +156,9 @@
                         </p>
                     </footer>
 
-
-
-
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" onclick="imprimer('printDa')"><i class="icon-printer txt-danger"></i></button>
+                    <button class="btn btn-primary" onclick="imprimer('printBc')"><i class="icon-printer txt-danger"></i></button>
                 </div>
             </div>
 

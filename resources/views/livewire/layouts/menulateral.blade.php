@@ -108,7 +108,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bStock">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
                                 <span class="feather-icon"><i data-feather="package"></i></span>
@@ -126,8 +126,11 @@
                                             </li>
                                         @endif
 
-                                        @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
 
+                                            <li class="nav-item" id="pvS">
+                                                <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" data-section="pvS">PV d'analyse</a>
+                                            </li>
                                             <li class="nav-item" id="bonComS">
                                                 <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" data-section="bonComS">Bons de commande</a>
                                             </li>
@@ -139,7 +142,15 @@
                                             </li>
                                         @endif
 
-                                        @if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+
+                                            @if (Auth::user()->role == 'MAG')
+
+                                                <li class="nav-item" id="bonComS">
+                                                    <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" data-section="bonComS">Bons de commande</a>
+
+                                                </li>
+                                            @endif
                                             <li class="nav-item" id="entreeS">
                                                 <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" data-section="entreeS">Entrées</a>
                                             </li>
