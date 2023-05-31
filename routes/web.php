@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/etBesReg', [App\Http\Controllers\EtatBesoinController::class, 'create'])->name('etBesReg');
 Route::post('/proformaReg', [App\Http\Controllers\EtatBesoinController::class, 'proforma'])->name('proformaReg');
 Route::post('/pvReg', [App\Http\Controllers\EtatBesoinController::class, 'pv'])->name('pvReg');
+Route::post('/brReg', [App\Http\Controllers\EtatBesoinController::class, 'br'])->name('brReg');
 
-Auth::routes();
+
 
 

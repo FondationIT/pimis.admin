@@ -7,6 +7,7 @@ use App\Models\DemAch;
 use App\Models\Bc;
 use App\Models\Fournisseur;
 use App\Models\ValidBc;
+use App\Models\Br;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,12 @@ class BcTable extends LivewireDatatable
         Bc::find($this->modelId)->update([
             'active' => 0,
         ]);
+    }
+
+    public function formBR($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formBR',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
     }
 
 
@@ -239,19 +246,10 @@ class BcTable extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true) {
-                        $edit = '';
-                        $edit2 = '';
-                    }elseif($active == false){
-                        $edit = '';
-                        $edit2 ='';
-                    }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBR('.$id.')" data-toggle="modal" data-target="#brModalForms"><span class="badge badge-info">Receptioner</span></a>';
 
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
-                    }
 
-                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
                 })->unsortable(),
             ];
         }else{

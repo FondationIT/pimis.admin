@@ -13,14 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proformas', function (Blueprint $table) {
+        Schema::create('brs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('da')->constrained()->onDelete('cascade');
+            $table->string('bc')->constrained()->onDelete('cascade');
+            $table->string('projet')->constrained()->onDelete('cascade');
             $table->string('fournisseur')->constrained()->onDelete('cascade');
-            $table->string('numero');
-            $table->string('description')->nullable();
+            $table->string('lieu');
+            $table->string('personne');
+            $table->string('bordereau');
+            $table->string('etat');
+            $table->text('comment')->nullable();
+            $table->boolean('niv1')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -33,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proformas');
+        Schema::dropIfExists('brs');
     }
 };

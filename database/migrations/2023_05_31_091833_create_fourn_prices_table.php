@@ -13,14 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proformas', function (Blueprint $table) {
+        Schema::create('fourn_prices', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('da')->constrained()->onDelete('cascade');
             $table->string('fournisseur')->constrained()->onDelete('cascade');
-            $table->string('numero');
+            $table->string('product')->constrained()->onDelete('cascade');
+            $table->date('debut');
+            $table->date('fin');
             $table->string('description')->nullable();
+            $table->float('prix');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -33,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proformas');
+        Schema::dropIfExists('fourn_prices');
     }
 };

@@ -297,3 +297,143 @@ function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profP
       "prodPv": prodPv
     };
   }
+
+
+
+
+
+
+
+  ///////////////////////////////////////////////////////////////////////
+                            /////////////////////
+                    /////////////////////////////////////
+
+
+
+
+                            //  SCRIPT BR  //
+
+
+
+
+           /////////////////////////////////////////////
+                      ///////////////////////
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE BR  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+var comm2Form = document.getElementById('registerBr');
+comm2Form.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+   var qte = [];
+   var observation = [];
+   var prod = [];
+
+   var bc = $('#bcBr').val()
+   var projet = $('#projetBr').val()
+   var fournisseur = $('#fournisseurBr').val()
+   var personne = $('#personneBr').val()
+   var lieu = $('#lieuBr').val()
+   var bordereau = $('#bordereauBr').val()
+   var etat = $('#etatBr').val()
+   var comment = $('#commentBr').val()
+
+   $('.qteBr').each(function(){
+    qte.push($(this).val());
+   });
+   $('.observationBr').each(function(){
+    observation.push($(this).val());
+   });
+   $('.prodBr').each(function(){
+    prod.push($(this).val());
+   });
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/brReg",
+    dataType: 'json',
+
+    data: JSON.stringify(pvFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment)),
+    beforeSend: function() {
+        $('#btnBr').hide();
+        $('#prldBr').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldBr').hide();
+            $('#btnBr').show();
+            $('.close').click()
+
+            Livewire.emit('demAchUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldBr').hide();
+        $('#btnBr').show();
+        $('#messageErrBr').html(messageErr(data))
+    }
+});
+
+ }
+
+
+
+
+
+
+
+
+function pvFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment) {
+    return {
+      "bc":bc,
+      "projet": projet,
+      "fournisseur": fournisseur,
+      "personne": personne,
+      "lieu": lieu,
+      "bordereau": bordereau,
+      "etat": etat,
+      "prod": prod,
+      "qte": qte,
+      "observation": observation,
+      "comment": comment
+    };
+  }

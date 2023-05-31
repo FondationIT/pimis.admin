@@ -33,54 +33,21 @@
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="designation">Designation *</label>
-                            <input type="text" class="form-control @error('designation') is-invalid @enderror" wire:model.defer="state.designation" name="designation" placeholder="Designation">
-                            @error('designation')
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model.defer="state.name" name="name" placeholder="Designation">
+                            @error('name')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
                             @enderror
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-md-12 mb-10">
-                            <label for="model">Marque *</label>
-                            <input type="text" class="form-control @error('model') is-invalid @enderror" wire:model.defer="state.marque" name="marque" placeholder="Marque">
-                            @error('marque')
-                                <span class="text-red-600" role="alert">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-12 mb-10">
-                            <label for="model">Model *</label>
-                            <input type="text" class="form-control @error('model') is-invalid @enderror" wire:model.defer="state.model" name="model" placeholder="Model">
-                            @error('model')
-                                <span class="text-red-600" role="alert">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
+                    
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
                             <label for="description">Description</label>
                             <textarea class="form-control" wire:model.defer="state.description" name="description"></textarea>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="col-md-12 mb-10">
-                            <label for="unite">Unité *</label>
-                            <input type="text" class="form-control @error('unite') is-invalid @enderror" wire:model.defer="state.unite" name="unite" placeholder="Unité">
-                            @error('unite')
-                                <span class="text-red-600" role="alert">
-                                    {{ $message }}
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" wire:loading.attr='disabled' id="btnCat" type="submit">Valider</button>

@@ -15,14 +15,11 @@ class Price extends Model
      */
     protected $fillable = [
         'reference',
-        'fournisseur',
         'product',
         'prix',
         'debut',
         'fin',
-        'type',
         'signature',
-        'description',
         'active',
     ];
 }

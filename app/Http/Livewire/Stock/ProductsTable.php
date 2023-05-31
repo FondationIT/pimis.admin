@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Categorie;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Price;
@@ -47,25 +48,18 @@ class ProductsTable extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
+        if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
 
             return [
 
-                Column::name('designation')
+                Column::name('name')
                     ->label('Desination'),
 
-                Column::name('unite')
-                    ->label('Unite'),
+                Column::callback(['categorie'], function ($categorie) {
 
-                Column::callback(['id'], function ($id) {
-                    $today = date('Y-m-d');
-                    $delete = '<span class="badge badge-danger">Expiré</span>';
-                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
-                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
-                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
-                    }
-                    return $delete;
-                })->label('Prix'),
+                    $categorie= Categorie::where('id', $categorie)->get();
+                    return $categorie[0]->name;
+                })->label('Categorie'),
 
                 BooleanColumn::name('active')
                     ->label('State'),
@@ -80,29 +74,25 @@ class ProductsTable extends LivewireDatatable
                         return '<div class="flex space-x-1 justify-around">'.$edit . $delete .'</div>';
                 })->unsortable(),
             ];
-
         }else{
 
             return [
 
-                Column::name('designation')
+                Column::name('name')
                     ->label('Desination'),
 
-                Column::name('unite')
-                    ->label('Unite'),
-                Column::callback(['id'], function ($id) {
-                    $today = date('Y-m-d');
-                    $delete = '<span class="badge badge-danger">Expiré</span>';
-                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
-                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
-                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
-                    }
-                    return $delete;
-                })->label('Prix'),
+                Column::callback(['categorie'], function ($categorie) {
 
+                    $categorie= Categorie::where('id', $categorie)->get();
+                    return $categorie[0]->name;
+                })->label('Categorie'),
+
+                BooleanColumn::name('active')
+                    ->label('State'),
             ];
 
         }
+
 
     }
 }

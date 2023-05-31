@@ -17,11 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique();
             $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('fournisseur')->constrained()->onDelete('cascade');
             $table->string('product')->constrained()->onDelete('cascade');
             $table->date('debut');
             $table->date('fin');
-            $table->string('description')->nullable();
             $table->float('prix');
             $table->boolean('active')->default(true);
             $table->timestamps();

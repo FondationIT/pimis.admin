@@ -24,9 +24,19 @@
                                     <li class="nav-item" id="aCatPrix">
                                         <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('catPrixUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
                                     </li>
+
+                                    <li class="nav-item" id="catProd">
+                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('catProdUpdated')" data-open="bFile" data-section="catProd">Categorie & Ptoduit</a>
+                                    </li>
+
                                     <li class="nav-item" id="etBes">
                                         <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
                                     </li>
+
+                                    <li class="nav-item" id="di">
+                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="di">Demmande interne</a>
+                                    </li>
+
                                     <li class="nav-item" id="usMvmt">
                                         <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('mvtUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
                                     </li>
@@ -152,7 +162,7 @@
                                                 </li>
                                             @endif
                                             <li class="nav-item" id="entreeS">
-                                                <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" data-section="entreeS">Entrées</a>
+                                                <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" data-section="entreeS">Bons de reception</a>
                                             </li>
                                             <li class="nav-item" id="sortieS">
                                                 <a class="nav-link" href="#" id="button-sortieS" data-active="sortieS" data-open="bStock" data-section="sortieS">Sorties</a>

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Stock;
+
+use App\Models\Article;
 use App\Models\Product;
 use App\Models\Categorie;
 use Illuminate\Support\Facades\Hash;
@@ -10,27 +12,28 @@ use Illuminate\Support\Facades\DB;
 
 use Livewire\Component;
 
-class ProductForm extends Component
+class ArticleForm extends Component
 {
-
     public $state = [];
     public $modelId;
     protected $listeners = [
-        'productForm',
-        'editProduct',
+        'articleForm',
+        'editArticle',
     ];
 
-    public function productForm(){
+    public function articleForm(){
         $this->reset('state');
         $this->modelId = null;
     }
 
-    public function editProduct($modelId){
+    public function editArticle($modelId){
         $this->modelId = $modelId;
 
         $model = Product::find($this->modelId);
-        $this->state['name'] = $model->name;
-        $this->state['categorie'] = $model->categorie;
+        $this->state['product'] = $model->product;
+        $this->state['model'] = $model->model;
+        $this->state['unite'] = $model->unite;
+        $this->state['marque'] = $model->marque;
         $this->state['description'] = $model->description;
     }
 
@@ -39,8 +42,10 @@ class ProductForm extends Component
     {
 
         $validator = Validator::make($this->state, [
-            'name' => ['required', 'string', 'max:255'],
-            'categorie' => ['required', 'string', 'max:255'],
+            'product' => ['required', 'string', 'max:255'],
+            'model' => ['required', 'string', 'max:255'],
+            'marque' => ['required', 'string', 'max:255'],
+            'unite' => ['required', 'string', 'max:255'],
         ])->validate();
 
         if ($this->modelId != null) {
@@ -49,15 +54,17 @@ class ProductForm extends Component
             try {
 
 
-                Product::find($this->modelId)->update([
-                    'name' => $this->state['name'],
-                    'categorie' => $this->state['categorie'],
+                Article::find($this->modelId)->update([
+                    'product' => $this->state['product'],
+                    'model' => $this->state['model'],
+                    'unite' => $this->state['unite'],
+                    'marque' => $this->state['marque'],
                     'description' => $this->state['description'],
                 ]);
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('articleUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -68,18 +75,20 @@ class ProductForm extends Component
             DB::beginTransaction();
             try {
 
-                $reference = 'PRD-'.substr($this->state['name'], 0, 1).''.$this->state['categorie'].''.Auth::user()->id.''.rand(100000,999999);
-                $data_create = Product::create([
+                $reference = 'ART-'.substr($this->state['model'], 0, 1).''.$this->state['product'].''.Auth::user()->id.''.rand(100000,999999).''.substr($this->state['marque'], 0, 1);
+                $data_create = Article::create([
                     'reference' => $reference,
-                    'name' => $this->state['name'],
-                    'categorie' => $this->state['categorie'],
+                    'product' => $this->state['product'],
+                    'model' => $this->state['model'],
+                    'unite' => $this->state['unite'],
+                    'marque' => $this->state['marque'],
                     'description' => $this->state['description'],
                     'signature' => Auth::user()->id,
                 ]);
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('articleUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -87,10 +96,8 @@ class ProductForm extends Component
         }
 
     }
-
-
     public function render()
     {
-        return view('livewire.stock.product-form',['categories' => Categorie::where("active", "1")->orderBy("id", "DESC")->get(),]);
+        return view('livewire.stock.article-form',['products' => Product::where("active", "1")->orderBy("id", "DESC")->get(),]);
     }
 }
