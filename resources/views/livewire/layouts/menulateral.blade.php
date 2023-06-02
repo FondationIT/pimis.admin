@@ -147,6 +147,9 @@
                                             <li class="nav-item" id="fournS">
                                                 <a class="nav-link" href="#" id="button-fournS" data-active="fournS" wire:click="$emit('fournisseurUpdated')" data-open="bStock" data-section="fournS">Fournisseurs</a>
                                             </li>
+                                            <li class="nav-item" id="prixMarcS">
+                                                <a class="nav-link" href="#" id="button-prixMarcS" data-active="prixMarcS" data-open="bStock" data-section="prixMarcS">Prix du marche</a>
+                                            </li>
                                             <li class="nav-item" id="contPrixS">
                                                 <a class="nav-link" href="#" id="button-contPrixS" data-active="contPrixS" data-open="bStock" data-section="contPrixS">Contrat & Prix</a>
                                             </li>

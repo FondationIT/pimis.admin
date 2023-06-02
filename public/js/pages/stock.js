@@ -380,7 +380,7 @@ comm2Form.onsubmit = function(e) {
     url: "/brReg",
     dataType: 'json',
 
-    data: JSON.stringify(pvFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment)),
+    data: JSON.stringify(brFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment)),
     beforeSend: function() {
         $('#btnBr').hide();
         $('#prldBr').show();
@@ -422,7 +422,7 @@ comm2Form.onsubmit = function(e) {
 
 
 
-function pvFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment) {
+function brFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qte,observation,comment) {
     return {
       "bc":bc,
       "projet": projet,

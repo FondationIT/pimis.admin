@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Stock;
 
-use App\Models\Article;
 use Livewire\Component;
 use App\Models\Fournisseur;
 use App\Models\Product;
@@ -14,13 +13,13 @@ use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
-class PrixTable extends LivewireDatatable
+class FprixTable extends LivewireDatatable
 {
     public $model = Price::class;
     public $modelId;
 
     protected $listeners = [
-        'prixUpdated'=> '$refresh'
+        'fprixUpdated'=> '$refresh'
     ];
 
     /**
@@ -30,7 +29,7 @@ class PrixTable extends LivewireDatatable
      */
     public function edit($modelId){
         $this->modelId = $modelId;
-        $this->emit('editPrix',$this->modelId );
+        $this->emit('editFPrix',$this->modelId );
     }
     public function deletePrix($modelId){
         $this->modelId = $modelId;
@@ -49,8 +48,12 @@ class PrixTable extends LivewireDatatable
     {
         return [
             Column::callback(['product'], function ($x) {
-                return Article::find($x)->marque.' '.Article::find($x)->model ;
+                return Product::find($x)->designation;
             })->label('Produit'),
+
+            Column::callback(['fournisseur'], function ($x) {
+                return Fournisseur::find($x)->name;
+            })->label('Fournisseur'),
 
             Column::name('debut')
                 ->label('Debut'),
