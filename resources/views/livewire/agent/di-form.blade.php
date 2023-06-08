@@ -55,7 +55,7 @@
                          <input type="text"  id="allProdPlus" hidden value='{"bad":{{json_encode($products)}} }' >
                          <div class="col-md-3 mb-10">
                              <label for="product">Produit</label>
-                             <select class="form-control prodEB" id="prodEB1" name="product" onchange="afficheEBChoix(this.value,1)" required>
+                             <select class="form-control prodEB22" id="prodEB12" name="product" onchange="afficheEBChoix(this.value,1)" required>
  
                              </select>
                              <div class="invalid-feedback">
@@ -65,9 +65,9 @@
                          <div class="col-md-3 mb-10">
                              <label for="username">Quantité</label>
                              <div class="input-group">
-                                 <input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required>
+                                 <input type="number" class="form-control QteEB12" name="username"  aria-describedby="inputGroupPrepend" required>
                                  <div class="input-group-prepend">
-                                     <span class="input-group-text uniteC" id="unite-1"></span>
+                                     <span class="input-group-text uniteC" id="unite-177"></span>
                                  </div>
                                  <div class="invalid-feedback">
                                      Le nom d'utilisateur est obligatoire
@@ -76,7 +76,7 @@
                          </div>
                          <div class="col-md-5 mb-10">
                              <label for="description">Aspects spécifiques</label>
-                             <textarea class="form-control descEB" name="description" id="prodE1"></textarea>
+                             <textarea class="form-control descEB1" name="description" id="prodE12"></textarea>
                          </div>
  
  
@@ -91,7 +91,7 @@
                      <div class="form-row">
                          <div class="col-md-12 mb-10">
                              <label for="commentEB">Commentaire</label>
-                             <textarea class="form-control" name="commentEB" id="commentEB"></textarea>
+                             <textarea class="form-control" name="commentEB22" id="commentEB22"></textarea>
                          </div>
                      </div>
  

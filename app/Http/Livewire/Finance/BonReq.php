@@ -37,7 +37,11 @@ class BonReq extends LivewireDatatable
     }
 
     public function apprEb($modelId){
-        DB::beginTransaction();
+        
+        $this->modelId = $modelId;
+        $this->emit('formEbAppr',$this->modelId );
+        
+        /*DB::beginTransaction();
         try {
             $this->modelId = $modelId;
             Et_bes::find($this->modelId)->update([
@@ -55,7 +59,7 @@ class BonReq extends LivewireDatatable
         } catch (\Throwable $th) {
 
             DB::rollBack();
-        }
+        }*/
 
     }
     public function cApprEb($modelId){
@@ -176,7 +180,7 @@ class BonReq extends LivewireDatatable
                         $edit = '';
                         $edit2 ='';
                     }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="apprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click="apprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
                         $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }

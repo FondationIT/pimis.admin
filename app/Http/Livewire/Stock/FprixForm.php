@@ -81,7 +81,7 @@ class FprixForm extends Component
 
                 $today = date('Y-m-d');
 
-                if (Price::where('product', $this->state['product'])->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
+                if (FournPrice::where('product', $this->state['product'])->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
 
                     session()->flash('message','Il existe deja un contrat en cours pour ce produit');
 

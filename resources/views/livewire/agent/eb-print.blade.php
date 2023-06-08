@@ -36,11 +36,16 @@
 
                     <div class="row">
                         @if ($ebs)
-                            <div class="col-lg-12" style="text-align: left">
+                            <div class="col-lg-6" style="text-align: left">
                                 <p>Nom du demandeur : <strong>{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</strong></p>
                                 <p>Projet du demandeur : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
+                                @if ($ligne)
+                                    <p>Ligne bidgetaire : <strong>{{$ligne[0]->libele}} ({{$ligne[0]->code}})</strong></p> 
+                                @endif
+                                
+                            </div>
+                            <div class="col-lg-6 droite" style="text-align: right">
                                 <p>Date : <strong>{{$ebs[0]->created_at->format('d/m/Y')}}</strong></p>
-                                <p>Ligne bidgetaire (Ppale/Sec) : </p>
                             </div>
                         @endif
 
@@ -56,7 +61,7 @@
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation}}</td><td>{{$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td><td>{{$prod->description}}</td>
                                         </tr>
                                     @endforeach
 
@@ -80,7 +85,7 @@
 
                                             <p class="center" >{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}<br>
                                             Le {{$ebs[0]->created_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $ebs[0]->agent)->signature)}}" style="position: relative;width:300px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $ebs[0]->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                         @endif
                                     </td>
@@ -91,7 +96,7 @@
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
                                             Le {{$valid1[0]->updated_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:300px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                         @endif
                                     </td>
@@ -102,7 +107,7 @@
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
                                                 Le {{$valid2[0]->updated_at->format('d/m/Y')}}
                                             </p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid2[0]->user)->signature)}}" style="position: relative;width:300px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid2[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
                                         @endif
                                     </td>
                                 </tr>

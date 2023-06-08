@@ -10,6 +10,7 @@ use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\prixPv;
 use App\Models\signaturePv;
+use App\Models\ValidEb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,32 @@ class EtatBesoinController extends Controller
 
         DB::commit();
 
+        return true;
+
+    }
+
+    public function approuve(Request $data)
+    {
+        DB::beginTransaction();
+        try {
+            
+            Et_bes::find($data['id'])->update([
+                'niv1' => 1,
+                'ligne' => $data['ligne'],
+            ]);
+            ValidEb::create([
+                'user' => Auth::user()->id,
+                'eb' => $data['id'],
+                'resp' => true,
+                'niv' => 1,
+                'motif' => 'Tout es prevu',
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+        }
         return true;
 
     }

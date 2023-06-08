@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Stock;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
 use App\Models\DemAch;
+use App\Models\Ligne;
 use App\Models\Price;
 use App\Models\ValidDa;
 
@@ -19,6 +20,13 @@ class DaPrint extends Component
     public $bailleur;
     public $i = 1;
 
+    public $valid1;
+    public $valid2;
+    public $valid3;
+    public $valid4;
+
+    public $ligne;
+
     protected $listeners = [
         'printDa'
     ];
@@ -33,6 +41,7 @@ class DaPrint extends Component
         $this->valid2 = ValidDa::where("da", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidDa::where("da", $this->modelId)->where("niv", 3)->get();
         $this->valid4 = ValidDa::where("da", $this->modelId)->where("niv", 4)->get();
+        $this->ligne = Ligne::where("code", $this->ebs[0]->ligne)->get();
 
 
         $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')

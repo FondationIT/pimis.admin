@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
 use Livewire\Component;
 use App\Models\Fournisseur;
+use App\Models\FournPrice;
 use App\Models\Product;
 use App\Models\Price;
 use Illuminate\Support\Str;
@@ -15,7 +17,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class FprixTable extends LivewireDatatable
 {
-    public $model = Price::class;
+    public $model = FournPrice::class;
     public $modelId;
 
     protected $listeners = [
@@ -48,7 +50,7 @@ class FprixTable extends LivewireDatatable
     {
         return [
             Column::callback(['product'], function ($x) {
-                return Product::find($x)->designation;
+                return Product::find(Article::find($x)->product)->name.' '.Article::find($x)->marque.' '.Article::find($x)->model ;
             })->label('Produit'),
 
             Column::callback(['fournisseur'], function ($x) {

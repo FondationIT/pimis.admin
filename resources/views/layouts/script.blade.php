@@ -68,13 +68,14 @@
     <script src="{{  asset('js/moment.min.js.map')}}"></script>
     <script src="{{  asset('js/nav.js')}}"></script>
 
+    <script src="{{  asset('js/pages/agent.js')}}"></script>
 
- 
+    <script src="{{  asset('js/pages/stock.js')}}"></script>
 
 
 
 
-<script src="{{  asset('js/pages/stock.js')}}"></script>
+
     @livewireScripts
 
     <script>

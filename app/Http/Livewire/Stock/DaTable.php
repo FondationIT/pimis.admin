@@ -180,6 +180,11 @@ class DaTable extends LivewireDatatable
             ->where('dem_aches.niv1', true)
             ->orderBy("id", "DESC");
             return $das;
+        }else if(Auth::user()->role == 'D.A.F'){
+            return DemAch::query()->orderBy("id", "DESC")
+            ->where('dem_aches.niv1', true)
+            ->where('dem_aches.niv2', true)
+            ->where('dem_aches.niv3', true);
         }else {
             return DemAch::query()->orderBy("id", "DESC")
             ->where('dem_aches.niv1', true)

@@ -1,4 +1,36 @@
+prod = $('#allProdPlus').val()
+art = $('#allArtPlus').val()
+art = JSON.parse(art)
+prod = JSON.parse(prod)
+
+
 function afficheEBChoix(texte,id){
+    
+    $('#unite-'+id).html('');
+    $('#prodE'+id).html('');
+
+    if(texte != ''){
+        texte = JSON.parse(texte)
+    }
+
+    ar = art.bad
+
+    var arr = ar.filter(function(v) {
+        return v.product == texte.item.id;
+
+     })
+    
+    prodE1 = '<option value=""  ></option>';
+    $.each(arr, function(i, item) {
+       item1= texte.item.name+' '+item.marque+' '+item.model;
+       prodE1 += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
+
+   });
+   $('#prodE'+id).html(prodE1);
+    
+}
+
+function afficheEB1Choix(texte,id){
     texte = JSON.parse(texte)
     $('#unite-'+id).html('');
     if(texte){
@@ -6,9 +38,9 @@ function afficheEBChoix(texte,id){
     }
 }
 
-prod = $('#allProdPlus').val()
-prod = JSON.parse(prod)
+
 function afficheCatChoix(id){
+
 
     $('.uniteC').html('')
     $('.prodEB').val('')
@@ -24,7 +56,7 @@ function afficheCatChoix(id){
      });
      prodEB = '<option value=""  ></option>';
      $.each(prr, function(i, item) {
-        item1= item.designation;
+        item1= item.name;
         prodEB += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
 
     });
@@ -39,17 +71,18 @@ $('#eBAdd').on('click', function(e){
     count = count + 1;
     var aBPlus ="";
     aBPlus += '<div class="form-row form-row-all" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control select2 prodEB" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
+    
+    aBPlus += '<div class="col-md-5 mb-10"><select class="form-control descEB" name="description" id="prodE'+count+'"  onchange="afficheEB1Choix(this.value,'+count+')" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
     aBPlus +='<div class="col-md-3 mb-10"><div class="input-group"><input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteC" id="unite-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
-
-    aBPlus += '<div class="col-md-5 mb-10"><textarea class="form-control descEB" name="description" id="prodE'+count+'"></textarea></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-row'+count+'" class="removeEB text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
 
     $('#autreEB').append(aBPlus);
     $('#prodEB'+count).html(prodEB);
+    
 
 
     $('.removeEB').on('click', function(e){
@@ -90,15 +123,25 @@ commForm.onsubmit = function(e) {
    var categorie = $('#catEB').val()
 
    $('.prodEB').each(function(){
-    item = JSON.parse($(this).val())
-    produit.push(item.item.id);
+    var ite = JSON.parse($(this).val())
+    console.log($(this).val())
+    if(ite != null){
+        va = ite.item.id
+        produit.push(va);
+    }
+   });
+   $('.descEB').each(function(){
+    var ite = JSON.parse($(this).val())
+    console.log($(this).val())
+    if(ite != null){
+        va = ite.item.id
+        descr.push(va);
+    }
    });
    $('.QteEB').each(function(){
     qte.push($(this).val());
    });
-   $('.descEB').each(function(){
-    descr.push($(this).val());
-   });
+   
 
 
 
@@ -171,3 +214,131 @@ function imprimer(divName) {
 
  }
 
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+           //   APPROBATION ETAT DE BESOIN(BON DE REQUISITION)  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+function afficheAppChoix(id){
+    
+    ligne = $('#allLigne').val()
+    ligne = JSON.parse(ligne)
+
+    ar = ligne.bad
+    
+    var arr = ar.filter(function(v) {
+        return v.parent == id;
+
+    })
+    line2 = '<option value=""  ></option>';
+    $.each(arr, function(i, item) {
+        line2 += '<option value="'+item.code+'">'+item.libele+' '+item.code+'</option>';
+
+    });
+    $('#line2').html(line2);
+    
+}
+
+function afficheApp1Choix(id){
+
+    ligne = $('#allLigne').val()
+    ligne = JSON.parse(ligne)
+
+    ar = ligne.bad
+    
+    var arr = ar.filter(function(v) {
+        return v.parent == id;
+
+    })
+    line3 = '<option value=""  ></option>';
+    $.each(arr, function(i, item) {
+        line3 += '<option value="'+item.code+'">'+item.libele+' '+item.code+'</option>';
+
+    });
+    $('#line3').html(line3);
+}
+
+function afficheApp2Choix(id){
+
+    ligne = $('#allLigne').val()
+    ligne = JSON.parse(ligne)
+
+    ar = ligne.bad
+    
+    var arr = ar.filter(function(v) {
+        return v.parent == id;
+
+    })
+    line4 = '<option value=""  ></option>';
+    $.each(arr, function(i, item) {
+        line4 += '<option value="'+item.code+'">'+item.libele+' '+item.code+'</option>';
+
+    });
+    $('#line4').html(line4);
+}
+
+
+var commForm5 = document.getElementById('apprEtBes');
+commForm5.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+
+   var line = $('#line4').val()
+   var eb = $('#idEbLigne').val()
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/etBesApp",
+    dataType: 'json',
+
+    data: JSON.stringify({"ligne":line,"id":eb}),
+    beforeSend: function() {
+        $('#btnAppEtBes').hide();
+        $('#prldAppEtBes').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#btnAppEtBes').hide();
+            $('#prldAppEtBes').show();
+            $('.close').click()
+
+            Livewire.emit('ebUpdated')
+            Livewire.emit('bonReqUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldAppEtBes').hide();
+        $('#btnAppEtBes').show();
+        $('messageErrLigne').html(messageErr(data))
+    }
+});
+
+ }

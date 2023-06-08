@@ -212,7 +212,7 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:stock.prix-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <livewire:stock.fprix-table searchable="reference" dates="created_at|d-m-Y" exportable/>
             <!-- /Row -->
 
         </div>
@@ -245,3 +245,4 @@
       </div>
   </section>
 </div>
+

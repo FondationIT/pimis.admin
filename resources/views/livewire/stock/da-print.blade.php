@@ -38,9 +38,8 @@
                         @if ($ebs)
                             <div class="col-lg-6" style="text-align: left">
                                 <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
-                                <p>Compte : <strong></strong></p>
-                                <p>Motif : </p>
-                                <p>Ligne : </p>
+                                <p>Motif : <strong>{{$das[0]->motif}}</strong></p>
+                                <p>Ligne : <strong>{{$ligne[0]->libele}} ({{$ligne[0]->code}})</strong></p></p>
                             </div>
                             <div class="col-lg-6 droite" style="text-align: right">
                                 <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
@@ -61,9 +60,9 @@
                                     @foreach ($products as $prod)
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.App\Models\Product::firstWhere('id', $prod->product)->marque.' '.App\Models\Product::firstWhere('id', $prod->product)->model.' '.$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
-                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td>
+                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
 
                                             <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
 
@@ -134,7 +133,7 @@
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
                                             Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                         @endif
                                     </td>

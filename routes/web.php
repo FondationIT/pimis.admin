@@ -17,6 +17,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/etBesReg', [App\Http\Controllers\EtatBesoinController::class, 'create'])->name('etBesReg');
+Route::post('/etBesApp', [App\Http\Controllers\EtatBesoinController::class, 'approuve'])->name('etBesApp');
+
 Route::post('/proformaReg', [App\Http\Controllers\EtatBesoinController::class, 'proforma'])->name('proformaReg');
 Route::post('/pvReg', [App\Http\Controllers\EtatBesoinController::class, 'pv'])->name('pvReg');
 Route::post('/brReg', [App\Http\Controllers\EtatBesoinController::class, 'br'])->name('brReg');

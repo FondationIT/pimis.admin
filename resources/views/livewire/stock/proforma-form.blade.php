@@ -197,8 +197,7 @@
 
         </div>
     </div>
-    <script src="{{  asset('vendors/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{  asset('js/pages/agent.js')}}"></script>
+    
 
 </div>
 

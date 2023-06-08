@@ -49,7 +49,7 @@ class PrixTable extends LivewireDatatable
     {
         return [
             Column::callback(['product'], function ($x) {
-                return Article::find($x)->marque.' '.Article::find($x)->model ;
+                return Product::find(Article::find($x)->product)->name.' '.Article::find($x)->marque.' '.Article::find($x)->model ;
             })->label('Produit'),
 
             Column::name('debut')
