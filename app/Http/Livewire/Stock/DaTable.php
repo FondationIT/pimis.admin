@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
 use App\Models\Et_bes;
 use App\Models\Projet;
 use App\Models\DemAch;
@@ -10,7 +11,8 @@ use App\Models\Fournisseur;
 use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\Bc;
-
+use App\Models\FournPrice;
+use App\Models\ProductOder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -324,19 +326,26 @@ class DaTable extends LivewireDatatable
                         $fournisseurs =Fournisseur::where("catProduct", $das[0]->categorie)->get();
                         $bb = json_encode( $fournisseurs);
 
+                        $article =ProductOder::where("etatBes", $das[0]->eb)->get();
+                        
+
                         //$bb = '{"bad":'.$bb.'}';
 
 
                         $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formProforma('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
 
-                        if (Proforma::where("da", $id)->exists()) {
-                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-                        }
-
-                        if (Pv::where("da", $id)->exists()) {
+                        if (FournPrice::where("product", $article[0]->description)->exists()) {
                             $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                        }
+                        }else {
+                            if (Proforma::where("da", $id)->exists()) {
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                            }
 
+                            if (Pv::where("da", $id)->exists()) {
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
+                            }
+
+                        }
                         if (Bc::where("da", $id)->exists()) {
                             $dsa = '<span class="badge badge-success">Fini</span>';
                         }

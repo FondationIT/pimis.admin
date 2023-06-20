@@ -7,7 +7,9 @@ use App\Models\Bc;
 use App\Models\Br;
 use App\Models\Et_bes;
 use App\Models\Fournisseur;
+use App\Models\FournPrice;
 use App\Models\ProductOder;
+use App\Models\Proforma;
 use App\Models\Projet;
 use App\Models\Pv;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,6 @@ class BrForm extends Component
     public $da;
     public $eb;
     public $projet;
-    public $pv;
     public $fournisseur;
     public $modelId;
     public $product =[];
@@ -39,9 +40,22 @@ class BrForm extends Component
         $this->da = DemAch::where("id", $this->bc[0]->da)->get();
         $this->eb = Et_bes::where("id", $this->da[0]->eb)->get();
         $this->projet = Projet::where("id", $this->eb[0]->projet)->get();
-        $this->pv = Pv::where("da", $this->da[0]->id)->get();
-        $this->fournisseur = Fournisseur::where("id", $this->pv[0]->fournisseur)->get();
+        
+
         $this->product = ProductOder::where("etatBes", $this->da[0]->eb)->get();
+
+        if (Pv::where("da", $this->da[0]->id)->exists()) {
+            $pv = Pv::where("da", $this->da[0]->id)->get();
+            $fourn = Proforma::where("id", $pv[0]->fournisseur)->get();
+            $this->fournisseur = Fournisseur::where("id", $fourn[0]->fournisseur)->get();
+        }else{
+            $fourn = FournPrice::where("product", $this->product[0]->description)->get();
+            $this->fournisseur = Fournisseur::where("id", $fourn[0]->fournisseur)->get();
+        }
+
+
+        
+        
 
 
     }

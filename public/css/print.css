@@ -89,6 +89,12 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
     padding: 0px;
     opacity: 1;
 }
+.signn1{
+  top:0px; 
+  float:left;
+  padding: 0px;
+  opacity: 1;
+}
 .cache{
     position: absolute;
     margin: auto;

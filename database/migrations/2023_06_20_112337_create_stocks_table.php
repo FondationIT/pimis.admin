@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('br_oders', function (Blueprint $table) {
+        Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('br')->constrained()->onDelete('cascade');
-            $table->string('bc')->constrained()->onDelete('cascade');
-            $table->string('produit')->constrained()->onDelete('cascade');
+            $table->string('product')->constrained()->onDelete('cascade');
+            $table->string('project')->constrained()->onDelete('cascade');
             $table->integer('quantite');
-            $table->text('observation');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('br_oders');
+        Schema::dropIfExists('stocks');
     }
 };

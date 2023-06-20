@@ -244,5 +244,33 @@
 
       </div>
   </section>
+
+  <section id="invS-section" class="section js-section u-category-media">
+    <!-- Breadcrumb -->
+    <nav class="hk-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-light bg-transparent">
+            <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Inventaire</li>
+        </ol>
+    </nav>
+    <!-- /Breadcrumb -->
+    <!-- Content Wrapper. Contains page content -->
+     <div class="container">
+        <!-- Title -->
+            <div class="hk-pg-header align-items-top">
+              <div>
+                <h3 class="hk-pg-title font-weight-600 mb-10">Inventaire</h3>
+              </div>
+            </div>
+        <!-- /Title -->
+
+        <!-- Main content -->
+        <!-- Row -->
+        <livewire:stock.inventaire-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+        <!-- /Row -->
+
+    </div>
+  </section>
+
 </div>
 

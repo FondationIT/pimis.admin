@@ -44,7 +44,7 @@ class DaPrint extends Component
         $this->ligne = Ligne::where("code", $this->ebs[0]->ligne)->get();
 
 
-        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
+        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
             ->selectRaw("prices.prix * product_oders.quantite as price")
             ->where('product_oders.etatBes', $this->das[0]->eb)
             ->whereDate('prices.debut','<=', $this->das[0]->created_at)->whereDate('prices.fin','>=', $this->das[0]->created_at)

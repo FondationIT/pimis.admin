@@ -6,7 +6,7 @@ use App\Models\Pv;
 use App\Models\DemAch;
 use App\Models\Bc;
 use App\Models\Fournisseur;
-
+use App\Models\Proforma;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 class PvTable extends LivewireDatatable
 {
     public $model = Pv::class;
+    public $modelId;
 
     public function printDa($modelId){
         $this->modelId = $modelId;
@@ -43,7 +44,8 @@ class PvTable extends LivewireDatatable
             })->label('Reference DA'),
 
             Column::callback(['fournisseur'], function ($fournisseur) {
-                return Fournisseur::find($fournisseur)->name;
+                $prof = Proforma::find($fournisseur)->fournisseur;
+                return Fournisseur::find($prof)->name;
             })->label('Fournisseur'),
 
             Column::name('titre')

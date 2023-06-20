@@ -17,6 +17,7 @@ class ProformaForm extends Component
     public $modelId = null;
     public $some = 0;
     public $da;
+    public $ebs;
     public $bailleur;
     public $fournisseurs =[];
     protected $listeners = [

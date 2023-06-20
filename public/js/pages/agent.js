@@ -106,7 +106,7 @@ $('#eBAdd').on('click', function(e){
 
 
 
-var commForm = document.getElementById('registerEtBes');
+var commForm = $('#registerEtBes');
 commForm.onsubmit = function(e) {
     $.ajaxSetup({
         headers: {
@@ -288,7 +288,7 @@ function afficheApp2Choix(id){
 }
 
 
-var commForm5 = document.getElementById('apprEtBes');
+var commForm5 = $('#apprEtBes');
 commForm5.onsubmit = function(e) {
     $.ajaxSetup({
         headers: {
@@ -342,3 +342,89 @@ commForm5.onsubmit = function(e) {
 });
 
  }
+
+
+
+
+
+
+
+
+
+ ///////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////
+
+                        //  DEMANDE INTERNE  //
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+prod2 = $('#allProdPlus2').val()
+art2 = $('#allArtPlus2').val()
+art2 = JSON.parse(art2)
+prod2 = JSON.parse(prod2)
+
+
+function afficheDIChoix(texte,id){
+    texte = JSON.parse(texte)
+    $('#uniteDI-'+id).html('');
+    if(texte){
+        $('#uniteDI-'+id).html(texte.item.unite);
+    }
+}
+
+
+function afficheProjectChoix(id){
+
+
+    $('.uniteDI').html('')
+    $('.prodDI').val('')
+    $('#prodDI').val('')
+    $('.QteDI').val('')
+    $('.form-row-all').remove();
+    pr = art2.bad
+
+    var prr = pr.filter(function(v) {
+        return v.categorie == id;
+
+     });
+     prodDI = '<option value=""  ></option>';
+     $.each(prr, function(i, item) {
+        item1= item.name;
+        prodDI += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
+
+    });
+    $('#prodDI1').html(prodDI);
+}
+
+
+var count = 1;
+$('#diAdd').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+    aBPlus += '<div class="form-row form-row-all" id="form-rowDI'+count+'"><div class="col-md-7 mb-10"><select class="form-control select2 prodDI" name="product"  onchange="afficheDIChoix(this.value,'+count+')" id="prodDI'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
+
+
+    aBPlus +='<div class="col-md-4 mb-10"><div class="input-group"><input type="number" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteDI" id="uniteDI-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowDI'+count+'" class="removeDI text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
+
+
+    $('#autreDI').append(aBPlus);
+    $('#prodDI'+count).html(prodDI);
+    
+
+
+    $('.removeDI').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});

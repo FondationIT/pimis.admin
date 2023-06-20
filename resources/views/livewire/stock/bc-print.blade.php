@@ -37,9 +37,9 @@
 
 
                     <div class="row">
-                        @if ($pvs)
+                        @if ($das)
                             <div class="col-lg-6" style="text-align: left">
-                                <p>Fournisseur : <strong>{{ App\Models\Fournisseur::firstWhere('id', $pvs[0]->fournisseur)->name}}</strong></p>
+                                <p>Fournisseur : <strong>{{ App\Models\Fournisseur::firstWhere('id', $prof[0]->fournisseur)->name}}</strong></p>
                                 <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
                                 <p>Personne de contact : <strong>{{$bcs[0]->personne}}</strong></p>
                                 <p>Lieu de livraison : <strong>{{$bcs[0]->lieu}}</strong></p>
@@ -65,15 +65,16 @@
                                 </tr>
                                 @if ($products)
                                     @foreach ($products as $prod)
+
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->produit)->designation.' '.App\Models\Product::firstWhere('id', $prod->produit)->marque.' '.App\Models\Product::firstWhere('id', $prod->produit)->model.' '.$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->model}}</td>
 
-                                            <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('product', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->produit)->unite}}</td>
+                                            <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->produit)->unite}}</td>
 
                                             <td>$ {{ $prod->prix }}</td>
 
-                                            <td>$ {{ $prod->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('product', $prod->produit)->get()[0]->quantite }}</td>
+                                            <td>$ {{ $prod->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
                                         </tr>
 
                                     @endforeach

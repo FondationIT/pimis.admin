@@ -185,6 +185,7 @@ class EtatBesoinController extends Controller
             BrOder::create([
                 'reference' => $ref1,
                 'br' => $br,
+                'bc' => $data['bc'],
                 'signature' => Auth::user()->id,
                 'produit' => $data['prod'][$count],
                 'quantite' => $data['qte'][$count],

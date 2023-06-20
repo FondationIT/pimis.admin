@@ -8,7 +8,11 @@ use App\Models\Bc;
 use App\Models\Fournisseur;
 use App\Models\ValidBc;
 use App\Models\Br;
-
+use App\Models\BrOder;
+use App\Models\Et_bes;
+use App\Models\FournPrice;
+use App\Models\ProductOder;
+use App\Models\Proforma;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -23,6 +27,11 @@ class BcTable extends LivewireDatatable
     public $model = Bc::class;
 
     public $modelId;
+
+    protected $listeners = [
+        'bcUpdated' => '$refresh'
+    ];
+
 
     public function printBc($modelId){
         $this->modelId = $modelId;
@@ -126,8 +135,19 @@ class BcTable extends LivewireDatatable
                 })->label('Reference BC'),
 
                 Column::callback(['da'], function ($da) {
-                    $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                    return Fournisseur::find($x)->name;
+                    if(Pv::where('da', $da)->exists()){
+                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($x)->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }else{
+                        $x = DemAch::where('id', $da)->get()[0]->eb;
+                        $x = Et_bes::where('id', $x)->get()[0]->id;
+                        $x = ProductOder::where('etatBes', $x)->get()[0]->description;
+                        $x = FournPrice::where('product', $x)->get()[0]->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }
+                    
+                    return $x;
                 })->label('Fournisseur'),
 
                 Column::name('lieu')
@@ -174,8 +194,19 @@ class BcTable extends LivewireDatatable
                 })->label('Reference BC'),
 
                 Column::callback(['da'], function ($da) {
-                    $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                    return Fournisseur::find($x)->name;
+                    if(Pv::where('da', $da)->exists()){
+                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($x)->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }else{
+                        $x = DemAch::where('id', $da)->get()[0]->eb;
+                        $x = Et_bes::where('id', $x)->get()[0]->id;
+                        $x = ProductOder::where('etatBes', $x)->get()[0]->description;
+                        $x = FournPrice::where('product', $x)->get()[0]->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }
+                    
+                    return $x;
                 })->label('Fournisseur'),
 
                 Column::name('lieu')
@@ -221,8 +252,19 @@ class BcTable extends LivewireDatatable
                 })->label('Reference BC'),
 
                 Column::callback(['da'], function ($da) {
-                    $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                    return Fournisseur::find($x)->name;
+                    if(Pv::where('da', $da)->exists()){
+                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($x)->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }else{
+                        $x = DemAch::where('id', $da)->get()[0]->eb;
+                        $x = Et_bes::where('id', $x)->get()[0]->id;
+                        $x = ProductOder::where('etatBes', $x)->get()[0]->description;
+                        $x = FournPrice::where('product', $x)->get()[0]->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }
+                    
+                    return $x;
                 })->label('Fournisseur'),
 
                 Column::name('lieu')
@@ -246,11 +288,29 @@ class BcTable extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBR('.$id.')" data-toggle="modal" data-target="#brModalForms"><span class="badge badge-info">Receptioner</span></a>';
+                    if (Br::where("bc", $id)->exists()) {
+
+                        $bc = Bc::where("id", $id)->get();
+                        $da = DemAch::where("id", $bc[0]->da)->get();
+                        $eb = Et_bes::where("id", $da[0]->eb)->get();
+                        $x = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+                        $y = BrOder::where('bc', $id)->get('quantite')->sum('quantite');
+
+                        if ($x==$y) {
+                            $dsa = '<span class="badge badge-success">Fini</span>';
+                        }else{
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBR('.$id.')" data-toggle="modal" data-target="#brModalForms"><span class="badge badge-info">Suite</span></a>';
+                        }
+
+
+                    }else{
+                        
+                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBR('.$id.')" data-toggle="modal" data-target="#brModalForms"><span class="badge badge-info">Commencer</span></a>';
+                    }
 
 
                         return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
-                })->unsortable(),
+                })->label('Reception'),
             ];
         }else{
             return [
@@ -259,8 +319,19 @@ class BcTable extends LivewireDatatable
                 })->label('Reference BC'),
 
                 Column::callback(['da'], function ($da) {
-                    $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                    return Fournisseur::find($x)->name;
+                    if(Pv::where('da', $da)->exists()){
+                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($x)->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }else{
+                        $x = DemAch::where('id', $da)->get()[0]->eb;
+                        $x = Et_bes::where('id', $x)->get()[0]->id;
+                        $x = ProductOder::where('etatBes', $x)->get()[0]->description;
+                        $x = FournPrice::where('product', $x)->get()[0]->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }
+                    
+                    return $x;
                 })->label('Fournisseur'),
 
                 Column::name('lieu')

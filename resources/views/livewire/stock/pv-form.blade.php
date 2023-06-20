@@ -45,8 +45,8 @@
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->designation}}</td>
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->unite}}</td>
+                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                    <td>{{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                     <td>
                                                         <div class="input-group">
@@ -55,7 +55,7 @@
                                                             </div>
                                                             <input type="number" id="prixPv" min="0" class="form-control prixPv" required>
                                                             <input type="text" id="profPv" class="profPv"  value="{{$prof->id}}" hidden>
-                                                            <input type="text" id="prodPv" class="prodPv" value="{{$prod->id}}" hidden>
+                                                            <input type="text" id="prodPv" class="prodPv" value="{{$prod->description}}" hidden>
 
                                                         </div>
                                                     </td>

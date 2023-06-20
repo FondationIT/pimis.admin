@@ -64,9 +64,9 @@
 
                                             <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->product)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
                                         </tr>
 
                                     @endforeach

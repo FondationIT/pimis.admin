@@ -390,8 +390,11 @@ comm2Form.onsubmit = function(e) {
             $('#prldBr').hide();
             $('#btnBr').show();
             $('.close').click()
+            $('.form-control').val('')
 
             Livewire.emit('demAchUpdated')
+            Livewire.emit('brUpdated')
+            Livewire.emit('bcUpdated')
 
             $.toast().reset('all');
             $.toast({

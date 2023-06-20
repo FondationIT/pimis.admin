@@ -17,6 +17,7 @@ class BrOder extends Model
     protected $fillable = [
         'reference',
         'br',
+        'bc',
         'produit',
         'quantite',
         'observation',

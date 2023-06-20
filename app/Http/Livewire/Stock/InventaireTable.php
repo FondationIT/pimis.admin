@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Livewire\Stock;
-
 use App\Models\Pv;
 use App\Models\DemAch;
 use App\Models\Bc;
@@ -18,7 +17,7 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Facades\DB;
 
-class BrTable extends LivewireDatatable
+class InventaireTable extends LivewireDatatable
 {
     public $model = Br::class;
     public $modelId;
@@ -40,14 +39,18 @@ class BrTable extends LivewireDatatable
 
             Column::callback(['projet'], function ($projet) {
                 return Projet::find($projet)->name;
-            })->label('Projet'),
+            })->label('Projet')->searchable()
+            ->filterable(),
 
             Column::callback(['fournisseur'], function ($fourn) {
                 return Fournisseur::find($fourn)->name;
             })->label('Fournisseur'),
 
             Column::callback(['active'], function ($active) {
+
+               
                     $delete = '<span class="badge badge-info">En cours</span>';
+                
                     return $delete ;
             })->unsortable(),
 
