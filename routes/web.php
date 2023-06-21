@@ -22,6 +22,7 @@ Route::post('/etBesApp', [App\Http\Controllers\EtatBesoinController::class, 'app
 Route::post('/proformaReg', [App\Http\Controllers\EtatBesoinController::class, 'proforma'])->name('proformaReg');
 Route::post('/pvReg', [App\Http\Controllers\EtatBesoinController::class, 'pv'])->name('pvReg');
 Route::post('/brReg', [App\Http\Controllers\EtatBesoinController::class, 'br'])->name('brReg');
+Route::post('/diReg', [App\Http\Controllers\EtatBesoinController::class, 'di'])->name('diReg');
 
 
 

@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('valid_dis', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
-            $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('project')->constrained()->onDelete('cascade');
-            $table->integer('quantite')->default(0);
-            $table->boolean('active')->default(true);
+            $table->string('user')->constrained()->onDelete('cascade');
+            $table->string('di')->constrained()->onDelete('cascade');
+            $table->boolean('resp');
+            $table->string('niv');
+            $table->string('motif');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('valid_dis');
     }
 };

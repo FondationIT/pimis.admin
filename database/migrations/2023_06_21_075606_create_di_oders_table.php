@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('di_oders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
             $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('project')->constrained()->onDelete('cascade');
-            $table->integer('quantite')->default(0);
+            $table->string('di')->constrained()->onDelete('cascade');
+            $table->integer('quantite');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('di_oders');
     }
 };

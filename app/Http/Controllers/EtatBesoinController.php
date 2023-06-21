@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Br;
 use App\Models\BrOder;
+use App\Models\Di;
+use App\Models\DiOder;
 use App\Models\Et_bes;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\prixPv;
 use App\Models\signaturePv;
+use App\Models\Stock;
 use App\Models\ValidEb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -191,6 +194,26 @@ class EtatBesoinController extends Controller
                 'quantite' => $data['qte'][$count],
                 'observation' => $data['observation'][$count],
             ]);
+
+            if(Stock::where('project', $data['projet'],)->where('product', $data['prod'][$count])->exists()){
+
+                $ref1 = 'ODR-BR-'.rand(10000,99999).'-FP'.rand(100,999);
+                $qte = Stock::where('project', $data['projet'],)->where('product', $data['prod'][$count])->get()[0]->quantite;
+                
+                Stock::where('project', $data['projet'],)->where('product', $data['prod'][$count])
+                ->update([
+                    'quantite' => $data['qte'][$count] + $qte,
+                ]);
+
+            }else{
+                $ref1 = 'ST-ART-'.rand(10000,99999).'-FP'.rand(100,999);
+                Stock::create([
+                    'reference' => $ref1,
+                    'project' => $data['projet'],
+                    'product' => $data['prod'][$count],
+                    'quantite' => $data['qte'][$count],
+                ]);
+            }
          }
 
         DB::commit();
@@ -198,4 +221,46 @@ class EtatBesoinController extends Controller
         return true;
 
     }
+
+    public function di(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        //$data = json_decode($data->getBody());
+        $ref = 'DI-'.rand(10000,99999).'-FP'.rand(100,999);
+        Di::create([
+            'reference' => $ref,
+            'agent' => $data['agent'],
+            'projet' => $data['projet'],
+        ]);
+        $di = Di::firstWhere('reference', $ref )->id;
+        for($count = 0; $count<count($data['product']); $count++)
+         {
+            $ref = 'DI-ODR-'.rand(10000,99999).''.$count;
+            DiOder::create([
+                'reference' => $ref,
+                'product' => $data['product'][$count],
+                'di' => $di,
+                'quantite' => $data['quantite'][$count],
+            ]);
+
+            if(Stock::where('project', $data['projet'],)->where('product', $data['product'][$count])->exists()){
+
+                $qte = Stock::where('project', $data['projet'],)->where('product', $data['product'][$count])->get()[0]->quantite;
+                
+                Stock::where('project', $data['projet'],)->where('product', $data['product'][$count])
+                ->update([
+                    'quantite' => $qte - $data['quantite'][$count],
+                ]);
+
+            }
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
 }

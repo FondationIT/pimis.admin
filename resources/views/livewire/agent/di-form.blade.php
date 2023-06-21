@@ -39,10 +39,11 @@
 
                      <div class="form-row">
                          <input type="text"  id="allProdPlus2" hidden value='{"bad":{{json_encode($products)}} }' >
+                         <input type="text"  id="allStockPlus2" hidden value='{"bad":{{json_encode($stock)}} }' >
                          <input type="text"  id="allArtPlus2" hidden value='{"bad":{{json_encode($articles)}} }' >
                          <div class="col-md-7 mb-10">
                              <label for="product">Produit</label>
-                             <select class="form-control prodDI" id="prodDI1" name="product" onchange="afficheDIChoix(this.value,1)" required>
+                             <select class="form-control select2 prodDI" id="prodDI1" name="product" onchange="afficheDIChoix(this.value,1)" required>
  
                              </select>
                              <div class="invalid-feedback">
@@ -52,7 +53,7 @@
                          <div class="col-md-4 mb-10">
                              <label for="username">Quantité</label>
                              <div class="input-group">
-                                 <input type="number" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required>
+                                 <input type="number" step="1" min="1" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required>
                                  <div class="input-group-prepend">
                                      <span class="input-group-text uniteDI" id="uniteDI-1"></span>
                                  </div>

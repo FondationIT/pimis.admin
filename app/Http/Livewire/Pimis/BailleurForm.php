@@ -12,6 +12,7 @@ use Livewire\Component;
 class BailleurForm extends Component
 {
     public $state = [];
+    public $modelId;
     protected $listeners = [
         'bailleurForm',
         'editBailleur',

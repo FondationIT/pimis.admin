@@ -37,8 +37,9 @@ class EbTable extends LivewireDatatable
     {
 
         return [
-            Column::name('reference')
-                ->label('Reference'),
+            Column::callback(['reference','id'], function ($reference,$id) {
+                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+            })->label('Reference'),
 
             Column::callback(['projet'], function ($projet) {
                 return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
@@ -60,15 +61,8 @@ class EbTable extends LivewireDatatable
                 }elseif($active == false){
                     $delete = '<span class="badge badge-danger">Refusé</span>';
                 }else{
-                    $delete = '<span class="badge badge-info">En cours</span>';
+                    $delete = '<span class="badge badge-info">En attente</span>';
                 }
-                    return $delete ;
-            })->unsortable(),
-
-            Column::callback(['id'], function ($id) {
-
-                $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms"><i class="icon-printer txt-danger"></i></a>';
-
                     return $delete ;
             })->unsortable(),
         ];

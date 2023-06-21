@@ -106,7 +106,7 @@ $('#eBAdd').on('click', function(e){
 
 
 
-var commForm = $('#registerEtBes');
+var commForm = document.getElementById('registerEtBes');
 commForm.onsubmit = function(e) {
     $.ajaxSetup({
         headers: {
@@ -364,8 +364,9 @@ commForm5.onsubmit = function(e) {
 ///////////////////////////////////////////////////////////////////////
 
 prod2 = $('#allProdPlus2').val()
-art2 = $('#allArtPlus2').val()
-art2 = JSON.parse(art2)
+stock2 = $('#allStockPlus2').val()
+
+stock2 = JSON.parse(stock2)
 prod2 = JSON.parse(prod2)
 
 
@@ -386,16 +387,25 @@ function afficheProjectChoix(id){
     $('#prodDI').val('')
     $('.QteDI').val('')
     $('.form-row-all').remove();
-    pr = art2.bad
+    pr = stock2.bad
 
     var prr = pr.filter(function(v) {
-        return v.categorie == id;
+        return v.project == id;
 
      });
      prodDI = '<option value=""  ></option>';
      $.each(prr, function(i, item) {
-        item1= item.name;
-        prodDI += '<option value=\'{"item":'+JSON.stringify(item)+'}\'>'+item1+'</option>';
+
+        art2 = $('#allArtPlus2').val()
+        art2 = JSON.parse(art2)
+        art2 = art2.bad
+
+        arr = art2.filter(function(v) {
+            return v.id == item.product;
+        });
+
+        item1= arr[0].marque+' '+arr[0].model+' '+arr[0].description;
+        prodDI += '<option value=\'{"item":'+JSON.stringify(arr[0])+'}\'>'+item1+'</option>';
 
     });
     $('#prodDI1').html(prodDI);
@@ -410,7 +420,7 @@ $('#diAdd').on('click', function(e){
     aBPlus += '<div class="form-row form-row-all" id="form-rowDI'+count+'"><div class="col-md-7 mb-10"><select class="form-control select2 prodDI" name="product"  onchange="afficheDIChoix(this.value,'+count+')" id="prodDI'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
-    aBPlus +='<div class="col-md-4 mb-10"><div class="input-group"><input type="number" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteDI" id="uniteDI-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
+    aBPlus +='<div class="col-md-4 mb-10"><div class="input-group"><input type="number" step="1" min="1" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteDI" id="uniteDI-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowDI'+count+'" class="removeDI text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
@@ -428,3 +438,91 @@ $('#diAdd').on('click', function(e){
     });
 
 });
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE DEMANDE INTERNE  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+var commForm = document.getElementById('registerDI')
+commForm.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+   var produit = [];
+   var qte = [];
+   var agent = $('#agentDI').val()
+   var projet = $('#projetDI').val()
+
+   $('.prodDI').each(function(){
+    var ite = JSON.parse($(this).val())
+    console.log($(this).val())
+    if(ite != null){
+        va = ite.item.id
+        produit.push(va);
+    }
+   });
+   $('.QteDI').each(function(){
+    qte.push($(this).val());
+   });
+   
+
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/diReg",
+    dataType: 'json',
+
+    data: JSON.stringify(diFormToJSON(produit,qte,agent,projet)),
+    beforeSend: function() {
+        $('#btnDI').hide();
+        $('#prldDI').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldDI').hide();
+            $('#btnDI').show();
+            $('.close').click()
+
+            Livewire.emit('dipdated')
+            Livewire.emit('fichStUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldDI').hide();
+        $('#btnDI').show();
+        $('#messageErrDI').html(messageErr(data))
+    }
+});
+
+ }
+
+//
+ function diFormToJSON(produit,qte,agent,projet) {
+   return {
+     "product":produit,
+     "quantite": qte,
+     "agent": agent,
+     "projet": projet,
+   };
+ }

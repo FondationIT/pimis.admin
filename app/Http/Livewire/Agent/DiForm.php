@@ -6,6 +6,7 @@ use App\Models\Affectation;
 use App\Models\Article;
 use App\Models\Product;
 use App\Models\Categorie;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,7 @@ class DiForm extends Component
             'affectation' => Affectation::where("active", "1")->where("agent", Auth::user()->agent)->orderBy("id", "DESC")->get(),
             'products' => Product::where("active", "1")->orderBy("id", "DESC")->get(),
             'categories' => Categorie::where("active", true)->orderBy("id", "DESC")->get(),
+            'stock' => Stock::where("quantite", ">", 0)->where("active", "1")->orderBy("id", "DESC")->get(),
             'articles' => Article::where("active", "1")->orderBy("id", "DESC")->get(),
 
         ]);

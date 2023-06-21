@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('dis', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('project')->constrained()->onDelete('cascade');
-            $table->integer('quantite')->default(0);
+            $table->string('agent')->constrained()->onDelete('cascade');
+            $table->string('projet')->constrained()->onDelete('cascade');
+            $table->boolean('niv1')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('dis');
     }
 };

@@ -29,6 +29,10 @@
                                         <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('catProdUpdated')" data-open="bFile" data-section="catProd">Categorie & Ptoduit</a>
                                     </li>
 
+                                    <li class="nav-item" id="fichSt">
+                                        <a class="nav-link" href="#" id="button-fichSt" data-active="fichSt" wire:click="$emit('fichStUpdated')" data-open="bFile" data-section="fichSt">Fiche de stock</a>
+                                    </li>
+
                                     <li class="nav-item" id="etBes">
                                         <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
                                     </li>
@@ -167,8 +171,8 @@
                                             <li class="nav-item" id="entreeS">
                                                 <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" data-section="entreeS">Bons de reception</a>
                                             </li>
-                                            <li class="nav-item" id="sortieS">
-                                                <a class="nav-link" href="#" id="button-sortieS" data-active="sortieS" data-open="bStock" data-section="sortieS">Sorties</a>
+                                            <li class="nav-item" id="diS">
+                                                <a class="nav-link" href="#" id="button-diS" data-active="diS" wire:click="$emit('ebUpdated')" data-open="bStock" data-section="diS">Demmande interne</a>
                                             </li>
                                         @endif
                                         <li class="nav-item" id="invS">
@@ -220,6 +224,9 @@
                                         </li>
                                         <li class="nav-item" id="demAchP">
                                             <a class="nav-link" href="#" id="button-demAchP" data-active="demAchP" wire:click="$emit('demAchUpdated')" data-open="bProjet" data-section="demAchP">Demandes d'achat</a>
+                                        </li>
+                                        <li class="nav-item" id="diP">
+                                            <a class="nav-link" href="#" id="button-diP" data-active="diP" wire:click="$emit('ebUpdated')" data-open="bProjet" data-section="diP">Demmande interne</a>
                                         </li>
                                         <li class="nav-item" id="bonpayF">
                                             <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" data-open="bProjet" data-section="bonpayP">Demandes de congé</a>
