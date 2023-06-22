@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Stock;
 
 use App\Models\Article;
+use App\Models\Bailleur;
 use App\Models\Et_bes;
 use App\Models\Projet;
 use App\Models\DemAch;
@@ -327,6 +328,10 @@ class DaTable extends LivewireDatatable
                         $bb = json_encode( $fournisseurs);
 
                         $article =ProductOder::where("etatBes", $das[0]->eb)->get();
+
+                        $ebs = Et_bes::where("id", $das[0]->eb)->get();
+                        $projet = Projet::where("id", $ebs[0]->projet)->get();
+                        $bailleur = Bailleur::where("id", $projet[0]->bailleur)->get();
                         
 
                         //$bb = '{"bad":'.$bb.'}';
@@ -334,21 +339,30 @@ class DaTable extends LivewireDatatable
 
                         $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formProforma('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
 
-                        if (FournPrice::where("product", $article[0]->description)->exists()) {
-                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                        }else {
-                            if (Proforma::where("da", $id)->exists()) {
-                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-                            }
+                        $some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
+                        ->selectRaw("prices.prix * product_oders.quantite as price")
+                        ->where('product_oders.etatBes', $das[0]->eb)
+                        ->whereDate('prices.debut','<=', $das[0]->created_at)->whereDate('prices.fin','>=', $das[0]->created_at)
+                        ->get('price')
+                        ->sum('price');
 
-                            if (Pv::where("da", $id)->exists()) {
+                        
+                            if (FournPrice::where("product", $article[0]->description)->exists()) {
                                 $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                            }
+                            }else {
+                                if (Proforma::where("da", $id)->exists()) {
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                }
 
-                        }
-                        if (Bc::where("da", $id)->exists()) {
-                            $dsa = '<span class="badge badge-success">Fini</span>';
-                        }
+                                if (Pv::where("da", $id)->exists()) {
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
+                                }
+
+                            }
+                            if (Bc::where("da", $id)->exists()) {
+                                $dsa = '<span class="badge badge-success">Fini</span>';
+                            }
+                        
 
 
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';

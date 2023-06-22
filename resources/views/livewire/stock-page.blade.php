@@ -297,7 +297,7 @@
 
         <!-- Main content -->
         <!-- Row -->
-        <livewire:stock.inventaire-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+        <livewire:stock.inventaire-table  dates="created_at|d-m-Y" exportable/>
         <!-- /Row -->
 
     </div>

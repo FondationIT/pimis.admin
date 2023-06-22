@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Etat de besoin</h5>
+                    <h5 class="modal-title">Demande interne</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -20,7 +20,7 @@
                         <div class="col-lg-6 fix" style="text-align: center">
                             <div>
                                 <br>
-                                <h3>BON DE REQUISITION</h3>
+                                <h3>DEMANDE INTERNE</h3>
                                 <p class="center">N<sup>o</sup> : <b>@if ($ebs)
                                     {{$ebs[0]->reference}}
                                 @endif</b></p>
@@ -37,8 +37,8 @@
                     <div class="row">
                         @if ($ebs)
                             <div class="col-lg-6" style="text-align: left">
-                                <p>Nom du demandeur : <strong>{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</strong></p>
-                                <p>Projet du demandeur : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
+                                <p>Nom du demandeur : <strong>{{ App\Models\User::firstWhere('id', $dis[0]->agent)->name}}</strong></p>
+                                <p>Projet du demandeur : <strong>{{ App\Models\Projet::firstWhere('id', $dis[0]->projet)->name}}</strong></p>
                                 
                                     <p>Ligne bidgetaire : 
                                         @if ($ligne && isset($ligne[0]))<strong>{{$ligne[0]->libele}} ({{$ligne[0]->code}})</strong>@endif

@@ -39,13 +39,12 @@ class ProformaForm extends Component
         $projet = Projet::where("id", $this->ebs[0]->projet)->get();
         $this->bailleur = Bailleur::where("id", $projet[0]->bailleur)->get();
 
-        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
+        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
         ->selectRaw("prices.prix * product_oders.quantite as price")
         ->where('product_oders.etatBes', $this->da[0]->eb)
         ->whereDate('prices.debut','<=', $this->da[0]->created_at)->whereDate('prices.fin','>=', $this->da[0]->created_at)
         ->get('price')
         ->sum('price');
-
 
 
 

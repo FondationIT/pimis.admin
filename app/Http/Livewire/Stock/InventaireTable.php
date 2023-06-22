@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Livewire\Stock;
+
+use App\Models\Article;
 use App\Models\Pv;
 use App\Models\DemAch;
 use App\Models\Bc;
 use App\Models\Fournisseur;
 use App\Models\ValidBc;
 use App\Models\Br;
+use App\Models\BrOder;
+use App\Models\DiOder;
 use App\Models\Projet;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -19,47 +23,50 @@ use Illuminate\Support\Facades\DB;
 
 class InventaireTable extends LivewireDatatable
 {
-    public $model = Br::class;
+    public $model = Article::class;
     public $modelId;
     protected $listeners = [
-        'brUpdated' => '$refresh'
+        'invUpdated' => '$refresh'
     ];
-
-    public function printBr($modelId){
-        $this->modelId = $modelId;
-        $this->emit('printBr',$this->modelId );
-    }
 
     public function columns()
     {
 
         return [
-            Column::name('reference')
-                ->label('Reference'),
+           
+            Column::callback(['id','marque','model','description'], function ($id,$marque,$model,$description) {
+                return $marque.' '.$model.' '.$description;
+            })->label('Article')->searchable(),
 
-            Column::callback(['projet'], function ($projet) {
-                return Projet::find($projet)->name;
-            })->label('Projet')->searchable()
-            ->filterable(),
+            Column::callback(['id','unite'], function ($id,$unite) {
 
-            Column::callback(['fournisseur'], function ($fourn) {
-                return Fournisseur::find($fourn)->name;
-            })->label('Fournisseur'),
+                return BrOder::where('produit', $id)->get('quantite')->sum('quantite').' '.$unite;
 
-            Column::callback(['active'], function ($active) {
+            })->label('Entrees'),
 
-               
-                    $delete = '<span class="badge badge-info">En cours</span>';
+            Column::callback(['id','model','unite'], function ($id,$model,$unite) {
+
+                return DiOder::where('product', $id)->get('quantite')->sum('quantite').' '.$unite;
+
+            })->label('Sorties'),
+
+            Column::callback(['id','marque','unite'], function ($id,$marque,$unite) {
+
+                $ent = BrOder::where('produit', $id)->get('quantite')->sum('quantite');
+                $sort = DiOder::where('product', $id)->get('quantite')->sum('quantite');
+                $solde = $ent-$sort;
+
+                if($solde > 0){
+                    return '<span class="badge badge-success">'.$solde.' '.$unite.'</span>';
+                }else{
+
+                    return '<span class="badge badge-danger">'.$solde.' '.$unite.'</span>';
+                }
                 
-                    return $delete ;
-            })->unsortable(),
 
-            Column::callback(['id'], function ($id) {
+            })->label('Solde'),
 
-                $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBr('.$id.')" data-toggle="modal" data-target="#pBrModalForms"><i class="icon-printer txt-danger"></i></a>';
-
-                    return $delete ;
-            })->unsortable(),
+            
         ];
     }
 }
