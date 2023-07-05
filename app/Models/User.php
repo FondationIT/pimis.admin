@@ -46,4 +46,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function conversations()
+    {
+        return Conversation::where(function ($q) {
+            $q->where('to', $this->id)
+                ->orWhere('from', $this->id);
+        });
+    }
+
+    public function getConversationsAttribute()
+    {
+        return $this->conversations()->get();
+    }
 }

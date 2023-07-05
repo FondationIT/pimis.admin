@@ -2,16 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use App\Models\Agent;
-use App\Models\Bailleur;
-use App\Models\Projet;
-use App\Models\Product;
-use App\Models\ProductOder;
-use App\Models\Affectation;
-use App\Models\Et_bes;
-use App\Models\Categorie;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 

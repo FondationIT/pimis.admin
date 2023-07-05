@@ -3,6 +3,7 @@
 @section('content')
  @include('dash')
  @include('agent')
+ <livewire:chat.index />
 
  @if (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('pimis')

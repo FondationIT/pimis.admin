@@ -1,3 +1,17 @@
+
+        var x = document.getElementById('chat-body');
+        function scrollBottom(element) {
+            element.scroll({ top: element.scrollHeight, behavior: "smooth"})
+        }
+    
+        scrollBottom(x);
+
+
+
+
+
+
+
 prod = $('#allProdPlus').val()
 art = $('#allArtPlus').val()
 art = JSON.parse(art)

@@ -13290,7 +13290,6 @@ div.mce-menu .mce-menu-item-sep, .mce-menu-item-sep:hover {
             color: #324148; }
           .chatapp-wrap .chatapp-right .chat-body .media .media-body .msg-box > div .chat-time {
             display: block;
-            text-transform: uppercase;
             font-size: 13px;
             margin-top: 5px; }
           .chatapp-wrap .chatapp-right .chat-body .media .media-body .msg-box > div .arrow-triangle-wrap {

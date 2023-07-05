@@ -27,7 +27,7 @@
     {{-- fin menu verital  --}}
 
     <!-- Main Content -->
-    <div class="hk-pg-wrapper">
+    <div class="hk-pg-wrapper pb-0">
 
         @yield('content')
 
