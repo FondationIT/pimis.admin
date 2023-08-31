@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Finance;
 
 use App\Models\Et_bes;
 use App\Models\Ligne;
+use App\Models\ProductOder;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -16,13 +17,13 @@ class AppEbForm extends Component
     public $state = [];
 
     protected $listeners = [
-        'formEbAppr'
+        'ligneArt'
     ];
 
-    public function formEbAppr($modelId){
+    public function ligneArt($modelId){
         $this->modelId = $modelId;
 
-        $this->eb = Et_bes::where("id", $this->modelId)->get();
+        $this->eb = ProductOder::where("id", $this->modelId)->get();
         $this->lignes = DB::table('lignes')->get();
         $this->ribrique = DB::table('lignes')->where("parent", 0)->get();
 

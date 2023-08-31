@@ -7,13 +7,14 @@ use App\Models\BrOder;
 use App\Models\Di;
 use App\Models\DiOder;
 use App\Models\Et_bes;
+use App\Models\Nd;
+use App\Models\NdOder;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\prixPv;
 use App\Models\signaturePv;
 use App\Models\Stock;
-use App\Models\ValidEb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -56,27 +57,18 @@ class EtatBesoinController extends Controller
 
     public function approuve(Request $data)
     {
-        DB::beginTransaction();
+       
         try {
             
-            Et_bes::find($data['id'])->update([
-                'niv1' => 1,
+            ProductOder::find($data['id'])->update([
                 'ligne' => $data['ligne'],
             ]);
-            ValidEb::create([
-                'user' => Auth::user()->id,
-                'eb' => $data['id'],
-                'resp' => true,
-                'niv' => 1,
-                'motif' => 'Tout es prevu',
-            ]);
 
-            DB::commit();
+            return true;
         } catch (\Throwable $th) {
 
-            DB::rollBack();
+            return false;
         }
-        return true;
 
     }
 
@@ -237,7 +229,7 @@ class EtatBesoinController extends Controller
         $di = Di::firstWhere('reference', $ref )->id;
         for($count = 0; $count<count($data['product']); $count++)
          {
-            $ref = 'DI-ODR-'.rand(10000,99999).''.$count;
+            $ref = 'DI-ODR-'.$di.rand(10000,99999).''.$count;
             DiOder::create([
                 'reference' => $ref,
                 'product' => $data['product'][$count],
@@ -255,6 +247,41 @@ class EtatBesoinController extends Controller
                 ]);
 
             }
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+
+
+    public function nd(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        //$data = json_decode($data->getBody());
+        $ref = 'ND-'.rand(10000,99999).'-FP'.rand(100,999);
+        Nd::create([
+            'reference' => $ref,
+            'agent' => $data['agent'],
+            'projet' => $data['projet'],
+        ]);
+        $nd = Nd::firstWhere('reference', $ref )->id;
+        for($count = 0; $count<count($data['product']); $count++)
+         {
+            $ref = 'ND-ODR-'.$nd.rand(10000,99999).''.$count;
+            NdOder::create([
+                'reference' => $ref,
+                'libelle' => $data['product'][$count],
+                'nd' => $nd,
+                'unite' => $data['unite'][$count],
+                'prix' => $data['prix'][$count],
+                'quantite' => $data['quantite'][$count],
+            ]);
+
          }
 
         DB::commit();

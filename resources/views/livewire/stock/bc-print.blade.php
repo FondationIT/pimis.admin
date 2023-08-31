@@ -106,7 +106,7 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Directeur Administratif etFinancier</strong></th><th><strong>Secrétaire Exécutif(-ve)</strong></th>
+                                    <th><strong>Directeur Administratif et Financier</strong></th><th><strong>Secrétaire Exécutif(-ve)</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -130,7 +130,7 @@
 
                                         @endif
                                     </td>
-                                </tr>
+                                </tr> 
                             </table>
 
                         </div>

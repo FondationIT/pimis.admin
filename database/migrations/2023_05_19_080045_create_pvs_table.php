@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('pvs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('da')->constrained()->onDelete('cascade');
-            $table->string('fournisseur')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('da')->constrained('dem_aches');
+            $table->foreignId('fournisseur')->constrained('fournisseurs');
             $table->string('titre');
             $table->string('dateC');
-            $table->string('observation');
-            $table->string('justification');
+            $table->text('observation');
+            $table->text('justification');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

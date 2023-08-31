@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('valid_nds', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('categorie')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->boolean('active')->default(true);
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('nd')->constrained('nds');
+            $table->boolean('resp');
+            $table->string('niv');
+            $table->string('motif');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('valid_nds');
     }
 };

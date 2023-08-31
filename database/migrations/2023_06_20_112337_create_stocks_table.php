@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('project')->constrained()->onDelete('cascade');
+            $table->foreignId('product')->constrained('articles')->onDelete('cascade');
+            $table->foreignId('project')->constrained('projets')->onDelete('cascade');
             $table->integer('quantite')->default(0);
             $table->boolean('active')->default(true);
             $table->timestamps();

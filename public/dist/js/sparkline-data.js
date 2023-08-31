@@ -8,14 +8,14 @@ var sparklineLogin = function() {
 			height: '50',
 			resize: true,
 			lineWidth: '1',
-			lineColor: '#d3a403',
-			fillColor: '#d3a403',
-			spotColor:'#d3a403',
+			lineColor: '#528FEB',
+			fillColor: '#528FEB',
+			spotColor:'#528FEB',
 			spotRadius:'2',
-			minSpotColor: '#d3a403',
-			maxSpotColor: '#d3a403',
+			minSpotColor: '#528FEB',
+			maxSpotColor: '#528FEB',
 			highlightLineColor: 'rgba(0, 0, 0, 0)',
-			highlightSpotColor: '#d3a403'
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_2').length > 0 ){
@@ -26,8 +26,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_3').length > 0 ){
@@ -36,7 +36,7 @@ var sparklineLogin = function() {
 			width: '50',
 			height: '50',
 			resize: true,
-			sliceColors: ['#d3a403', '#BDBDBD', '#cecece']
+			sliceColors: ['#528FEB', '#BDBDBD', '#cecece']
 		});
 	}
 	if( $('#sparkline_7').length > 0 ){
@@ -47,14 +47,14 @@ var sparklineLogin = function() {
 			chartRangeMax: 50,
 			resize: true,
 			lineWidth: '1',
-			lineColor: '#d3a403',
-			fillColor: '#d3a403',
-			spotColor:'#d3a403',
+			lineColor: '#528FEB',
+			fillColor: '#528FEB',
+			spotColor:'#528FEB',
 			spotRadius:'2',
-			minSpotColor: '#d3a403',
-			maxSpotColor: '#d3a403',
+			minSpotColor: '#528FEB',
+			maxSpotColor: '#528FEB',
 			highlightLineColor: 'rgba(0, 0, 0, 0)',
-			highlightSpotColor: '#d3a403'
+			highlightSpotColor: '#528FEB'
 		});
 		$('#sparkline_7').sparkline([0, 13, 10, 14, 15, 10, 18, 20, 0], {
 			type: 'line',

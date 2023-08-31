@@ -40,10 +40,6 @@
                                 <p>Nom du demandeur : <strong>{{ App\Models\User::firstWhere('id', $ebs[0]->agent)->name}}</strong></p>
                                 <p>Projet du demandeur : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
                                 
-                                    <p>Ligne bidgetaire : 
-                                        @if ($ligne && isset($ligne[0]))<strong>{{$ligne[0]->libele}} ({{$ligne[0]->code}})</strong>@endif
-                                    </p> 
-                                
                             </div>
                             <div class="col-lg-6 droite" style="text-align: right">
                                 <p>Date : <strong>{{$ebs[0]->created_at->format('d/m/Y')}}</strong></p>
@@ -62,7 +58,7 @@
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td><td>{{$prod->description}}</td>
+                                            <td>{{$i++}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} </td><td>{{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
                                         </tr>
                                     @endforeach
 

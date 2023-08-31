@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('projets', function (Blueprint $table) {
+        Schema::create('bailleurs', function (Blueprint $table) {
             $table->id();
-            $table->string('signature')->constrained()->onDelete('cascade');
             $table->string('reference')->unique();
+            $table->foreignId('signature')->constrained('users');
             $table->string('name');
-            $table->date('dateD');
-            $table->date('dateF')->nullable();
-            $table->text('contex')->nullable();
-            $table->string('bailleur')->constrained()->onDelete('cascade');
-            $table->string('domaine')->nullable();
+            $table->string('phone')->unique();
+            $table->string('email')->unique();
+            $table->float('min1', 25, 2);
+            $table->float('min2', 25, 2);
+            $table->float('min3', 25, 2);
+            $table->float('max1', 25, 2);
+            $table->float('max2', 25, 2);
+            $table->float('max3', 25, 2);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('projets');
+        Schema::dropIfExists('bailleurs');
     }
 };

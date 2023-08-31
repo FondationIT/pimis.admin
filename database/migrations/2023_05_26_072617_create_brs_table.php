@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('brs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('bc')->constrained()->onDelete('cascade');
-            $table->string('projet')->constrained()->onDelete('cascade');
-            $table->string('fournisseur')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('bc')->constrained('bcs');
+            $table->foreignId('projet')->constrained('projets');
+            $table->foreignId('fournisseur')->constrained('fournisseurs');
             $table->string('lieu');
             $table->string('personne');
             $table->string('bordereau');

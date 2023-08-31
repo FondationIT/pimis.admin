@@ -20,7 +20,7 @@ class ProductsTable extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'productUpdated'=> '$refresh'
+        'productssUpdated'=> '$refresh'
     ];
 
     /**

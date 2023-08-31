@@ -22,7 +22,7 @@ class ArticleTable extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'productUpdated'=> '$refresh'
+        'articleUpdated'=> '$refresh'
     ];
 
     /**

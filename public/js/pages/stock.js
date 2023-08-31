@@ -186,7 +186,9 @@ $('#partPVAdd').on('click', function(e){
 
 });
 
-
+$("#prixPv").change(function() {
+    console.log( "Handler for `keyup` called." );
+} );
 
 
 

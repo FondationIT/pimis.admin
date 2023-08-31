@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('fourn_prices', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('fournisseur')->constrained()->onDelete('cascade');
-            $table->string('product')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('fournisseur')->constrained('fournisseurs');
+            $table->string('product')->constrained('articles');
             $table->date('debut');
             $table->date('fin');
             $table->string('description')->nullable();

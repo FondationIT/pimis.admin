@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('agent')->constrained()->onDelete('cascade')->nullable();
+            $table->foreignId('agent')->constrained('agents');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

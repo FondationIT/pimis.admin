@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('valid_ebs', function (Blueprint $table) {
             $table->id();
-            $table->string('user')->constrained()->onDelete('cascade');
-            $table->string('eb')->constrained()->onDelete('cascade');
+
+            $table->foreignId('signature')->constrained('users');
+
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('eb')->constrained('et_bes');
             $table->boolean('resp');
             $table->string('niv');
             $table->string('motif');

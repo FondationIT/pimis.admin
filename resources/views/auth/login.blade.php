@@ -4,43 +4,10 @@
     <x-meta></x-meta>
     <style>
 
-
-        svg {
-        max-width: 100%;
+        .loginLogo{
+            height: 70px;
         }
-
-        @-webkit-keyframes logo_kinetics {
-        to {
-            transform: rotate(360deg);
-        }
-        }
-
-        @keyframes logo_kinetics {
-        to {
-            transform: rotate(360deg);
-        }
-        }
-        .e-albania {
-        height: 100px;
-        position: relative;
-        width: 100px;
-        }
-        .e-albania svg:not(#orbit) {
-        -webkit-animation: logo_kinetics 2.5s linear infinite normal forwards;
-                animation: logo_kinetics 2.5s linear infinite normal forwards;
-        position: absolute;
-        top: -50%;
-        left: 0;
-        transform-origin: bottom center;
-        }
-        .login-logo svg:not(#orbit) {
-        -webkit-animation: logo_kinetics 2.5s linear infinite normal forwards;
-                animation: logo_kinetics 2.5s linear infinite normal forwards;
-        position: absolute;
-        top: -100%;
-        left: 0;
-        transform-origin: bottom center;
-        }
+       
 
         .logo-title {
         font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -48,7 +15,7 @@
         font-size: 26px;
         margin-top: 4px;
         margin-bottom: 4px;
-        color:#d3a403;
+        color:#528FEB;
         }
 
     </style>
@@ -56,16 +23,14 @@
 </head>
 <body class="hold-transition login-page">
 
-    <div class="e-albania">
-        <img class="profile-user-img img-fluid img-circle"
-               src="{{asset('img/logo/logo.png')}}"
+    <div>
+        <img class="loginLogo img-fluid"
+               src="{{asset('img/logo/logoN.png')}}"
                alt="User profile picture">
-        <svg viewBox="0 0 120 120" id=electron>
-          <circle fill=#d3a403 cx=10 cy=90 r="10"/>
-        </svg>
+      
       </div>
 
-      <h1 class="logo-title">pimis</h1>
+      <hr>
 
 
 <div class="container">

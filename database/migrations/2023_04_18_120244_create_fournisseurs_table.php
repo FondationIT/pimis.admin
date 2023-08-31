@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Categorie;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,8 @@ return new class extends Migration
         Schema::create('fournisseurs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('catProduct')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('catProduct')->constrained('categories');
             $table->string('name');
             $table->string('adresse');
             $table->string('email');

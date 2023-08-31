@@ -28,7 +28,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius : '55%',
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -69,7 +69,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius : '55%',
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -113,7 +113,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -154,7 +154,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:'a'},
 						{value:679, name:''},
@@ -198,7 +198,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['30%', '50%'],
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -304,7 +304,7 @@ var echartsConfig = function() {
 							name: 'b',
 							itemStyle: {
 								normal: {
-									color: '#d3a403'
+									color: '#528FEB'
 								}
 							}
 						},
@@ -332,7 +332,7 @@ var echartsConfig = function() {
 							name: 'a',
 							itemStyle: {
 								normal: {
-									color: '#d3a403'
+									color: '#528FEB'
 								}
 							}
 						},
@@ -376,7 +376,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['40%', '50%'],
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -420,7 +420,7 @@ var echartsConfig = function() {
 					name:'',
 					type:'pie',
 					radius: ['45%', '50%'],
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -466,7 +466,7 @@ var echartsConfig = function() {
 					radius : '60%',
 					center : ['50%', '50%'],
 					roseType : 'radius',
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -509,7 +509,7 @@ var echartsConfig = function() {
 					radius : '60%',
 					center : ['50%', '50%'],
 					roseType : 'radius',
-					color: ['#d3a403', '#bdbdbd', '#cecece', '#cecece'],
+					color: ['#528FEB', '#bdbdbd', '#cecece', '#cecece'],
 					data:[
 						{value:735, name:''},
 						{value:479, name:''},

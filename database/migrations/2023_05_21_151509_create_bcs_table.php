@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('bcs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('da')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('da')->constrained('dem_aches');
             $table->string('personne');
             $table->string('lieu');
             $table->string('delai');

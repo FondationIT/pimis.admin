@@ -13,17 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('et_bes', function (Blueprint $table) {
+        Schema::create('nds', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('agent')->constrained()->onDelete('cascade');
-            $table->string('projet')->constrained()->onDelete('cascade');
-            $table->string('categorie')->constrained()->onDelete('cascade');
-            $table->string('ligne')->nullable();
-            $table->text('comment')->nullable();
+            $table->foreignId('agent')->constrained('users');
+            $table->foreignId('projet')->constrained('projets');
             $table->boolean('niv1')->default(false);
-            $table->boolean('niv2')->default(false);
-            $table->boolean('niv3')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('et_bes');
+        Schema::dropIfExists('nds');
     }
 };

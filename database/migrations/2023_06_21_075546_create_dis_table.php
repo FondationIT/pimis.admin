@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('dis', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('agent')->constrained()->onDelete('cascade');
-            $table->string('projet')->constrained()->onDelete('cascade');
+            $table->foreignId('agent')->constrained('users');
+            $table->foreignId('projet')->constrained('projets');
             $table->boolean('niv1')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();

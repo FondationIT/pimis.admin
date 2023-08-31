@@ -21,6 +21,10 @@ class PvTable extends LivewireDatatable
     public $model = Pv::class;
     public $modelId;
 
+    protected $listeners = [
+        'pvUpdated' => '$refresh'
+    ];
+
     public function printDa($modelId){
         $this->modelId = $modelId;
         $this->emit('printDa',$this->modelId );

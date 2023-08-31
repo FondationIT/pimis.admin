@@ -8,7 +8,7 @@ $(document).ready(function() {
 		heading: 'Well done!',
 		text: '<p>You have successfully completed level 1.</p><button class="btn btn-primary btn-sm mt-10">Play again</button>',
 		position: 'top-right',
-		loaderBg:'#d3a403',
+		loaderBg:'#528FEB',
 		class: 'jq-toast-primary',
 		hideAfter: 3500,
 		stack: 6,
@@ -55,11 +55,11 @@ $(document).ready(function() {
         pointSize: 0,
         lineWidth:0,
 		fillOpacity: 0.95,
-		pointStrokeColors:['#97ca5a','#d3a403'],
+		pointStrokeColors:['#97ca5a','#528FEB'],
 		behaveLikeLine: true,
 		grid: false,
 		hideHover: 'auto',
-		lineColors: ['#97ca5a','#d3a403'],
+		lineColors: ['#97ca5a','#528FEB'],
 		resize: true,
 		redraw: true,
 		smooth: true,
@@ -93,8 +93,8 @@ $(document).ready(function() {
 				pointSize:4,
 				lineWidth:2,
 				pointFillColors:['#fff','#fff','#fff'],
-				pointStrokeColors: ['#d3a403','#97ca5a','#aed67e'],
-				lineColors: ['#d3a403','#97ca5a','#aed67e'],
+				pointStrokeColors: ['#528FEB','#97ca5a','#aed67e'],
+				lineColors: ['#528FEB','#97ca5a','#aed67e'],
 			});
 	}
 
@@ -132,7 +132,7 @@ var echartsConfig = function() {
 							show: false
 						}
 					},
-					color: ['#d3a403', '#e2e2e2'],
+					color: ['#528FEB', '#e2e2e2'],
 					data:[
 						{value:435, name:''},
 						{value:679, name:''},
@@ -147,7 +147,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_3').length > 0 ){
 		var eChart_3 = echarts.init(document.getElementById('e_chart_3'));
 		var option2 = {
-			color: ['#d3a403', '#bdbdbd','#cecece','#d3a403','#e2e2e2'],
+			color: ['#528FEB', '#bdbdbd','#cecece','#528FEB','#e2e2e2'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -356,14 +356,14 @@ var echartsConfig = function() {
 					},
 					itemStyle: {
 						normal: {
-							color: '#d3a403',
+							color: '#528FEB',
 						}
 					},
 					areaStyle: {
 						normal: {
 							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
 								offset: 0,
-								color: '#d3a403'
+								color: '#528FEB'
 							}, {
 								offset: 1,
 								color: '#fff'
@@ -401,8 +401,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_2').length > 0 ){
@@ -413,8 +413,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_3').length > 0 ){
@@ -425,8 +425,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_4').length > 0 ){
@@ -437,8 +437,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 }

@@ -300,7 +300,7 @@ function afficheProjectChoix(id){
 
 
 var count = 1;
-$('#diAdd').on('click', function(e){
+$('#diAdd').on('click', function(e){ 
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";

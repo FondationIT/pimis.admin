@@ -13,19 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bailleurs', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
             $table->string('name');
-            $table->string('phone')->unique();
-            $table->string('email')->unique();
-            $table->float('min1', 25, 2);
-            $table->float('min2', 25, 2);
-            $table->float('min3', 25, 2);
-            $table->float('max1', 25, 2);
-            $table->float('max2', 25, 2);
-            $table->float('max3', 25, 2);
+            $table->text('description')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -38,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bailleurs');
+        Schema::dropIfExists('categories');
     }
 };

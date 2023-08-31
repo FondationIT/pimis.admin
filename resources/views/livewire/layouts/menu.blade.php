@@ -6,8 +6,8 @@
 
         <a class="navbar-brand font-weight-700" href="{{url('admin')}}">
 
-            <img src="img/logo/logo.png" style="height: 40px;position: relative;" />
-                -PIMIS
+            <img src="img/logo/logoP.png" style="height: 40px;position: relative;" />
+               
         </a>
         <ul class="navbar-nav hk-navbar-content">
 

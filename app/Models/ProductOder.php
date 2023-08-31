@@ -19,6 +19,7 @@ class ProductOder extends Model
         'reference',
         'etatBes',
         'quantite',
+        'ligne',
         'description',
         'active',
     ];

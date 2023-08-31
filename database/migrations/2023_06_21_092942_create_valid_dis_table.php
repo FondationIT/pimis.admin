@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('valid_dis', function (Blueprint $table) {
             $table->id();
-            $table->string('user')->constrained()->onDelete('cascade');
-            $table->string('di')->constrained()->onDelete('cascade');
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('di')->constrained('dis');
             $table->boolean('resp');
             $table->string('niv');
             $table->string('motif');

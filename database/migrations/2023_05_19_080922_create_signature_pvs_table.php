@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('signature_pvs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('pv')->constrained()->onDelete('cascade');
-            $table->string('agent')->constrained()->onDelete('cascade');
+            $table->foreignId('pv')->constrained('pvs');
+            $table->string('agent')->constrained('users');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

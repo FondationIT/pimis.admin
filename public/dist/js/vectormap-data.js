@@ -26,15 +26,15 @@ $(function() {
 							r: 12,
 							'fill': '#fff',
 							'fill-opacity':1,
-							'stroke': '#d3a403',
+							'stroke': '#528FEB',
 							'stroke-width' : 2,
 							'stroke-opacity': 1
 						},
 				hover: {
 					r: 10,
-					'fill': '#d3a403',
+					'fill': '#528FEB',
 					'fill-opacity':1,
-					'stroke': '#d3a403',
+					'stroke': '#528FEB',
 					'stroke-width' : 1,
 					'stroke-opacity': 1
 				},

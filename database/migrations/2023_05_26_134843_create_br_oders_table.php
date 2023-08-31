@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('br_oders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('br')->constrained()->onDelete('cascade');
-            $table->string('bc')->constrained()->onDelete('cascade');
-            $table->string('produit')->constrained()->onDelete('cascade');
+            $table->foreignId('br')->constrained('brs');
+            $table->foreignId('bc')->constrained('bcs');
+            $table->foreignId('produit')->constrained('articles');
             $table->integer('quantite');
             $table->text('observation');
             $table->boolean('active')->default(true);

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('prix_pvs', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('pv')->constrained()->onDelete('cascade');
-            $table->string('produit')->constrained()->onDelete('cascade');
-            $table->string('proforma')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('pv')->constrained('pvs');
+            $table->string('produit')->constrained('articles');
+            $table->foreignId('proforma')->constrained('proformas');
             $table->float('prix');
             $table->boolean('active')->default(true);
             $table->timestamps();

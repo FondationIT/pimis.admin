@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Stock;
 use App\Models\Pv;
 use App\Models\DemAch;
 use App\Models\Bc;
+use App\Models\Bp;
 use App\Models\Fournisseur;
 use App\Models\ValidBc;
 use App\Models\Br;
@@ -33,6 +34,7 @@ class BcTable extends LivewireDatatable
     ];
 
 
+
     public function printBc($modelId){
         $this->modelId = $modelId;
         $this->emit('printBc',$this->modelId );
@@ -41,6 +43,11 @@ class BcTable extends LivewireDatatable
     public function printPv($modelId){
         $this->modelId = $modelId;
         $this->emit('printPv',$this->modelId );
+    }
+
+    public function printBr($modelId){
+        $this->modelId = $modelId;
+        $this->emit('printBr',$this->modelId );
     }
 
 
@@ -98,7 +105,11 @@ class BcTable extends LivewireDatatable
     public function formBR($modelId){
         $this->modelId = $modelId;
         $this->emit('formBR',$this->modelId );
-        //$this->dispatchBrowserEvent('formProforma');
+    }
+
+    public function formBP($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formBP',$this->modelId );
     }
 
 
@@ -112,7 +123,7 @@ class BcTable extends LivewireDatatable
             ->orderBy("id", "DESC");
             return $das;
 
-        }else if (Auth::user()->role == 'MAG') {
+        }else if (Auth::user()->role == 'MAG' || Auth::user()->role == 'COMPT1' || Auth::user()->role == 'COMPT2') {
 
             $das = Bc::query()
             ->where('niv1', true)
@@ -311,6 +322,75 @@ class BcTable extends LivewireDatatable
 
                         return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
                 })->label('Reception'),
+            ];
+        }else if(Auth::user()->role == 'COMPT1' || Auth::user()->role == 'COMPT2'){
+            return [
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
+                })->label('Reference BC'),
+
+                Column::callback(['da'], function ($da) {
+                    if(Pv::where('da', $da)->exists()){
+                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($x)->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }else{
+                        $x = DemAch::where('id', $da)->get()[0]->eb;
+                        $x = Et_bes::where('id', $x)->get()[0]->id;
+                        $x = ProductOder::where('etatBes', $x)->get()[0]->description;
+                        $x = FournPrice::where('product', $x)->get()[0]->fournisseur;
+                        $x = Fournisseur::find($x)->name;
+                    }
+                    
+                    return $x;
+                })->label('Fournisseur'),
+
+                Column::name('lieu')
+                    ->label('Lieu de livraison'),
+
+                Column::callback(['active','id'], function ($active,$id) {
+
+                    $br = Br::where('bc',$id)->get();
+
+                    $n = '<ul>';
+                    foreach ($br as $br) {
+                        
+                      $n .= '<li><a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBr('.$br->id.')" data-toggle="modal" data-target="#pBrModalForms">'.$br->reference.'</a></li>';  
+                    }
+                    
+                    return $n ;
+                    
+                        
+                    })->label('Bons de reception'),
+
+
+                Column::callback(['id'], function ($id) {
+
+                    if (Br::where("bc", $id)->exists()) {
+
+                        $bc = Bc::where("id", $id)->get();
+                        $da = DemAch::where("id", $bc[0]->da)->get();
+                        $eb = Et_bes::where("id", $da[0]->eb)->get();
+                        $x = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+                        $y = BrOder::where('bc', $id)->get('quantite')->sum('quantite');
+
+                        if ($x==$y) {
+
+                            if (Bp::where("bc", $id)->where('categorie',2)->exists()){
+
+                                $dsa = '<span class="badge badge-success">BP Déjà fait</span>';
+
+                            }else{
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBP('.$id.')" data-toggle="modal" data-target="#bpModalForms"><span class="badge badge-info">Faire un BP</span></a>';
+                            }
+                        }
+
+
+                    }
+
+
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
+                })->label('Action'),
             ];
         }else{
             return [

@@ -347,7 +347,7 @@ class DaTable extends LivewireDatatable
                         ->sum('price');
 
                         
-                            if (FournPrice::where("product", $article[0]->description)->exists()) {
+                            if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
                                 $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
                             }else {
                                 if (Proforma::where("da", $id)->exists()) {

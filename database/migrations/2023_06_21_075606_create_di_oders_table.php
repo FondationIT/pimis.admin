@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('di_oders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('di')->constrained()->onDelete('cascade');
+            $table->foreignId('product')->constrained('articles');
+            $table->foreignId('di')->constrained('dis');
             $table->integer('quantite');
             $table->boolean('active')->default(true);
             $table->timestamps();

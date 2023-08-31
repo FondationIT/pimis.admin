@@ -1,8 +1,12 @@
 @import url(../../vendors/bootstrap/dist/css/bootstrap.min.css);
 /* Tuto Alsacreations : Faites bonne impression - Feuille styles css imprimante */
+@page {
+  /*size: landscape;*/
+}
 
 body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© utilisÃ©e pour la taille de la police  */
 	background-color:#fff;
+  font-family: ;
 	font-size:14pt;
 }
 
@@ -10,6 +14,9 @@ body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© ut
 	margin:0;
 	border:none;
 }
+
+
+
 
 #banner, #menuright, #footer { /* Les Ã©lÃ©ments qui ne seront pas affichÃ©s  */
 	display:none;
@@ -125,6 +132,13 @@ div.droite {
   div.droite p{
 
     text-align: right;
+  }
+
+  #printBp{
+  
+    
+      size: landscape;
+  
   }
 
   footer{

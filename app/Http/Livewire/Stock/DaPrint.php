@@ -25,9 +25,10 @@ class DaPrint extends Component
     public $valid3;
     public $valid4;
 
-    public $ligne;
+    
 
     protected $listeners = [
+        'printDaRef'=> '$refresh',
         'printDa'
     ];
 
@@ -41,7 +42,7 @@ class DaPrint extends Component
         $this->valid2 = ValidDa::where("da", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidDa::where("da", $this->modelId)->where("niv", 3)->get();
         $this->valid4 = ValidDa::where("da", $this->modelId)->where("niv", 4)->get();
-        $this->ligne = Ligne::where("code", $this->ebs[0]->ligne)->get();
+        
 
 
         $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
@@ -50,6 +51,13 @@ class DaPrint extends Component
             ->whereDate('prices.debut','<=', $this->das[0]->created_at)->whereDate('prices.fin','>=', $this->das[0]->created_at)
             ->get('price')
             ->sum('price');
+    }
+
+    public function ligneArt($modelId){
+        
+        $this->modelId = $modelId;
+        $this->emit('ligneArt',$this->modelId );
+
     }
 
     public function render()

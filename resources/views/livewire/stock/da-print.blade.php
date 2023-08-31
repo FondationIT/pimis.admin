@@ -39,7 +39,7 @@
                             <div class="col-lg-6" style="text-align: left">
                                 <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
                                 <p>Motif : <strong>{{$das[0]->motif}}</strong></p>
-                                <p>Ligne : <strong>{{$ligne[0]->libele}} ({{$ligne[0]->code}})</strong></p></p>
+                               
                             </div>
                             <div class="col-lg-6 droite" style="text-align: right">
                                 <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
@@ -54,24 +54,29 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0 prodT">
                                 <tr>
-                                    <th><strong>N<sup>o</sup></strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
+                                    <th><strong>N<sup>o</sup></strong></th><th><strong>ligne</strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
                                 </tr>
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
+                                            <td>{{$i++}}</td>
+                                            <td>@if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)<a href="#" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>@else{{ $prod->ligne }}@endif</td>
+                                            <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
                                             <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
 
                                             <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
 
                                             <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+
+                                            
                                         </tr>
 
                                     @endforeach
                                     <tr>
                                         <th><strong>Total</strong></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>

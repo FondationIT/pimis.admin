@@ -13,15 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('articles', function (Blueprint $table) {
+        Schema::create('affectations', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('product')->constrained()->onDelete('cascade');
-            $table->string('marque');
-            $table->string('model');
-            $table->string('description')->nullable();
-            $table->string('unite');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('agent')->constrained('agents');
+            $table->foreignId('projet')->constrained('projets');
+            $table->string('cath');
+            $table->string('poste');
+            $table->string('lieu');
+            $table->text('description')->nullable();
+            $table->boolean('statut')->default(true);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('articles');
+        Schema::dropIfExists('affectations');
     }
 };

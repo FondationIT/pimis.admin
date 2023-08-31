@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('valid_bcs', function (Blueprint $table) {
             $table->id();
-            $table->string('user')->constrained()->onDelete('cascade');
-            $table->string('bc')->constrained()->onDelete('cascade');
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('bc')->constrained('bcs');
             $table->boolean('resp');
             $table->string('niv');
             $table->string('motif');

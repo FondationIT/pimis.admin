@@ -35,7 +35,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
-                                                <th>Unite</th>
+                                                <th>Qte</th>
                                                 @foreach ($proforma as $prof)
                                                 <th>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</th>
                                                 @endforeach
@@ -46,7 +46,7 @@
                                                 <tr>
 
                                                     <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
-                                                    <td>{{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
+                                                    <td>{{$prod->quantite}} {{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                     <td>
                                                         <div class="input-group">
@@ -54,16 +54,28 @@
                                                                 <span class="input-group-text" id="inputGroupPrepend">$</span>
                                                             </div>
                                                             <input type="number" id="prixPv" min="0" class="form-control prixPv" required>
+                                                            
+
                                                             <input type="text" id="profPv" class="profPv"  value="{{$prof->id}}" hidden>
                                                             <input type="text" id="prodPv" class="prodPv" value="{{$prod->description}}" hidden>
 
                                                         </div>
+                                                        <span>Total: <strong class="" id="prixPv{{$prof->id}}{{$prod->description}}">$</strong></span>
                                                     </td>
                                                     @endforeach
 
                                                 </tr>
 
                                             @endforeach
+                                            <tr>
+                                                <td>Total</td>
+                                                <td>####</td>
+                                                @foreach ($proforma as $prof)
+                                                    <td>
+                                                        <strong>$</strong>
+                                                    </td>
+                                                @endforeach
+                                            </tr>
                                         </tbody>
                                     </table>
 
