@@ -29,10 +29,9 @@
 
 
                 <ul class="navbar-nav flex-column">
-                    <li class="nav-item" id="dash">
+                    <li class="nav-item">
                         <a class="nav-link" href="#" id="button-dash" data-active="dash" data-activ="" data-section="dash">
-                            <span class="feather-icon"><i data-feather="map"></i></span>
-                            <span class="nav-link-text">Dashboard</span>
+                           Tableau de bord
                         </a>
                     </li>
 
@@ -58,6 +57,10 @@
 
                                     <li class="nav-item" id="etBes">
                                         <a class="nav-link" href="#" id="button-etBes" data-active="etBes" wire:click="$emit('ebUpdated')" data-open="bFile" data-section="etBes">Etat de besoin</a>
+                                    </li>
+
+                                    <li class="nav-item" id="tdr">
+                                        <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('tdrUpdated')" data-open="bFile" data-section="tdr">Terme de reference</a>
                                     </li>
 
                                     <li class="nav-item" id="di">
@@ -127,6 +130,9 @@
                                         <li class="nav-item" id="aff">
                                             <a class="nav-link" href="#" id="button-aff" data-active="aff" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="aff">Affectations</a>
                                         </li>
+                                        <li class="nav-item" id="compteA">
+                                            <a class="nav-link" href="#" id="button-compteA" data-active="compteA" wire:click="$emit('compteUpdated')" data-open="bRH" data-section="compteA">Compte Agent</a>
+                                        </li>
                                         <li class="nav-item" id="mvmt">
                                             <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmt">Mouvements agents</a>
                                         </li>
@@ -175,6 +181,9 @@
                                             <li class="nav-item" id="fournS">
                                                 <a class="nav-link" href="#" id="button-fournS" data-active="fournS" wire:click="$emit('fournisseurUpdated')" data-open="bStock" data-section="fournS">Fournisseurs</a>
                                             </li>
+                                            <li class="nav-item" id="compteS">
+                                                <a class="nav-link" href="#" id="button-compteS" data-active="compteS" wire:click="$emit('compteUpdated')" data-open="bStock" data-section="compteS">Compte Fournisseur</a>
+                                            </li>
                                             <li class="nav-item" id="prixMarcS">
                                                 <a class="nav-link" href="#" id="button-prixMarcS" data-active="prixMarcS" data-open="bStock" wire:click="$emit('prixUpdated')" data-section="prixMarcS">Prix du marche</a>
                                             </li>
@@ -209,7 +218,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bFinance">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#finance">
                                 <span class="feather-icon"><i data-feather="pocket"></i></span>
@@ -218,6 +227,12 @@
                             <ul id="finance" class="nav flex-column collapse collapse-level-1">
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
+                                        <li class="nav-item" id="compteF">
+                                            <a class="nav-link" href="#" id="button-compteF" data-active="compteF" wire:click="$emit('compteUpdated')" data-open="bFinance" data-section="compteF">Compte Projet</a>
+                                        </li>
+                                        <li class="nav-item" id="bonReqF">
+                                            <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" wire:click="$emit('bonReqUpdated')" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>
+                                        </li>
                                         <li class="nav-item" id="bonReqF">
                                             <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" wire:click="$emit('bonReqUpdated')" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>
                                         </li>
@@ -238,11 +253,54 @@
                                             <a class="nav-link" href="#" id="button-bonpayF" data-active="bonpayF" data-open="bFinance" wire:click="$emit('bpUpdated')" data-section="bonpayF">Bons de payement</a>
                                         </li>
 
+                                        <li class="nav-item" id="opF">
+                                            <a class="nav-link" href="#" id="button-opF" data-active="opF" data-open="bFinance" wire:click="$emit('opUpdated')" data-section="opF">Ordres de paiement</a>
+                                        </li>
+
+                                        <li class="nav-item" id="chequeF">
+                                            <a class="nav-link" href="#" id="button-chequeF" data-active="chequeF" data-open="bFinance" wire:click="$emit('chequeUpdated')" data-section="chequeF">Cheques</a>
+                                        </li>
+
                                     </ul>
                                 </li>
                             </ul>
                         </li>
                     @endif
+
+
+
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                        <li class="nav-item" id="bFinance">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#caisse">
+                                <span class="feather-icon"><i data-feather="book"></i></span>
+                                <span class="nav-link-text">Caisse</span>
+                            </a>
+                            <ul id="caisse" class="nav flex-column collapse collapse-level-1">
+                                <li class="nav-item">
+                                    <ul class="nav flex-column">
+                                        @if (Auth::user()->role == 'CAISS')
+                                        <li class="nav-item" id="bonpayC">
+                                            <a class="nav-link" href="#" id="button-bonpayC" data-active="bonpayC" data-open="bCaisse" wire:click="$emit('bpUpdated')" data-section="bonpayC">Bons de payement</a>
+                                        </li>
+                                        @endif
+                                        <li class="nav-item" id="dechargeC">
+                                            <a class="nav-link" href="#" id="dechargeC" data-active="dechargeC" wire:click="$emit('dechargeUpdated')" data-open="bCaisse" data-section="dechargeC">Decharge</a>
+                                        </li>
+                                        <li class="nav-item" id="rapportC">
+                                            <a class="nav-link" href="#" id="button-rapportC" data-active="rapportC" wire:click="$emit('rapportCUpdated')" data-open="bCaisse" data-section="rapportC">Rapport</a>
+                                        </li>
+                                        <li class="nav-item" id="livreC">
+                                            <a class="nav-link" href="#" id="button-livreC" data-active="livreC" wire:click="$emit('livreUpdated')" data-open="bCaisse" data-section="livreC">Livre de caisse</a>
+                                        </li>
+                                        
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+
+
+
 
                     @if (Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bProjet">

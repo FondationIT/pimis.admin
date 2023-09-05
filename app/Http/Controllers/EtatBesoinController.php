@@ -123,7 +123,6 @@ class EtatBesoinController extends Controller
             signaturePv::create([
                 'reference' => $ref1,
                 'pv' => $pv,
-                'signature' => Auth::user()->id,
                 'agent' => $data['agPv'][$count],
             ]);
          }
@@ -181,7 +180,6 @@ class EtatBesoinController extends Controller
                 'reference' => $ref1,
                 'br' => $br,
                 'bc' => $data['bc'],
-                'signature' => Auth::user()->id,
                 'produit' => $data['prod'][$count],
                 'quantite' => $data['qte'][$count],
                 'observation' => $data['observation'][$count],

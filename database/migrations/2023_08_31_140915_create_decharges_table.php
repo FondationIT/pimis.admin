@@ -13,19 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ops', function (Blueprint $table) {
+        Schema::create('decharges', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->foreignId('agent')->constrained('users');
+            $table->foreignId('signature')->constrained('users');
             $table->foreignId('projet')->constrained('projets');
             $table->foreignId('bp')->constrained('bps');
             $table->string('beneficiare');
-            $table->string('compteB');
-            $table->string('banqueB');
-            $table->string('numero')->unique();
-            $table->string('lieu');
+            $table->string('qualite');
+            $table->string('piece');
+            $table->string('phone');
+            $table->string('institution');
             $table->float('montant', 20, 2);
+            $table->string('montantTL');
             $table->string('motif');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -37,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ops');
+        Schema::dropIfExists('decharges');
     }
 };

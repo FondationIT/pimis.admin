@@ -17,8 +17,12 @@
     @include('rh')
  @endif
 
- @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'COMPT1'|| Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+ @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1'|| Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('finance')
+ @endif
+
+ @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'CAISS' || Auth::user()->role == 'COMPT1'|| Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+    @include('caisse')
  @endif
 
  @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')

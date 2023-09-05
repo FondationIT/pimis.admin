@@ -5,20 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cheque extends Model
+class Compte extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'reference',
-        'agent',
-        'projet',
-        'bp',
-        'beneficiare',
+        'intitule',
         'numero',
-        'montant',
-        'lieu',
-        'motif',
+        'type',
+        'proprietaire',
+        'banque',
+        'adresse',
+        'solde',
+        'signature',
         'active',
     ];
+
+  
 }

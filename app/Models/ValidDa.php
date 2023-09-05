@@ -20,5 +20,6 @@ class ValidDa extends Model
         'resp',
         'niv',
         'motif',
+        'signature',
     ];
 }

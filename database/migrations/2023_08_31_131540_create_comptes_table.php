@@ -13,19 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ops', function (Blueprint $table) {
+        Schema::create('comptes', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->foreignId('agent')->constrained('users');
-            $table->foreignId('projet')->constrained('projets');
-            $table->foreignId('bp')->constrained('bps');
-            $table->string('beneficiare');
-            $table->string('compteB');
-            $table->string('banqueB');
+            $table->foreignId('signature')->constrained('users');
+            $table->string('intitule')->constrained();
             $table->string('numero')->unique();
-            $table->string('lieu');
-            $table->float('montant', 20, 2);
-            $table->string('motif');
+            $table->string('type');
+            $table->string('proprietaire')->constrained();
+            $table->string('banque');
+            $table->string('adresse');
+            $table->float('solde', 20, 2);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ops');
+        Schema::dropIfExists('comptes');
     }
 };

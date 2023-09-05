@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Finance;
 
 use App\Models\Bc;
 use App\Models\Bp;
+use App\Models\Compte;
 use App\Models\DemAch;
 use App\Models\Et_bes;
 use App\Models\FournPrice;
@@ -23,6 +24,7 @@ class BpPrint extends Component
     public $modelId;
     public $products;
     public $das;
+    public $compte =[];
     public $some;
     public $bcs;
     public $bps =[];
@@ -44,14 +46,19 @@ class BpPrint extends Component
 
         $this->bps = Bp::where("id", $this->modelId)->get();
 
+        
+
         if($this->bps[0]->categorie == 2){
             $this->bcs = Bc::where("id", $this->bps[0]->bc)->get();
             $this->das = DemAch::where("id", $this->bcs[0]->da)->get();
             $this->index = Et_bes::where("id", $this->das[0]->eb)->get();
             $this->odrs = ProductOder::where("etatBes", $this->index[0]->id)->get();
+            
 
             if(Pv::where("da", $this->bcs[0]->da)->exists()){
                 $this->pvs = Pv::where("da", $this->bcs[0]->da)->get();
+
+                $this->compte = Compte::where("type", 2)->where("proprietaire", $this->pvs[0]->fournisseur)->get();
     
                 $this->prof = Proforma::where("id", $this->pvs[0]->fournisseur)->where("da", $this->pvs[0]->da)->get();
     
@@ -69,6 +76,8 @@ class BpPrint extends Component
             }elseif (FournPrice::where("product", $this->odrs[0]->description)->exists()) {
                 
                 $this->prof = FournPrice::where("product", $this->odrs[0]->description)->get();
+
+                $this->compte = Compte::where("type", 2)->where("proprietaire", $this->prof[0]->fournisseur)->get();
     
                 $this->products = ProductOder::join('fourn_prices', 'fourn_prices.product', '=', 'product_oders.description')
                     ->selectRaw("product_oders.description as produit,fourn_prices.prix as prix")
@@ -91,6 +100,8 @@ class BpPrint extends Component
             $this->index = Nd::where("id", $this->bps[0]->bc)->get();
             $this->products = NdOder::where("nd", $this->index[0]->id)->get();
             $this->some = NdOder::where('nd',$this->bps[0]->bc)->selectRaw("prix * quantite as price")->get('price')->sum('price');
+
+            $this->compte = Compte::where("type", 1)->where("proprietaire", 1)->get();
         }
 
         $this->valid1 = ValidBp::where("bp", $this->modelId)->where("niv", 1)->get();

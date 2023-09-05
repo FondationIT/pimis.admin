@@ -366,6 +366,8 @@ class BcTable extends LivewireDatatable
 
                 Column::callback(['id'], function ($id) {
 
+                    $dsa = '';
+
                     if (Br::where("bc", $id)->exists()) {
 
                         $bc = Bc::where("id", $id)->get();

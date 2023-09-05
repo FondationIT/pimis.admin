@@ -3,7 +3,11 @@
 namespace App\Http\Livewire\Finance;
 
 use App\Models\Bp;
+use App\Models\Cheque;
+use App\Models\Decharge;
 use App\Models\Fournisseur;
+use App\Models\Op;
+use App\Models\Projet;
 use App\Models\ValidBp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -113,6 +117,23 @@ class BpTable extends LivewireDatatable
 
 
 
+    public function formOP($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formOP',$this->modelId );
+    }
+
+    public function formCheque($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formCheque',$this->modelId );
+    }
+
+    public function formDecharge($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formDecharge',$this->modelId );
+    }
+
+
+
 
     public function builder()
     {
@@ -147,7 +168,16 @@ class BpTable extends LivewireDatatable
 
             $bps = Bp::query()
             ->where('niv1', true)
-            ->where('montant','<=', 500)
+            ->orderBy("id", "DESC");
+            return $bps;
+
+        }else if (Auth::user()->role == 'CAISS') {
+
+            $bps = Bp::query()
+            ->where('niv1', true)
+            ->where('niv2', true)
+            ->where('niv3', true)
+            ->where('type',1)
             ->orderBy("id", "DESC");
             return $bps;
 
@@ -165,8 +195,12 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback('beneficiaire', function ($id) {
-                    return Fournisseur::where('id',$id)->get()[0]->name;
+                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
+                    if($cat == 4){
+                        return Projet::where('id',$id)->get()[0]->name;
+                    }else{
+                        return Fournisseur::where('id',$id)->get()[0]->name;
+                    }
                 })->label('Paye a'),
 
                 Column::callback('montant', function ($some) {
@@ -227,8 +261,12 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback('beneficiaire', function ($id) {
-                    return Fournisseur::where('id',$id)->get()[0]->name;
+                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
+                    if($cat == 4){
+                        return Projet::where('id',$id)->get()[0]->name;
+                    }else{
+                        return Fournisseur::where('id',$id)->get()[0]->name;
+                    }
                 })->label('Paye a'),
 
                 Column::callback('montant', function ($some) {
@@ -287,8 +325,12 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback('beneficiaire', function ($id) {
-                    return Fournisseur::where('id',$id)->get()[0]->name;
+                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
+                    if($cat == 4){
+                        return Projet::where('id',$id)->get()[0]->name;
+                    }else{
+                        return Fournisseur::where('id',$id)->get()[0]->name;
+                    }
                 })->label('Paye a'),
 
                 Column::callback('montant', function ($some) {
@@ -340,15 +382,19 @@ class BpTable extends LivewireDatatable
                 })->label('Action'),
 
             ];
-        }else{
+        }else if(Auth::user()->role == 'CAISS'){
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
 
-                Column::callback('beneficiaire', function ($id) {
-                    return Fournisseur::where('id',$id)->get()[0]->name;
+                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
+                    if($cat == 4){
+                        return Projet::where('id',$id)->get()[0]->name;
+                    }else{
+                        return Fournisseur::where('id',$id)->get()[0]->name;
+                    }
                 })->label('Paye a'),
 
                 Column::callback('montant', function ($some) {
@@ -381,6 +427,114 @@ class BpTable extends LivewireDatatable
                     }
                         return $delete ;
                     })->unsortable(),
+
+                Column::callback(['id','type','montant'], function ($id,$cat,$s) {
+
+                    if ($cat == 1) {
+
+                        if (Decharge::where("bp", $id)->exists()){
+
+                            $dsa = '<span class="badge badge-success">Payé</span>';
+
+                            $y = Decharge::where('bp', $id)->get('montant')->sum('montant');
+
+                            if ($y==$s) {
+
+                                $dsa = '<span class="badge badge-success">Payé</span>';
+                            }else{
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formDecharge('.$id.')" data-toggle="modal" data-target="#dechargeModalForms"><span class="badge badge-info">Faire une autre Decharge</span></a>';
+                            }
+
+                        }else{
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formDecharge('.$id.')" data-toggle="modal" data-target="#dechargeModalForms"><span class="badge badge-info">Faire une Decharge</span></a>';
+                        }
+
+                    }
+
+
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
+                })->label('Action'),
+
+            ];
+        }else{
+            return [
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
+                })->label('Reference BC'),
+
+
+                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
+                    if($cat == 4){
+                        return Projet::where('id',$id)->get()[0]->name;
+                    }else{
+                        return Fournisseur::where('id',$id)->get()[0]->name;
+                    }
+                })->label('Paye a'),
+
+                Column::callback('montant', function ($some) {
+                    return '$ '.$some;
+                })->label('Montant'),
+                
+                Column::callback('type', function ($type) {
+
+                    if($type == 1){
+                        $t = 'Caisse';
+                    }else if($type == 2){
+                        $t = 'Chèque';
+                    }else if($type == 3){
+                        $t = 'Transfert bancaire';
+                    }
+                    return $t;
+                })->label('Paiement'),
+
+                Column::name('dateP')
+                    ->label('Date'),
+
+                Column::callback(['active','niv3','niv2'], function ($active,$niv3,$niv2) {
+
+                    if ($active == true && $niv2 == true && $niv3 == true ) {
+                        $delete = '<span class="badge badge-success">Approuvé</span>';
+                    }elseif($active == false){
+                        $delete = '<span class="badge badge-danger">Refusé</span>';
+                    }else{
+                        $delete = '<span class="badge badge-info">En cours</span>';
+                    }
+                        return $delete ;
+                    })->unsortable(),
+
+                Column::callback(['id','type'], function ($id,$cat) {
+
+                    if ($cat == 3) {
+
+                        if (Op::where("bp", $id)->exists()){
+
+                            $dsa = '<span class="badge badge-success">OP Déjà fait</span>';
+
+                        }else{
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formOP('.$id.')" data-toggle="modal" data-target="#opModalForms"><span class="badge badge-info">Faire un OP</span></a>';
+                        }
+                    }
+
+                    if ($cat == 2) {
+
+                        if (Cheque::where("bp", $id)->exists()){
+
+                            $dsa = '<span class="badge badge-success">Cheque Déjà fait</span>';
+
+                        }else{
+                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formCheque('.$id.')" data-toggle="modal" data-target="#chequeModalForms"><span class="badge badge-info">Faire un Cheque</span></a>';
+                        }
+                    }
+
+                    if ($cat == 1) {
+
+                        $dsa = '<span class="badge badge-success">Pret</span>';
+
+                    }
+
+
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
+                })->label('Action'),
 
             ];
         }

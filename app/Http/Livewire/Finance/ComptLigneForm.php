@@ -46,6 +46,7 @@ class ComptLigneForm extends Component
             ]);
             ValidEb::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'eb' => $this->eb,
                 'resp' => true,
                 'niv' => 1,

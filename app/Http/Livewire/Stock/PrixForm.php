@@ -81,7 +81,7 @@ class PrixForm extends Component
                 }else{
 
                     $reference = 'PRX-'.$this->state['product'].''.Auth::user()->id.''.rand(100000,999999);
-                    $data_create = Price::create([
+                    Price::create([
                         'reference' => $reference,
                         'product' => $this->state['product'],
                         'prix' => $this->state['prix'],

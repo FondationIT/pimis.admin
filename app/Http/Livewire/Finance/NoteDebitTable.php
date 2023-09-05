@@ -93,7 +93,7 @@ class NoteDebitTable extends LivewireDatatable
         }if(Auth::user()->role == 'COMPT2'){
 
             
-            if(Affectation::where('agent', Auth::user()->agent)->get()[0]->projet == '1'){
+            if(Affectation::where('agent', Auth::user()->agent)->where('projet', 1)->exists()){
                 return Nd::query()->orderBy("id", "DESC");
             }else{
                 return Nd::join('affectations', 'affectations.projet', '=', 'nds.projet')

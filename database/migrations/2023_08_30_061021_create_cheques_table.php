@@ -15,6 +15,16 @@ return new class extends Migration
     {
         Schema::create('cheques', function (Blueprint $table) {
             $table->id();
+            $table->string('reference');
+            $table->foreignId('agent')->constrained('users');
+            $table->foreignId('projet')->constrained('projets');
+            $table->foreignId('bp')->constrained('bps');
+            $table->string('beneficiare');
+            $table->string('numero')->unique();
+            $table->string('lieu');
+            $table->float('montant', 20, 2);
+            $table->string('motif');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

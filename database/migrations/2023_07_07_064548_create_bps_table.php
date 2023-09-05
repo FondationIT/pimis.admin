@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('projet')->constrained('projets');
             $table->string('beneficiaire');
             $table->string('type');
-            $table->string('montant');
+            $table->float('montant', 20, 2);
             $table->string('montantTL');
             $table->string('categorie');
             $table->date('dateP');

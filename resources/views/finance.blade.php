@@ -7,3 +7,6 @@
 
 <livewire:finance.note-debit-form />
 <livewire:finance.note-debit-print />
+
+<livewire:finance.op-form />
+<livewire:finance.cheque-form />

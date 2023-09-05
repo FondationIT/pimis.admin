@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
-            $table->foreignId('product')->constrained('products');
+            $table->foreignId('product')->constrained('articles');
             $table->date('debut');
             $table->date('fin');
             $table->float('prix');

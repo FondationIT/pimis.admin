@@ -68,6 +68,7 @@ class DaTable extends LivewireDatatable
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
                 'niv' => 2,
@@ -89,6 +90,7 @@ class DaTable extends LivewireDatatable
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
                 'niv' => 1,
@@ -111,6 +113,7 @@ class DaTable extends LivewireDatatable
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
                 'niv' => 3,
@@ -133,6 +136,7 @@ class DaTable extends LivewireDatatable
             ]);
             ValidDa::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'da' => $this->modelId,
                 'resp' => true,
                 'niv' => 4,

@@ -71,6 +71,7 @@ class BonReq extends LivewireDatatable
             ]);
             ValidEb::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'eb' => $this->modelId,
                 'resp' => true,
                 'niv' => 2,
