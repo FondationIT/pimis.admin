@@ -189,18 +189,14 @@
                   </div>
 
                   <div class="d-flex">
-                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('tdrForm')" data-target="#tdrModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('trForm')" data-target="#trModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
                   </div>
                 </div>
             <!-- /Title -->
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:agent.eb-table
-            searchable="reference,projet"
-            dates="created_at|d-m-Y"
-            exportable
-            />
+            <livewire:agent.tr-table />
             <!-- /Row -->
 
         </div>
@@ -263,6 +259,8 @@
         <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
+
+            
             <!-- Title -->
                 <div class="hk-pg-header align-items-top">
                   <div>

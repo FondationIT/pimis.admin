@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('decharges', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
+            $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
             $table->foreignId('projet')->constrained('projets');
             $table->foreignId('bp')->constrained('bps');

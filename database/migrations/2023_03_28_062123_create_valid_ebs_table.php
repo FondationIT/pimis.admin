@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('signature')->constrained('users');
-
             $table->foreignId('user')->constrained('users');
             $table->foreignId('eb')->constrained('et_bes');
             $table->boolean('resp');

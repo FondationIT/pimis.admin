@@ -4,177 +4,161 @@ $.ajaxSetup({
     }
 });
 
-function messageErr(data){
-    message = '<div class="alert alert-danger alert-wth-icon alert-dismissible fade show" role="alert" aria-hidden="true">'
-    message += '<span class="alert-icon-wrap"><i class="zmdi zmdi-bug"></i></span>'
-    message += data
-    message += '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-    message += '<span aria-hidden="true">&times;</span></button></div>'
-
-    return message
-}
-
-//setInterval(notification, 3000);
-//setInterval(message, 3000);
+///////////////////////////////////////////////////////////////////////
+                            /////////////////////
+                    /////////////////////////////////////
 
 
 
-/* ***************************
 
-        REGISTER AGENT
-
-******************************/
+                            //  SCRIPT PV  //
 
 
-$('#registerAgent').on('submit', function(e) {
+
+
+           /////////////////////////////////////////////
+                      ///////////////////////
+//////////////////////////////////////////////////////////////////////
+
+
+
+var pr = $('#allPartMSPlus').val();
+    pr =JSON.parse(pr)
+
+var count = 1;
+$('#partMSAdd').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+
+    aBPlus +='<div class="form-row form-row-all" id="form-rowMS'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartMS" id="agMS'+count+'" required></select></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowMS'+count+'" class="removePartMS text-red-600"><i class="icon-close txt-danger"></i></a></div><div class="col-md-2 mb-10"></div></div>'
+
+    partPv = '<option value=""  ></option>';
+    $.each(pr, function(i, item) {
+
+        item1= item.firstname;
+        item2= item.lastname;
+        partPv += '<option value='+item.id+'>'+item1+' '+item2+'.</option>';
+        //$('#fournP1').html(fournP);
+    });
+
+    $('#autrePartMS').append(aBPlus);
+    $('#agMS'+count).html(partPv);
+
+
+    $('.removePartMS').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE PV  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+var comm1Form = document.getElementById('registerMs');
+comm1Form.onsubmit = function(e) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-     e.preventDefault();
-     $(this).add('was-validated');
-    var x = $('#registerAgent').serializeArray();
-    var formData = {};
+  e.preventDefault();
+   var agMs = [];
+   var trMs = $('#trMs').val()
+   var destMs = $('#destMs').val()
+   var objectifMs = $('#objectifMs').val()
+   var dateDMs = $('#dateDMs').val()
+   var dateFMs = $('#dateFMs').val()
+   var typeMs = $('#typeMs').val()
+   var dureMs = $('#dureMs').val()
+   var moyenMs = $('#moyenMs').val()
+   var itMs = $('#itMs').val()
 
-    $.each(x, function(i, field){
-        if(field.value.trim() != ""){
-            if(formData[field.name] != undefined){
-                var val = formData[field.name];
-                if(!Array.isArray(val)){
-                     arr = [val];
-                }
-                arr.push(field.value.trim());
-                formData[field.name] = arr;
-            }else{
-              formData[field.name] = field.value;
-            }
-        }
-    });
-
-    //console.log(formData)
-
-   registerAgent(formData)
-})
-function registerAgent(data){
-    $.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: "/agentReg",
-        dataType: 'json',
-
-        data: JSON.stringify(data),
-        beforeSend: function() {
-            $('#btnAg').hide();
-            $('#prldAg').show();
-        },
-        success: function(data, textStatus, jqXHR){
-
-                $('#prldAg').hide();
-                $('#btnAg').show();
-                $('.close').click()
-                location.reload();
-
-                $.toast().reset('all');
-                $.toast({
-                    text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
-                    position: 'top-center',
-                    loaderBg:'#7a5449',
-                    class: 'jq-has-icon jq-toast-success',
-                    hideAfter: 3500,
-                    stack: 6,
-                    showHideTransition: 'fade'
-                    });
+   $('.fournPartMs').each(function(){
+    agMs.push($(this).val());
+   });
 
 
-        },
-        error: function(jqXHR, textStatus, data){
-            $('#prldAg').hide();
-            $('#btnAg').show();
-            $('#messageErrAgent').html(messageErr(data))
-        }
-    });
-}
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/msReg",
+    dataType: 'json',
+
+    data: JSON.stringify(pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+    beforeSend: function() {
+        $('#btnPv').hide();
+        $('#prldPv').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldPv').hide();
+            $('#btnPv').show();
+            $('.close').click()
+
+            Livewire.emit('demAchUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldPv').hide();
+        $('#btnPv').show();
+        $('#messageErrPv').html(messageErr(data))
+    }
+});
+
+ }
 
 
 
 
 
-/* ***************************
-
-        REGISTER AFFECTATION
-
-******************************/
 
 
-$('#registerAffectation').on('submit', function(e) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-     e.preventDefault();
-     $(this).add('was-validated');
-    var x = $('#registerAffectation').serializeArray();
-    var formData = {};
 
-    $.each(x, function(i, field){
-        if(field.value.trim() != ""){
-            if(formData[field.name] != undefined){
-                var val = formData[field.name];
-                if(!Array.isArray(val)){
-                     arr = [val];
-                }
-                arr.push(field.value.trim());
-                formData[field.name] = arr;
-            }else{
-              formData[field.name] = field.value;
-            }
-        }
-    });
+function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
+    return {
+      "titrePv":titrePv,
+      "fournPv": fournPv,
+      "daPv": daPv,
+      "datePv":datePv,
+      "obsPv": obsPv,
+      "justPv": justPv,
+      "agPv":agPv,
+      "prixPv": prixPv,
+      "profPv": profPv,
+      "prodPv": prodPv
+    };
+  }
 
-    //console.log(formData)
-
-   registerAffectation(formData)
-})
-function registerAffectation(data){
-    $.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        url: "/affectationReg",
-        dataType: 'json',
-
-        data: JSON.stringify(data),
-        beforeSend: function() {
-            $('#btnAff').hide();
-            $('#prldAff').show();
-        },
-        success: function(data, textStatus, jqXHR){
-
-                $('#prldAff').hide();
-                $('#btnAff').show();
-                $('.close').click()
-                location.reload();
-
-                $.toast().reset('all');
-                $.toast({
-                    text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
-                    position: 'top-center',
-                    loaderBg:'#7a5449',
-                    class: 'jq-has-icon jq-toast-success',
-                    hideAfter: 3500,
-                    stack: 6,
-                    showHideTransition: 'fade'
-                    });
-
-
-        },
-        error: function(jqXHR, textStatus, data){
-            $('#prldAff').hide();
-            $('#btnAff').show();
-            $('#messageErrAff').html(messageErr(data))
-        }
-    });
-}
 
 

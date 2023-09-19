@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
-
+use App\Models\Agent;
 use App\Models\DemAch;
 use App\Models\Bc;
 use App\Models\Bp;
@@ -15,6 +15,10 @@ use App\Models\prixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
+use App\Models\RCaisse;
+use App\Models\Tr;
+use App\Models\TrOder;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +41,9 @@ class BpForm extends Component
     public $valid2;
     public $fournisseur;
 
+    public $trs;
+    public $odrs3;
+
     public $nds;
     public $odrs4;
 
@@ -51,7 +58,9 @@ class BpForm extends Component
 
     protected $listeners = [
         'formBP',
-        'formBP4'
+        'formBP3',
+        'formBP4',
+        'formBP5'
     ];
 
     public function formBP($modelId){
@@ -122,6 +131,30 @@ class BpForm extends Component
 
 
     //////////////////////////////////////////////////////////////////////
+    //////////////// BON DE PAYEMENT TERME DE REFERENCE //////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+
+
+
+    public function formBP3($modelId){
+        $this->modelId = $modelId;
+
+        $this->trs = Tr::where("id", $this->modelId)->get();
+        $this->odrs3 = TrOder::where("tr", $this->modelId)->get();
+
+        $this->index = $this->modelId;
+        
+        $this->beneficiaire = User::find($this->trs[0]->agent)->id;
+        $this->projet = $this->trs[0]->projet;
+        $this->categorie = 3;
+        $this->some = TrOder::where('tr',$this->modelId)->selectRaw("prix * quantite as price")->get('price')
+        ->sum('price');
+
+    }
+
+
+    //////////////////////////////////////////////////////////////////////
     //////////////// BON DE PAYEMENT NOTE DE DEBIT //////////////////////
     ////////////////////////////////////////////////////////////////////
 
@@ -145,6 +178,24 @@ class BpForm extends Component
 
 
 
+    //////////////////////////////////////////////////////////////////////
+    //////////////// BON DE PAYEMENT APPROVISIONNEMEMT CAISSE //////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+    public function formBP5($modelId){
+        $this->modelId = $modelId;
+
+        $this->nds = RCaisse::where("id", $this->modelId)->get();
+
+        $this->index = $this->modelId;
+        $this->beneficiaire = 1;
+        $this->projet = $this->nds[0]->projet;
+        $this->categorie = 5;
+
+    }
+
+
+
 
 
 
@@ -153,12 +204,24 @@ class BpForm extends Component
 
     public function submit()
     {
-        $validator = Validator::make($this->state, [
-            'montantTL' => ['required', 'max:255'],
-            'type' => ['required', 'max:255'],
-            'date' => ['required', 'max:255'],
-            'comment' => ['required', 'max:255'],
-        ])->validate();
+        
+
+        if($this->categorie == 5){
+            $validator = Validator::make($this->state, [
+                'montantTL' => ['required', 'max:255'],
+                'type' => ['required', 'max:255'],
+                'date' => ['required', 'max:255'],
+                'comment' => ['required', 'max:255'],
+                'montant' => ['required', 'max:255'],
+            ])->validate();
+        }else{
+            $validator = Validator::make($this->state, [
+                'montantTL' => ['required', 'max:255'],
+                'type' => ['required', 'max:255'],
+                'date' => ['required', 'max:255'],
+                'comment' => ['required', 'max:255'],
+            ])->validate();
+        }
 
         DB::beginTransaction();
         try {
@@ -169,20 +232,55 @@ class BpForm extends Component
                 $niv1 = false;
             }
 
-            Bp::create([
-                'reference' => $ref,
-                'signature' => Auth::user()->id,
-                'bc' => $this->index,
-                'type' => $this->state['type'],
-                'beneficiaire' => $this->beneficiaire,
-                'projet' => $this->projet,
-                'montant' => $this->some,
-                'montantTL' => $this->state['montantTL'],
-                'categorie' => $this->categorie,
-                'dateP' => $this->state['date'],
-                'comment' => $this->state['comment'],
-                'niv1' => $niv1
-            ]);
+            if($this->categorie == 5){
+                $montant = $this->state['montant'];
+
+                Bp::create([
+                    'reference' => $ref,
+                    'signature' => Auth::user()->id,
+                    'bc' => $this->index,
+                    'type' => $this->state['type'],
+                    'beneficiaire' => $this->beneficiaire,
+                    'projet' => $this->projet,
+                    'montant' => $montant,
+                    'montantTL' => $this->state['montantTL'],
+                    'categorie' => $this->categorie,
+                    'dateP' => $this->state['date'],
+                    'comment' => $this->state['comment'],
+                    'niv1' => $niv1
+                ]);
+
+                $sld = RCaisse::where('projet', $this->projet )->orderBy('created_at', 'desc')->first()->solde;
+
+                $solde = $sld + $montant;
+
+                $ref2 = 'RC-'.$this->index.''.rand(1000,9999);
+                RCaisse::create([
+                    'reference' => $ref2,
+                    'projet' => $this->projet,
+                    'solde' => $solde,
+                ]);
+            }else{
+                $montant = $this->some;
+
+                Bp::create([
+                    'reference' => $ref,
+                    'signature' => Auth::user()->id,
+                    'bc' => $this->index,
+                    'type' => $this->state['type'],
+                    'beneficiaire' => $this->beneficiaire,
+                    'projet' => $this->projet,
+                    'montant' => $montant,
+                    'montantTL' => $this->state['montantTL'],
+                    'categorie' => $this->categorie,
+                    'dateP' => $this->state['date'],
+                    'comment' => $this->state['comment'],
+                    'niv1' => $niv1
+                ]);
+            }
+            
+
+            
 
             DB::commit();
             $this->reset('state');

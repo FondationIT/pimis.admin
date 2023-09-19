@@ -78,6 +78,7 @@ commForm5.onsubmit = function(e) {
 
    var line = $('#line4').val()
    var eb = $('#idEbLigne').val()
+   var type = $('#typeLigne').val()
 
 
    $.ajax({
@@ -86,7 +87,7 @@ commForm5.onsubmit = function(e) {
     url: "/etBesApp",
     dataType: 'json',
 
-    data: JSON.stringify({"ligne":line,"id":eb}),
+    data: JSON.stringify({"ligne":line,"id":eb,"type":type}),
     beforeSend: function() {
         $('#btnAppEtBes').hide();
         $('#prldAppEtBes').show();

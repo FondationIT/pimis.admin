@@ -18,6 +18,7 @@
                         <input type="text"  id="allLigne" hidden value='{"bad":{{json_encode($lignes)}} }' >
                         @if ($eb)
                         <input type="text"  id="idEbLigne" hidden value="{{$eb[0]->id}}" >
+                        <input type="text"  id="typeLigne" hidden value="{{$type}}" >
                         @endif
                         
                         <div class="form-row">

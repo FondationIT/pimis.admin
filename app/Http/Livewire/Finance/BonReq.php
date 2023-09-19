@@ -40,27 +40,6 @@ class BonReq extends LivewireDatatable
         
         $this->modelId = $modelId;
         $this->emit('formEbAppr',$this->modelId );
-        
-        /*DB::beginTransaction();
-        try {
-            $this->modelId = $modelId;
-            Et_bes::find($this->modelId)->update([
-                'niv1' => 1,
-            ]);
-            ValidEb::create([
-                'user' => Auth::user()->id,
-                'eb' => $this->modelId,
-                'resp' => true,
-                'niv' => 1,
-                'motif' => 'Tout es prevu',
-            ]);
-
-            DB::commit();
-        } catch (\Throwable $th) {
-
-            DB::rollBack();
-        }*/
-
     }
     public function cApprEb($modelId){
         DB::beginTransaction();

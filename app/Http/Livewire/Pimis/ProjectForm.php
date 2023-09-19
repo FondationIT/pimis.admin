@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pimis;
 use App\Models\Bailleur;
 use App\Models\Projet;
+use App\Models\RCaisse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,7 @@ use Livewire\Component;
 class ProjectForm extends Component
 {
     public $state = [];
+    public $modelId;
     protected $listeners = [
         'projectForm',
         'editProject',
@@ -88,6 +90,14 @@ class ProjectForm extends Component
                     'contex' => $this->state['contexte'],
                     'bailleur' => $this->state['bailleur'],
                     'signature' => Auth::user()->id,
+                ]);
+
+                $pr = Projet::firstWhere('reference', $ref )->id;
+
+                $ref2 = 'RC-'.substr($this->state['name'], 0, 1).''.rand(1000,9999);
+                RCaisse::create([
+                    'reference' => $ref2,
+                    'projet' => $pr,
                 ]);
 
                 DB::commit();

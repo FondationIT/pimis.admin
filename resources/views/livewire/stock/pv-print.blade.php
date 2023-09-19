@@ -110,9 +110,9 @@
                             <div class="col-lg-12">
                                 <ol>
                                     <li>
-                                        {{ App\Models\User::firstWhere('id', $ag->agent)->name}}
+                                        {{ App\Models\User::firstWhere('agent', $ag->agent)->name}}
                                         
-                                        <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $ag->agent)->signature)}}" style="position: relative;width:200px;margin-top:-10px;text-align:left" />
+                                        <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;margin-top:-10px;text-align:left" />
                                     </li>
                                 </ol>
                             </div>

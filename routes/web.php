@@ -24,7 +24,7 @@ Route::post('/pvReg', [App\Http\Controllers\EtatBesoinController::class, 'pv'])-
 Route::post('/brReg', [App\Http\Controllers\EtatBesoinController::class, 'br'])->name('brReg');
 Route::post('/diReg', [App\Http\Controllers\EtatBesoinController::class, 'di'])->name('diReg');
 Route::post('/ndReg', [App\Http\Controllers\EtatBesoinController::class, 'nd'])->name('ndReg');
-
+Route::post('/trReg', [App\Http\Controllers\EtatBesoinController::class, 'tr'])->name('trReg');
 
 
 

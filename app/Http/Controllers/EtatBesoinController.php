@@ -15,6 +15,8 @@ use App\Models\Pv;
 use App\Models\prixPv;
 use App\Models\signaturePv;
 use App\Models\Stock;
+use App\Models\Tr;
+use App\Models\TrOder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -60,9 +62,15 @@ class EtatBesoinController extends Controller
        
         try {
             
-            ProductOder::find($data['id'])->update([
-                'ligne' => $data['ligne'],
-            ]);
+            if($data['type'] == 1){
+                ProductOder::find($data['id'])->update([
+                    'ligne' => $data['ligne'],
+                ]);
+            }else{
+                TrOder::find($data['id'])->update([
+                    'ligne' => $data['ligne'],
+                ]);
+            }
 
             return true;
         } catch (\Throwable $th) {
@@ -275,6 +283,42 @@ class EtatBesoinController extends Controller
                 'reference' => $ref,
                 'libelle' => $data['product'][$count],
                 'nd' => $nd,
+                'unite' => $data['unite'][$count],
+                'prix' => $data['prix'][$count],
+                'quantite' => $data['quantite'][$count],
+            ]);
+
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+
+    public function tr(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        //$data = json_decode($data->getBody());
+        $ref = 'TR-'.rand(10000,99999).'-FP'.rand(100,999);
+        Tr::create([
+            'reference' => $ref,
+            'agent' => $data['agent'],
+            'projet' => $data['projet'],
+            'type' => $data['type'],
+            'titre' => $data['titre'],
+        ]);
+        $tr = Tr::firstWhere('reference', $ref )->id;
+        for($count = 0; $count<count($data['product']); $count++)
+         {
+            $ref = 'ND-ODR-'.$tr.rand(10000,99999).''.$count;
+            TrOder::create([
+                'reference' => $ref,
+                'libelle' => $data['product'][$count],
+                'tr' => $tr,
                 'unite' => $data['unite'][$count],
                 'prix' => $data['prix'][$count],
                 'quantite' => $data['quantite'][$count],

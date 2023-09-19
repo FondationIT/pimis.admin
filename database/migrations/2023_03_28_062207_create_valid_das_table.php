@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('valid_das', function (Blueprint $table) {
             $table->id();
             $table->foreignId('signature')->constrained('users');
+            $table->foreignId('user')->constrained('users');
             $table->foreignId('da')->constrained('dem_aches');
             $table->boolean('resp');
             $table->string('niv');

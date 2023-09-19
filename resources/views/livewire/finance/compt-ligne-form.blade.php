@@ -19,7 +19,12 @@
                                     <table class="table  table-bordered table-striped mb-0">
                                         <thead>
                                             <tr>
-                                                <th>Produit</th>
+                                                @if ($type == 1)
+                                                <th>Produit</th> 
+                                                @elseif ($type == 2)
+                                                <th>Libellé</th> 
+                                                @endif
+                                                
                                                 <th>Qte</th>
                                                 <th>Unite</th>
                                                 <th>Ligne</th>
@@ -31,17 +36,43 @@
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
-                                                    <td>{{$prod->quantite}}</td>
-                                                    <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
+                                                    
+
+                                                    @if ($type == 1)
+
+                                                        <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
+
+                                                        <td>{{$prod->quantite}}</td>
+
+                                                        <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
+
+                                                        <td>
+                                                            <input type="text"  id="prixBr"  value= "{{$prod->ligne}}" class="form-control qteBr" required>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>  
+                                                        </td>
+
+                                                    @elseif ($type == 2)
+                                                    
+                                                        <td>{{$prod->libelle}}</td>
+
+                                                        <td>{{$prod->quantite}}</td>
+
+                                                        <td>{{$prod->unite}}</td>
+
+                                                        <td>
+                                                            <input type="text"  id="prixBr"  value= "{{$prod->ligne}}" class="form-control qteBr" required>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneTr({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>  
+                                                        </td>
+
+                                                    @endif
  
-                                                    <td>
-                                                        <input type="text"  id="prixBr"  value= "{{$prod->ligne}}" class="form-control qteBr" required>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>  
-                                                    </td>
+                                                    
                                                   
                                                     
                                                     

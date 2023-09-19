@@ -72,6 +72,7 @@
 
 
     <script src="{{  asset('js/pages/fin.js')}}"></script>
+    <script src="{{  asset('js/pages/rh.js')}}"></script>
 
     <script src="{{  asset('js/pages/stock.js')}}"></script>
 

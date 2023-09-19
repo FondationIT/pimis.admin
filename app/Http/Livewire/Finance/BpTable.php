@@ -8,6 +8,7 @@ use App\Models\Decharge;
 use App\Models\Fournisseur;
 use App\Models\Op;
 use App\Models\Projet;
+use App\Models\User;
 use App\Models\ValidBp;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -196,8 +197,12 @@ class BpTable extends LivewireDatatable
 
 
                 Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 4){
+                    if($cat == 5){
+                        return 'Caisse Projet';
+                    }else if($cat == 4){
                         return Projet::where('id',$id)->get()[0]->name;
+                    }else if($cat == 3){
+                        return User::where('id',$id)->get()[0]->name;
                     }else{
                         return Fournisseur::where('id',$id)->get()[0]->name;
                     }
@@ -262,8 +267,12 @@ class BpTable extends LivewireDatatable
 
 
                 Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 4){
+                    if($cat == 5){
+                        return 'Caisse Projet';
+                    }else if($cat == 4){
                         return Projet::where('id',$id)->get()[0]->name;
+                    }else if($cat == 3){
+                        return User::where('id',$id)->get()[0]->name;
                     }else{
                         return Fournisseur::where('id',$id)->get()[0]->name;
                     }
@@ -326,8 +335,12 @@ class BpTable extends LivewireDatatable
 
 
                 Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 4){
+                    if($cat == 5){
+                        return 'Caisse Projet';
+                    }else if($cat == 4){
                         return Projet::where('id',$id)->get()[0]->name;
+                    }else if($cat == 3){
+                        return User::where('id',$id)->get()[0]->name;
                     }else{
                         return Fournisseur::where('id',$id)->get()[0]->name;
                     }
@@ -390,8 +403,12 @@ class BpTable extends LivewireDatatable
 
 
                 Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 4){
+                    if($cat == 5){
+                        return 'Caisse Projet';
+                    }else if($cat == 4){
                         return Projet::where('id',$id)->get()[0]->name;
+                    }else if($cat == 3){
+                        return User::where('id',$id)->get()[0]->name;
                     }else{
                         return Fournisseur::where('id',$id)->get()[0]->name;
                     }
@@ -464,8 +481,12 @@ class BpTable extends LivewireDatatable
 
 
                 Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 4){
+                    if($cat == 5){
+                        return 'Caisse Projet';
+                    }else if($cat == 4){
                         return Projet::where('id',$id)->get()[0]->name;
+                    }else if($cat == 3){
+                        return User::where('id',$id)->get()[0]->name;
                     }else{
                         return Fournisseur::where('id',$id)->get()[0]->name;
                     }
@@ -502,38 +523,43 @@ class BpTable extends LivewireDatatable
                         return $delete ;
                     })->unsortable(),
 
-                Column::callback(['id','type'], function ($id,$cat) {
+                Column::callback(['id','type','active','niv3','niv2'], function ($id,$cat,$active,$niv3,$niv2) {
 
-                    if ($cat == 3) {
+                    $dsa = '';
 
-                        if (Op::where("bp", $id)->exists()){
+                    if ($active == true && $niv2 == true && $niv3 == true ) {
 
-                            $dsa = '<span class="badge badge-success">OP Déjà fait</span>';
+                        if ($cat == 3) {
 
-                        }else{
-                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formOP('.$id.')" data-toggle="modal" data-target="#opModalForms"><span class="badge badge-info">Faire un OP</span></a>';
+                            if (Op::where("bp", $id)->exists()){
+
+                                $dsa = '<span class="badge badge-success">OP Déjà fait</span>';
+
+                            }else{
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formOP('.$id.')" data-toggle="modal" data-target="#opModalForms"><span class="badge badge-info">Faire un OP</span></a>';
+                            }
+                        }
+
+                        if ($cat == 2) {
+
+                            if (Cheque::where("bp", $id)->exists()){
+
+                                $dsa = '<span class="badge badge-success">Cheque Déjà fait</span>';
+
+                            }else{
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formCheque('.$id.')" data-toggle="modal" data-target="#chequeModalForms"><span class="badge badge-info">Faire un Cheque</span></a>';
+                            }
+                        }
+
+                        if ($cat == 1) {
+
+                            $dsa = '<span class="badge badge-success">Pret</span>';
+
                         }
                     }
 
-                    if ($cat == 2) {
 
-                        if (Cheque::where("bp", $id)->exists()){
-
-                            $dsa = '<span class="badge badge-success">Cheque Déjà fait</span>';
-
-                        }else{
-                            $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formCheque('.$id.')" data-toggle="modal" data-target="#chequeModalForms"><span class="badge badge-info">Faire un Cheque</span></a>';
-                        }
-                    }
-
-                    if ($cat == 1) {
-
-                        $dsa = '<span class="badge badge-success">Pret</span>';
-
-                    }
-
-
-                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
                 })->label('Action'),
 
             ];

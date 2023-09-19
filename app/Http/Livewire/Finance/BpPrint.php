@@ -14,6 +14,9 @@ use App\Models\prixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
+use App\Models\RCaisse;
+use App\Models\Tr;
+use App\Models\TrOder;
 use App\Models\ValidBc;
 use App\Models\ValidBp;
 use Livewire\Component;
@@ -96,12 +99,24 @@ class BpPrint extends Component
                     ->sum('price');
     
             }
+        }elseif($this->bps[0]->categorie == 3){
+            $this->index = Tr::where("id", $this->bps[0]->bc)->get();
+            $this->products = TrOder::where("tr", $this->index[0]->id)->get();
+            $this->some = TrOder::where('tr',$this->bps[0]->bc)->selectRaw("prix * quantite as price")->get('price')->sum('price');
+            $this->compte = Compte::where("type", 2)->where("proprietaire", 1)->get();
+
         }elseif($this->bps[0]->categorie == 4){
             $this->index = Nd::where("id", $this->bps[0]->bc)->get();
             $this->products = NdOder::where("nd", $this->index[0]->id)->get();
             $this->some = NdOder::where('nd',$this->bps[0]->bc)->selectRaw("prix * quantite as price")->get('price')->sum('price');
 
             $this->compte = Compte::where("type", 1)->where("proprietaire", 1)->get();
+
+        }elseif($this->bps[0]->categorie == 5){
+            $this->index = RCaisse::where("id", $this->bps[0]->bc)->get();
+            $this->products = [];
+            $this->some = $this->bps[0]->montant;
+
         }
 
         $this->valid1 = ValidBp::where("bp", $this->modelId)->where("niv", 1)->get();

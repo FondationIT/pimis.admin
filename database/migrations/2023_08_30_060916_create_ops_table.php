@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ops', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
+            $table->string('reference')->unique();
             $table->foreignId('agent')->constrained('users');
             $table->foreignId('projet')->constrained('projets');
             $table->foreignId('bp')->constrained('bps');

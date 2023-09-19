@@ -413,3 +413,140 @@ commForm.onsubmit = function(e) {
      "projet": projet,
    };
  }
+
+
+
+
+
+ ///////////////////////////////////////////////////////////////////////
+
+           //   TERME DE REFERENCE  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+var count = 1;
+$('#trAdd').on('click', function(e){ 
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+    aBPlus += '<div class="form-row form-row-all" id="form-rowTR'+count+'"><div class="col-md-5 mb-10"><textarea class="form-control prodND" name="product" required></textarea></div>'
+
+    aBPlus +='<div class="col-md-2 mb-10"><input type="texte" class="form-control uniteTR" name="unite" required></div>'
+
+    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step="1" min="1" class="form-control QteTR" name="" required></div>'
+
+    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step="1" min="1" class="form-control prixTR" name="" required></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowTR'+count+'" class="removeTR text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
+
+
+    $('#autreTR').append(aBPlus);
+    
+
+
+    $('.removeTR').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE TERME DE REFERENCE  //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+var trForm = document.getElementById('registerTR')
+trForm.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+   var produit = [];
+   var qte = [];
+   var unite = [];
+   var prix = [];
+   var agent = $('#agentTR').val()
+   var projet = $('#projetTR').val()
+   var type = $('#typeTR').val()
+   var titre = $('#titreTR').val()
+
+   $('.prodTR').each(function(){
+    produit.push($(this).val()); 
+   });
+   $('.QteTR').each(function(){
+    qte.push($(this).val());
+   });
+   $('.uniteTR').each(function(){
+    unite.push($(this).val());
+   });
+   $('.prixTR').each(function(){
+    prix.push($(this).val());
+   });
+   
+
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/trReg",
+    dataType: 'json',
+
+    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre)),
+    beforeSend: function() {
+        $('#btnTR').hide();
+        $('#prldTR').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldTR').hide();
+            $('#btnTR').show();
+            $('.close').click()
+
+            Livewire.emit('dipdated')
+            Livewire.emit('trUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldTR').hide();
+        $('#btnTR').show();
+        $('#messageErrTR').html(data)
+    }
+});
+
+ }
+
+//
+ function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre) {
+   return {
+     "product":produit,
+     "quantite": qte,
+     "unite": unite,
+     "prix": prix,
+     "agent": agent,
+     "projet": projet,
+     "type": type,
+     "titre": titre,
+   };
+ }

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Caisse;
 use App\Models\Bp;
 use App\Models\Decharge;
 use App\Models\Projet;
+use App\Models\RCaisse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -55,21 +56,36 @@ class DechargeForm extends Component
         DB::beginTransaction();
         try {
             $ref = 'DCG-'.rand(100000,999999).'-FP'.rand(100,999);
+            $sld = RCaisse::where('projet', $this->bps[0]->projet )->orderBy('created_at', 'desc')->first()->solde;
 
-            Decharge::create([
-                'reference' => $ref,
-                'signature' => Auth::user()->id,
-                'projet' => $this->bps[0]->projet,
-                'bp' => $this->bps[0]->id,
-                'beneficiare' => $this->state['ben'],
-                'qualite' => $this->state['qualite'],
-                'piece' => $this->state['pid'],
-                'montant' => $this->state['montant'],
-                'phone' => $this->state['phone'],
-                'institution' => $this->state['inst'],
-                'montantTL' => $this->state['montantTL'],
-                'motif' => $this->state['motif']
-            ]);
+            if($sld >= $this->state['montant']){
+
+                Decharge::create([
+                    'reference' => $ref,
+                    'signature' => Auth::user()->id,
+                    'projet' => $this->bps[0]->projet,
+                    'bp' => $this->bps[0]->id,
+                    'beneficiare' => $this->state['ben'],
+                    'qualite' => $this->state['qualite'],
+                    'piece' => $this->state['pid'],
+                    'montant' => $this->state['montant'],
+                    'phone' => $this->state['phone'],
+                    'institution' => $this->state['inst'],
+                    'montantTL' => $this->state['montantTL'],
+                    'motif' => $this->state['motif']
+                ]);
+
+                
+
+                $solde = $sld - $this->state['montant'];
+
+                $ref2 = 'RC-'. $this->bps[0]->projet.$this->bps[0]->id.''.rand(1000,9999);
+                RCaisse::create([
+                    'reference' => $ref2,
+                    'projet' => $this->bps[0]->projet,
+                    'solde' => $solde,
+                ]);
+            }
 
             DB::commit();
             $this->reset('state');

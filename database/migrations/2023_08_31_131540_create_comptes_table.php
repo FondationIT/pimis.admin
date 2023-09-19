@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('comptes', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
+            $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
             $table->string('intitule')->constrained();
             $table->string('numero')->unique();

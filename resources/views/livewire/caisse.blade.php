@@ -25,7 +25,7 @@
                 <a class="nav-link active" data-toggle="tab" href="#home">Achat</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#menu1">Note de debit</a>
+                <a class="nav-link" data-toggle="tab" href="#menu1">Approvisionnement</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#menu2">TDR</a>
@@ -50,6 +50,39 @@
            
             
          
+    
+        </div>
+    </section>
+
+
+
+    <section id="beC-section" class="section js-section u-category-media">
+        <!-- Breadcrumb -->
+        <nav class="hk-breadcrumb" aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light bg-transparent">
+                <li class="breadcrumb-item"><a href="#">Caisse</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bon d'entrée</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+        <!-- Content Wrapper. Contains page content -->
+         <div class="container">
+            <!-- Title -->
+                <div class="hk-pg-header align-items-top">
+                  <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Bon d'entrée</h3>
+                  </div>
+                  <div class="d-flex">
+                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('beForm')" data-target="#beModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Nouveau </span></button>
+                  </div>
+                </div>
+            <!-- /Title -->
+            
+    
+            <!-- Main content -->
+            <!-- Row -->
+            <livewire:caisse.be-table />
+            <!-- /Row -->
     
         </div>
     </section>
@@ -106,16 +139,14 @@
                   <div>
                     <h3 class="hk-pg-title font-weight-600 mb-10">Rapport</h3>
                   </div>
-                  <div class="d-flex">
-                    
-                  </div>
+                  
                 </div>
             <!-- /Title -->
             
     
             <!-- Main content -->
             <!-- Row -->
-            <livewire:caisse.decharge-table />
+            <livewire:caisse.rapport-table />
             <!-- /Row -->
     
         </div>

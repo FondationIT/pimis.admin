@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Finance;
 
 use App\Models\Bp;
 use App\Models\Compte;
+use App\Models\Fournisseur;
 use App\Models\Op;
 use App\Models\Projet;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,12 @@ class OpForm extends Component
             $this->state['ben'] = Projet::where('id',$this->bps[0]->beneficiaire)->get()[0]->name;
             $this->state['cBen'] = Compte::where('proprietaire',$this->bps[0]->beneficiaire)->where('type',1)->get()[0]->numero;
             $this->state['banque'] = Compte::where('proprietaire',$this->bps[0]->beneficiaire)->where('type',1)->get()[0]->banque;
+
+        }else if($this->bps[0]->categorie == 3){
+
+            $this->state['ben'] = Fournisseur::where('id',$this->bps[0]->beneficiaire)->get()[0]->name;
+            $this->state['cBen'] = Compte::where('proprietaire',$this->bps[0]->beneficiaire)->where('type',3)->get()[0]->numero;
+            $this->state['banque'] = Compte::where('proprietaire',$this->bps[0]->beneficiaire)->where('type',3)->get()[0]->banque;
         }
         $this->state['montant'] = $this->bps[0]->montant;
     }

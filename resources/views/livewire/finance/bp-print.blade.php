@@ -136,8 +136,12 @@
                                         <td style="border: 1px solid;text-align:center;width:70%">
                                             <strong>
                                             @if ($bps)
-                                                @if ($bps[0]->categorie == 4 && $bps[0]->beneficiaire == 1 )
+                                                @if ($bps[0]->categorie == 5)
+                                                 Caisse Projet
+                                                @elseif ($bps[0]->categorie == 4 && $bps[0]->beneficiaire == 1 )
                                                 Administration 
+                                                @elseif($bps[0]->categorie == 3)
+                                                    {{App\Models\User::firstWhere('id', $bps[0]->beneficiaire)->name}}
                                                 @elseif($bps[0]->categorie == 2)
                                                     {{App\Models\Fournisseur::firstWhere('id', $bps[0]->beneficiaire)->name}}
                                                 @endif
@@ -428,6 +432,33 @@
                                     <th></th>
                                     <th><strong>$ {{$some}}</strong></th>
                                 </tr>
+                            
+                            @elseif($bps[0]->categorie == 3)
+                                @foreach ($products as $prod)
+
+                                    <tr style="border: 1px solid;width: 100%;text-align:center">
+                                        <td></td>
+                                        <td>{{ $prod->libelle}}</td>
+
+                                        <td>USD</td>
+                                        <td>{{ $prod->prix * $prod->quantite }}</td>
+
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+
+                                @endforeach
+
+                                <tr>
+                                    <th><strong>Total</strong></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><strong>$ {{$some}}</strong></th>
+                                </tr>
                             @elseif($bps[0]->categorie == 4)
                                 @foreach ($products as $prod)
 
@@ -447,6 +478,30 @@
                                     </tr>
 
                                 @endforeach
+
+                                <tr>
+                                    <th><strong>Total</strong></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><strong>$ {{$some}}</strong></th>
+                                </tr>
+                            @elseif($bps[0]->categorie == 5)
+                               
+
+                                    <tr style="border: 1px solid;width: 100%;text-align:center">
+                                        <td></td>
+                                        <td>Approvisionnement caisse projet</td>
+
+                                        <td>USD</td>
+                                        <td>{{$some}}</td>
+
+                                        <td></td>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
 
                                 <tr>
                                     <th><strong>Total</strong></th>
@@ -479,9 +534,9 @@
                                 <span></span><br><br>
                                 @if ($index)
 
-                                    <p class="center">{{ App\Models\User::firstWhere('id', $index[0]->agent)->name}}<br>
+                                    <p class="center">{{ App\Models\User::firstWhere('id', $bps[0]->signature)->name}}<br>
                                     Le {{$index[0]->updated_at->format('d/m/Y')}}</p>
-                                    <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $index[0]->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                    <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $bps[0]->signature)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                 @endif
                             </td>
