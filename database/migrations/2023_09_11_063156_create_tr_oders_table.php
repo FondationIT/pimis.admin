@@ -13,18 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('conges', function (Blueprint $table) {
+        Schema::create('tr_oders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->foreignId('signature')->constrained('users');
-            $table->foreignId('agent')->constrained('agents');
-            $table->date('debut');
-            $table->date('fin');
-            $table->string('dure');
-            $table->string('type');
-            $table->text('motif')->nullable();
-            $table->boolean('niv1')->default(false);
-            $table->boolean('niv2')->default(false);
+            $table->text('libelle');
+            $table->foreignId('tr')->constrained('trs');
+            $table->string('unite');
+            $table->integer('quantite');
+            $table->string('ligne')->nullable();
+            $table->float('prix');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conges');
+        Schema::dropIfExists('tr_oders');
     }
 };

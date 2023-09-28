@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('middlename')->nullable();
-            $table->string('service');
+            $table->foreignId('service')->constrained('services');
+            $table->string('fonction');
             $table->string('gender')->nullable();
             $table->string('etatcivil')->nullable();
             $table->string('phone')->unique()->nullable();

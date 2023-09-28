@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('conges', function (Blueprint $table) {
+        Schema::create('mouvements', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
             $table->foreignId('agent')->constrained('agents');
-            $table->date('debut');
-            $table->date('fin');
-            $table->string('dure');
-            $table->string('type');
-            $table->text('motif')->nullable();
+            $table->time('depart');
+            $table->time('retour');
+            $table->string('destination');
+            $table->text('motif');
             $table->boolean('niv1')->default(false);
             $table->boolean('niv2')->default(false);
             $table->boolean('active')->default(true);
@@ -37,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conges');
+        Schema::dropIfExists('mouvements');
     }
 };

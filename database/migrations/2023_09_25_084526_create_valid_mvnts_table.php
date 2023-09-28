@@ -13,16 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tr_oders', function (Blueprint $table) {
+        Schema::create('valid_mvnts', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
-            $table->text('libelle');
-            $table->foreignId('tr')->constrained('nds');
-            $table->string('unite');
-            $table->integer('quantite');
-            $table->string('ligne')->nullable();
-            $table->float('prix');
-            $table->boolean('active')->default(true);
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('mvnt')->constrained('mouvements');
+            $table->boolean('resp');
+            $table->string('niv');
+            $table->string('motif');
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tr_oders');
+        Schema::dropIfExists('valid_mvnts');
     }
 };

@@ -42,19 +42,30 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-12 mb-10">
+                        <div class="col-md-6 mb-10">
                             <label for="service">Service</label>
                             <select class="form-control @error('service') is-invalid @enderror" wire:model.defer="state.service" name="service" placeholder="Service">
                                 <option value=""></option>
-                                <option value="Administration">Administration</option>
-                                <option value="Programme">Programme</option>
-                                <option value="Resources humaines">Resources humaines</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Logistiaue">Logistiaue</option>
-                                <option value="IT">IT</option>
-                                <option value="Audit interne">Audit interne</option>
+                                @foreach ($service as $serv)
+                                    <option value="{{$serv->id}}">{{$serv->name}}</option>
+                                @endforeach
                             </select>
                             @error('service')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-10">
+                            <label for="service">Fonction</label>
+                            <select class="form-control @error('fonction') is-invalid @enderror" wire:model.defer="state.fonction" name="fonction" placeholder="fonction">
+                                <option value=""></option>
+                                <option value="1">Chef de service</option>
+                                <option value="2">Senior</option>
+                                <option value="3">Autre</option>
+                            </select>
+                            @error('fonction')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>

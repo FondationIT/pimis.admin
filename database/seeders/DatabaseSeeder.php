@@ -16,12 +16,76 @@ class DatabaseSeeder extends Seeder
     {
         //\App\Models\User::factory(10)->create();
 
+        
+
+        $service = [
+            [
+                'id' => 100,
+                'name' => 'Administration',
+                'reference' => 'SRV-ADM0000111A',
+                'niveau' => 1,
+                'parent' => 0,
+            ],
+            [
+                'id' => 200,
+                'name' => 'Programme',
+                'reference' => 'SRV-PRG0000222P',
+                'niveau' => 1,
+                'parent' => 0,
+            ],
+
+            /// NIVEAU 2 ADM ///
+
+            [
+                'id' => 101,
+                'name' => 'Finance',
+                'reference' => 'SRV-ADM0000123F',
+                'niveau' => 2,
+                'parent' => 100,
+            ],
+            [
+                'id' => 102,
+                'name' => 'Resources Humaines',
+                'reference' => 'SRV-ADM0000321R',
+                'niveau' => 2,
+                'parent' => 100,
+            ],
+            [
+                'id' => 103,
+                'name' => 'Logistique',
+                'reference' => 'SRV-ADM0000987FL',
+                'niveau' => 2,
+                'parent' => 100,
+            ],
+            [
+                'id' => 104,
+                'name' => 'IT',
+                'reference' => 'SRV-ADM0000518IT',
+                'niveau' => 2,
+                'parent' => 100,
+            ],
+
+            /// NIVEAU 2 PRG ///
+
+            [
+                'id' => 201,
+                'name' => 'Suivie Evaluation',
+                'reference' => 'SRV-PRG0000123F',
+                'niveau' => 2,
+                'parent' => 200,
+            ],
+        ];
+
+        foreach ($service as $serv){
+            \App\Models\Service::create($serv);
+        }
         \App\Models\Agent::create([
             'id' => 3394,
             'firstname' => 'David',
             'lastname' => 'Tino',
+            'service' => 100,
+            'fonction' => 3,
             'matricule' => 'FP-ST000000D',
-            'service' => 'IT',
         ]);
 
         \App\Models\User::factory()->create([

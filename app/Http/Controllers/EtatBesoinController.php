@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgentMission;
 use App\Models\Br;
 use App\Models\BrOder;
 use App\Models\Di;
 use App\Models\DiOder;
 use App\Models\Et_bes;
+use App\Models\Mission;
 use App\Models\Nd;
 use App\Models\NdOder;
 use App\Models\ProductOder;
@@ -314,7 +316,7 @@ class EtatBesoinController extends Controller
         $tr = Tr::firstWhere('reference', $ref )->id;
         for($count = 0; $count<count($data['product']); $count++)
          {
-            $ref = 'ND-ODR-'.$tr.rand(10000,99999).''.$count;
+            $ref = 'TR-ODR-'.$tr.rand(10000,99999).''.$count;
             TrOder::create([
                 'reference' => $ref,
                 'libelle' => $data['product'][$count],
@@ -324,6 +326,48 @@ class EtatBesoinController extends Controller
                 'quantite' => $data['quantite'][$count],
             ]);
 
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+
+
+    public function miss(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        $ref = 'MS-'.rand(10000,99999).'-FP'.rand(100,999);
+        Mission::create([
+            'reference' => $ref,
+            'tr' => $data['trMs'],
+            'destination' => $data['destMs'],
+            'objectif' => $data['objectifMs'],
+            'debut' => $data['dateDMs'],
+            'fin' => $data['dateFMs'],
+            'dure' => $data['dureMs'],
+            'moyen' => $data['moyenMs'],
+            'type' => $data['typeMs'],
+            'itinéraire' => $data['itMs'],
+            'signature' => Auth::user()->id,
+
+        ]);
+
+        $ms = Mission::firstWhere('reference', $ref )->id;
+
+        //$data = json_decode($data->getBody());
+        for($count = 0; $count<count($data['agMs']); $count++)
+         {
+            $ref1 = 'AGMS-'.rand(10000,99999).'-FP'.rand(100,999);
+            AgentMission::create([
+                'reference' => $ref1,
+                'ms' => $ms,
+                'agent' => $data['agMs'][$count],
+            ]);
          }
 
         DB::commit();

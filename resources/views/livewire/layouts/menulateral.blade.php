@@ -74,8 +74,8 @@
                                     <li class="nav-item" id="usTrans">
                                         <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('dtUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
                                     </li>
-                                    <li class="nav-item" id="usConge">
-                                        <a class="nav-link" href="#" id="button-usConge" data-active="usConge" wire:click="$emit('congeUpdated')" data-open="bFile" data-section="usConge">Conge</a>
+                                    <li class="nav-item" id="conge">
+                                        <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('congeUpdated')" data-open="bFile" data-section="conge">Conge</a>
                                     </li>
                                     <li class="nav-item" id="contr">
                                         <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('contratUpdated')" data-open="bFile" data-section="contr">Contrat</a>
@@ -85,6 +85,37 @@
                             </li>
                         </ul>
                     </li>
+
+                    @if (App\Models\Agent::firstWhere('id', Auth::user()->agent)->fonction == 1)
+                        <li class="nav-item" id="bService">
+                            <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#service">
+                                <span class="feather-icon"><i data-feather="home"></i></span>
+                                <span class="nav-link-text">Service</span>
+                            </a>
+                            <ul id="service" class="nav flex-column collapse collapse-level-1" >
+                                <li class="nav-item" >
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item" id="artS">
+                                            <a class="nav-link" href="#" id="button-artS" data-active="artS" wire:click="$emit('agentUpdated')" data-open="bService" data-section="artS">Agents</a>
+                                        </li>
+                                        <li class="nav-item" id="affS">
+                                            <a class="nav-link" href="#" id="button-affS" data-active="affS" wire:click="$emit('affectationUpdated')" data-open="bService" data-section="affS">Affectations</a>
+                                        </li>
+                                        <li class="nav-item" id="mvmtS">
+                                            <a class="nav-link" href="#" id="button-mvmtS" data-active="mvmtS" wire:click="$emit('mouvementUpdated')" data-open="bService" data-section="mvmtS">Mouvements agents</a>
+                                        </li>
+                                        <li class="nav-item" id="missS">
+                                            <a class="nav-link" href="#" id="button-missS" data-active="missS" wire:click="$emit('affectationUpdated')" data-open="bService" data-section="missS">Missions</a>
+                                        </li>
+                                        <li class="nav-item" id="congeS">
+                                            <a class="nav-link" href="#" id="button-congeS" data-active="congeS" wire:click="$emit('congeUpdated')" data-open="bService" data-section="congeS">Conges</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
 
                     @if (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bPimis">
@@ -133,20 +164,17 @@
                                         <li class="nav-item" id="compteA">
                                             <a class="nav-link" href="#" id="button-compteA" data-active="compteA" wire:click="$emit('compteUpdated')" data-open="bRH" data-section="compteA">Compte Agent</a>
                                         </li>
-                                        <li class="nav-item" id="mvmt">
-                                            <a class="nav-link" href="#" id="button-mvmt" data-active="mvmt" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmt">Mouvements agents</a>
+                                        <li class="nav-item" id="mvmtR">
+                                            <a class="nav-link" href="#" id="button-mvmtR" data-active="mvmtR" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmtR">Mouvements agents</a>
                                         </li>
                                         <li class="nav-item" id="tdr">
                                             <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('tdrUpdated')" data-open="bRH" data-section="tdr">Terme de reference</a>
                                         </li>
-                                        <li class="nav-item" id="miss">
-                                            <a class="nav-link" href="#" id="button-miss" data-active="miss" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="miss">Missions</a>
+                                        <li class="nav-item" id="missR">
+                                            <a class="nav-link" href="#" id="button-missR" data-active="missR" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="missR">Missions</a>
                                         </li>
-                                        <li class="nav-item" id="conge">
-                                            <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('congeUpdated')" data-open="bRH" data-section="conge">Conges</a>
-                                        </li>
-                                        <li class="nav-item" id="recrut">
-                                            <a class="nav-link" href="#" id="button-recrut" data-active="recrut" wire:click="$emit('recrutementUpdated')" data-open="bRH" data-section="recrut">Recrutement</a>
+                                        <li class="nav-item" id="congeR">
+                                            <a class="nav-link" href="#" id="button-congeR" data-active="congeR" wire:click="$emit('congeUpdated')" data-open="bRH" data-section="congeR">Conges</a>
                                         </li>
 
                                     </ul>

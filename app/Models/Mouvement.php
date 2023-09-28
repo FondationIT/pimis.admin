@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Conge extends Model
+class Mouvement extends Model
 {
     use HasFactory;
 
@@ -14,10 +14,9 @@ class Conge extends Model
         'signature',
         'agent',
         'motif',
-        'debut',
-        'fin',
-        'dure',
-        'type',
+        'depart',
+        'retour',
+        'destination',
         'niv1',
         'niv2',
         'active',

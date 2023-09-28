@@ -9,6 +9,10 @@
     @include('pimis')
  @endif
 
+ @if (App\Models\Agent::firstWhere('id', Auth::user()->agent)->fonction == 1)
+   @include('service')
+ @endif
+
  @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('stock')
  @endif

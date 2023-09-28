@@ -29,6 +29,7 @@ class Agent extends Authenticatable
         'birthdate',
         'adress',
         'service',
+        'fonction',
         'country',
         'region',
         'description',

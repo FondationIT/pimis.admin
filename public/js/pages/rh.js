@@ -11,7 +11,7 @@ $.ajaxSetup({
 
 
 
-                            //  SCRIPT PV  //
+                            //  SCRIPT MISSION  //
 
 
 
@@ -31,7 +31,7 @@ $('#partMSAdd').on('click', function(e){
     count = count + 1;
     var aBPlus ="";
 
-    aBPlus +='<div class="form-row form-row-all" id="form-rowMS'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartMS" id="agMS'+count+'" required></select></div>'
+    aBPlus +='<div class="form-row form-row-all" id="form-rowMS'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartMs" id="agMS'+count+'" required></select></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowMS'+count+'" class="removePartMS text-red-600"><i class="icon-close txt-danger"></i></a></div><div class="col-md-2 mb-10"></div></div>'
 
@@ -66,7 +66,7 @@ $('#partMSAdd').on('click', function(e){
 
 ///////////////////////////////////////////////////////////////////////
 
-           //   VALIDATION FORMULAIRE PV  //
+           //   VALIDATION FORMULAIRE MISSION  //
 
 //////////////////////////////////////////////////////////////////////
 
@@ -103,18 +103,19 @@ comm1Form.onsubmit = function(e) {
     url: "/msReg",
     dataType: 'json',
 
-    data: JSON.stringify(pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+    data: JSON.stringify(missFormToJSON(agMs,trMs,destMs,objectifMs,dateDMs,dateFMs,typeMs,dureMs,moyenMs,itMs)),
     beforeSend: function() {
-        $('#btnPv').hide();
-        $('#prldPv').show();
+        $('#btnMs').hide();
+        $('#prldMs').show();
     },
     success: function(data, textStatus, jqXHR){
 
-            $('#prldPv').hide();
-            $('#btnPv').show();
+            $('#prldMs').hide();
+            $('#btnMs').show();
             $('.close').click()
 
-            Livewire.emit('demAchUpdated')
+            Livewire.emit('trUpdated')
+            Livewire.emit('missionUpdated')
 
             $.toast().reset('all');
             $.toast({
@@ -130,9 +131,9 @@ comm1Form.onsubmit = function(e) {
 
     },
     error: function(jqXHR, textStatus, data){
-        $('#prldPv').hide();
-        $('#btnPv').show();
-        $('#messageErrPv').html(messageErr(data))
+        $('#prldMs').hide();
+        $('#btnMs').show();
+        $('#messageErrMs').html(data)
     }
 });
 
@@ -145,18 +146,18 @@ comm1Form.onsubmit = function(e) {
 
 
 
-function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
+function missFormToJSON(agMs,trMs,destMs,objectifMs,dateDMs,dateFMs,typeMs,dureMs,moyenMs,itMs) {
     return {
-      "titrePv":titrePv,
-      "fournPv": fournPv,
-      "daPv": daPv,
-      "datePv":datePv,
-      "obsPv": obsPv,
-      "justPv": justPv,
-      "agPv":agPv,
-      "prixPv": prixPv,
-      "profPv": profPv,
-      "prodPv": prodPv
+      "agMs":agMs,
+      "trMs": trMs,
+      "destMs": destMs,
+      "objectifMs":objectifMs,
+      "dateFMs": dateFMs,
+      "dateDMs": dateDMs,
+      "typeMs":typeMs,
+      "dureMs": dureMs,
+      "moyenMs": moyenMs,
+      "itMs": itMs
     };
   }
 

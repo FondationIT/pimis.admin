@@ -5,21 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Conge extends Model
+class ValidConge extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'reference',
-        'signature',
-        'agent',
+        'user',
+        'conge',
+        'resp',
+        'niv',
         'motif',
-        'debut',
-        'fin',
-        'dure',
-        'type',
-        'niv1',
-        'niv2',
-        'active',
     ];
 }

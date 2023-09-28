@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Rh;
 use App\Models\Agent;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,7 @@ class AgentForm extends Component
         $this->state['lieuN'] = $model->lieu;
         $this->state['dateN'] = $model->birthdate;
         $this->state['service'] = $model->service;
+        $this->state['fonction'] = $model->fonction;
         $this->state['adresse'] = $model->adress;
         $this->state['pays'] = $model->country;
         $this->state['region'] = $model->region;
@@ -59,6 +61,7 @@ class AgentForm extends Component
                 'dateN' => ['required', 'date', 'max:255'],
                 'genre' => ['required', 'string', 'max:255'],
                 'service' => ['required', 'string', 'max:255'],
+                'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
             ])->validate();
 
@@ -75,6 +78,7 @@ class AgentForm extends Component
                     'phone' => $this->state['phone'],
                     'lieu' => $this->state['lieuN'],
                     'service' => $this->state['service'],
+                    'fonction' => $this->state['fonction'],
                     'birthdate' => $this->state['dateN'],
                     'adress' => $this->state['adresse'],
                     'country' => $this->state['pays'],
@@ -102,6 +106,7 @@ class AgentForm extends Component
                 'dateN' => ['required', 'date', 'max:255'],
                 'genre' => ['required', 'string', 'max:255'],
                 'service' => ['required', 'string', 'max:255'],
+                'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
             ])->validate();
 
@@ -120,6 +125,7 @@ class AgentForm extends Component
                     'phone' => $this->state['phone'],
                     'lieu' => $this->state['lieuN'],
                     'service' => $this->state['service'],
+                    'fonction' => $this->state['fonction'],
                     'birthdate' => $this->state['dateN'],
                     'adress' => $this->state['adresse'],
                     'country' => $this->state['pays'],
@@ -142,6 +148,7 @@ class AgentForm extends Component
 
     public function render()
     {
-        return view('livewire.rh.agent-form');
+        return view('livewire.rh.agent-form',[
+            'service' => Service::orderBy("id", "ASC")->get(),]);
     }
 }

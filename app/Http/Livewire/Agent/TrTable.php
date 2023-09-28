@@ -166,7 +166,7 @@ class TrTable extends LivewireDatatable
 
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printNd('.$id.')" data-toggle="modal" data-target="#pNdModalForms">'.$reference.'</a>';
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
                 })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
@@ -380,7 +380,7 @@ class TrTable extends LivewireDatatable
 
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printNd('.$id.')" data-toggle="modal" data-target="#pNdModalForms">'.$reference.'</a>';
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
                 })->label('Reference'),
 
                 Column::callback(['projet'], function ($projet) {
