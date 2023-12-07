@@ -2,7 +2,7 @@
     @includeIf($beforeTableSlot)
     <div class="relative">
         <div class="flex items-center justify-between mb-0">
-            <div class="flex items-center h-20">
+            <div class="flex items-center h-10">
                 @if($this->searchableColumns()->count())
                     <div class="flex rounded w-96 ">
                         <div class="relative flex-grow focus-within:z-20">
@@ -102,7 +102,7 @@
             </div>
         @endif
 
-        <div wire:loading.class="opacity-50" class="rounded @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg  max-w-screen <!--overflow-x-scroll--> border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex) rounded-b-none border-b-0 @endif">
+        <div wire:loading.class="opacity-50" class="rounded @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg  max-w-screen overflow-x-scroll border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex) rounded-b-none border-b-0 @endif">
             <div>
                 <div class="table min-w-full align-middle">
                     @unless($this->hideHeader)

@@ -26,6 +26,8 @@ Route::post('/diReg', [App\Http\Controllers\EtatBesoinController::class, 'di'])-
 Route::post('/ndReg', [App\Http\Controllers\EtatBesoinController::class, 'nd'])->name('ndReg');
 Route::post('/trReg', [App\Http\Controllers\EtatBesoinController::class, 'tr'])->name('trReg');
 Route::post('/msReg', [App\Http\Controllers\EtatBesoinController::class, 'miss'])->name('msReg');
+Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr'])->name('ctrReg');
+Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
 
 
 

@@ -56,6 +56,39 @@
 
 
 
+    <section id="chequeC-section" class="section js-section u-category-media">
+      <!-- Breadcrumb -->
+      <nav class="hk-breadcrumb" aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light bg-transparent">
+              <li class="breadcrumb-item"><a href="#">Caisse</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Cheques</li>
+          </ol>
+      </nav>
+      <!-- /Breadcrumb -->
+      <!-- Content Wrapper. Contains page content -->
+      <div class="container">
+          <!-- Title -->
+              <div class="hk-pg-header align-items-top">
+                <div>
+                  <h3 class="hk-pg-title font-weight-600 mb-10">Cheques</h3>
+                </div>
+                <div class="d-flex">
+                  
+                </div>
+              </div>
+          <!-- /Title -->
+          
+  
+          <!-- Main content -->
+          <!-- Row -->
+          <livewire:finance.cheque-table />
+          <!-- /Row -->
+  
+      </div>
+    </section>
+
+
+
     <section id="beC-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
@@ -168,16 +201,16 @@
                   <div>
                     <h3 class="hk-pg-title font-weight-600 mb-10">Livre de caisse</h3>
                   </div>
-                  <div class="d-flex">
-                    
-                  </div>
+                  
+                  
                 </div>
             <!-- /Title -->
             
     
             <!-- Main content -->
+            <livewire:caisse.filtre />
             <!-- Row -->
-            
+            <livewire:caisse.livre-caisse />
             <!-- /Row -->
     
         </div>

@@ -249,17 +249,7 @@ class BpForm extends Component
                     'comment' => $this->state['comment'],
                     'niv1' => $niv1
                 ]);
-
-                $sld = RCaisse::where('projet', $this->projet )->orderBy('created_at', 'desc')->first()->solde;
-
-                $solde = $sld + $montant;
-
-                $ref2 = 'RC-'.$this->index.''.rand(1000,9999);
-                RCaisse::create([
-                    'reference' => $ref2,
-                    'projet' => $this->projet,
-                    'solde' => $solde,
-                ]);
+                
             }else{
                 $montant = $this->some;
 

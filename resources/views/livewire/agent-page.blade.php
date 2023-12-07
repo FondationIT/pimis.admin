@@ -316,9 +316,9 @@
                <div class="row">
 
                 <livewire:agent.conge-table
-            searchable="reference"
-            exportable
-            />
+                searchable="reference"
+                exportable
+                />
 
                </div>
                <!-- /Row -->

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Finance;
 use App\Models\Bp;
 use App\Models\Cheque;
 use App\Models\Compte;
+use App\Models\Fournisseur;
 use App\Models\Projet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,12 @@ class ChequeForm extends Component
 
         if($this->bps[0]->categorie == 4){
             $this->state['ben'] = Projet::where('id',$this->bps[0]->beneficiaire)->get()[0]->name;
+        }
+        else if($this->bps[0]->categorie == 3){
+            $this->state['ben'] = Fournisseur::where('id',$this->bps[0]->beneficiaire)->get()[0]->name;
+        }
+        else if($this->bps[0]->categorie == 5){
+            $this->state['ben'] = 'Caisse projet';
         }
         $this->state['montant'] = $this->bps[0]->montant;
     }

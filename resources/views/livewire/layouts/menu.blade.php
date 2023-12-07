@@ -4,14 +4,16 @@
 
         <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
 
-        <a class="navbar-brand font-weight-700" href="{{url('admin')}}">
+        <a class="navbar-brand font-weight-700" href="{{url('/')}}">
 
             <img src="img/logo/logoP.png" style="height: 40px;position: relative;" />
                
         </a>
         <ul class="navbar-nav hk-navbar-content">
 
-            
+            <li class="nav-item dropdown dropdown-notifications">
+                <h4><span class="badge badge-danger">1 USD | {{ App\Models\Taux::firstWhere('active', true)->taux}} CDF</span></h4>
+            </li>   
 
             <li class="nav-item dropdown dropdown-notifications">
                 <a class="nav-link nav-link-hover dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"

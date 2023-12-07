@@ -469,7 +469,7 @@ class BpTable extends LivewireDatatable
                     }
 
 
-                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>'; ;
+                        return '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
                 })->label('Action'),
 
             ];

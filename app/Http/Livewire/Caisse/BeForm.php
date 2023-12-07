@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Caisse;
 use App\Models\Affectation;
 use App\Models\Agent;
 use App\Models\Be;
+use App\Models\LivreCaisse;
 use App\Models\Projet;
 use App\Models\RCaisse;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,18 @@ class BeForm extends Component
                 'montant' => $montant,
                 'montantTL' => $this->state['montantTL'],
                 'motif' => $this->state['motif'],
+            ]);
+
+            $ref1 = 'LVC-'.$ref;
+            $index = Be::firstWhere('reference', $ref )->id;
+            LivreCaisse::create([
+                'reference' => $ref1,
+                'signature' => Auth::user()->id,
+                'projet' => $this->state['projet'],
+                'index' => $index,
+                'type' => 12,//Bon d'entree//
+                'entree' => $montant,
+                'libelle' => $this->state['motif'],
             ]);
 
             $sld = RCaisse::where('projet', $this->state['projet'] )->orderBy('created_at', 'desc')->first()->solde;

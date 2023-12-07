@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Rh;
 use App\Models\Agent;
 use App\Models\Service;
+use App\Models\StatutAgent;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,8 @@ class AgentForm extends Component
         $this->modelId = $modelId;
 
         $model = Agent::find($this->modelId);
+        $model1 = StatutAgent::where('agent',$this->modelId)->where('active', true)->orderBy('created_at', 'desc')->first();
+
         $this->state['name'] = $model->firstname;
         $this->state['name2'] = $model->lastname;
         $this->state['name3'] = $model->middlename;
@@ -43,7 +46,8 @@ class AgentForm extends Component
         $this->state['pays'] = $model->country;
         $this->state['region'] = $model->region;
         $this->state['description'] = $model->description;
-        $this->state['etatcivil'] = $model->etatcivil;
+        $this->state['etatcivil'] = $model1->etatcivil;
+        $this->state['enfant'] = $model1->enfant;
     }
 
     public function submit()
@@ -63,6 +67,7 @@ class AgentForm extends Component
                 'service' => ['required', 'string', 'max:255'],
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
+                'enfant' => ['required', 'string', 'max:255'],
             ])->validate();
 
             DB::beginTransaction();
@@ -84,8 +89,22 @@ class AgentForm extends Component
                     'country' => $this->state['pays'],
                     'region' => $this->state['region'],
                     'description' => $this->state['description'],
-                    'etatcivil' => $this->state['etatcivil'],
                 ]);
+
+                StatutAgent::where('agent',$this->modelId)->update([
+                    'active' => false
+                ]);
+
+                $ref = 'STFP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
+
+                StatutAgent::create([
+                    'reference' => $ref,
+                    'agent' =>$this->modelId,
+                    'enfant' => $this->state['enfant'],
+                    'etatcivil' => $this->state['etatcivil'],
+                    'signature' => Auth::user()->id,
+                ]);
+
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
@@ -108,6 +127,7 @@ class AgentForm extends Component
                 'service' => ['required', 'string', 'max:255'],
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
+                'enfant' => ['required', 'string', 'max:255'],
             ])->validate();
 
             DB::beginTransaction();
@@ -115,7 +135,7 @@ class AgentForm extends Component
 
                 $matricule = 'FP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
                 
-                $data_create = Agent::create([
+                Agent::create([
                     'firstname' => $this->state['name'],
                     'lastname' => $this->state['name2'],
                     'middlename' => $this->state['name3'],
@@ -131,9 +151,21 @@ class AgentForm extends Component
                     'country' => $this->state['pays'],
                     'region' => $this->state['region'],
                     'description' => $this->state['description'],
+                    'signature' => Auth::user()->id,
+                ]);
+
+                $agent = Agent::where("matricule", $matricule)->get();
+                $ref = 'STFP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
+
+                StatutAgent::create([
+                    'reference' => $ref,
+                    'agent' =>$agent[0]->id,
+                    'enfant' => $this->state['enfant'],
                     'etatcivil' => $this->state['etatcivil'],
                     'signature' => Auth::user()->id,
                 ]);
+
+                
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');

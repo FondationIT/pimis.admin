@@ -109,10 +109,10 @@ class AgentsTable extends LivewireDatatable
 
                 Column::callback(['id','active'], function ($id,$active) {
 
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAgent(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
+                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAgent(' . $id . ')" text-red-700><i class="icon-trash"></i></a>';
                     $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nAgentModalForms"><i class="icon-pencil"></i></a>';
                     if ($active == false) {
-                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreAgent(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
+                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreAgent(' . $id . ')"><i class="icon-action-undo"></i></a>';
                     }
                         return '<div class="flex space-x-1 justify-around">'.$edit . $delete .'</div>';
                 })->unsortable(),

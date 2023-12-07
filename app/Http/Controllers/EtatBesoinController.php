@@ -5,17 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\AgentMission;
 use App\Models\Br;
 use App\Models\BrOder;
+use App\Models\Contrat;
 use App\Models\Di;
 use App\Models\DiOder;
 use App\Models\Et_bes;
+use App\Models\ListePaie;
 use App\Models\Mission;
 use App\Models\Nd;
 use App\Models\NdOder;
+use App\Models\PartContrat;
+use App\Models\PayementAgent;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\prixPv;
 use App\Models\signaturePv;
+use App\Models\StatutAgent;
 use App\Models\Stock;
 use App\Models\Tr;
 use App\Models\TrOder;
@@ -367,6 +372,86 @@ class EtatBesoinController extends Controller
                 'reference' => $ref1,
                 'ms' => $ms,
                 'agent' => $data['agMs'][$count],
+            ]);
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+
+    public function ctr(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        $ref = 'CTR-'.rand(10000,99999).'-FP'.rand(100,999);
+        Contrat::create([
+            'reference' => $ref,
+            'agent' => $data['agent'],
+            'projet' => $data['prots'],
+            'type' => $data['type'],
+            'salaire' => $data['salaire'],
+            'debut' => $data['debut'],
+            'fin' => $data['fin'],
+            'description' => $data['description'],
+            'signature' => Auth::user()->id,
+
+        ]);
+
+        $ctr = Contrat::firstWhere('reference', $ref )->id;
+
+        //$data = json_decode($data->getBody());
+        for($count = 0; $count<count($data['projet']); $count++)
+         {
+            $ref1 = 'PRT-CTR-'.rand(10000,99999).'-FP'.rand(100,999);
+            PartContrat::create([
+                'reference' => $ref1,
+                'contrat' => $ctr,
+                'projet' => $data['projet'][$count],
+                'pourcentage' => $data['part'][$count],
+                'debut' => $data['debut'],
+                'fin' => $data['fin'],
+                'signature' => Auth::user()->id,
+            ]);
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+    public function jp(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        PayementAgent::firstWhere('id', $data['pymt'])->update([
+            'statut' => true,
+        ]);
+        $month = PayementAgent::firstWhere('id', $data['pymt'])->month;
+
+        //$data = json_decode($data->getBody());
+        for($count = 0; $count<count($data['agent']); $count++)
+         {
+            $ref = 'AG-PYMNT-'.rand(10000,99999).'-FP'.rand(100,999);
+            $sa = StatutAgent::where('agent',$data['agent'][$count])->where('active',true)->get()[0]->id;
+            $ne = StatutAgent::where('agent',$data['agent'][$count])->where('active',true)->get()[0]->enfant;
+            $sb = Contrat::where('agent',$data['agent'][$count])->where('statut',true)->get()[0]->salaire;
+            ListePaie::create([
+                'reference' => $ref,
+                'agent' => $data['agent'][$count],
+                'sAgent' => $sa,
+                'pymt' => $data['pymt'],
+                'month' => $month,
+                'SB' => $sb,
+                'jp' => $data['jour'][$count],
+                'ne' => $ne,
+                'signature' => Auth::user()->id,
+
             ]);
          }
 

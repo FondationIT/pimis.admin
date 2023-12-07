@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Caisse;
 
 use App\Models\Bp;
 use App\Models\Decharge;
+use App\Models\LivreCaisse;
 use App\Models\Projet;
 use App\Models\RCaisse;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,18 @@ class DechargeForm extends Component
                     'institution' => $this->state['inst'],
                     'montantTL' => $this->state['montantTL'],
                     'motif' => $this->state['motif']
+                ]);
+
+                $ref1 = 'LVC-'.$ref;
+                $index = Decharge::firstWhere('reference', $ref )->id;
+                LivreCaisse::create([
+                    'reference' => $ref1,
+                    'signature' => Auth::user()->id,
+                    'projet' => $this->bps[0]->projet,
+                    'index' => $index,
+                    'type' => 21,//Decharge//
+                    'sortie' => $this->state['montant'],
+                    'libelle' => $this->state['motif'],
                 ]);
 
                 

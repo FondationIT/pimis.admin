@@ -220,11 +220,32 @@ commForm.onsubmit = function(e) {
 function imprimer(divName) {
 
     var printContents = document.getElementById(divName).innerHTML;
-    var originalContents = document.body.innerHTML;
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    return false;
+    const mywindow = window.open('','Print Code');
+    const headContent = document.head.innerHTML;
+    mywindow.document.write('<html><body>');
+    mywindow.document.write(headContent);
+    mywindow.document.write('<div style="margin:0px auto !important;">');
+    mywindow.document.write(printContents);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close();
+    mywindow.focus();
+    mywindow.onload = function(){
+        mywindow.print();
+        mywindow.close();
+    }
+
+
+
+
+
+    //var originalContents = document.body.innerHTML;
+    //document.body.innerHTML = printContents;
+    
+
+    //window.print();
+    //document.body.innerHTML = originalContents;
+    //return false;
 
  }
 

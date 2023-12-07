@@ -104,7 +104,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-10">
+                        <div class="col-md-5 mb-10">
                             <label for="genre">Genre</label>
                             <select class="form-control @error('genre') is-invalid @enderror" wire:model.defer="state.genre" name="genre" placeholder="Genre">
                                 <option value=""></option>
@@ -118,15 +118,26 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-6 mb-10">
+                        <div class="col-md-4 mb-10">
                             <label for="etatcivil">Etat civil</label>
                             <select class="form-control @error('etatcivil') is-invalid @enderror" wire:model.defer="state.etatcivil" name="etatcivil" placeholder="Etat civil">
                                 <option value=""></option>
                                 <option value="Marie(e)">Marie(e)</option>
                                 <option value="Celibataire">Celibataire</option>
                                 <option value="Divorce(e)">Divorce(e)</option>
+                                <option value="Veuf(ve)">Veuf(ve)</option>
                             </select>
                             @error('etatcivil')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3 mb-10">
+                            <label for="etatcivil">Nbre Enfant</label>
+                            <input type="number" step="1" min="0" class="form-control @error('enfant') is-invalid @enderror" wire:model.defer="state.enfant" name="enfant">
+                               
+                            @error('enfant')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>

@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cheques', function (Blueprint $table) {
+        Schema::create('contrats', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->foreignId('agent')->constrained('users');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('agent')->constrained('agents');
             $table->foreignId('projet')->constrained('projets');
-            $table->foreignId('bp')->constrained('bps');
-            $table->string('beneficiare');
-            $table->string('numero')->unique();
-            $table->string('lieu');
-            $table->float('montant', 20, 2);
-            $table->string('motif');
-            $table->boolean('active')->default(false);
+            $table->string('type');
+            $table->date('debut');
+            $table->date('fin');
+            $table->float('salaire', 20, 2);
+            $table->text('description')->nullable();
+            $table->boolean('statut')->default(true);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -36,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cheques');
+        Schema::dropIfExists('contrats');
     }
 };

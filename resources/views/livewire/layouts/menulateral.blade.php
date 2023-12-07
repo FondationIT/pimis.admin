@@ -158,17 +158,23 @@
                                         <li class="nav-item" id="art">
                                             <a class="nav-link" href="#" id="button-art" data-active="art" wire:click="$emit('agentUpdated')" data-open="bRH" data-section="art">Agents</a>
                                         </li>
+                                        <li class="nav-item" id="contratA">
+                                            <a class="nav-link" href="#" id="button-contratA" data-active="contratA" wire:click="$emit('contratUpdated')" data-open="bRH" data-section="contratA">Contrats Agents</a>
+                                        </li>
                                         <li class="nav-item" id="aff">
                                             <a class="nav-link" href="#" id="button-aff" data-active="aff" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="aff">Affectations</a>
                                         </li>
                                         <li class="nav-item" id="compteA">
-                                            <a class="nav-link" href="#" id="button-compteA" data-active="compteA" wire:click="$emit('compteUpdated')" data-open="bRH" data-section="compteA">Compte Agent</a>
+                                            <a class="nav-link" href="#" id="button-compteA" data-active="compteA" wire:click="$emit('compteUpdated')" data-open="bRH" data-section="compteA">Comptes Agents</a>
+                                        </li>
+                                        <li class="nav-item" id="paieA">
+                                            <a class="nav-link" href="#" id="button-paieA" data-active="paieA" wire:click="$emit('paieAUpdated')" data-open="bRH" data-section="paieA">Paiemment Agents</a>
                                         </li>
                                         <li class="nav-item" id="mvmtR">
                                             <a class="nav-link" href="#" id="button-mvmtR" data-active="mvmtR" wire:click="$emit('mouvementUpdated')" data-open="bRH" data-section="mvmtR">Mouvements agents</a>
                                         </li>
                                         <li class="nav-item" id="tdr">
-                                            <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('tdrUpdated')" data-open="bRH" data-section="tdr">Terme de reference</a>
+                                            <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('tdrUpdated')" data-open="bRH" data-section="tdr">Termes de reference</a>
                                         </li>
                                         <li class="nav-item" id="missR">
                                             <a class="nav-link" href="#" id="button-missR" data-active="missR" wire:click="$emit('affectationUpdated')" data-open="bRH" data-section="missR">Missions</a>
@@ -277,6 +283,11 @@
                                         <li class="nav-item" id="bonComF">
                                             <a class="nav-link" href="#" id="button-bonComF" data-active="bonComF" wire:click="$emit('demAchUpdated')" data-open="bFinance" data-section="bonComF">Bons de commande</a>
                                         </li>
+                                            @if (Auth::user()->role == 'COMPT1')
+                                            <li class="nav-item" id="paieF">
+                                                <a class="nav-link" href="#" id="button-paieF" data-active="paieF" wire:click="$emit('paieAUpdated')" data-open="bFinance" data-section="paieF">Paiemment Agents</a>
+                                            </li>
+                                            @endif
                                         @endif
 
                                         <li class="nav-item" id="notdebF">
@@ -316,6 +327,9 @@
                                         <li class="nav-item" id="bonpayC">
                                             <a class="nav-link" href="#" id="button-bonpayC" data-active="bonpayC" data-open="bCaisse" wire:click="$emit('bpUpdated')" data-section="bonpayC">Bons de payement</a>
                                         </li>
+                                        <li class="nav-item" id="chequeC">
+                                            <a class="nav-link" href="#" id="button-chequeC" data-active="chequeC" data-open="bCaisse" wire:click="$emit('chequeUpdated')" data-section="chequeC">Cheques</a>
+                                        </li>
                                         <li class="nav-item" id="beC">
                                             <a class="nav-link" href="#" id="button-beC" data-active="beC" wire:click="$emit('beUpdated')" data-open="bCaisse" data-section="beC">Bon d'entrée</a>
                                         </li>
@@ -328,7 +342,7 @@
                                             <a class="nav-link" href="#" id="button-rapportC" data-active="rapportC" wire:click="$emit('rapportCUpdated')" data-open="bCaisse" data-section="rapportC">Rapport</a>
                                         </li>
                                         <li class="nav-item" id="livreC">
-                                            <a class="nav-link" href="#" id="button-livreC" data-active="livreC" wire:click="$emit('livreUpdated')" data-open="bCaisse" data-section="livreC">Livre de caisse</a>
+                                            <a class="nav-link" href="#" id="button-livreC" data-active="livreC" wire:click="$emit('livreCaisseUpdated')" data-open="bCaisse" data-section="livreC">Livre de caisse</a>
                                         </li>
                                         
                                     </ul>
