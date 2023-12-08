@@ -15,6 +15,7 @@ class ListePaie extends Model
         'agent',
         'sAgent',
         'pymt',
+        'contrat',
         'month',
         'SB',
         'jp',

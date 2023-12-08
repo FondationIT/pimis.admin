@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire\Rh;
 
+use App\Models\Affectation;
+use App\Models\Bp;
 use App\Models\PayementAgent;
+use App\Models\Projet;
 use App\Models\ValidPaie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +19,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class PaiementTable extends LivewireDatatable
 {
     public $modelId;
+    public $projet;
 
     protected $listeners = [
         'paieAUpdated'=> '$refresh'
@@ -28,6 +32,18 @@ class PaiementTable extends LivewireDatatable
     public function voir($modelId){
         $this->modelId = $modelId;
         $this->emit('listePaieAf',$this->modelId );
+    }
+
+    public function voir2($modelId,$projet){
+        $this->modelId = $modelId;
+        $this->projet = $projet;
+        $this->emit('listePaieAf2',$this->modelId, $this->projet);
+    }
+
+    public function formBP6($modelId,$projet){
+        $this->modelId = $modelId;
+        $this->projet = $projet;
+        $this->emit('formBP6',$this->modelId, $this->projet);
     }
 
     public function appC($modelId){
@@ -91,6 +107,19 @@ class PaiementTable extends LivewireDatatable
             ->where('niv1', true)
             ->orderBy("id", "DESC");
             return $das;
+
+        }else if (Auth::user()->role == 'COMPT2') {
+
+            $das = PayementAgent::query()
+            ->where('statut', true)
+            ->where('niv1', true)
+            ->where('niv2', true)
+            ->orderBy("id", "DESC");
+            $aff = Affectation::where('agent', Auth::user()->agent);
+
+            return $aff;
+            
+            
 
         }else{
             return PayementAgent::query()->orderBy("id", "DESC");
@@ -188,6 +217,93 @@ class PaiementTable extends LivewireDatatable
                     }
                         return '<div class="flex space-x-1 justify-around">'.$delete .'</div>';
                 })->unsortable(),
+            ];
+
+        }else if (Auth::user()->role == 'COMPT2') {
+
+            return [
+
+                Column::callback(['projet'], function ($id) {
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    $projet = Projet::find($id)->name;
+
+                    return $projet;
+
+                })->label('Projet'),
+
+                Column::callback(['agent'], function () {
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    return $das[0]->type;
+
+                })->label('Type'),
+
+                Column::callback(['cath'], function () {
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    return $das[0]->month;
+
+                })->label('Mois'),
+
+                BooleanColumn::callback(['active'], function () {
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    return $das[0]->niv1;
+
+                })->label('Mois'),
+
+                Column::callback(['id','projet'], function ($id,$projet) {
+
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    $di = $das[0]->id;
+
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="voir2('.$di.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms"><span class="badge badge-success">Voir</span></i></a>';
+                })->unsortable(),
+    
+
+                Column::callback(['projet','agent'], function ($projet,$agent) {
+
+                    $das = PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->get();
+
+                    $di = $das[0]->id;
+
+                    if (Bp::where("bc", $di)->where('categorie', 6)->where('projet',$projet)->exists()){
+
+                        return '<span class="badge badge-success">BP Déjà fait</span>';
+                    }else{
+                        
+                            return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBP6('.$di.','.$projet.')" data-toggle="modal" data-target="#bp6ModalForms"><span class="badge badge-info">Faire un BP</span></a>';
+                        
+                    }
+                    
+
+                })->label('Action'),
             ];
 
         }else{

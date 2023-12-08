@@ -136,7 +136,9 @@
                                         <td style="border: 1px solid;text-align:center;width:70%">
                                             <strong>
                                             @if ($bps)
-                                                @if ($bps[0]->categorie == 5)
+                                                @if ($bps[0]->categorie == 6)
+                                                Compte salaire
+                                                @elseif ($bps[0]->categorie == 5)
                                                  Caisse Projet
                                                 @elseif ($bps[0]->categorie == 4 && $bps[0]->beneficiaire == 1 )
                                                 Administration 
@@ -502,6 +504,30 @@
                                         <td></td>
                                         <td></td>
                                     </tr>
+
+                                <tr>
+                                    <th><strong>Total</strong></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><strong>$ {{$some}}</strong></th>
+                                </tr>
+                                @elseif($bps[0]->categorie == 6)
+                               
+
+                                <tr style="border: 1px solid;width: 100%;text-align:center">
+                                    <td></td>
+                                    <td>{{$bps[0]->comment}}</td>
+
+                                    <td>USD</td>
+                                    <td>{{$some}}</td>
+
+                                    <td></td>
+
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
 
                                 <tr>
                                     <th><strong>Total</strong></th>

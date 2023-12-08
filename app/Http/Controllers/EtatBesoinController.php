@@ -441,11 +441,13 @@ class EtatBesoinController extends Controller
             $sa = StatutAgent::where('agent',$data['agent'][$count])->where('active',true)->get()[0]->id;
             $ne = StatutAgent::where('agent',$data['agent'][$count])->where('active',true)->get()[0]->enfant;
             $sb = Contrat::where('agent',$data['agent'][$count])->where('statut',true)->get()[0]->salaire;
+            $contrat = Contrat::where('agent',$data['agent'][$count])->where('statut',true)->get()[0]->id;
             ListePaie::create([
                 'reference' => $ref,
                 'agent' => $data['agent'][$count],
                 'sAgent' => $sa,
                 'pymt' => $data['pymt'],
+                'contrat' => $contrat,
                 'month' => $month,
                 'SB' => $sb,
                 'jp' => $data['jour'][$count],

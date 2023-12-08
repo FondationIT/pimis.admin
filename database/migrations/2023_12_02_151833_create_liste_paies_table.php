@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('agent')->constrained('agents');
             $table->foreignId('sAgent')->constrained('statut_agents');
             $table->foreignId('pymt')->constrained('payement_agents');
+            $table->foreignId('contrat')->constrained('contrats');
             $table->foreignId('signature')->constrained('users');
             $table->date('month');
 

@@ -8,6 +8,7 @@
 <livewire:agent.mvmt-print />
 <livewire:agent.tr-print />
 <livewire:rh.om-print />
+<livewire:rh.liste-paie />
 
 
 

@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Terme de reference</h5>
+                    <h5 class="modal-title">Liste de paie</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -36,12 +36,21 @@
 
                     <div class="row">
                         @if ($lp)
-                            <div class="col-lg-6" style="text-align: left">
+                            <div class="col-lg-4" style="text-align: left">
                                 <p>Mois : <strong>{{$lp[0]->month}}</strong></p>
                                 
                                 
                             </div>
-                            <div class="col-lg-6 droite" style="text-align: right">
+
+                            <div class="col-lg-4" style="text-align: center">
+                                @if ($projet)
+                                    <h6>Staff {{$projet[0]->name}}</h6>
+                                @else
+                                    <h6>Tous les staff</h6>
+                                @endif
+                            </div>
+
+                            <div class="col-lg-4 droite" style="text-align: right">
                                 <p>Date : <strong>{{$lp[0]->created_at->format('d/m/Y')}}</strong></p>
                             </div>
                         @endif
@@ -50,11 +59,14 @@
                     <hr>
                     <div class="row">
 
-                        <div class="col-lg-12" style="text-align: center">
+                        <div class="col-lg-12" style="text-align: left">
                             
                             <table class="table table-striped table-border mb-0" style="padding: 5px;">
                                 <tr style="font-size:11px">
+                                    @if (Auth::user()->role == 'COMPT2')
+                                    @else
                                     <th><strong>Projet</strong></th>
+                                    @endif
                                     <th><strong>Nom</strong></th>
                                     <th><strong>S_Brut</strong></th>
                                     <th><strong>Jrs_P</strong></th>
@@ -70,16 +82,25 @@
                                     <th><strong>IPR_Ret</strong></th>
                                     <th><strong>Net_P</strong></th>
                                     <th><strong>Charge_P</strong></th>
-                                    <th><strong>Brut</strong></th>
+                                    <th><strong>T.C</strong></th>
+                                    @if (Auth::user()->role == 'COMPT2') 
+                                    <th><strong>A_Payer</strong></th>
+                                    @endif
                                 </tr>
                                 @if ($agents)
                                     @foreach ($agents as $prod)
 
                                     <?php
                                         $taux =App\Models\Taux::firstWhere('id', $lp[0]->taux)->taux;
+                                        $sb = ((100*$prod->SB)-(( ($prod->ne*455.62*$prod->jp)/$taux)+((10000*$prod->jp)/$taux))*100)/130;
+                                        $qpo = $sb*5/100;
                                         $tbi = (sprintf("%.2f", (((100*$prod->SB)-(( ($prod->ne*455.62*$prod->jp)/$taux)+((10000*$prod->jp)/$taux))*100)/130)-((((100*$prod->SB)-(( ($prod->ne*455.62*$prod->jp)/$taux)+((10000*$prod->jp)/$taux))*100)/130)*5/100)));
+
+                                        $qpp = $sb*13/100;
+                                        $inpp = $sb*1/100;
+                                        $onem = $sb*0.2/100;
                                         
-                                         $cp = $prod->SB*16.2/100;
+                                         $cp = $sb*14.2/100;
 
                                          $tbi_fc = $tbi*$taux;
                                          $ind_t = (10000*$prod->jp)/$taux;
@@ -104,25 +125,30 @@
 
                                             if($a > 1800000 ){
 
-                                                $i1 = 162000*3/100;
-                                                $i2 = 1800000*15/100;
-                                                $b = $a-1800000;
+                                                
+                                                $b = $a-1638000;
 
                                                 if($b <= 3600000){
+
+                                                    $i1 = 162000*3/100;
+                                                    $i2 = 1638000*15/100;
                                                     $i3 = $b*30/100;
+
                                                     $ipr_form = ($i1+$i2+$i3)/$taux;
                                                 }
 
-                                                if($b > 3600000 ){
+                                                if($b > 3600000){
 
+                                                    $c = $b-1800000;
                                                     $i1 = 162000*3/100;
-                                                    $i2 = 1800000*15/100;
-                                                    $i3 = 3600000*30/100;
-                                                    $c = $b-3600000;
+                                                    $i2 = 1638000*15/100;
+                                                    $i3 = 1800000*30/100;
                                                     $i4 = $c*40/100;
+
                                                     $ipr_form = ($i1+$i2+$i3+$i4)/$taux;
- 
                                                 }
+
+                                                
                                             }
                                             
                                          }
@@ -139,19 +165,40 @@
                                             $pers_ch = 9;
                                          }
 
-                                         $ipr_cal = $ipr_form - ($pers_ch*$ipr_form*2/100);
+                                         if($tbi_fc <= 1159000){
+                                            $ipr_cal = $ipr_form - ($pers_ch*$ipr_form*2/100);
+                                         }else{
+                                            $ipr_cal = $ipr_form;
+                                         }
 
                                          if($ipr_cal > $ipr_max){
                                             $ipr_ret = $ipr_max;
                                          }else{
                                             $ipr_ret = $ipr_cal;
                                          }
-                                         $net_p = ($tbi-$ipr_ret) + $av;
-                                         $brut = $net_p + $cp
+                                         $net_p = ($prod->SB-$ipr_ret-$qpo);
+                                         $brut = $net_p + $cp +$qpo +$ipr_ret;
+
+                                         $prt = $projet[0]->id;
+
+                                         if($prt == 3){
+                                            $pourc = App\Models\PartContrat::where('contrat', $prod->contrat)->where('projet',$prt)->get()[0]->pourcentage;
+                                            $ap = $brut*$pourc/100;
+                                            $some +=$ap;
+                                         }else{
+                                            $ap = $brut;
+                                            $some +=$brut;
+                                         }
+                                         
+                                         
+                                         
                                     ?>
                                         <tr style="text-align:left;font-size:10px">
-                                           
+
+                                            @if (Auth::user()->role == 'COMPT2')
+                                            @else  
                                             <td>{{App\Models\Projet::firstWhere('id', App\Models\Contrat::where('agent', $prod->agent)->where('statut',true)->where('active',true)->get()[0]->projet)->name}}</td>
+                                            @endif
 
                                             <td>{{App\Models\Agent::firstWhere('id', $prod->agent)->firstname}} {{App\Models\Agent::firstWhere('id', $prod->agent)->lastname}} {{App\Models\Agent::firstWhere('id', $prod->agent)->middlename}}</td>
                                             
@@ -161,9 +208,9 @@
                                             <td>{{$prod->ne}}</td>
                                             <td>${{(sprintf("%.2f", $all_f))}}</td>
                                             <td>${{(sprintf("%.2f", $ind_t))}}</td>
-                                            <td>${{(sprintf("%.2f", ((100*$prod->SB)-(( ($prod->ne*455.62*$prod->jp)/2500)+((10000*$prod->jp)/$taux))*100)/130))}}</td>
-                                            <td>${{(sprintf("%.2f", (((100*$prod->SB)-(( ($prod->ne*455.62*$prod->jp)/2500)+((10000*$prod->jp)/$taux))*100)/130)*5/100))}}</td>
-                                            <td>${{$tbi}}</td>
+                                            <td>${{(sprintf("%.2f", $sb))}}</td>
+                                            <td>${{(sprintf("%.2f", $qpo))}}</td>
+                                            <td>${{$prt}}</td>
                                             <td>${{sprintf("%.2f", $ipr_max)}}</td>
                                             <td>${{sprintf("%.2f", $ipr_form)}}</td>
                                             <td>${{sprintf("%.2f", $ipr_cal)}}</td>
@@ -171,12 +218,19 @@
                                             <td style="color: #528FEB">${{sprintf("%.2f", $net_p)}}</td>
                                             <td>${{sprintf("%.2f", $cp)}}</td>
                                             <td style="color: peru"><strong>${{sprintf("%.2f", $brut)}}</strong></td>
+                                            @if (Auth::user()->role == 'COMPT2') 
+                                            <td style="color: peru"><strong>${{sprintf("%.2f", $ap)}}</strong></td>
+                                            @endif
                                         </tr>
                                     @endforeach
 
                                 @endif
                                 <tr>
                                     <th><strong>Total</strong></th>
+                                    @if (Auth::user()->role == 'COMPT2')   
+                                    @else
+                                    <th></th>
+                                    @endif
                                     <th></th>
                                     <th></th>
                                     <th></th>
@@ -191,8 +245,12 @@
                                     <th></th>
                                     <th></th>
                                     <th></th>
+                                    @if (Auth::user()->role == 'COMPT2')   
                                     <th></th>
-                                    <th><strong>$</strong></th>
+                                    <th><span class="badge badge-info">${{sprintf("%.2f", $some)}}</span></th>
+                                    @else
+                                    <th><span class="badge badge-info">${{sprintf("%.2f", $some)}}</span></th>
+                                    @endif
                                 </tr>
                             </table>
 

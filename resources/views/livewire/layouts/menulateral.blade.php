@@ -283,11 +283,11 @@
                                         <li class="nav-item" id="bonComF">
                                             <a class="nav-link" href="#" id="button-bonComF" data-active="bonComF" wire:click="$emit('demAchUpdated')" data-open="bFinance" data-section="bonComF">Bons de commande</a>
                                         </li>
-                                            @if (Auth::user()->role == 'COMPT1')
-                                            <li class="nav-item" id="paieF">
-                                                <a class="nav-link" href="#" id="button-paieF" data-active="paieF" wire:click="$emit('paieAUpdated')" data-open="bFinance" data-section="paieF">Paiemment Agents</a>
-                                            </li>
-                                            @endif
+                                            
+                                        <li class="nav-item" id="paieF">
+                                            <a class="nav-link" href="#" id="button-paieF" data-active="paieF" wire:click="$emit('paieAUpdated')" data-open="bFinance" data-section="paieF">Paiemment Agents</a>
+                                        </li>
+                                        
                                         @endif
 
                                         <li class="nav-item" id="notdebF">

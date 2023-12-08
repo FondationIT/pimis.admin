@@ -5,9 +5,9 @@ namespace App\Http\Livewire\Finance;
 use App\Models\Bp;
 use App\Models\Cheque;
 use App\Models\Decharge;
-use App\Models\Fournisseur;
 use App\Models\Op;
-use App\Models\Projet;
+use App\Models\PayementAgent;
+use App\Models\Tr;
 use App\Models\User;
 use App\Models\ValidBp;
 use Illuminate\Support\Str;
@@ -19,9 +19,10 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Facades\DB;
 
-class BpTable extends LivewireDatatable
+class Bp6Table extends LivewireDatatable
 {
     public $modelId;
+    public $projet;
 
     protected $listeners = [
         'bpUpdated' => '$refresh'
@@ -53,6 +54,13 @@ class BpTable extends LivewireDatatable
             DB::rollBack();
         }
     }
+
+    public function printIndex($modelId,$projet){
+        $this->modelId = $modelId;
+        $this->projet = $projet;
+        $this->emit('listePaieAf2',$this->modelId, $this->projet);
+    }
+
 
 
     public function dApprBp($modelId){
@@ -145,7 +153,7 @@ class BpTable extends LivewireDatatable
             $bps = Bp::query()
             ->where('niv2', true)
             ->where('type','!=', 1)
-            ->where('categorie', 1)
+            ->where('categorie', 6)
             ->orderBy("id", "DESC");
             return $bps;
 
@@ -154,7 +162,7 @@ class BpTable extends LivewireDatatable
             $bps = Bp::query()
             ->where('niv1', true)
             ->where('type','!=', 1)
-            ->where('categorie', 1)
+            ->where('categorie', 6)
             ->where('montant','>=', 500)
             ->orderBy("id", "DESC");
             return $bps;
@@ -163,7 +171,7 @@ class BpTable extends LivewireDatatable
 
             $bps = Bp::join('affectations', 'affectations.projet', '=', 'bps.projet')
             ->where('affectations.agent', Auth::user()->agent)
-            ->where('categorie', 1)
+            ->where('categorie', 6)
             ->where('affectations.cath', '1');
             
             return $bps;
@@ -172,7 +180,7 @@ class BpTable extends LivewireDatatable
 
             $bps = Bp::query()
             ->where('niv1', true)
-            ->where('categorie', 1)
+            ->where('categorie', 6)
             ->orderBy("id", "DESC");
             return $bps;
 
@@ -183,13 +191,13 @@ class BpTable extends LivewireDatatable
             ->where('niv2', true)
             ->where('niv3', true)
             ->where('type',1)
-            ->where('categorie', 1)
+            ->where('categorie', 6)
             ->orderBy("id", "DESC");
             return $bps;
 
         }else{
             return Bp::query()->orderBy("id", "DESC")
-            ->where('categorie', 1);
+            ->where('categorie', 6);
         }
     }
 
@@ -201,21 +209,19 @@ class BpTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
+                Column::callback(['bc','projet'], function ($id,$projet) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
+                    
+                })->label('Justif'),
 
-                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 5){
-                        return 'Caisse Projet';
-                    }else if($cat == 4){
-                        return Projet::where('id',$id)->get()[0]->name;
-                    }else if($cat == 3){
-                        return User::where('id',$id)->get()[0]->name;
-                    }else{
-                        return Fournisseur::where('id',$id)->get()[0]->name;
-                    }
-                })->label('Paye a'),
+                Column::callback(['beneficiaire'], function ($id) {
+                    
+                    return 'Compte Salaire';
+                    
+                })->label('Beneficiaire'),
 
                 Column::callback('montant', function ($some) {
-                    return '$ '.$some;
+                    return '<span class="badge badge-danger">$ '.$some.'</span>';
                 })->label('Montant'),
                 
                 Column::callback('type', function ($type) {
@@ -243,7 +249,7 @@ class BpTable extends LivewireDatatable
                         $delete = '<span class="badge badge-info">En cours</span>';
                     }
                         return $delete ;
-                    })->unsortable(),
+                    })->label('Statut'),
 
                 Column::callback(['id','active','niv2'], function ($id,$active,$niv2) {
 
@@ -272,20 +278,19 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 5){
-                        return 'Caisse Projet';
-                    }else if($cat == 4){
-                        return Projet::where('id',$id)->get()[0]->name;
-                    }else if($cat == 3){
-                        return User::where('id',$id)->get()[0]->name;
-                    }else{
-                        return Fournisseur::where('id',$id)->get()[0]->name;
-                    }
-                })->label('Paye a'),
+                Column::callback(['bc','projet'], function ($id,$projet) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
+                    
+                })->label('Justif'),
+
+                Column::callback(['beneficiaire'], function ($id) {
+                    
+                    return 'Compte Salaire';
+                    
+                })->label('Beneficiaire'),
 
                 Column::callback('montant', function ($some) {
-                    return '$ '.$some;
+                    return '<span class="badge badge-danger">$ '.$some.'</span>';
                 })->label('Montant'),
                 
                 Column::callback('type', function ($type) {
@@ -313,7 +318,7 @@ class BpTable extends LivewireDatatable
                         $delete = '<span class="badge badge-info">En cours</span>';
                     }
                         return $delete ;
-                    })->unsortable(),
+                    })->label('Statut'),
 
                 Column::callback(['id','active','niv3'], function ($id,$active,$niv3) {
 
@@ -340,20 +345,19 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 5){
-                        return 'Caisse Projet';
-                    }else if($cat == 4){
-                        return Projet::where('id',$id)->get()[0]->name;
-                    }else if($cat == 3){
-                        return User::where('id',$id)->get()[0]->name;
-                    }else{
-                        return Fournisseur::where('id',$id)->get()[0]->name;
-                    }
-                })->label('Paye a'),
+                Column::callback(['bc','projet'], function ($id,$projet) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
+                    
+                })->label('Justif'),
+
+                Column::callback(['beneficiaire'], function ($id) {
+                    
+                    return 'Compte Salaire';
+                    
+                })->label('Beneficiaire'),
 
                 Column::callback('montant', function ($some) {
-                    return '$ '.$some;
+                    return '<span class="badge badge-danger">$ '.$some.'</span>';
                 })->label('Montant'),
                 
                 Column::callback('type', function ($type) {
@@ -408,20 +412,19 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 5){
-                        return 'Caisse Projet';
-                    }else if($cat == 4){
-                        return Projet::where('id',$id)->get()[0]->name;
-                    }else if($cat == 3){
-                        return User::where('id',$id)->get()[0]->name;
-                    }else{
-                        return Fournisseur::where('id',$id)->get()[0]->name;
-                    }
-                })->label('Paye a'),
+                Column::callback(['bc','projet'], function ($id,$projet) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
+                    
+                })->label('Justif'),
+
+                Column::callback(['beneficiaire'], function ($id) {
+                    
+                    return 'Compte Salaire';
+                    
+                })->label('Beneficiaire'),
 
                 Column::callback('montant', function ($some) {
-                    return '$ '.$some;
+                    return '<span class="badge badge-danger">$ '.$some.'</span>';
                 })->label('Montant'),
                 
                 Column::callback('type', function ($type) {
@@ -449,7 +452,7 @@ class BpTable extends LivewireDatatable
                         $delete = '<span class="badge badge-info">En cours</span>';
                     }
                         return $delete ;
-                    })->unsortable(),
+                    })->label('Statut'),
 
                 Column::callback(['id','type','montant'], function ($id,$cat,$s) {
 
@@ -486,20 +489,19 @@ class BpTable extends LivewireDatatable
                 })->label('Reference BC'),
 
 
-                Column::callback(['beneficiaire','categorie'], function ($id,$cat) {
-                    if($cat == 5){
-                        return 'Caisse Projet';
-                    }else if($cat == 4){
-                        return Projet::where('id',$id)->get()[0]->name;
-                    }else if($cat == 3){
-                        return User::where('id',$id)->get()[0]->name;
-                    }else{
-                        return Fournisseur::where('id',$id)->get()[0]->name;
-                    }
-                })->label('Paye a'),
+                Column::callback(['bc','projet'], function ($id,$projet) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
+                    
+                })->label('Justif'),
+
+                Column::callback(['beneficiaire'], function ($id) {
+                    
+                    return 'Compte Salaire';
+                    
+                })->label('Beneficiaire'),
 
                 Column::callback('montant', function ($some) {
-                    return '$ '.$some;
+                    return '<span class="badge badge-danger">$ '.$some.'</span>';
                 })->label('Montant'),
                 
                 Column::callback('type', function ($type) {
@@ -527,7 +529,7 @@ class BpTable extends LivewireDatatable
                         $delete = '<span class="badge badge-info">En cours</span>';
                     }
                         return $delete ;
-                    })->unsortable(),
+                    })->label('Statut'),
 
                 Column::callback(['id','type','active','niv3','niv2'], function ($id,$cat,$active,$niv3,$niv2) {
 

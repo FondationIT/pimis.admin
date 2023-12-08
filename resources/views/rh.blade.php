@@ -8,5 +8,5 @@
 <livewire:rh.contrat-form />
 <livewire:rh.paiement-form />
 <livewire:rh.jp-form />
-<livewire:rh.liste-paie />
+
 

@@ -10,6 +10,7 @@ use App\Models\Et_bes;
 use App\Models\FournPrice;
 use App\Models\Nd;
 use App\Models\NdOder;
+use App\Models\PayementAgent;
 use App\Models\prixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
@@ -116,6 +117,12 @@ class BpPrint extends Component
             $this->index = RCaisse::where("id", $this->bps[0]->bc)->get();
             $this->products = [];
             $this->some = $this->bps[0]->montant;
+
+        }elseif($this->bps[0]->categorie == 6){
+            $this->index = Bp::where("id", $this->bps[0]->id)->get();
+            $this->products = [];
+            $this->some = $this->bps[0]->montant;
+            $this->compte = Compte::where("type", 10)->where("proprietaire", 1)->get();
 
         }
 
