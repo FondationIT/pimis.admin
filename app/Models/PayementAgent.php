@@ -13,6 +13,7 @@ class PayementAgent extends Model
         'reference',
         'signature',
         'month',
+		'taux',
         'type',
         'niv1',
         'niv2',

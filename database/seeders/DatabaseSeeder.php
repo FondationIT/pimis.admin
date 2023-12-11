@@ -96,5 +96,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@panzi.com',
             'role' => 'Sup',
         ]);
+
+        \App\Models\Bailleur::factory()->create([
+            'id' => 568,
+            'agent' =>3394,
+            'name' => 'David Tino',
+            'reference' => 'US-ST000000D',
+            'email' => 'test@panzi.com',
+            'role' => 'Sup',
+        ]);
+
+        \App\Models\Projet::factory()->create([
+            'id' => 3,
+            'signature' =>2345,
+            'bailleur' => 568,
+            'name' => 'Administation',
+            'reference' => 'ADM-FP-ST000000D',
+            'dateD' => '2008-01-01',
+        ]);
     }
 }

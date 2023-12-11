@@ -217,7 +217,7 @@ class BpForm extends Component
         $this->index = $this->modelId;
         $this->beneficiaire = 1;
         $this->projet = $projet; 
-        Contrat::where("id", $this->modelId)->get(); 
+        //Contrat::where("id", $this->modelId)->get(); 
         $this->categorie = 6;
 
         $agents = ListePaie::join('contrats', 'contrats.id', '=', 'liste_paies.contrat')

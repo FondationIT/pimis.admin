@@ -145,7 +145,7 @@ class BpTable extends LivewireDatatable
             $bps = Bp::query()
             ->where('niv2', true)
             ->where('type','!=', 1)
-            ->where('categorie', 1)
+            ->where('categorie', 2)
             ->orderBy("id", "DESC");
             return $bps;
 
@@ -154,7 +154,7 @@ class BpTable extends LivewireDatatable
             $bps = Bp::query()
             ->where('niv1', true)
             ->where('type','!=', 1)
-            ->where('categorie', 1)
+            ->where('categorie', 2)
             ->where('montant','>=', 500)
             ->orderBy("id", "DESC");
             return $bps;
@@ -163,7 +163,7 @@ class BpTable extends LivewireDatatable
 
             $bps = Bp::join('affectations', 'affectations.projet', '=', 'bps.projet')
             ->where('affectations.agent', Auth::user()->agent)
-            ->where('categorie', 1)
+            ->where('categorie', 2)
             ->where('affectations.cath', '1');
             
             return $bps;
@@ -172,7 +172,7 @@ class BpTable extends LivewireDatatable
 
             $bps = Bp::query()
             ->where('niv1', true)
-            ->where('categorie', 1)
+            ->where('categorie', 2)
             ->orderBy("id", "DESC");
             return $bps;
 
@@ -183,13 +183,13 @@ class BpTable extends LivewireDatatable
             ->where('niv2', true)
             ->where('niv3', true)
             ->where('type',1)
-            ->where('categorie', 1)
+            ->where('categorie', 2)
             ->orderBy("id", "DESC");
             return $bps;
 
         }else{
             return Bp::query()->orderBy("id", "DESC")
-            ->where('categorie', 1);
+            ->where('categorie', 2);
         }
     }
 

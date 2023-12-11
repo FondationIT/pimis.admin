@@ -10,48 +10,63 @@
         <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
-            <!-- Title -->
-                <div class="hk-pg-header align-items-top">
-                  <div>
-                    <h3 class="hk-pg-title font-weight-600 mb-10">Bons de payement</h3>
-                  </div>
-                </div>
-            <!-- /Title -->
-    
-    
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#home">Achat</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#menu1">Approvisionnement</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#menu2">TDR</a>
-              </li>
-            </ul>
-    
-              <!-- Tab panes -->
-              <div class="tab-content">
-              <div id="home" class="container tab-pane active"><br>
-                <livewire:finance.bp-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+        <!-- Title -->
+            <div class="hk-pg-header align-items-top">
+              <div>
+                <h3 class="hk-pg-title font-weight-600 mb-10">Bons de payement</h3>
               </div>
-              <div id="menu1" class="container tab-pane fade"><br>
-                <h6>Menu 1</h6>
-                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-              <div id="menu2" class="container tab-pane fade"><br>
-                <h6>Menu 2</h6>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-              </div>
-              </div>
-    
-           
-            
-         
-    
-        </div>
+            </div>
+        <!-- /Title -->
+
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#home">Achat</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu1">Note de debit</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">TDR</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu4">Approvisionnement caisse</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu3">Salaire agents</a>
+          </li>
+        </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div id="home" class="container tab-pane active"><br>
+              <h5>Bon de paiement des achats</h5>
+              <livewire:finance.bp-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            </div>
+            <div id="menu1" class="container tab-pane fade"><br>
+              <h5>Bon de paiement des notes de debit</h5>
+              <livewire:finance.bp4-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            </div>
+            <div id="menu2" class="container tab-pane fade"><br>
+              <h5>Bon de paiement des TDR</h5>
+              <livewire:finance.bp3-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            </div>
+            <div id="menu3" class="container tab-pane fade"><br>
+              <h5>Bon de paiement des salaires</h5>
+              <livewire:finance.bp6-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            </div>   
+            <div id="menu4" class="container tab-pane fade"><br>
+              <h5>Bon de paiement approvionnement caisse</h5>
+              <livewire:finance.bp5-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            </div>
+          </div>
+
+       
+        
+     
+
+    </div>
     </section>
 
 

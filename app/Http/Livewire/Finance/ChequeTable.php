@@ -47,15 +47,7 @@ class ChequeTable extends LivewireDatatable
             $index = Cheque::firstWhere('id', $this->modelId)->get();
             $ref1 = 'LVC-'.$index[0]->rference;
             
-            LivreCaisse::create([
-                'reference' => $ref1,
-                'signature' => Auth::user()->id,
-                'projet' => $index[0]->projet,
-                'index' => $this->modelId,
-                'type' => 11,//Cheque//
-                'entree' => $index[0]->montant,
-                'libelle' => $index[0]->motif,
-            ]);
+            
 
             $sld = RCaisse::where('projet', $index[0]->projet )->orderBy('created_at', 'desc')->first()->solde;
 

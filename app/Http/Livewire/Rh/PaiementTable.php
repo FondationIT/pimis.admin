@@ -242,8 +242,10 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv1', true)
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
-
+					
+					
                     return $das[0]->type;
+					
 
                 })->label('Type'),
 

@@ -178,7 +178,7 @@
                                          }
                                          $net_p = ($prod->SB-$ipr_ret-$qpo);
                                          $brut = $net_p + $cp +$qpo +$ipr_ret;
-
+										if(Auth::user()->role == 'COMPT2'){
                                          $prt = $projet[0]->id;
 
                                          if($prt == 3){
@@ -189,6 +189,9 @@
                                             $ap = $brut;
                                             $some +=$brut;
                                          }
+										}else{
+											$some +=$brut;
+										}
                                          
                                          
                                          
@@ -210,7 +213,7 @@
                                             <td>${{(sprintf("%.2f", $ind_t))}}</td>
                                             <td>${{(sprintf("%.2f", $sb))}}</td>
                                             <td>${{(sprintf("%.2f", $qpo))}}</td>
-                                            <td>${{$prt}}</td>
+                                            <td>${{(sprintf("%.2f", $tbi))}}</td>
                                             <td>${{sprintf("%.2f", $ipr_max)}}</td>
                                             <td>${{sprintf("%.2f", $ipr_form)}}</td>
                                             <td>${{sprintf("%.2f", $ipr_cal)}}</td>

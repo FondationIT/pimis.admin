@@ -474,6 +474,8 @@
                                 <label for="">Reference note de debit</label>
                                 @if ($paie)
                                 <input type="text" class="form-control" value="{{$paie[0]->reference}}" readonly>
+								@else
+									<p>noooo</p>
                                 @endif
 
                             </div>
@@ -490,8 +492,8 @@
                         <div class="form-row">
                             <div class="col-md-3 mb-10">
                                 <label for="">Montant</label>
-                                @if ($paie)
-                                <input type="text" class="form-control"  value="$ {{(sprintf("%.2f", $some))}}" readonly>
+                                @if ($some)
+                                <input type="text" class="form-control"  value="$ {{(sprintf('%.2f', $some))}}" readonly>
                                 @endif
                             </div>
                             <div class="col-md-9 mb-10">

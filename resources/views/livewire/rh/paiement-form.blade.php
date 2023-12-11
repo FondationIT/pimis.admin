@@ -38,7 +38,7 @@
                           <div class="col-md-12 mb-10">
                               <label for="poste">Mois</label>
                               
-                              <input type="month" class="form-control @error('month') is-invalid @enderror" wire:model.defer="state.month" name="month">
+                              <input type="date" class="form-control @error('month') is-invalid @enderror" wire:model.defer="state.month" name="month">
                               
                               @error('month')
                                     <span class="text-red-600" role="alert">

@@ -161,7 +161,7 @@ class Bp5Table extends LivewireDatatable
 
             $bps = Bp::join('affectations', 'affectations.projet', '=', 'bps.projet')
             ->where('affectations.agent', Auth::user()->agent)
-            ->where('categorie', 3)
+            ->where('categorie', 5)
             ->where('affectations.cath', '1');
             
             return $bps;
