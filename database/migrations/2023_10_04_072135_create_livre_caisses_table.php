@@ -24,6 +24,7 @@ return new class extends Migration
             $table->float('sortie', 20, 2);
             $table->text('libelle');
             $table->boolean('active')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

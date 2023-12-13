@@ -97,22 +97,43 @@ class DatabaseSeeder extends Seeder
             'role' => 'Sup',
         ]);
 
-        \App\Models\Bailleur::factory()->create([
+        \App\Models\Bailleur::create([
             'id' => 568,
-            'agent' =>3394,
-            'name' => 'David Tino',
-            'reference' => 'US-ST000000D',
-            'email' => 'test@panzi.com',
-            'role' => 'Sup',
+            'signature' =>2345,
+            'name' => 'Fondation Panzi',
+            'reference' => 'BLL-FP-ST0000001',
+            'phone' => '0999999999',
+            'email' => 'info@panzi.org',
+            'min1' => 1,
+            'min2' => 1001,
+            'min3' => 10001,
+            'max1' => 1000,
+            'max2' => 10000,
+            'max3' => 1000000000,
         ]);
 
-        \App\Models\Projet::factory()->create([
+        \App\Models\Projet::create([
             'id' => 3,
             'signature' =>2345,
             'bailleur' => 568,
             'name' => 'Administation',
-            'reference' => 'ADM-FP-ST000000D',
+            'reference' => 'ADM-FP-ST0000001',
             'dateD' => '2008-01-01',
         ]);
+
+        \App\Models\Rcaisse::create([
+            'id' => 1,
+            'reference' => 'RC-FP-ST0000001',
+            'projet' =>3,
+            'solde' => 0,
+        ]);
+
+
+        \App\Models\Taux::create([
+            'id' => 1,
+            'user' =>2345,
+            'taux' => 2004.77,
+        ]);
+
     }
 }

@@ -10,7 +10,7 @@
                     @if (Auth::user()->role == 'Sup')SUPER USER @endif
                     @if (Auth::user()->role == 'ADMIN')ADMIN @endif
                     @if (Auth::user()->role == 'S.E')EXECUTIVE @endif
-                    @if (Auth::user()->role == 'D.A.F')ADMINISTRATION ET FINANCE @endif
+                    @if (Auth::user()->role == 'D.A.F')DAF @endif
                     @if (Auth::user()->role == 'D.P')PROGRAMME @endif
                     @if (Auth::user()->role == 'C.P')PROJET @endif
                     @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
@@ -48,7 +48,7 @@
                                     </li>
 
                                     <li class="nav-item" id="catProd">
-                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated','productssUpdated')" data-open="bFile" data-section="catProd">Categorie & Ptoduit</a>
+                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated')" data-open="bFile" data-section="catProd">Categorie & Ptoduit</a>
                                     </li>
 
                                     <li class="nav-item" id="fichSt">

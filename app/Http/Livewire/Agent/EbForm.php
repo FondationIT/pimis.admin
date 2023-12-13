@@ -22,10 +22,10 @@ class EbForm extends Component
     {
         return view('livewire.agent.eb-form',
         [
-            'affectation' => Affectation::where("active", "1")->where("agent", Auth::user()->agent)->orderBy("id", "DESC")->get(),
-            'products' => Product::where("active", "1")->orderBy("id", "DESC")->get(),
+            'affectation' => Affectation::where("active", true)->where("agent", Auth::user()->agent)->orderBy("id", "DESC")->get(),
+            'products' => Product::where("active", true)->orderBy("id", "DESC")->get(),
             'categories' => Categorie::where("active", true)->orderBy("id", "DESC")->get(),
-            'articles' => Article::where("active", "1")->orderBy("id", "DESC")->get(),
+            'articles' => Article::where("active", true)->orderBy("id", "DESC")->get(),
 
         ]);
     }

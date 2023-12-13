@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
 use App\Models\Categorie;
 use Livewire\Component;
 use App\Models\Product;
@@ -16,11 +17,12 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class ProductsTable extends LivewireDatatable
 {
-    public $model = Product::class;
+    
     public $modelId;
 
     protected $listeners = [
-        'productssUpdated'=> '$refresh'
+        'productssUpdated'=> '$refresh',
+        'categorieUpdated'=> '$refresh'
     ];
 
     /**
@@ -37,6 +39,9 @@ class ProductsTable extends LivewireDatatable
         Product::find($this->modelId)->update([
             'active' => 0,
         ]);
+        Article::where('product', $this->modelId)->update([
+            'active' => 0,
+        ]);
     }
 
     public function restoreProduct($modelId){
@@ -44,6 +49,16 @@ class ProductsTable extends LivewireDatatable
         Product::find($this->modelId)->update([
             'active' => 1,
         ]);
+    }
+
+    public function builder()
+    {
+        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+            return Product::query()->orderBy("id", "DESC");
+        }else {
+            return Product::query()->orderBy("id", "DESC")
+            ->where('active', true);
+        }
     }
 
     public function columns()

@@ -48,6 +48,16 @@ class ArticleTable extends LivewireDatatable
         ]);
     }
 
+    public function builder()
+    {
+        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+            return Article::query()->orderBy("id", "DESC");
+        }else {
+            return Article::query()->orderBy("id", "DESC")
+            ->where('active', true);
+        }
+    }
+
     public function columns()
     {
         if(Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){

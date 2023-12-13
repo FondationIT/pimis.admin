@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Categorie;
@@ -15,11 +16,12 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class CategoriesTable extends LivewireDatatable
 {
-    public $model = Categorie::class;
+   
     public $modelId;
 
     protected $listeners = [
-        'categorieUpdated'=> '$refresh'
+        'categorieUpdated'=> '$refresh',
+        'productssUpdated'=> '$refresh'
     ];
 
     /**
@@ -36,10 +38,17 @@ class CategoriesTable extends LivewireDatatable
         Categorie::find($this->modelId)->update([
             'active' => 0,
         ]);
+        $prod = Product::where('categorie', $this->modelId)->get();
         Product::where('categorie', $this->modelId)->update([
             'active' => 0,
         ]);
-        $this->emit('productUpdated');
+        
+        foreach ($prod as $prod) {
+            Article::where('product', $prod->id)->update([
+                'active' => 0,
+            ]);
+        }
+        $this->emit('productssUpdated');
     }
 
     public function restoreCategorie($modelId){
@@ -50,8 +59,21 @@ class CategoriesTable extends LivewireDatatable
         Product::where('categorie',$this->modelId)->update([
             'active' => 1,
         ]);
-        $this->emit('productUpdated');
+        $this->emit('productssUpdated');
     }
+
+
+    public function builder()
+    {
+        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+            return Categorie::query()->orderBy("id", "DESC");
+        }else {
+            return Categorie::query()->orderBy("id", "DESC")
+            ->where('active', true);
+        }
+    }
+
+
     public function columns()
     {
         if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
