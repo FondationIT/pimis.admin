@@ -3,6 +3,7 @@
     <div class="modal fade" id="pTrModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
+                
                 <div class="modal-header">
                     <h5 class="modal-title">Terme de reference</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -10,7 +11,12 @@
                     </button>
                 </div>
 
-                <div class="modal-body" id="printTr">
+                <div class="modal-body card card-refresh" id="printTr">
+                    <!-- Preloader -->
+                    <div class="refresh-container">
+                        <div class="loader-pendulums"></div>
+                    </div>
+                    <!-- /Preloader -->
                     <div class="row">
 
                         <div class="col-lg-3 fix" style="text-align: center">

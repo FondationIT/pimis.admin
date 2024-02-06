@@ -1,4 +1,5 @@
 <livewire:agent-page />
+<livewire:rh.vue-agent />
 <livewire:finance.bp-print />
 <livewire:finance.compte-form />
 <livewire:agent.tr-form />

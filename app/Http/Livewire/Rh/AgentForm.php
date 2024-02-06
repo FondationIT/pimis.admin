@@ -48,6 +48,9 @@ class AgentForm extends Component
         $this->state['description'] = $model->description;
         $this->state['etatcivil'] = $model1->etatcivil;
         $this->state['enfant'] = $model1->enfant;
+
+        $this->state['nom2'] = $model->nom2;
+        $this->state['phone2'] = $model->contact;
     }
 
     public function submit()
@@ -68,6 +71,9 @@ class AgentForm extends Component
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
                 'enfant' => ['required', 'string', 'max:255'],
+
+                'nom2' => ['required', 'string', 'max:255'],
+                'phone2' => ['required', 'string', 'max:255'],
             ])->validate();
 
             DB::beginTransaction();
@@ -89,6 +95,8 @@ class AgentForm extends Component
                     'country' => $this->state['pays'],
                     'region' => $this->state['region'],
                     'description' => $this->state['description'],
+                    'nom2' => $this->state['nom2'],
+                    'contact' => $this->state['phone2'],
                 ]);
 
                 StatutAgent::where('agent',$this->modelId)->update([
@@ -128,6 +136,9 @@ class AgentForm extends Component
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
                 'enfant' => ['required', 'string', 'max:255'],
+
+                'nom2' => ['required', 'string', 'max:255'],
+                'phone2' => ['required', 'string', 'max:255'],
             ])->validate();
 
             DB::beginTransaction();
@@ -151,6 +162,8 @@ class AgentForm extends Component
                     'country' => $this->state['pays'],
                     'region' => $this->state['region'],
                     'description' => $this->state['description'],
+                    'nom2' => $this->state['nom2'],
+                    'contact' => $this->state['phone2'],
                     'signature' => Auth::user()->id,
                 ]);
 

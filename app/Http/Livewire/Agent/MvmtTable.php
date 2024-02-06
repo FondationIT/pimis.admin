@@ -19,7 +19,7 @@ class MvmtTable extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'mouvementUpdated' => '$refresh'
+        'mvtUpdated' => '$refresh'
     ];
 
 

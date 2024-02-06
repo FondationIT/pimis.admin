@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('region')->nullable();
             $table->text('description')->nullable();
+            $table->string('nom2')->nullable();
+            $table->string('contact')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

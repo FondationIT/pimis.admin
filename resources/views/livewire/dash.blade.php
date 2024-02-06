@@ -41,7 +41,7 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <span class="d-block display-5 text-dark mb-5">76.5K</span>
+                                                <span class="d-block display-5 text-dark mb-5">12K</span>
                                                 <small class="d-block">172,458 Target Users</small>
                                             </div>
                                         </div>

@@ -187,6 +187,35 @@
                             <textarea class="form-control" wire:model.defer="state.description" name="description"></textarea>
                         </div>
                     </div>
+                    <h5>Personne de contact</h5><hr>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="nom2">Nom complet</label>
+                            
+                            <input type="text" class="form-control @error('nom2') is-invalid @enderror" wire:model.defer="state.nom2" name="nom2" placeholder="Nom complet">
+                            
+                            @error('nom2')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-10">
+                            <label for="phone2">Numero de telephone</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend"><i class="icon-phone"></i></span>
+                                </div>
+                                <input type="text" class="form-control @error('phone2') is-invalid @enderror" wire:model.defer="state.phone2" name="phone2" placeholder="Numero de telephone" aria-describedby="inputGroupPrepend">
+                            </div>
+                            @error('phone2')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">

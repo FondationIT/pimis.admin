@@ -15,8 +15,8 @@
                     @if (Auth::user()->role == 'C.P')PROJET @endif
                     @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
                     @if (Auth::user()->role == 'A.I')AUDIT INTERNE @endif
-                    @if (Auth::user()->role == 'COMPT1')COMTABILITE NIV 1 @endif
-                    @if (Auth::user()->role == 'COMPT2')COMPTABILITE NIV 2 @endif
+                    @if (Auth::user()->role == 'COMPT1')COMTABILITE @endif
+                    @if (Auth::user()->role == 'COMPT2')CHEF COMPTABLE @endif
                     @if (Auth::user()->role == 'CAISS')CAISSSE @endif
                     @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
                     @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
@@ -60,7 +60,7 @@
                                     </li>
 
                                     <li class="nav-item" id="tdr">
-                                        <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('tdrUpdated')" data-open="bFile" data-section="tdr">Terme de reference</a>
+                                        <a class="nav-link" href="#" id="button-tdr" data-active="tdr" wire:click="$emit('trUpdated')" data-open="bFile" data-section="tdr">Terme de reference</a>
                                     </li>
 
                                     <li class="nav-item" id="di">
@@ -71,11 +71,11 @@
                                     <li class="nav-item" id="usMvmt">
                                         <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('mvtUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
                                     </li>
-                                    <li class="nav-item" id="usTrans">
-                                        <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('dtUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
-                                    </li>
                                     <li class="nav-item" id="conge">
                                         <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('congeUpdated')" data-open="bFile" data-section="conge">Conge</a>
+                                    </li>
+                                    <li class="nav-item" id="usTrans">
+                                        <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('dtUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
                                     </li>
                                     <li class="nav-item" id="contr">
                                         <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('contratUpdated')" data-open="bFile" data-section="contr">Contrat</a>
