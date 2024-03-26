@@ -17,20 +17,48 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class EbTable extends LivewireDatatable
 {
 
-    public $modelId;
+    public $modelId, $ebData;
+    public $eb, $data;
 
     protected $listeners = [
-        'ebUpdated' => '$refresh'
+        'ebUpdated' => '$refresh',
+        'filterEb'
     ];
-
+    
     public function printEb($modelId){
         $this->modelId = $modelId;
         $this->emit('printEb',$this->modelId );
     }
 
+    public function filterEb($data){
+        $this->data = $data;
+    }
+
     public function builder()
     {
-        return Et_bes::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC");
+        return $this->getBuilder();
+    }
+
+    public function getBuilder(){
+        return (is_null($this->data)) ? Et_bes::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC") : $this->filterData($this->data);
+    }
+
+    public function filterData($data){
+        $query = Et_bes::query()->whereDate('created_at','>=',$data['debut'])->whereDate('created_at','<=',$data['fin']);
+        $query = ($data['projet']== 0) ? $query : $query->where('projet', $data['projet']);
+
+        return $this->statusData($data['status'], $query)->orderBy("id", "DESC");
+    }
+
+    public function statusData($status, $query){
+        if ($status == 1){
+            $query = $query->active();
+        }elseif($status == 2){
+            $query = $query->enCours();
+        }elseif($status == 3){
+            $query = $query->inactive();
+        }
+        return $query;
     }
 
     public function columns()

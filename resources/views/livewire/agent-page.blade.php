@@ -212,7 +212,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Catalogue de prix</li>
             </ol>
         </nav>
@@ -252,7 +252,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Categorie & Produit</li>
             </ol>
         </nav>
@@ -313,7 +313,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Fiche de stock</li>
             </ol>
         </nav>
@@ -345,7 +345,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Etat de besoin</li>
             </ol>
         </nav>
@@ -365,11 +365,26 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:agent.eb-table
-            searchable="reference,projet"
-            dates="created_at|d-m-Y"
-            exportable
-            />
+            
+            <div class="card">
+                <h6 class="card-header d-flex align-items-center">
+                    <i class="ion ion-md-funnel font-30 mr-10"></i>Filtre
+                </h6>
+                <div class="card-body">
+                    <livewire:filter.eb-filter>
+                </div>
+            </div>
+       
+            <div class="card">
+                <div class="card-body">
+                    <livewire:agent.eb-table 
+                    wire:key='{{now()}}'
+                    searchable="reference,projet"
+                    dates="created_at|d-m-Y"
+                    exportable 
+                    />
+                </div>
+            </div>
             <!-- /Row -->
 
         </div>
@@ -383,7 +398,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Terme de reference</li>
             </ol>
         </nav>
@@ -418,7 +433,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Demmande Interne</li>
             </ol>
         </nav>
@@ -459,7 +474,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Mouvement</li>
             </ol>
         </nav>
@@ -497,7 +512,7 @@
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
-                <li class="breadcrumb-item"><a href="#">Agent</a></li>
+                <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Conges</li>
             </ol>
         </nav>

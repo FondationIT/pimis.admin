@@ -58,14 +58,29 @@
             <!-- /Title -->
 
             <!-- Main content -->
-            <!-- Row -->
 
-            <livewire:finance.bon-req
-            searchable="reference,projet"
-            dates="created_at|d-m-Y"
-            exportable
-            />
-            <!-- /Row -->
+            <!-- Row -->
+            
+            <div class="card">
+              <h6 class="card-header d-flex align-items-center">
+                  <i class="ion ion-md-funnel font-30 mr-10"></i>Filtre
+              </h6>
+              <div class="card-body">
+                  <livewire:filter.bon-req-filter>
+              </div>
+          </div>
+     
+          <div class="card">
+              <div class="card-body">
+                  <livewire:finance.bon-req 
+                  wire:key='{{now()}}'
+                  searchable="reference,projet"
+                  dates="created_at|d-m-Y"
+                  exportable 
+                  />
+              </div>
+          </div>
+          <!-- /Row -->
 
         </div>
     </section>

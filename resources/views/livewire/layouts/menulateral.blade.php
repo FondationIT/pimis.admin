@@ -7,21 +7,23 @@
             <div class="navbar-nav-wrap">
                 <div class="nav-header">
                     <h4><span style="color: #F5BF60">
+                    
                     @if (Auth::user()->role == 'Sup')SUPER USER @endif
                     @if (Auth::user()->role == 'ADMIN')ADMIN @endif
                     @if (Auth::user()->role == 'S.E')EXECUTIVE @endif
                     @if (Auth::user()->role == 'D.A.F')DAF @endif
                     @if (Auth::user()->role == 'D.P')PROGRAMME @endif
-                    @if (Auth::user()->role == 'C.P')PROJET @endif
+                    @if (Auth::user()->role == 'C.P')COORDINATION @endif
                     @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
                     @if (Auth::user()->role == 'A.I')AUDIT INTERNE @endif
-                    @if (Auth::user()->role == 'COMPT1')COMTABILITE @endif
-                    @if (Auth::user()->role == 'COMPT2')CHEF COMPTABLE @endif
+                    @if (Auth::user()->role == 'COMPT2')COMTABILITE @endif
+                    @if (Auth::user()->role == 'COMPT1')CHEF COMPTABLE @endif
                     @if (Auth::user()->role == 'CAISS')CAISSSE @endif
                     @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
                     @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
                     @if (Auth::user()->role == 'MAG')MAGASIN @endif
-                    @if (Auth::user()->role == 'SECU')SECURITE @endif
+                    @if (Auth::user()->role == 'SECU')SECURITE @endif         
+                    @if (Auth::user()->role == 'PERS')USER @endif
                 </span></h4>
             </div>
             <hr class="nav-separator">
@@ -38,7 +40,7 @@
                     <li class="nav-item" id="bFile">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#fichier_drp">
                             <span class="feather-icon"><i data-feather="user"></i></span>
-                            <span class="nav-link-text">Agent</span>
+                            <span class="nav-link-text">Informations gemerales</span>
                         </a>
                         <ul id="fichier_drp" class="nav flex-column collapse collapse-level-1" >
                             <li class="nav-item" >
@@ -48,7 +50,7 @@
                                     </li>
 
                                     <li class="nav-item" id="catProd">
-                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated')" data-open="bFile" data-section="catProd">Categorie & Ptoduit</a>
+                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated')" data-open="bFile" data-section="catProd">Categorie & Produit</a>
                                     </li>
 
                                     <li class="nav-item" id="fichSt">
@@ -67,7 +69,14 @@
                                         <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demmande interne</a>
                                     </li>
 
-   
+                                    <!--<li class="nav-item" id="di">
+                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demmande pret</a>
+                                    </li>
+
+                                    <li class="nav-item" id="di">
+                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Avance sur salaire</a>
+                                    </li>-->
+  
                                     <li class="nav-item" id="usMvmt">
                                         <a class="nav-link" href="#" id="button-usMvmt" data-active="usMvmt" wire:click="$emit('mvtUpdated')" data-open="bFile" data-section="usMvmt">Mouvement</a>
                                     </li>
@@ -266,9 +275,6 @@
                                     <ul class="nav flex-column">
                                         <li class="nav-item" id="compteF">
                                             <a class="nav-link" href="#" id="button-compteF" data-active="compteF" wire:click="$emit('compteUpdated')" data-open="bFinance" data-section="compteF">Compte Projet</a>
-                                        </li>
-                                        <li class="nav-item" id="bonReqF">
-                                            <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" wire:click="$emit('bonReqUpdated')" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>
                                         </li>
                                         <li class="nav-item" id="bonReqF">
                                             <a class="nav-link" href="#" id="button-bonReqF" data-active="bonReqF" wire:click="$emit('bonReqUpdated')" data-open="bFinance" data-section="bonReqF">Bons de réquisition</a>

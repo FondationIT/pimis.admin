@@ -7,6 +7,7 @@ use App\Models\Agent;
 use App\Models\Contrat;
 use App\Models\StatutAgent;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class AgentPage extends Component

@@ -236,7 +236,7 @@ class PaiementTable extends LivewireDatatable
 
                 })->label('Projet'),
 
-                Column::callback(['agent'], function () {
+               /* Column::callback(['agent'], function () {
                     $das = PayementAgent::query()
                     ->where('statut', true)
                     ->where('niv1', true)
@@ -305,7 +305,7 @@ class PaiementTable extends LivewireDatatable
                     }
                     
 
-                })->label('Action'),
+                })->label('Action'),*/
             ];
 
         }else{

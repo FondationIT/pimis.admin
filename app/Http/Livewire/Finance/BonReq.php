@@ -20,10 +20,11 @@ use Illuminate\Support\Facades\DB;
 
 class BonReq extends LivewireDatatable
 {
-    public $modelId;
+    public $modelId,$data;
 
     protected $listeners = [
-        'bonReqUpdated' => '$refresh'
+        'bonReqUpdated' => '$refresh',
+        'filterBReq'
     ];
 
     public function printEb($modelId){
@@ -86,23 +87,30 @@ class BonReq extends LivewireDatatable
         }
     }
 
+    public function filterBReq($data){
+        $this->data = $data;
+    }
+
     public function builder()
     {
+        return $this->getBuilder();
+    }
+
+    public function logicAlg(){
         if(Auth::user()->role == 'COMPT1'){
-            return Et_bes::query()->orderBy("id", "DESC");
+            return Et_bes::query();
         }elseif (Auth::user()->role == 'LOG2' || Auth::user()->role == 'LOG1') {
 
             $et_bes = Et_bes::query()
             ->where('niv1', true)
             ->where('niv2', true)
-            ->where('active', true)
-            ->orderBy("id", "DESC");
+            ->where('active', true);
             return $et_bes;
         }elseif (Auth::user()->role == 'C.P') {
 
             $et_bes = Et_bes::join('affectations', 'affectations.projet', '=', 'et_bes.projet')
             ->where('affectations.agent', Auth::user()->agent)
-            ->where('Et_bes.niv1', true)
+            ->where('et_bes.niv1', true)
             ->where('affectations.cath', '1');
             return $et_bes;
         }elseif (Auth::user()->role == 'COMPT2') {
@@ -111,8 +119,30 @@ class BonReq extends LivewireDatatable
             ->where('affectations.agent', Auth::user()->agent);
             return $et_bes;
         }else{
-            return Et_bes::query()->orderBy("id", "DESC");
+            return Et_bes::query();
         }
+    }
+
+    public function getBuilder(){
+        return (is_null($this->data)) ? $this->logicAlg()->orderBy("et_bes.id", "DESC") : $this->filterData($this->data);
+    }
+
+    public function filterData($data){
+        $query = $this->logicAlg()->whereDate('et_bes.created_at','>=',$data['debut'])->whereDate('et_bes.created_at','<=',$data['fin']);
+        $query = ($data['projet']== 0) ? $query : $query->where('et_bes.projet', $data['projet']);
+
+        return $this->statusData($data['status'], $query)->orderBy("et_bes.id", "DESC");
+    }
+
+    public function statusData($status, $query){
+        if ($status == 1){
+            $query = $query->active();
+        }elseif($status == 2){
+            $query = $query->enCours();
+        }elseif($status == 3){
+            $query = $query->inactive();
+        }
+        return $query;
     }
 
     public function columns()
@@ -126,7 +156,7 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -178,7 +208,7 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -227,7 +257,7 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -256,7 +286,7 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),

@@ -54,7 +54,7 @@
 
                         <div class="form-row">
                             <div class="col-md-12 mb-10">
-                                <label for="fin">Debut *</label>
+                                <label for="fin">Fin *</label>
                                 <input type="date" class="form-control @error('fin') is-invalid @enderror" wire:model.defer="state.fin" name="fin">
                                 @error('fin')
                                     <span class="text-red-600" role="alert">

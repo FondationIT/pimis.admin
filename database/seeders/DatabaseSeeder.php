@@ -93,7 +93,7 @@ class DatabaseSeeder extends Seeder
             'agent' =>3394,
             'name' => 'David Tino',
             'reference' => 'US-ST000000D',
-            'email' => 'test@panzi.com',
+            'email' => 'test@panzi.org',
             'role' => 'Sup',
         ]);
 
