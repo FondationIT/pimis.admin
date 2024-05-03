@@ -23,6 +23,14 @@ class BonReqFilter extends Component
         ])->validate();
         $this->emit('filterBReq',$validatedData);
     }
+    
+
+    public function resetForm(){
+        
+        $this->reset('state');
+        $this->emit('resetFilterBReq');
+    }
+
 
   
     public function render()

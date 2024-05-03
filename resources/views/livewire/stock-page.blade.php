@@ -66,13 +66,27 @@
 
             <!-- Main content -->
             <!-- Row -->
-
-            <livewire:stock.da-table
-            searchable="reference,eb"
-            dates="created_at|d-m-Y"
-            exportable
-            />
-            <!-- /Row -->
+            
+            <div class="card">
+              <h6 class="card-header d-flex align-items-center">
+                  <i class="ion ion-md-funnel font-30 mr-10"></i>Filtre
+              </h6>
+              <div class="card-body">
+                  <livewire:filter.da-filter>
+              </div>
+          </div>
+     
+          <div class="card">
+              <div class="card-body">
+                  <livewire:stock.da-table 
+                  wire:key='{{now()}}'
+                  searchable="reference,projet"
+                  dates="created_at|d-m-Y"
+                  exportable 
+                  />
+              </div>
+          </div>
+          <!-- /Row -->
 
         </div>
     </section>

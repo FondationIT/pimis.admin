@@ -22,7 +22,8 @@ class EbTable extends LivewireDatatable
 
     protected $listeners = [
         'ebUpdated' => '$refresh',
-        'filterEb'
+        'filterEb',
+        'resetFilterEb'
     ];
     
     public function printEb($modelId){
@@ -30,7 +31,20 @@ class EbTable extends LivewireDatatable
         $this->emit('printEb',$this->modelId );
     }
 
+
+    ///////////////////////////////////////////////////////////
+    /////////////// FILTER DATA  /////////////////////////////
+    ////////////////////////////////////////////////////////
+
+    public function resetFilterEb(){
+        $this->data = null;
+    }
+
     public function filterEb($data){
+        $this->data = $data;
+    }
+
+    public function filterBReq($data){
         $this->data = $data;
     }
 

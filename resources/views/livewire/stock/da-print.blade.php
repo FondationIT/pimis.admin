@@ -61,7 +61,13 @@
                                         <tr>
 
                                             <td>{{$i++}}</td>
-                                            <td>@if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)<a href="#" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>@else{{ $prod->ligne }}@endif</td>
+                                            <td>
+                                                @if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)
+                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                @elseif (Auth::user()->role == 'COMPT2' && $das[0]->niv3 == false)
+                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                @else<a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}">{{ $prod->ligne }}<a>@endif
+                                            </td>
                                             <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
                                             <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>

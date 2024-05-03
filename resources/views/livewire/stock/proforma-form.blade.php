@@ -79,7 +79,7 @@
                                     <label for="reference">Reference proforma</label>
                                     @endif
                                 @endif
-                                <input type="text" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
+                                <input type="file" accept="application/pdf" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
 
                                 <div class="invalid-feedback">
                                     La reference proforma est obligatoire
@@ -123,7 +123,7 @@
                                         <label for="reference">Reference proforma</label>
                                         @endif
                                     @endif
-                                    <input type="text" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
+                                    <input type="file" accept="application/pdf" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
 
                                     <div class="invalid-feedback">
                                         La reference proforma est obligatoire
@@ -164,7 +164,7 @@
                                         <label for="reference">Reference proforma</label>
                                         @endif
                                     @endif
-                                    <input type="text" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
+                                    <input type="file" accept="application/pdf" class="form-control refProf" name="reference"  aria-describedby="inputGroupPrepend" required>
 
                                     <div class="invalid-feedback">
                                         La reference proforma est obligatoire

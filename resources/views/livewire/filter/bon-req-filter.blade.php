@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent='filterEb' wire:reset='resetFilter'>
+    <form wire:submit.prevent='filterEb' wire:reset.prevent=''>
         <div class="form-row">
             <div hidden>{{$modelId}}</div>
             
@@ -66,7 +66,7 @@
             </div>
 
             <div class="col-md-1 mb-10">
-                <button class="btn btn-secondary" type="reset" wire:loading.attr='disabled' >Reinitialiser</button>
+                <button class="btn btn-secondary" type="reset" wire:loading.attr='disabled' wire:click='resetForm' >Reinitialiser</button>
             </div>
         </div>
     </form>

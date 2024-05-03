@@ -24,7 +24,8 @@ class BonReq extends LivewireDatatable
 
     protected $listeners = [
         'bonReqUpdated' => '$refresh',
-        'filterBReq'
+        'filterBReq',
+        'resetFilterBReq'
     ];
 
     public function printEb($modelId){
@@ -87,6 +88,17 @@ class BonReq extends LivewireDatatable
         }
     }
 
+
+
+
+    ///////////////////////////////////////////////////////////
+    /////////////// FILTER DATA  /////////////////////////////
+    ////////////////////////////////////////////////////////
+
+    public function resetFilterBReq(){
+        $this->data = null;
+    }
+
     public function filterBReq($data){
         $this->data = $data;
     }
@@ -144,6 +156,11 @@ class BonReq extends LivewireDatatable
         }
         return $query;
     }
+
+
+    //////////////////////////////////////////////////////////
+    //////////////////////// DATA TABLE /////////////////////
+    ////////////////////////////////////////////////////////
 
     public function columns()
     {

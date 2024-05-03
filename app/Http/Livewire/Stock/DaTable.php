@@ -25,10 +25,12 @@ use Illuminate\Support\Facades\DB;
 
 class DaTable extends LivewireDatatable
 {
-    public $modelId;
+    public $modelId,$data;
 
     protected $listeners = [
-        'demAchUpdated' => '$refresh'
+        'demAchUpdated' => '$refresh',
+        'filterDa',
+        'resetFilterDa'
     ];
 
     public function printDa($modelId){
@@ -157,14 +159,32 @@ class DaTable extends LivewireDatatable
         ]);
     }
 
+
+
+
+    
+    ///////////////////////////////////////////////////////////
+    /////////////// FILTER DATA  /////////////////////////////
+    ////////////////////////////////////////////////////////
+
+    public function resetFilterDa(){
+        $this->data = null;
+    }
+
+    public function filterDa($data){
+        $this->data = $data;
+    }
+
     public function builder()
     {
+        return $this->getBuilder();
+    }
 
+    public function logicAlg(){
         if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'){
-            return DemAch::query()->orderBy("id", "DESC");
+            return DemAch::query();
         }elseif(Auth::user()->role == 'LOG1'){
-            return DemAch::query()
-            ->orderBy("id", "DESC");
+            return DemAch::query();
         }elseif (Auth::user()->role == 'C.P') {
 
             $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
@@ -184,8 +204,7 @@ class DaTable extends LivewireDatatable
         }elseif (Auth::user()->role == 'COMPT1') {
 
             $das = DemAch::query()
-            ->where('dem_aches.niv1', true)
-            ->orderBy("id", "DESC");
+            ->where('dem_aches.niv1', true);
             return $das;
         }else if(Auth::user()->role == 'D.A.F'){
             return DemAch::query()->orderBy("id", "DESC")
@@ -200,6 +219,33 @@ class DaTable extends LivewireDatatable
             ->where('dem_aches.niv4', true);
         }
     }
+
+    public function getBuilder(){
+        return (is_null($this->data)) ? $this->logicAlg()->orderBy("dem_aches.id", "DESC") : $this->filterData($this->data);
+    }
+
+    public function filterData($data){
+        $query = $this->logicAlg()->whereDate('dem_aches.created_at','>=',$data['debut'])->whereDate('dem_aches.created_at','<=',$data['fin']);
+        $query = ($data['projet']== 0) ? $query : $query->where('dem_aches.projet', $data['projet']);
+
+        return $this->statusData($data['status'], $query)->orderBy("dem_aches.id", "DESC");
+    }
+
+    public function statusData($status, $query){
+        if ($status == 1){
+            $query = $query->active();
+        }elseif($status == 2){
+            $query = $query->enCours();
+        }elseif($status == 3){
+            $query = $query->inactive();
+        }
+        return $query;
+    }
+
+
+    //////////////////////////////////////////////////////////
+    //////////////////////// DATA TABLE /////////////////////
+    ////////////////////////////////////////////////////////
 
     public function columns()
     {
@@ -351,18 +397,25 @@ class DaTable extends LivewireDatatable
                         ->sum('price');
 
                         
-                            if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
+                            /*if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
                                 $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                            }else {
+                            }else {*/
                                 if (Proforma::where("da", $id)->exists()) {
-                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                    if($some <= $bailleur[0]->max1){
+
+                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Cotation</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+
+                                    }else{
+                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                    }
+
                                 }
 
                                 if (Pv::where("da", $id)->exists()) {
                                     $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
                                 }
 
-                            }
+                           // }
                             if (Bc::where("da", $id)->exists()) {
                                 $dsa = '<span class="badge badge-success">Fini</span>';
                             }

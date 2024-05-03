@@ -23,6 +23,12 @@ class EbFilter extends Component
         $this->emit('filterEb',$validatedData);
     }
 
+    public function resetForm(){
+        
+        $this->reset('state');
+        $this->emit('resetFilterEb');
+    }
+
     public function render()
     {
         $this->modelId = Auth::user()->agent;

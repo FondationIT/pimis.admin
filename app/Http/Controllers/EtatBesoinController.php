@@ -95,13 +95,20 @@ class EtatBesoinController extends Controller
         //$data = json_decode($data->getBody());
         for($count = 0; $count<count($data['fournisseur']); $count++)
          {
+            
             $ref = 'PROF-'.rand(10000,99999).'-FP'.rand(100,999);
+            $file = $data->file('reference');
+            echo $file;
+            $file_name = $file->store('doc/proformas','public');
+            //$file_name = $data['fournisseur'][$count];
+            //$new_name = rand() . '.' . $file_name->getClientOriginalExtension();
+            //$file_name->move(public_path('final_doc'), $new_name);
             Proforma::create([
                 'reference' => $ref,
                 'da' => $data['da'],
                 'signature' => Auth::user()->id,
                 'fournisseur' => $data['fournisseur'][$count],
-                'numero' => $data['reference'][$count],
+                'numero' => $file_name,
             ]);
          }
 

@@ -22,7 +22,7 @@
                         @enderror
                     </div>
                     <div class="col-md-3 mb-10">
-                        <select class="form-control select2 @error('projet') is-invalid @enderror" wire:model.defer="state.projet">
+                        <select class="form-control @error('projet') is-invalid @enderror" wire:model.defer="state.projet">
                             <option value="">Projet</option>
                             <option value="0">Tous</option>
                             @foreach ($affectation as $aff)
@@ -60,7 +60,7 @@
             </div>
 
             <div class="col-md-1 mb-10">
-                <button class="btn btn-secondary" type="reset" >Reinitialiser</button>
+                <button class="btn btn-secondary" type="reset"  wire:click='resetForm' >Reinitialiser</button>
             </div>
         </div>
     </form>

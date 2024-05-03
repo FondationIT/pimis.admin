@@ -24,7 +24,7 @@ $('#profAdd').on('click', function(e){
     aBPlus += '<div class="form-row form-row-all" id="form-rowP'+count+'"><div class="col-md-1 mb-10"></div><div class="col-md-5 mb-10"><label for="fournisseur">Fournisseur</label><select class="form-control fournProf" id="fournP'+count+'" name="fournisseur" required></select><div class="invalid-feedback">Selectionner un fournisseur</div></div>'
 
 
-    aBPlus +='<div class="col-md-5 mb-10"><label for="reference">Reference proforma</label><input type="text" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
+    aBPlus +='<div class="col-md-5 mb-10"><label for="reference">Reference proforma</label><input type="file" accept="application/pdf" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
 
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowP'+count+'" class="removeProf text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
