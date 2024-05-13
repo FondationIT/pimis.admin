@@ -145,10 +145,10 @@ class BcTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
-                Column::callback(['da'], function ($da) {
+                Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
-                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                        $x = Proforma::find($x)->fournisseur;
+                        //$x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($prof)->fournisseur;
                         $x = Fournisseur::find($x)->name;
                     }else{
                         $x = DemAch::where('id', $da)->get()[0]->eb;
@@ -204,10 +204,10 @@ class BcTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
-                Column::callback(['da'], function ($da) {
+                Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
-                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                        $x = Proforma::find($x)->fournisseur;
+                        //$x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($prof)->fournisseur;
                         $x = Fournisseur::find($x)->name;
                     }else{
                         $x = DemAch::where('id', $da)->get()[0]->eb;
@@ -262,10 +262,10 @@ class BcTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
-                Column::callback(['da'], function ($da) {
+                Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
-                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                        $x = Proforma::find($x)->fournisseur;
+                        //$x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($prof)->fournisseur;
                         $x = Fournisseur::find($x)->name;
                     }else{
                         $x = DemAch::where('id', $da)->get()[0]->eb;
@@ -329,10 +329,10 @@ class BcTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
-                Column::callback(['da'], function ($da) {
+                Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
-                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                        $x = Proforma::find($x)->fournisseur;
+                        //$x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($prof)->fournisseur;
                         $x = Fournisseur::find($x)->name;
                     }else{
                         $x = DemAch::where('id', $da)->get()[0]->eb;
@@ -400,10 +400,10 @@ class BcTable extends LivewireDatatable
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
                 })->label('Reference BC'),
 
-                Column::callback(['da'], function ($da) {
+                Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
-                        $x = Pv::where('da', $da)->get()[0]->fournisseur;
-                        $x = Proforma::find($x)->fournisseur;
+                        //$x = Pv::where('da', $da)->get()[0]->fournisseur;
+                        $x = Proforma::find($prof)->fournisseur;
                         $x = Fournisseur::find($x)->name;
                     }else{
                         $x = DemAch::where('id', $da)->get()[0]->eb;

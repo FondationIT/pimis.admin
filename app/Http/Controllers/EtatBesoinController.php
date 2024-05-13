@@ -19,7 +19,10 @@ use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\prixPv;
+use App\Models\PvAttr;
+use App\Models\SelectPv;
 use App\Models\signaturePv;
+use App\Models\SignaturePVAttr;
 use App\Models\StatutAgent;
 use App\Models\Stock;
 use App\Models\Tr;
@@ -97,9 +100,9 @@ class EtatBesoinController extends Controller
          {
             
             $ref = 'PROF-'.rand(10000,99999).'-FP'.rand(100,999);
-            $file = $data->file('reference');
-            echo $file;
-            $file_name = $file->store('doc/proformas','public');
+            //$file = $data->file('reference');
+            //echo $file;
+            //$file_name = $file->store('doc/proformas','public');
             //$file_name = $data['fournisseur'][$count];
             //$new_name = rand() . '.' . $file_name->getClientOriginalExtension();
             //$file_name->move(public_path('final_doc'), $new_name);
@@ -108,7 +111,7 @@ class EtatBesoinController extends Controller
                 'da' => $data['da'],
                 'signature' => Auth::user()->id,
                 'fournisseur' => $data['fournisseur'][$count],
-                'numero' => $file_name,
+                'numero' => $data['fournisseur'][$count],
             ]);
          }
 
@@ -128,10 +131,8 @@ class EtatBesoinController extends Controller
             'reference' => $ref,
             'da' => $data['daPv'],
             'titre' => $data['titrePv'],
-            'fournisseur' => $data['fournPv'],
             'dateC' => $data['datePv'],
             'observation' => $data['obsPv'],
-            'justification' => $data['justPv'],
             'signature' => Auth::user()->id,
 
         ]);
@@ -160,6 +161,55 @@ class EtatBesoinController extends Controller
                 'produit' => $data['prodPv'][$count],
                 'proforma' => $data['profPv'][$count],
                 'prix' => $data['prixPv'][$count],
+            ]);
+         }
+
+        DB::commit();
+
+        return true;
+
+    }
+
+
+    public function pvAttr(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        $ref = 'PV-ATTR-'.rand(10000,99999).'-FP'.rand(100,999);
+        PvAttr::create([
+            'reference' => $ref,
+            'da' => $data['daPv'],
+            'titre' => $data['titrePv'],
+            'justification' => $data['justPv'],
+            'observation' => $data['obsPv'],
+            'signature' => Auth::user()->id,
+
+        ]);
+
+        $pv = PvAttr::firstWhere('reference', $ref )->id;
+
+        //$data = json_decode($data->getBody());
+        for($count = 0; $count<count($data['agPv']); $count++)
+         {
+            $ref1 = 'AGPV-ATTR-'.rand(10000,99999).'-FP'.rand(100,999);
+            SignaturePVAttr::create([
+                'reference' => $ref1,
+                'pv' => $pv,
+                'agent' => $data['agPv'][$count],
+            ]);
+         }
+
+
+         for($count = 0; $count<count($data['prodPv']); $count++)
+         {
+            $ref2 = 'PRPV-ATTR-'.rand(10000,99999).'-FP'.rand(100,999);
+            SelectPv::create([
+                'reference' => $ref2,
+                'pv' => $pv,
+                'signature' => Auth::user()->id,
+                'produit' => $data['prodPv'][$count],
+                'proforma' => $data['fournPv'][$count],
             ]);
          }
 

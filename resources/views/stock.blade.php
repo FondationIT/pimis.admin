@@ -9,12 +9,16 @@
 <livewire:stock.prix-form />
 <livewire:stock.fprix-form />
 <livewire:stock.pv-form />
+<livewire:stock.pv-attr-form />
 <livewire:stock.proforma-form />
+<livewire:stock.bc-edit />
 <livewire:stock.bc-form />
 <livewire:stock.br-form />
 
+
 <livewire:stock.bc-print />
 <livewire:stock.pv-print />
+<livewire:stock.pv-attr-print />
 <livewire:stock.br-print />
 
 

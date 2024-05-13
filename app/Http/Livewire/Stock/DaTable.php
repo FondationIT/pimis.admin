@@ -14,6 +14,7 @@ use App\Models\Pv;
 use App\Models\Bc;
 use App\Models\FournPrice;
 use App\Models\ProductOder;
+use App\Models\PvAttr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 
 class DaTable extends LivewireDatatable
 {
-    public $modelId,$data;
+    public $modelId,$data,$pv;
 
     protected $listeners = [
         'demAchUpdated' => '$refresh',
@@ -55,9 +56,21 @@ class DaTable extends LivewireDatatable
         //$this->dispatchBrowserEvent('formProforma');
     }
 
+    public function formPVAttr($modelId){
+        $this->modelId = $modelId;
+        $this->emit('formPVAttr',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
+    }
+
     public function formBC($modelId){
         $this->modelId = $modelId;
         $this->emit('formBC',$this->modelId );
+        //$this->dispatchBrowserEvent('formProforma');
+    }
+
+    public function editBC($modelId){
+        $this->modelId = $modelId;
+        $this->emit('editBC',$this->modelId );
         //$this->dispatchBrowserEvent('formProforma');
     }
 
@@ -406,18 +419,23 @@ class DaTable extends LivewireDatatable
                                         $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Cotation</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
 
                                     }else{
-                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Faire un PV</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Analyse</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
                                     }
 
                                 }
 
                                 if (Pv::where("da", $id)->exists()) {
-                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                }
+                                
+                                
+                                if (PvAttr::where("da", $id )->exists()) {
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
                                 }
 
                            // }
                             if (Bc::where("da", $id)->exists()) {
-                                $dsa = '<span class="badge badge-success">Fini</span>';
+                                //$dsa = '<span class="badge badge-success">Fini</span>';
                             }
                         
 

@@ -47,11 +47,6 @@ class PvTable extends LivewireDatatable
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.DemAch::find($da)->id.')" data-toggle="modal" data-target="#pDaModalForms">'.DemAch::find($da)->reference.'</a>';
             })->label('Reference DA'),
 
-            Column::callback(['fournisseur'], function ($fournisseur) {
-                $prof = Proforma::find($fournisseur)->fournisseur;
-                return Fournisseur::find($prof)->name;
-            })->label('Fournisseur'),
-
             Column::name('titre')
                 ->label('Titre'),
 

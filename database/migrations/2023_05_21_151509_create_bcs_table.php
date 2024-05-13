@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
             $table->foreignId('da')->constrained('dem_aches');
+            $table->foreignId('proforma')->constrained('proformas');
             $table->string('personne');
             $table->string('lieu');
             $table->string('delai');

@@ -52,7 +52,7 @@ class AgentsTable extends LivewireDatatable
 
     public function builder()
     {
-        if (Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup') {
+        if (Auth::user()->role == 'R.H' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'S.E' || Auth::user()->role == 'Sup') {
 
             return Agent::query()->orderBy("id", "DESC");
         }else{

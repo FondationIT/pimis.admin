@@ -71,13 +71,13 @@
                                                 @if($agent)
                                                 <div class="col-4 border-right pr-0">
                                                     <div class="pa-15">
-                                                        <span class="d-block display-6 text-dark mb-5">154</span>
+                                                        <span class="d-block display-6 text-dark mb-5">{{$nc}}</span>
                                                         <span class="d-block text-capitalize font-14">Contrats</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-4 border-right px-0">
                                                     <div class="pa-15">
-                                                        <span class="d-block display-6 text-dark mb-5">65</span>
+                                                        <span class="d-block display-6 text-dark mb-5">{{$na}}</span>
                                                         <span class="d-block text-capitalize font-14">Affectations</span>
                                                     </div>
                                                 </div>

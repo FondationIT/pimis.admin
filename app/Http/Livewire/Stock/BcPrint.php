@@ -10,6 +10,8 @@ use App\Models\FournPrice;
 use App\Models\Pv;
 use App\Models\Proforma;
 use App\Models\PrixPv;
+use App\Models\PvAttr;
+use App\Models\SelectPv;
 use App\Models\ValidBc;
 
 use Livewire\Component;
@@ -23,6 +25,7 @@ class BcPrint extends Component
     public $bcs;
     public $ebs;
     public $pvs;
+    public $pvAttr;
     public $odrs;
     public $prof;
     public $valid1;
@@ -46,17 +49,23 @@ class BcPrint extends Component
 
         if(Pv::where("da", $this->bcs[0]->da)->exists()){
             $this->pvs = Pv::where("da", $this->bcs[0]->da)->get();
+            $this->pvAttr = PvAttr::where("da", $this->bcs[0]->da)->get();
 
-            $this->prof = Proforma::where("id", $this->pvs[0]->fournisseur)->where("da", $this->pvs[0]->da)->get();
+            $this->prof = Proforma::where("id", $this->bcs[0]->proforma)->where("da", $this->bcs[0]->da)->get();
 
-            $this->products = PrixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+            //$this->products = PrixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+
+            $this->products = SelectPv::where("pv", $this->pvAttr[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
 
             
 
             $this->some  = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
                 ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
+                ->where("select_pvs.pv", $this->pvAttr[0]->id)
+                ->where("select_pvs.proforma", $this->prof[0]->id)
                 ->where("prix_pvs.pv", $this->pvs[0]->id)
-                ->where("proforma", $this->prof[0]->id)
+                ->where("prix_pvs.proforma", $this->prof[0]->id)
                 ->where("product_oders.etatBes", $this->ebs[0]->id)
                 ->get('price')
                 ->sum('price');

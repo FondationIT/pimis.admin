@@ -40,18 +40,19 @@
                     <li class="nav-item" id="bFile">
                         <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#fichier_drp">
                             <span class="feather-icon"><i data-feather="user"></i></span>
-                            <span class="nav-link-text">Informations gemerales</span>
+                            <span class="nav-link-text">Informations generales</span>
                         </a>
                         <ul id="fichier_drp" class="nav flex-column collapse collapse-level-1" >
                             <li class="nav-item" >
                                 <ul class="nav flex-column">
+                                    <li class="nav-item" id="catProd">
+                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated')" data-open="bFile" data-section="catProd">Categorie & Produit</a>
+                                    </li>
+
                                     <li class="nav-item" id="aCatPrix">
                                         <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('articleUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
                                     </li>
 
-                                    <li class="nav-item" id="catProd">
-                                        <a class="nav-link" href="#" id="button-catProd" data-active="catProd" wire:click="$emit('categorieUpdated')" data-open="bFile" data-section="catProd">Categorie & Produit</a>
-                                    </li>
 
                                     <li class="nav-item" id="fichSt">
                                         <a class="nav-link" href="#" id="button-fichSt" data-active="fichSt" wire:click="$emit('fichStUpdated')" data-open="bFile" data-section="fichSt">Fiche de stock</a>

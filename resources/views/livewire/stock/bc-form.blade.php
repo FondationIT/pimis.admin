@@ -13,9 +13,19 @@
 
                         <div class="form-row">
                             <div class="col-md-12 mb-10">
-                                <label for="description">Reference</label>
+                                <label for="description">Reference DA</label>
                                 @if ($da)
                                 <input type="text" class="form-control" value="{{$da[0]->reference}}" readonly>
+                                @endif
+
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-12 mb-10">
+                                <label for="description">Fournisseur</label>
+                                @if ($prof)
+                                <input type="text" class="form-control" value="{{App\Models\Fournisseur::firstWhere('id', App\Models\Proforma::firstWhere('id', $prof[0]->id)->fournisseur)->name}}" readonly>
                                 @endif
 
                             </div>

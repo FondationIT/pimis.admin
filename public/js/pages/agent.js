@@ -138,7 +138,7 @@ commForm.onsubmit = function(e) {
 
    $('.prodEB').each(function(){
     var ite = JSON.parse($(this).val())
-    console.log($(this).val())
+    //console.log($(this).val())
     if(ite != null){
         va = ite.item.id
         produit.push(va);
@@ -146,7 +146,7 @@ commForm.onsubmit = function(e) {
    });
    $('.descEB').each(function(){
     var ite = JSON.parse($(this).val())
-    console.log($(this).val())
+    //console.log($(this).val())
     if(ite != null){
         va = ite.item.id
         descr.push(va);
@@ -370,7 +370,7 @@ commForm.onsubmit = function(e) {
 
    $('.prodDI').each(function(){
     var ite = JSON.parse($(this).val())
-    console.log($(this).val())
+    //console.log($(this).val())
     if(ite != null){
         va = ite.item.id
         produit.push(va);

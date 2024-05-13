@@ -13,20 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pvs', function (Blueprint $table) {
+        Schema::create('valid_avances', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
-            $table->foreignId('signature')->constrained('users');
-            $table->foreignId('da')->constrained('dem_aches');
-            $table->string('titre');
-            $table->string('dateC');
-            $table->text('observation');
-            $table->boolean('active')->default(true);
+            $table->foreignId('user')->constrained('users');
+            $table->foreignId('avance')->constrained('avances');
+            $table->boolean('resp');
+            $table->string('niv');
+            $table->string('motif');
             $table->timestamps();
         });
     }
-
-
 
     /**
      * Reverse the migrations.
@@ -35,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pvs');
+        Schema::dropIfExists('valid_avances');
     }
 };

@@ -88,6 +88,8 @@ class DatabaseSeeder extends Seeder
             'matricule' => 'FP-ST000000D',
         ]);
 
+        
+
         \App\Models\User::factory()->create([
             'id' => 2345,
             'agent' =>3394,
@@ -95,6 +97,14 @@ class DatabaseSeeder extends Seeder
             'reference' => 'US-ST000000D',
             'email' => 'test@panzi.org',
             'role' => 'Sup',
+        ]);
+
+        \App\Models\StatutAgent::create([
+            'id' => 674,
+            'signature' =>2345,
+            'agent' => 3394,
+            'etatcivil' => 1,
+            'reference' => 'AG-ST-ST000000D',
         ]);
 
         \App\Models\Bailleur::create([
@@ -132,7 +142,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Taux::create([
             'id' => 1,
             'user' =>2345,
-            'taux' => 2004.77,
+            'taux' => 2500.00,
         ]);
 
     }

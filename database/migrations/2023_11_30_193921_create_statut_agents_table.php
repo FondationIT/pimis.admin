@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignId('agent')->constrained('agents');
             $table->string('etatcivil');
             $table->integer('enfant')->default(0);
+            $table->boolean('bus')->default(false);
+            $table->boolean('sociale')->default(false);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

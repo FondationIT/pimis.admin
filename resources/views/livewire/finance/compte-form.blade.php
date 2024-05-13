@@ -23,10 +23,16 @@
                             <label for="type">Type</label>
                             <select class="form-control @error('type') is-invalid @enderror" wire:model.defer="state.type" wire:change="change($event.target.value)" name="type" >
                                 <option value=""></option>
-                                <option value="1">Projet</option>
-                                <option value="2">Agent</option>
-                                <option value="3">Fournisseur</option>
-                                <option value="4">Partenaire</option>
+                                @if (Auth::user()->role == 'COMPT1')
+                                    <option value="1">Projet</option>
+                                @endif
+                                @if (Auth::user()->role == 'R.H')
+                                    <option value="2">Agent</option>
+                                @endif
+                                @if (Auth::user()->role == 'LOG1')
+                                    <option value="3">Fournisseur</option>
+                                @endif
+                                <!--<option value="4">Partenaire</option>-->
                             </select>
                             @error('type')
                                 <span class="text-red-600" role="alert">
@@ -40,7 +46,11 @@
                             <select class="form-control select2 @error('prop') is-invalid @enderror" wire:model.defer="state.prop" >
                                 <option value=""></option>
                                     @foreach ($users as $user)
-                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @if (Auth::user()->role == 'R.H')
+                                            <option value="{{$user->id}}">{{$user->firstname}} {{$user->lastname}}</option>
+                                        @else
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endif
                                     @endforeach
                             </select>
                             

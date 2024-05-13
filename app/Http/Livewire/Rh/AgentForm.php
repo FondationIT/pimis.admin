@@ -49,6 +49,9 @@ class AgentForm extends Component
         $this->state['etatcivil'] = $model1->etatcivil;
         $this->state['enfant'] = $model1->enfant;
 
+        $this->state['sociale'] = $model1->sociale;
+        $this->state['bus'] = $model1->bus;
+
         $this->state['nom2'] = $model->nom2;
         $this->state['phone2'] = $model->contact;
     }
@@ -71,6 +74,9 @@ class AgentForm extends Component
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
                 'enfant' => ['required', 'string', 'max:255'],
+
+                'sociale' => ['required'],
+                'bus' => ['required'],
 
                 'nom2' => ['required', 'string', 'max:255'],
                 'phone2' => ['required', 'string', 'max:255'],
@@ -110,6 +116,8 @@ class AgentForm extends Component
                     'agent' =>$this->modelId,
                     'enfant' => $this->state['enfant'],
                     'etatcivil' => $this->state['etatcivil'],
+                    'bus' => $this->state['bus'],
+                    'sociale' => $this->state['sociale'],
                     'signature' => Auth::user()->id,
                 ]);
 
@@ -136,6 +144,9 @@ class AgentForm extends Component
                 'fonction' => ['required', 'string', 'max:255'],
                 'etatcivil' => ['required', 'string', 'max:255'],
                 'enfant' => ['required', 'string', 'max:255'],
+
+                'sociale' => ['required'],
+                'bus' => ['required'],
 
                 'nom2' => ['required', 'string', 'max:255'],
                 'phone2' => ['required', 'string', 'max:255'],
@@ -174,6 +185,8 @@ class AgentForm extends Component
                     'reference' => $ref,
                     'agent' =>$agent[0]->id,
                     'enfant' => $this->state['enfant'],
+                    'bus' => $this->state['bus'],
+                    'sociale' => $this->state['sociale'],
                     'etatcivil' => $this->state['etatcivil'],
                     'signature' => Auth::user()->id,
                 ]);

@@ -16,6 +16,7 @@ class Bc extends Model
     protected $fillable = [
         'reference',
         'da',
+        'proforma',
         'personne',
         'lieu',
         'delai',

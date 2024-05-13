@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Stock;
 
 use App\Models\DemAch;
 use App\Models\Bc;
+use App\Models\Proforma;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,17 +15,21 @@ class BcForm extends Component
 {
 
     public $da;
+    public $prof;
     public $modelId;
+    public $modelProf;
     public $state = [];
 
     protected $listeners = [
         'formBC'
     ];
 
-    public function formBC($modelId){
+    public function formBC($modelId,$modelProf){
         $this->modelId = $modelId;
+        $this->modelProf = $modelProf;
 
         $this->da = DemAch::where("id", $this->modelId)->get();
+        $this->prof = Proforma::where("id", $this->modelProf)->get();
 
     }
 
@@ -44,6 +49,7 @@ class BcForm extends Component
                 'reference' => $ref,
                 'signature' => Auth::user()->id,
                 'da' => $this->da[0]->id,
+                'proforma' => $this->prof[0]->id,
                 'personne' => $this->state['pers'],
                 'lieu' => $this->state['lieu'],
                 'delai' => $this->state['delai'],

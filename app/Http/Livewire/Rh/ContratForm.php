@@ -8,6 +8,9 @@ use Livewire\Component;
 
 class ContratForm extends Component
 {
+    protected $listeners = [
+        'contratAForm'=> '$refresh'
+    ];
     public function render()
     {
         return view('livewire.rh.contrat-form',

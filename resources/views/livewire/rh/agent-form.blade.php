@@ -172,7 +172,7 @@
                             <input type="text" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="Adresse">
                         </div>
                         <div class="col-md-3 mb-10">
-                            <label for="region">Region</label>
+                            <label for="region">Province/Region</label>
                             <input type="text" class="form-control" wire:model.defer="state.region" name="region" placeholder="Region">
                         </div>
                         <div class="col-md-3 mb-10">
@@ -185,6 +185,34 @@
                         <div class="col-md-12 mb-10">
                             <label for="description">Description</label>
                             <textarea class="form-control" wire:model.defer="state.description" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="bus">Abonnement bus</label>
+                            <select class="form-control @error('bus') is-invalid @enderror" wire:model.defer="state.bus" name="bus" placeholder="Etat civil">
+                                <option value=""></option>
+                                <option value="{{1}}">Oui</option>
+                                <option value="{{0}}">Non</option>
+                            </select>
+                            @error('bus')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <label for="sociale">Caisse sociale</label>
+                            <select class="form-control @error('sociale') is-invalid @enderror" wire:model.defer="state.sociale" name="sociale" placeholder="Etat civil">
+                                <option value=""></option>
+                                <option value="{{1}}">Oui</option>
+                                <option value="{{0}}">Non</option>
+                            </select>
+                            @error('sociale')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
                         </div>
                     </div>
                     <h5>Personne de contact</h5><hr>

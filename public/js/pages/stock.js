@@ -24,7 +24,7 @@ $('#profAdd').on('click', function(e){
     aBPlus += '<div class="form-row form-row-all" id="form-rowP'+count+'"><div class="col-md-1 mb-10"></div><div class="col-md-5 mb-10"><label for="fournisseur">Fournisseur</label><select class="form-control fournProf" id="fournP'+count+'" name="fournisseur" required></select><div class="invalid-feedback">Selectionner un fournisseur</div></div>'
 
 
-    aBPlus +='<div class="col-md-5 mb-10"><label for="reference">Reference proforma</label><input type="file" accept="application/pdf" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
+    aBPlus +='<div class="col-md-5 mb-10"><label for="reference">Reference proforma</label><input type="text" class="form-control refProf" name="reference" id="refP'+count+'" aria-describedby="inputGroupPrepend" required><div class="invalid-feedback">La reference proforma est obligatoire</div></div>'
 
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowP'+count+'" class="removeProf text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
@@ -140,7 +140,7 @@ commForm.onsubmit = function(e) {
 
 
 
-                            //  SCRIPT PV  //
+                            //  SCRIPT PV ANALYSE  //
 
 
 
@@ -186,9 +186,7 @@ $('#partPVAdd').on('click', function(e){
 
 });
 
-$("#prixPv").change(function() {
-    console.log( "Handler for `keyup` called." );
-} );
+
 
 
 
@@ -218,7 +216,6 @@ comm1Form.onsubmit = function(e) {
    var prodPv = [];
    var daPv = $('#daPv').val()
    var titrePv = $('#titrePv').val()
-   var fournPv = $('#fournPv').val()
    var datePv = $('#datePv').val()
    var obsPv = $('#obsPv').val()
    var justPv = $('#justPv').val()
@@ -243,7 +240,7 @@ comm1Form.onsubmit = function(e) {
     url: "/pvReg",
     dataType: 'json',
 
-    data: JSON.stringify(pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+    data: JSON.stringify(pvFormToJSON(daPv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
     beforeSend: function() {
         $('#btnPv').hide();
         $('#prldPv').show();
@@ -285,10 +282,9 @@ comm1Form.onsubmit = function(e) {
 
 
 
-function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
+function pvFormToJSON(daPv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
     return {
       "titrePv":titrePv,
-      "fournPv": fournPv,
       "daPv": daPv,
       "datePv":datePv,
       "obsPv": obsPv,
@@ -299,6 +295,182 @@ function pvFormToJSON(daPv,titrePv,fournPv,datePv,obsPv,justPv,agPv,prixPv,profP
       "prodPv": prodPv
     };
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+                            /////////////////////
+                    /////////////////////////////////////
+
+
+
+
+                            //  SCRIPT PV ATTRIBITION  //
+
+
+
+
+           /////////////////////////////////////////////
+                      ///////////////////////
+//////////////////////////////////////////////////////////////////////
+
+
+
+var pr = $('#allPartPVPlus2').val();
+    pr =JSON.parse(pr)
+
+var count = 1;
+$('#partPVAdd2').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+
+    aBPlus +='<div class="form-row form-row-all" id="form-rowPV2'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartPV" id="agPv2'+count+'" required></select></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowPV2'+count+'" class="removePartPV2 text-red-600"><i class="icon-close txt-danger"></i></a></div><div class="col-md-2 mb-10"></div></div>'
+
+    partPv = '<option value=""  ></option>';
+    $.each(pr, function(i, item) {
+
+        item1= item.firstname;
+        item2= item.lastname;
+        partPv += '<option value='+item.id+'>'+item1+' '+item2+'.</option>';
+        //$('#fournP1').html(fournP);
+    });
+
+    $('#autrePartPV2').append(aBPlus);
+    $('#agPv2'+count).html(partPv);
+
+
+    $('.removePartPV2').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+           //   VALIDATION FORMULAIRE PV ATTRIBUTION //
+
+//////////////////////////////////////////////////////////////////////
+
+
+
+
+var comm13Form = document.getElementById('registerPvAttr');
+comm13Form.onsubmit = function(e) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  e.preventDefault();
+   var agPv = [];
+   var fournPv = [];
+   var prodPv = [];
+   var daPv = $('#daPv2').val()
+   var titrePv = $('#titrePv2').val()
+   var obsPv = $('#obsPv2').val()
+   var justPv = $('#justPv2').val()
+
+   $('.fournPartPV2').each(function(){
+    agPv.push($(this).val());
+   });
+   $('.fournPv2').each(function(){
+    fournPv.push($(this).val());
+   });
+   $('.prodPv2').each(function(){
+    prodPv.push($(this).val());
+   });
+
+
+   $.ajax({
+    type: 'POST',
+    contentType: 'application/json',
+    url: "/pvAttrReg",
+    dataType: 'json',
+
+    data: JSON.stringify(pv2FormToJSON(daPv,titrePv,fournPv,obsPv,justPv,agPv,prodPv)),
+    beforeSend: function() {
+        $('#btnPv2').hide();
+        $('#prldPv2').show();
+    },
+    success: function(data, textStatus, jqXHR){
+
+            $('#prldPv2').hide();
+            $('#btnPv2').show();
+            $('.close').click()
+
+            Livewire.emit('demAchUpdated')
+
+            $.toast().reset('all');
+            $.toast({
+                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                position: 'top-center',
+                loaderBg:'#7a5449',
+                class: 'jq-has-icon jq-toast-success',
+                hideAfter: 3500,
+                stack: 6,
+                showHideTransition: 'fade'
+                });
+
+
+    },
+    error: function(jqXHR, textStatus, data){
+        $('#prldPv2').hide();
+        $('#btnPv2').show();
+        $('#messageErrPv2').html(messageErr(data))
+    }
+});
+
+ }
+
+
+
+
+
+
+
+
+function pv2FormToJSON(daPv,titrePv,fournPv,obsPv,justPv,agPv,prodPv) {
+    return {
+      "titrePv":titrePv,
+      "fournPv": fournPv,
+      "daPv": daPv,
+      "obsPv": obsPv,
+      "justPv": justPv,
+      "agPv":agPv,
+      "prodPv": prodPv
+    };
+  }
+
+
+
+
 
 
 

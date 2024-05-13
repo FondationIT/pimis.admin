@@ -14,6 +14,8 @@ class StatutAgent extends Model
         'reference',
         'enfant',
         'etatcivil',
+        'bus',
+        'sociale',
         'active',
         'signature',
 

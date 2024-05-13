@@ -51,8 +51,8 @@ class BrPrint extends Component
         }else if(Pv::where("da", $this->das[0]->id)->exists()){
 
             $pv = Pv::where("da", $this->das[0]->id)->get();
-            $prf = Proforma::where("id", $pv[0]->fournisseur)->get();
-            $this->fournisseur = Fournisseur::where("id", $prf[0]->fournisseur)->get();
+            $fourn = Proforma::where("id", $this->bc[0]->proforma)->get();
+            $this->fournisseur = Fournisseur::where("id", $fourn[0]->fournisseur)->get();
 
         }
 

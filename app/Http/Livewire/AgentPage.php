@@ -22,6 +22,8 @@ class AgentPage extends Component
             'statut' => StatutAgent::where('agent', $this->modelId)->where('active', true)->get()[0],
             'affectation' => Affectation::where('agent', $this->modelId)->where('active', true)->get(),
             'contrat' => Contrat::where('agent', $this->modelId)->where('statut', true)->whereDate('debut','<=', date("Y-m-d"))->whereDate('fin','>=', date("Y-m-d"))->get(),
+            'na' => Affectation::where('agent', $this->modelId)->count(),
+            'nc' => Contrat::where('agent', $this->modelId)->count()
             
         ]);
     }

@@ -14,18 +14,18 @@
 
                     <div class="row">
 
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" style="width: 200px;position: relative;text-align: center" />
-                        </div>
+                        
 
-                        <div class="col-lg-6 fix" style="text-align: center">
+                        <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
                                 <h3>BON DE COMMANDE</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($bcs)
+                                <p class="">N<sup>o</sup> : <b>@if ($bcs)
                                     {{$bcs[0]->reference}}
                                 @endif</b></p>
                             </div>
+                        </div>
+                        <div class="col-lg-3 fix" style="text-align: center">
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
@@ -68,13 +68,13 @@
 
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->model}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
 
                                             <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->produit)->unite}}</td>
 
-                                            <td>$ {{ $prod->prix }}</td>
+                                            <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix }}</td>
 
-                                            <td>$ {{ $prod->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
+                                            <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
                                         </tr>
 
                                     @endforeach
@@ -151,7 +151,7 @@
                             <strong>Fondation Panzi</strong><br>
                             Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
                             Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
-                            <a href="fondationpanzirdc.org">fondationpanzirdc.org</a>
+                            <a href="fondationpanzirdc.org">panzi.org</a>
                             <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
 
                         </p>
