@@ -19,18 +19,17 @@
                     <!-- /Preloader -->
                     <div class="row">
 
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logoN.png" style="width: 200px;position: relative;text-align: center" />
-                        </div>
-
-                        <div class="col-lg-6 fix" style="text-align: center">
+                        <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
                                 <h3>TERME DE REFERENCE</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($trs)
+                                <p class="">N<sup>o</sup> : <b>@if ($trs)
                                     {{$trs[0]->reference}}
                                 @endif</b></p>
                             </div>
+                        </div>
+
+                        <div class="col-lg-3 fix" style="text-align: center">
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
@@ -142,10 +141,12 @@
 
 
                     <footer >
-                        <hr style="color: #F5BF60">
-                        <p style="text-align: center">
-                            
-                            <a href="panzi.org" style="text-align: center">panzi.org</a>
+                        <hr>
+                        <p>
+                            <strong>Fondation Panzi</strong><br>
+                            Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
+                            Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
+                            <a href="fondationpanzirdc.org">panzi.org</a>
                             <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
 
                         </p>

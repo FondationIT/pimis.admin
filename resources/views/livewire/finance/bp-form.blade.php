@@ -358,7 +358,7 @@
 
                         <div class="form-row">
                             <div class="col-md-6 mb-10">
-                                <label for="">Reference note de debit</label>
+                                <label for="">Reference</label>
                                 @if ($nds)
                                 <input type="text" class="form-control" value="{{$nds[0]->reference}}" readonly>
                                 @endif

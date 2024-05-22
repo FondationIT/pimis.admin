@@ -15,7 +15,9 @@ use App\Models\prixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
+use App\Models\PvAttr;
 use App\Models\RCaisse;
+use App\Models\SelectPv;
 use App\Models\Tr;
 use App\Models\TrOder;
 use App\Models\ValidBc;
@@ -34,6 +36,7 @@ class BpPrint extends Component
     public $bps =[];
     public $index;
     public $pvs;
+    public $pvAttr;
     public $odrs;
     public $prof;
     public $valid1;
@@ -61,22 +64,33 @@ class BpPrint extends Component
 
             if(Pv::where("da", $this->bcs[0]->da)->exists()){
                 $this->pvs = Pv::where("da", $this->bcs[0]->da)->get();
+                $this->pvAttr = PvAttr::where("da", $this->bcs[0]->da)->get();
 
                 $this->compte = Compte::where("type", 2)->where("proprietaire", $this->pvs[0]->fournisseur)->get();
     
-                $this->prof = Proforma::where("id", $this->pvs[0]->fournisseur)->where("da", $this->pvs[0]->da)->get();
-    
-                $this->products = prixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+                //$this->prof = Proforma::where("id", $this->pvs[0]->fournisseur)->where("da", $this->pvs[0]->da)->get();
+                $this->prof = Proforma::where("id", $this->bcs[0]->proforma)->where("da", $this->bcs[0]->da)->get();
+
+                //$this->products = PrixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+
+                $this->products = SelectPv::where("pv", $this->pvAttr[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
     
                 
     
+                
+
                 $this->some  = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                    ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
                     ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
+                    ->where("select_pvs.pv", $this->pvAttr[0]->id)
+                    ->where("select_pvs.proforma", $this->prof[0]->id)
                     ->where("prix_pvs.pv", $this->pvs[0]->id)
-                    ->where("proforma", $this->prof[0]->id)
+                    ->where("prix_pvs.proforma", $this->prof[0]->id)
                     ->where("product_oders.etatBes", $this->index[0]->id)
                     ->get('price')
                     ->sum('price');
+
+
             }elseif (FournPrice::where("product", $this->odrs[0]->description)->exists()) {
                 
                 $this->prof = FournPrice::where("product", $this->odrs[0]->description)->get();
@@ -114,7 +128,7 @@ class BpPrint extends Component
             $this->compte = Compte::where("type", 1)->where("proprietaire", 1)->get();
 
         }elseif($this->bps[0]->categorie == 5){
-            $this->index = RCaisse::where("id", $this->bps[0]->bc)->get();
+            $this->index = RCaisse::where("projet", $this->bps[0]->bc)->get();
             $this->products = [];
             $this->some = $this->bps[0]->montant;
 

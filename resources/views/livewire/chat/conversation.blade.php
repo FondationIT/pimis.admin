@@ -32,7 +32,8 @@
         
         
 
-        <div class="chatapp-users-list" wire:poll.1s>
+        <!--<div class="chatapp-users-list" wire:poll.1s>-->
+        <div class="chatapp-users-list">
             @if (strlen($query) >= 1)
             <div class="nicescroll-bar">
                 @if (count($jobs) > 0)

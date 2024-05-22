@@ -46,7 +46,7 @@ class RapportTable extends LivewireDatatable
             if(Auth::user()->role == 'COMPT2'){
 
             
-                if(Affectation::where('agent', Auth::user()->agent)->where('projet', 1)->exists()){
+                if(Affectation::where('agent', Auth::user()->agent)->where('projet', 3)->exists()){
                     return Projet::query()->orderBy("id", "DESC");
                 }else{
                     return Projet::join('affectations', 'affectations.projet', '=', 'projets.id')
@@ -66,9 +66,8 @@ class RapportTable extends LivewireDatatable
         if(Auth::user()->role == 'COMPT2'){
 
             return [
-                Column::callback(['reference','id'], function ($reference,$id) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                Column::name('reference')
+                ->label('Reference'),
 
                 Column::callback(['name'], function ($name) {
                     return $name;;
@@ -108,9 +107,8 @@ class RapportTable extends LivewireDatatable
             ];
         }else{
             return [
-                Column::callback(['reference','id'], function ($reference,$id) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                Column::name('reference')
+                ->label('Reference'),
 
                 Column::callback(['name'], function ($name) {
                     return $name;;

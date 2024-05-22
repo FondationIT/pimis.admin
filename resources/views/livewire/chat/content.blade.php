@@ -34,7 +34,8 @@
     <div class="chat-body" id="chat-body" style="overflow:auto" wire:ignore.self>
         <div class="nicescroll-bar" >
             
-            <ul class="list-unstyled" wire:poll.1s>
+            <!--<ul class="list-unstyled" wire:poll.1s>-->
+            <ul class="list-unstyled">
 
 
                 @if($content && !empty($content))

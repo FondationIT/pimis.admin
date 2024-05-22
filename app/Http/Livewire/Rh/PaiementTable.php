@@ -243,9 +243,14 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
 					
+                    if(PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->exists()){
 					
-                    return $das[0]->type;
-					
+                        return $das[0]->type;
+                    }
 
                 })->label('Type'),
 
@@ -256,7 +261,15 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
 
-                    return $das[0]->month;
+                    if(PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->exists()){
+					
+                        return $das[0]->month;
+                    }
+                    
 
                 })->label('Mois'),
 
@@ -267,7 +280,15 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
 
-                    return $das[0]->niv1;
+                    if(PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->exists()){
+					
+                        return $das[0]->niv1;
+                    }
+                    
 
                 })->label('Mois'),
 
@@ -279,9 +300,17 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
 
-                    $di = $das[0]->id;
+                    if(PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->exists()){
+					
+                        $di = $das[0]->id;
+                        return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="voir2('.$di.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms"><span class="badge badge-success">Voir</span></i></a>';
+                    }
 
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="voir2('.$di.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms"><span class="badge badge-success">Voir</span></i></a>';
+                    
                 })->unsortable(),
     
 
@@ -293,15 +322,22 @@ class PaiementTable extends LivewireDatatable
                     ->where('niv2', true)
                     ->orderBy("id", "DESC")->get();
 
-                    $di = $das[0]->id;
+                    if(PayementAgent::query()
+                    ->where('statut', true)
+                    ->where('niv1', true)
+                    ->where('niv2', true)
+                    ->orderBy("id", "DESC")->exists()){
 
-                    if (Bp::where("bc", $di)->where('categorie', 6)->where('projet',$projet)->exists()){
+                        $di = $das[0]->id;
 
-                        return '<span class="badge badge-success">BP Déjà fait</span>';
-                    }else{
-                        
-                            return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBP6('.$di.','.$projet.')" data-toggle="modal" data-target="#bp6ModalForms"><span class="badge badge-info">Faire un BP</span></a>';
-                        
+                        if (Bp::where("bc", $di)->where('categorie', 6)->where('projet',$projet)->exists()){
+
+                            return '<span class="badge badge-success">BP Déjà fait</span>';
+                        }else{
+                            
+                                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="formBP6('.$di.','.$projet.')" data-toggle="modal" data-target="#bp6ModalForms"><span class="badge badge-info">Faire un BP</span></a>';
+                            
+                        }
                     }
                     
 

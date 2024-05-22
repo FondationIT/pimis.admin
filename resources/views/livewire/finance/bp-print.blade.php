@@ -140,7 +140,7 @@
                                                 Compte salaire
                                                 @elseif ($bps[0]->categorie == 5)
                                                  Caisse Projet
-                                                @elseif ($bps[0]->categorie == 4 && $bps[0]->beneficiaire == 1 )
+                                                @elseif ($bps[0]->categorie == 4 && $bps[0]->beneficiaire == 3 )
                                                 Administration 
                                                 @elseif($bps[0]->categorie == 3)
                                                     {{App\Models\User::firstWhere('id', $bps[0]->beneficiaire)->name}}
@@ -413,10 +413,10 @@
 
                                     <tr style="border: 1px solid;width: 100%;text-align:center">
                                         <td></td>
-                                        <td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->model}}</td>
+                                        <td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
 
                                         <td>USD</td>
-                                        <td>{{ $prod->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
+                                        <td>{{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
 
                                         <td></td>
 

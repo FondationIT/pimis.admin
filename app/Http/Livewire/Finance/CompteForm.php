@@ -60,8 +60,8 @@ class CompteForm extends Component
 
             DB::commit();
             $this->reset('state');
-            $this->dispatchBrowserEvent('formSuccess');
             $this->emit('compteUpdated');
+            $this->dispatchBrowserEvent('formSuccess');
 
         } catch (\Throwable $th) {
             DB::rollBack();

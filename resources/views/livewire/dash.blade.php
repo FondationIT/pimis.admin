@@ -9,20 +9,42 @@
         <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
-            <!-- Title -->
+            <!-- 
                 <div class="hk-pg-header align-items-top">
                   <div>
-                    <h3 class="hk-pg-title font-weight-600 mb-10">Data Analytics Dashboard</h3>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Encours de </h3>
                   </div>
 
                   <div class="d-flex">
                   </div>
                 </div>
-            <!-- /Title -->
+           /Title -->
+
+            <!-- Main Content -->
+        
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12 pa-0">
+                        <div class="auth-form-wrap pt-xl-0 pt-70">
+                            <div class="auth-form w-xl-25 w-lg-30 w-sm-50 w-100">
+                                
+                                <form>
+                                    <div class="d-62 bg-white rounded-circle mb-10 d-flex align-items-center justify-content-center mx-auto">
+                                        <i class="zmdi zmdi-settings font-28"></i>
+                                    </div>
+                                    <h1 class="display-4 mb-10 text-center">Désolé, cette page est en maintenance</h1>
+                                    <p class="mb-30 text-center">Nous nous excusons pour la gêne occasionnée, nous faisons de notre mieux pour remettre les choses en ordre pour vous. N'hésitez pas à <a href="#"><u>contacter le service IT</u></a> pour toute question.</p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- /Main Content -->
 
             <!-- Main content -->
 
-            <!-- Row -->
+            <!--
             <div class="row">
                 <div class="col-xl-12">
                     <div class="hk-row">
@@ -406,7 +428,7 @@
                     </div>
                 </div>
             </div>
-            <!-- /Row -->
+             -->
 
         </div>
     </section>

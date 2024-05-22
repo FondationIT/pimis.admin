@@ -55,6 +55,7 @@ class CategorieForm extends Component
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
                 $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -80,6 +81,7 @@ class CategorieForm extends Component
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
                 $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();

@@ -57,7 +57,8 @@ class ProductForm extends Component
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -79,7 +80,8 @@ class ProductForm extends Component
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();

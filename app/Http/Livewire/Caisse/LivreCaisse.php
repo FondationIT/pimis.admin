@@ -46,15 +46,12 @@ class LivreCaisse extends LivewireDatatable
         return [
 
             DateColumn::raw('created_at')
-                ->label('Date')
-                ->filterable(),
+                ->label('Date'),
             
 
             Column::callback(['projet'], function ($s) {
                 return Projet::where('id',$s)->get()[0]->name; 
-            })
-                ->filterable($this->projets)
-                ->label('Projet'),
+            })->label('Projet'),
 
             Column::callback(['index','type'], function ($id,$type) {
                 

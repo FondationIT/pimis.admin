@@ -11,48 +11,58 @@
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
             <!-- Title -->
-                <div class="hk-pg-header align-items-top">
-                  
-                    <div class="media align-items-center">
-                        <div class="d-flex media-img-wrap mr-15">
-                            <div class="avatar avatar-xl">
-                                <span class="avatar-text avatar-text-inv-pink rounded-circle"><span class="initial-wrap"><span>{{substr(Auth::user()->name, 0, 1)}}</span></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="media-body">
-                       
-                                <div class="text-capitalize display-6 mb-5 font-weight-400">{{Auth::user()->name}}</div>
-                                <div class="font-14">
-                                    <span class="mr-5">
-                                        @if($agent->gender == 'Masculin')
-                                            <span class="mr-5">Homme</span>    
-                                        @else
-                                            <span class="mr-5">Femme</span>  
-                                        @endif
-                                    </span>
-                                    <span class="mr-5"> / {{$statut->etatcivil}}</span>
-                                    <span class="mr-5">
-                                         /  
-                                        @if (Auth::user()->role == 'Sup')SUPER USER @endif
-                                        @if (Auth::user()->role == 'ADMIN')ADMIN @endif
-                                        @if (Auth::user()->role == 'S.E')EXECUTIVE @endif
-                                        @if (Auth::user()->role == 'D.A.F')DAF @endif
-                                        @if (Auth::user()->role == 'D.P')PROGRAMME @endif
-                                        @if (Auth::user()->role == 'C.P')PROJET @endif
-                                        @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
-                                        @if (Auth::user()->role == 'A.I')AUDIT INTERNE @endif
-                                        @if (Auth::user()->role == 'COMPT1')COMTABILITE @endif
-                                        @if (Auth::user()->role == 'COMPT2')CHEF COMPTABLE @endif
-                                        @if (Auth::user()->role == 'CAISS')CAISSSE @endif
-                                        @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
-                                        @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
-                                        @if (Auth::user()->role == 'MAG')MAGASIN @endif
-                                        @if (Auth::user()->role == 'SECU')SECURITE @endif
+                <div class="">
+                  <div class="row">
+                    <div class="col-lg-9">
+                        <div class="media align-items-center">
+                            <div class="d-flex media-img-wrap mr-15">
+                                <div class="avatar avatar-xl">
+                                    <span class="avatar-text avatar-text-inv-pink rounded-circle"><span class="initial-wrap"><span>{{substr(Auth::user()->name, 0, 1)}}</span></span>
                                     </span>
                                 </div>
+                            </div>
+                            <div class="media-body">
+                        
+                                    <div class="text-capitalize display-6 mb-5 font-weight-400">{{Auth::user()->name}}</div>
+                                    <div class="font-14">
+                                        <span class="mr-5">
+                                            @if($agent->gender == 'Masculin')
+                                                <span class="mr-5">Homme</span>    
+                                            @else
+                                                <span class="mr-5">Femme</span>  
+                                            @endif
+                                        </span>
+                                        <span class="mr-5"> / {{$statut->etatcivil}}</span>
+                                        <span class="mr-5">
+                                            /  
+                                            @if (Auth::user()->role == 'Sup')SUPER USER @endif
+                                            @if (Auth::user()->role == 'ADMIN')ADMIN @endif
+                                            @if (Auth::user()->role == 'S.E')EXECUTIVE @endif
+                                            @if (Auth::user()->role == 'D.A.F')DAF @endif
+                                            @if (Auth::user()->role == 'D.P')PROGRAMME @endif
+                                            @if (Auth::user()->role == 'C.P')PROJET @endif
+                                            @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
+                                            @if (Auth::user()->role == 'A.I')AUDIT INTERNE @endif
+                                            @if (Auth::user()->role == 'COMPT1')COMTABILITE @endif
+                                            @if (Auth::user()->role == 'COMPT2')CHEF COMPTABLE @endif
+                                            @if (Auth::user()->role == 'CAISS')CAISSSE @endif
+                                            @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
+                                            @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
+                                            @if (Auth::user()->role == 'MAG')MAGASIN @endif
+                                            @if (Auth::user()->role == 'SECU')SECURITE @endif
+                                        </span>
+                                    </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-lg-3">
+                        <div class="font-14"><span>SIGNATURE</span></div>
+                        <div style="background: #fff;border: 1px solid #ccc;text-align: center;">
+                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', Auth::user()->id)->signature)}}" style="position: relative;width:150px;text-align: center;margin:auto;padding:5px;" />
+                        </div>
+                    </div>
+                  </div>
+                    
                 </div><hr>
                     <div class="container">
                         <div class="hk-row">
@@ -178,6 +188,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                   
                                     <div class="card-body">
                                         <livewire:auth.reset-pass />
                                     </div>

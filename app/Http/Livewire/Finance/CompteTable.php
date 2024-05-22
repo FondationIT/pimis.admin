@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Finance;
 
+use App\Models\Agent;
 use App\Models\Compte;
 use App\Models\Fournisseur;
 use App\Models\Projet;
@@ -29,7 +30,7 @@ class CompteTable extends LivewireDatatable
         if (Auth::user()->role == 'R.H') {
  
             return Compte::query()
-            ->where('type', 4)
+            ->where('type', 2)
             ->orderBy("id", "DESC");
 
         }else if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'LOG2') {
@@ -56,7 +57,7 @@ class CompteTable extends LivewireDatatable
 
         return [
             Column::callback(['reference','id'], function ($reference,$id) {
-                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded">'.$reference.'</a>';
             })->label('Reference'),
 
             Column::name('intitule')
@@ -70,8 +71,8 @@ class CompteTable extends LivewireDatatable
                     return Projet::where('id',$id)->get()[0]->name;
                 }else if($cat == 3){
                     return Fournisseur::where('id',$id)->get()[0]->name;
-                }else if($cat == 4){
-                    return User::where('id',$id)->get()[0]->name;
+                }else if($cat == 2){
+                    return Agent::where('id',$id)->get()[0]->firstname;
                 }
             })->label('Proprietaire'),
 

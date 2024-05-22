@@ -81,9 +81,9 @@ class BpForm extends Component
 
 
         if(Pv::where('da', $this->das[0]->id)->exists()){
-            $x = Pv::where('da', $this->das[0]->id)->get()[0]->fournisseur;
-            $x = Proforma::find($x)->fournisseur;
-            $this->fournisseur = Fournisseur::find($x)->id;
+            $x = $this->bcs[0]->proforma;
+
+            $this->fournisseur = Proforma::find($x)->fournisseur;;
         }else{
             $x = DemAch::where('id', $this->das[0]->id)->get()[0]->eb;
             $x = Et_bes::where('id', $x)->get()[0]->id;
@@ -95,9 +95,9 @@ class BpForm extends Component
         if(Pv::where("da", $this->bcs[0]->da)->exists()){
             $this->pvs = Pv::where("da", $this->bcs[0]->da)->get();
 
-            $this->prof = Proforma::where("id", $this->pvs[0]->fournisseur)->where("da", $this->pvs[0]->da)->get();
+            $this->prof = Proforma::where("id", $this->bcs[0]->proforma)->where("da", $this->pvs[0]->da)->get();
 
-            $this->products = prixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+            //$this->products = prixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
 
             
 
@@ -176,7 +176,7 @@ class BpForm extends Component
         $this->odrs4 = NdOder::where("nd", $this->modelId)->get();
 
         $this->index = $this->modelId;
-        $this->beneficiaire = 1;
+        $this->beneficiaire = 3;
         $this->projet = $this->nds[0]->projet;
         $this->categorie = 4;
         $this->some = NdOder::where('nd',$this->modelId)->selectRaw("prix * quantite as price")->get('price')
@@ -193,11 +193,11 @@ class BpForm extends Component
     public function formBP5($modelId){
         $this->modelId = $modelId;
 
-        $this->nds = RCaisse::where("id", $this->modelId)->get();
+        $this->nds = RCaisse::where("projet", $this->modelId)->get();
 
         $this->index = $this->modelId;
-        $this->beneficiaire = 1;
-        $this->projet = $this->nds[0]->projet;
+        $this->beneficiaire = $this->index;
+        $this->projet = $this->index;
         $this->categorie = 5;
 
     }
@@ -411,6 +411,11 @@ class BpForm extends Component
             $this->reset('state');
             $this->modelId = null;
             $this->dispatchBrowserEvent('formSuccess');
+            $this->emit('bcUpdated');
+            $this->emit('rapportCUpdated');
+            $this->emit('ndUpdated');
+            $this->emit('paieAUpdated');
+            $this->emit('trUpdated');
             $this->emit('bcUpdated');
 
         } catch (\Throwable $th) {

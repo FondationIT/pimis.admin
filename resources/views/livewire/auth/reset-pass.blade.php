@@ -4,6 +4,7 @@
            
             <form wire:submit.prevent='submit'>
                 <p class="display-6 mb-30 text-center">Voulez-vous changer votre mot de passe</p>
+                <p>Non d'utilisateur: {{Auth::user()->email}}</p>
                 <div class="form-group">
                     <input class="form-control @error('password') is-invalid @enderror" name="password" wire:model.defer="state.password" placeholder="Nouveau mot de passe" type="password">
                     @error('password')
