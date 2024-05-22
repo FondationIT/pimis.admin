@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
+use App\Models\Categorie;
 use Livewire\Component;
 use App\Models\Product;
+use App\Models\Price;
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +17,12 @@ use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class ProductsTable extends LivewireDatatable
 {
-    public $model = Product::class;
+    
     public $modelId;
 
     protected $listeners = [
-        'productUpdated'=> '$refresh'
+        'productssUpdated'=> '$refresh',
+        'categorieUpdated'=> '$refresh'
     ];
 
     /**
@@ -35,6 +39,9 @@ class ProductsTable extends LivewireDatatable
         Product::find($this->modelId)->update([
             'active' => 0,
         ]);
+        Article::where('product', $this->modelId)->update([
+            'active' => 0,
+        ]);
     }
 
     public function restoreProduct($modelId){
@@ -44,20 +51,30 @@ class ProductsTable extends LivewireDatatable
         ]);
     }
 
+    public function builder()
+    {
+        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+            return Product::query()->orderBy("id", "DESC");
+        }else {
+            return Product::query()->orderBy("id", "DESC")
+            ->where('active', true);
+        }
+    }
+
     public function columns()
     {
-        if(Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
+        if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
 
             return [
 
-                Column::name('designation')
+                Column::name('name')
                     ->label('Desination'),
 
-                Column::name('unite')
-                    ->label('Unite'),
+                Column::callback(['categorie'], function ($categorie) {
 
-                Column::name('prix')
-                    ->label('prix'),
+                    $categorie= Categorie::where('id', $categorie)->get();
+                    return $categorie[0]->name;
+                })->label('Categorie'),
 
                 BooleanColumn::name('active')
                     ->label('State'),
@@ -72,22 +89,25 @@ class ProductsTable extends LivewireDatatable
                         return '<div class="flex space-x-1 justify-around">'.$edit . $delete .'</div>';
                 })->unsortable(),
             ];
-
         }else{
 
             return [
 
-                Column::name('designation')
+                Column::name('name')
                     ->label('Desination'),
 
-                Column::name('unite')
-                    ->label('Unite'),
+                Column::callback(['categorie'], function ($categorie) {
 
-                Column::name('prix')
-                    ->label('prix'),
+                    $categorie= Categorie::where('id', $categorie)->get();
+                    return $categorie[0]->name;
+                })->label('Categorie'),
+
+                BooleanColumn::name('active')
+                    ->label('State'),
             ];
 
         }
+
 
     }
 }

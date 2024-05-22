@@ -5,6 +5,7 @@ use App\Models\ProductOder;
 use App\Models\Product;
 use App\Models\Et_bes;
 use App\Models\DemAch;
+use App\Models\Price;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -22,8 +23,8 @@ class DaForm extends Component
     ];
     public function formDA($modelId){
         $this->modelId = $modelId;
-        $this->somme  = ProductOder::join('products', 'products.id', '=', 'product_oders.product')
-            ->selectRaw("products.prix * product_oders.quantite as price")
+        $this->somme  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
+            ->selectRaw("prices.prix * product_oders.quantite as price")
             ->where('product_oders.etatBes', $this->modelId)
             ->get('price')
             ->sum('price');
@@ -54,8 +55,8 @@ class DaForm extends Component
             $this->reset('state');
             $this->modelId = null;
             $this->dispatchBrowserEvent('formSuccess');
-            $this->emit('daUpdated');
-            $this->emit('ebUpdated');
+            $this->emit('demAchUpdated');
+            $this->emit('bonReqUpdated');
 
         } catch (\Throwable $th) {
             DB::rollBack();

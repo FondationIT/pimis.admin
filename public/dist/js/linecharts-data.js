@@ -37,11 +37,11 @@ $(document).ready(function(){
         fillOpacity: 0,
 		lineWidth:2,
 		pointFillColors:['#fff'],
-		pointStrokeColors:['#d3a403'],
+		pointStrokeColors:['#528FEB'],
 		behaveLikeLine: true,
 		hideHover: 'auto',
 		gridLineColor: 'transparent',
-		lineColors: ['#d3a403'],
+		lineColors: ['#528FEB'],
 		resize: true,
 		smooth:false,
 		gridTextColor:'#5e7d8a',
@@ -73,8 +73,8 @@ $(document).ready(function(){
 				pointSize:3,
 				lineWidth:2,
 				pointFillColors:['#fff','#fff','#fff'],
-				pointStrokeColors: ['#d3a403','#ababab','#bdbdbd'],
-				lineColors: ['#d3a403','#ababab','#bdbdbd'],
+				pointStrokeColors: ['#528FEB','#ababab','#bdbdbd'],
+				lineColors: ['#528FEB','#ababab','#bdbdbd'],
 			});
 	}
 });

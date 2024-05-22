@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,19 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/home', [App\Http\Controllers\HomeController::class, 'select'])->name('home');
-Route::post('/agentReg', [App\Http\Controllers\Admin\UserController::class, 'create'])->name('agentReg');
-Route::post('/userReg', [App\Http\Controllers\UserController::class, 'create'])->name('userReg');
-Route::post('/bailleurReg', [App\Http\Controllers\BailleurController::class, 'create'])->name('bailleurReg');
-Route::post('/projetReg', [App\Http\Controllers\ProjetController::class, 'create'])->name('projetReg');
-Route::post('/affectationReg', [App\Http\Controllers\AffectationController::class, 'create'])->name('affectationReg');
-Route::post('/categorieReg', [App\Http\Controllers\ProductController::class, 'createCat'])->name('categorieReg');
-Route::post('/productReg', [App\Http\Controllers\ProductController::class, 'createProd'])->name('productReg');
 Route::post('/etBesReg', [App\Http\Controllers\EtatBesoinController::class, 'create'])->name('etBesReg');
+Route::post('/etBesApp', [App\Http\Controllers\EtatBesoinController::class, 'approuve'])->name('etBesApp');
 
-Auth::routes();
+Route::post('/proformaReg', [App\Http\Controllers\EtatBesoinController::class, 'proforma'])->name('proformaReg');
+Route::post('/pvReg', [App\Http\Controllers\EtatBesoinController::class, 'pv'])->name('pvReg');
+Route::post('/pvAttrReg', [App\Http\Controllers\EtatBesoinController::class, 'pvAttr'])->name('pvAttrReg');
+Route::post('/brReg', [App\Http\Controllers\EtatBesoinController::class, 'br'])->name('brReg');
+Route::post('/diReg', [App\Http\Controllers\EtatBesoinController::class, 'di'])->name('diReg');
+Route::post('/ndReg', [App\Http\Controllers\EtatBesoinController::class, 'nd'])->name('ndReg');
+Route::post('/trReg', [App\Http\Controllers\EtatBesoinController::class, 'tr'])->name('trReg');
+Route::post('/msReg', [App\Http\Controllers\EtatBesoinController::class, 'miss'])->name('msReg');
+Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr'])->name('ctrReg');
+Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
+
 
 

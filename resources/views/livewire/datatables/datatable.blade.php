@@ -2,7 +2,7 @@
     @includeIf($beforeTableSlot)
     <div class="relative">
         <div class="flex items-center justify-between mb-0">
-            <div class="flex items-center h-20">
+            <div class="flex items-center h-10">
                 @if($this->searchableColumns()->count())
                     <div class="flex rounded w-96 ">
                         <div class="relative flex-grow focus-within:z-20">
@@ -20,6 +20,11 @@
                         </div>
                     </div>
                 @endif
+                <div class="flex rounded w-8 p-2">
+                    <button wire:click="$set('search', null)" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+                    </button>
+                </div>
             </div>
 
             @if($this->activeFilters)
@@ -65,8 +70,8 @@
                     <div x-data="{ init() {
                         window.livewire.on('startDownload', link => window.open(link, '_blank'))
                         } }" x-init="init">
-                        <button wire:click="export" class="flex items-center px-3 text-xs font-medium tracking-wider text-gray-500 uppercase bg-white border border-green-400 space-x-2 rounded leading-4 hover:bg-gray-200 focus:outline-none"><span>{{ __('Exporter') }}</span>
-                            <x-icons.excel class="m-2" /></button>
+                        <button wire:click="export" class="flex items-center px-2   tracking-wider text-gray-600   border border-green-600 space-x-2 rounded leading-4 hover:bg-gray-300 focus:outline-none"><span>{{ __('Exporter') }}</span>
+                            <x-icons.excel class="m-1.5" /></button>
                     </div>
                 @endif
 
@@ -97,7 +102,7 @@
             </div>
         @endif
 
-        <div wire:loading.class="opacity-50" class="rounded @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg bg-white max-w-screen overflow-x-scroll border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex) rounded-b-none border-b-0 @endif">
+        <div wire:loading.class="opacity-50" class="rounded @unless($complex || $this->hidePagination) rounded-b-none @endunless shadow-lg  max-w-screen overflow-x-scroll border-2 @if($this->activeFilters) border-blue-500 @else border-transparent @endif @if($complex) rounded-b-none border-b-0 @endif">
             <div>
                 <div class="table min-w-full align-middle">
                     @unless($this->hideHeader)
@@ -107,7 +112,7 @@
                                     @include('datatables::header-inline-hide', ['column' => $column, 'sort' => $sort])
                                 @elseif($column['type'] === 'checkbox')
                                     @unless($column['hidden'])
-                                        <div class="flex justify-center table-cell w-32 h-12 px-6 py-4 overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-top border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
+                                        <div class="flex justify-center table-cell w-32 h-12 px-3 py-0 overflow-hidden text-xs font-medium tracking-wider text-left text-gray-500 uppercase align-top border-b border-gray-200 bg-gray-50 leading-4 focus:outline-none">
                                             <div class="px-3 py-1 rounded @if(count($selected)) bg-orange-400 @else bg-gray-200 @endif text-white text-center">
                                                 {{ count($visibleSelected) }}
                                             </div>
@@ -149,7 +154,7 @@
                         @endforeach
                     </div>
                     @foreach($this->results as $row)
-                        <div class="table-row p-1 {{ $this->rowClasses($row, $loop) }}">
+                        <div class="table-row p-0 {{ $this->rowClasses($row, $loop) }}">
                             @foreach($this->columns as $column)
                                 @if($column['hidden'])
                                     @if($hideable === 'inline')
@@ -161,7 +166,7 @@
                                     @include('datatables::label')
                                 @else
 
-                                    <div class="table-cell px-6 py-2 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                    <div class="table-cell px-3 py-0 @unless($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
                                         {!! $row->{$column['name']} !!}
                                     </div>
                                 @endif
@@ -170,11 +175,11 @@
                     @endforeach
 
                     @if ($this->hasSummaryRow())
-                        <div class="table-row p-1">
+                        <div class="table-row p-0">
                             @foreach($this->columns as $column)
                                 @unless($column['hidden'])
                                     @if ($column['summary'])
-                                        <div class="table-cell px-6 py-2 @unless ($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
+                                        <div class="table-cell px-3 py-0 @unless ($column['wrappable']) whitespace-nowrap truncate @endunless @if($column['contentAlign'] === 'right') text-right @elseif($column['contentAlign'] === 'center') text-center @else text-left @endif {{ $this->cellClasses($row, $column) }}">
                                             {{ $this->summarize($column['name']) }}
                                         </div>
                                     @else

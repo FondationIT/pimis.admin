@@ -16,6 +16,7 @@ class ValidEb extends Model
      */
     protected $fillable = [
         'user',
+        'signature',
         'eb',
         'resp',
         'niv',

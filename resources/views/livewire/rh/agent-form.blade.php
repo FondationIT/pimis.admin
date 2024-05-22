@@ -42,19 +42,30 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-12 mb-10">
+                        <div class="col-md-6 mb-10">
                             <label for="service">Service</label>
                             <select class="form-control @error('service') is-invalid @enderror" wire:model.defer="state.service" name="service" placeholder="Service">
                                 <option value=""></option>
-                                <option value="Administration">Administration</option>
-                                <option value="Programme">Programme</option>
-                                <option value="Resources humaines">Resources humaines</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Logistiaue">Logistiaue</option>
-                                <option value="IT">IT</option>
-                                <option value="Audit interne">Audit interne</option>
+                                @foreach ($service as $serv)
+                                    <option value="{{$serv->id}}">{{$serv->name}}</option>
+                                @endforeach
                             </select>
                             @error('service')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-10">
+                            <label for="service">Fonction</label>
+                            <select class="form-control @error('fonction') is-invalid @enderror" wire:model.defer="state.fonction" name="fonction" placeholder="fonction">
+                                <option value=""></option>
+                                <option value="1">Chef de service</option>
+                                <option value="2">Senior</option>
+                                <option value="3">Autre</option>
+                            </select>
+                            @error('fonction')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
@@ -93,7 +104,7 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-md-6 mb-10">
+                        <div class="col-md-5 mb-10">
                             <label for="genre">Genre</label>
                             <select class="form-control @error('genre') is-invalid @enderror" wire:model.defer="state.genre" name="genre" placeholder="Genre">
                                 <option value=""></option>
@@ -107,15 +118,26 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-md-6 mb-10">
+                        <div class="col-md-4 mb-10">
                             <label for="etatcivil">Etat civil</label>
                             <select class="form-control @error('etatcivil') is-invalid @enderror" wire:model.defer="state.etatcivil" name="etatcivil" placeholder="Etat civil">
                                 <option value=""></option>
                                 <option value="Marie(e)">Marie(e)</option>
                                 <option value="Celibataire">Celibataire</option>
                                 <option value="Divorce(e)">Divorce(e)</option>
+                                <option value="Veuf(ve)">Veuf(ve)</option>
                             </select>
                             @error('etatcivil')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-md-3 mb-10">
+                            <label for="etatcivil">Nbre Enfant</label>
+                            <input type="number" step="1" min="0" class="form-control @error('enfant') is-invalid @enderror" wire:model.defer="state.enfant" name="enfant">
+                               
+                            @error('enfant')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
@@ -150,7 +172,7 @@
                             <input type="text" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="Adresse">
                         </div>
                         <div class="col-md-3 mb-10">
-                            <label for="region">Region</label>
+                            <label for="region">Province/Region</label>
                             <input type="text" class="form-control" wire:model.defer="state.region" name="region" placeholder="Region">
                         </div>
                         <div class="col-md-3 mb-10">
@@ -163,6 +185,63 @@
                         <div class="col-md-12 mb-10">
                             <label for="description">Description</label>
                             <textarea class="form-control" wire:model.defer="state.description" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="bus">Abonnement bus</label>
+                            <select class="form-control @error('bus') is-invalid @enderror" wire:model.defer="state.bus" name="bus" placeholder="Etat civil">
+                                <option value=""></option>
+                                <option value="{{1}}">Oui</option>
+                                <option value="{{0}}">Non</option>
+                            </select>
+                            @error('bus')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-10">
+                            <label for="sociale">Caisse sociale</label>
+                            <select class="form-control @error('sociale') is-invalid @enderror" wire:model.defer="state.sociale" name="sociale" placeholder="Etat civil">
+                                <option value=""></option>
+                                <option value="{{1}}">Oui</option>
+                                <option value="{{0}}">Non</option>
+                            </select>
+                            @error('sociale')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <h5>Personne de contact</h5><hr>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-10">
+                            <label for="nom2">Nom complet</label>
+                            
+                            <input type="text" class="form-control @error('nom2') is-invalid @enderror" wire:model.defer="state.nom2" name="nom2" placeholder="Nom complet">
+                            
+                            @error('nom2')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-10">
+                            <label for="phone2">Numero de telephone</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend"><i class="icon-phone"></i></span>
+                                </div>
+                                <input type="text" class="form-control @error('phone2') is-invalid @enderror" wire:model.defer="state.phone2" name="phone2" placeholder="Numero de telephone" aria-describedby="inputGroupPrepend">
+                            </div>
+                            @error('phone2')
+                                <span class="text-red-600" role="alert">
+                                    {{ $message }}
+                                </span>
+                            @enderror
                         </div>
                     </div>
 

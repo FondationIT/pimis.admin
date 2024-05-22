@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('dem_aches', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->string('signature')->constrained()->onDelete('cascade');
-            $table->string('eb')->constrained()->onDelete('cascade');
+            $table->foreignId('signature')->constrained('users');
+            $table->foreignId('eb')->constrained('et_bes');
             $table->float('amount', 20, 2);
             $table->string('motif');
             $table->text('comment')->nullable();

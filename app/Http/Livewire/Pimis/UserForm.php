@@ -85,7 +85,10 @@ class UserForm extends Component
                 $agents = Agent::where('id', $this->state['agent'])->get();
                 //$image_name= $agents[0]->matricule;
                 $image_name = $this->state['photo']->store('img/signatures','public');
+                $reference = 'US-'.substr($agents[0]->lastname, 0, 1).''.$this->state['agent'].''.rand(100000,999999).''.substr($agents[0]->firstname, 0, 1);
+
                 User::create([
+                    'reference' => $reference,
                     'name' => $agents[0]->firstname.' '.$agents[0]->lastname,
                     'agent' => $this->state['agent'],
                     'email' => $this->state['email'],
@@ -93,6 +96,8 @@ class UserForm extends Component
                     'signature' => $image_name,
                     'password' => Hash::make('password'),
                 ]);
+
+
 
                 DB::commit();
                 $this->reset('state');

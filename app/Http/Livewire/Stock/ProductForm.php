@@ -29,11 +29,8 @@ class ProductForm extends Component
         $this->modelId = $modelId;
 
         $model = Product::find($this->modelId);
-        $this->state['designation'] = $model->designation;
+        $this->state['name'] = $model->name;
         $this->state['categorie'] = $model->categorie;
-        $this->state['model'] = $model->model;
-        $this->state['unite'] = $model->unite;
-        $this->state['prix'] = $model->prix;
         $this->state['description'] = $model->description;
     }
 
@@ -42,10 +39,8 @@ class ProductForm extends Component
     {
 
         $validator = Validator::make($this->state, [
-            'designation' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'categorie' => ['required', 'string', 'max:255'],
-            'model' => ['required', 'string', 'max:255'],
-            'unite' => ['required', 'string', 'max:255'],
         ])->validate();
 
         if ($this->modelId != null) {
@@ -55,17 +50,15 @@ class ProductForm extends Component
 
 
                 Product::find($this->modelId)->update([
-                    'designation' => $this->state['designation'],
+                    'name' => $this->state['name'],
                     'categorie' => $this->state['categorie'],
-                    'model' => $this->state['model'],
-                    'unite' => $this->state['unite'],
-                    'prix' => $this->state['prix'],
                     'description' => $this->state['description'],
                 ]);
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();
@@ -76,19 +69,19 @@ class ProductForm extends Component
             DB::beginTransaction();
             try {
 
+                $reference = 'PRD-'.substr($this->state['name'], 0, 1).''.$this->state['categorie'].''.Auth::user()->id.''.rand(100000,999999);
                 $data_create = Product::create([
-                    'designation' => $this->state['designation'],
+                    'reference' => $reference,
+                    'name' => $this->state['name'],
                     'categorie' => $this->state['categorie'],
-                    'model' => $this->state['model'],
-                    'unite' => $this->state['unite'],
-                    'prix' => $this->state['prix'],
                     'description' => $this->state['description'],
                     'signature' => Auth::user()->id,
                 ]);
                 DB::commit();
                 $this->reset('state');
                 $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('productUpdated');
+                $this->emit('categorieUpdated');
+                $this->emit('productssUpdated');
 
             } catch (\Throwable $th) {
                 DB::rollBack();

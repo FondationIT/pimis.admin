@@ -13,18 +13,17 @@
                 <div class="modal-body" id="printDa">
                     <div class="row">
 
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" style="width: 200px;position: relative;text-align: center" />
-                        </div>
-
-                        <div class="col-lg-6 fix" style="text-align: center">
+                        <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
                                 <h3>DEMMANDE D'ACHAT</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($ebs)
+                                <p class="">N<sup>o</sup> : <b>@if ($ebs)
                                     {{$das[0]->reference}}
                                 @endif</b></p>
                             </div>
+                        </div>
+
+                        <div class="col-lg-3 fix" style="text-align: center">
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
@@ -34,15 +33,14 @@
 
                     <hr class="mbtm">
 
-                    <div class="row">
+                    <div class="row" >
                         @if ($ebs)
                             <div class="col-lg-6" style="text-align: left">
                                 <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
-                                <p>Compte : <strong></strong></p>
-                                <p>Motif : </p>
-                                <p>Ligne : </p>
+                                <p>Motif : <strong>{{$das[0]->motif}}</strong></p>
+                               
                             </div>
-                            <div class="col-lg-6" style="text-align: right">
+                            <div class="col-lg-6 droite" style="text-align: right">
                                 <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
                                 <p>Date : <strong>{{$das[0]->created_at->format('d/m/Y')}}</strong></p>
                             </div>
@@ -53,16 +51,43 @@
                     <div class="row">
 
                         <div class="col-lg-12" style="text-align: center">
-                            <table class="table table-striped table-border mb-0">
+                            <table class="table table-striped table-border mb-0 prodT">
                                 <tr>
-                                    <th><strong>N<sup>o</sup></strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
+                                    <th><strong>N<sup>o</sup></strong></th><th><strong>ligne</strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
                                 </tr>
                                 @if ($products)
                                     @foreach ($products as $prod)
                                         <tr>
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', $prod->product)->designation.' '.$prod->description}}</td><td>{{$prod->quantite}}</td><td>{{ App\Models\Product::firstWhere('id', $prod->product)->unite}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix}}</td><td>$ {{ App\Models\Product::firstWhere('id', $prod->product)->prix * $prod->quantite }}</td>
+
+                                            <td>{{$i++}}</td>
+                                            <td>
+                                                @if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)
+                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                @elseif (Auth::user()->role == 'COMPT2' && $das[0]->niv3 == false)
+                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                @else<a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}">{{ $prod->ligne }}<a>@endif
+                                            </td>
+                                            <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
+
+                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
+
+                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+
+                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+
+                                            
                                         </tr>
+
                                     @endforeach
+                                    <tr>
+                                        <th><strong>Total</strong></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th><strong>$ {{$some}}</strong></th>
+                                    </tr>
 
                                 @endif
                             </table>
@@ -77,7 +102,7 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Demmandeur</strong></th><th><strong>Finance</strong></th><th><strong>Logistique</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
+                                    <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -92,7 +117,7 @@
                                     </td>
 
                                     <td>
-                                        <span>Comptable</span><br><br>
+                                        <span>Logistique</span><br><br>
                                         @if (isset($valid1[0]) && !empty($valid1[0]))
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
@@ -103,7 +128,7 @@
                                     </td>
 
                                     <td>
-                                        <span>Logistique</span><br><br>
+                                        <span>Comptable</span><br><br>
                                         @if (isset($valid2[0]) && !empty($valid2[0]))
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
                                                 Le {{$valid2[0]->updated_at->format('d/m/Y')}}
@@ -118,7 +143,7 @@
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
                                             Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                         @endif
                                     </td>
@@ -137,6 +162,19 @@
 
                         </div>
                     </div>
+
+
+                    <footer >
+                        <hr>
+                        <p>
+                            <strong>Fondation Panzi</strong><br>
+                            Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
+                            Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
+                            <a href="fondationpanzirdc.org">panzi.org</a>
+                            <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
+
+                        </p>
+                    </footer>
 
 
 

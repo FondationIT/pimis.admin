@@ -11,16 +11,20 @@ function handleSectionTrigger (event) {
 
   // Highlight clicked button and show view
   const btnAct = `${event.target.dataset.active}`
-  document.getElementById(btnAct).classList.add('active')
 
+  if(document.getElementById(btnAct)){
+    document.getElementById(btnAct).classList.add('active')
+  }
   const btnAct2 = `${event.target.dataset.open}`
-  if (btnAct2) {
+  if (document.getElementById(btnAct2)) {
     document.getElementById(btnAct2).classList.add('active')
   }
 
   // Display the current section
   const sectionId = `${event.target.dataset.section}-section`
-  document.getElementById(sectionId).classList.add('is-shown')
+  if(document.getElementById(sectionId)){
+    document.getElementById(sectionId).classList.add('is-shown')
+  }
 
   // Save currently active button in localStorage
   const buttonId = event.target.getAttribute('id')

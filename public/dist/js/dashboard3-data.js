@@ -10,7 +10,7 @@ $(document).ready(function() {
 	}
 	if( $('#pie_chart_1').length > 0 ){
 		$('#pie_chart_1').easyPieChart({
-			barColor : '#d3a403',
+			barColor : '#528FEB',
 			lineWidth: 3,
 			animate: 3000,
 			size:	50,
@@ -33,8 +33,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 	if( $('#sparkline_5').length > 0 ){
@@ -45,8 +45,8 @@ var sparklineLogin = function() {
 			barWidth: '5',
 			resize: true,
 			barSpacing: '5',
-			barColor: '#d3a403',
-			highlightSpotColor: '#d3a403'
+			barColor: '#528FEB',
+			highlightSpotColor: '#528FEB'
 		});
 	}
 }
@@ -133,7 +133,7 @@ var echartsConfig = function() {
 						shadowBlur: 5,
 						shadowColor: 'rgba(0, 0, 0, 0.5)',
 						shadowOffsetY: 5,
-						color: '#d3a403'
+						color: '#528FEB'
 					}
 				}
 			}, {
@@ -244,7 +244,7 @@ var echartsConfig = function() {
 						shadowBlur: 5,
 						shadowColor: 'rgba(0, 0, 0, 0.5)',
 						shadowOffsetY: 5,
-						color: '#d3a403'
+						color: '#528FEB'
 					}
 				}
 			}, {
@@ -351,7 +351,7 @@ var echartsConfig = function() {
 						shadowBlur: 5,
 						shadowColor: 'rgba(0, 0, 0, 0.5)',
 						shadowOffsetY: 5,
-						color: '#d3a403'
+						color: '#528FEB'
 					}
 				}
 			}, {

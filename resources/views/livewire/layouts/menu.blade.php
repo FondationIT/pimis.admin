@@ -4,12 +4,41 @@
 
         <a id="navbar_toggle_btn" class="navbar-toggle-btn nav-link-hover" href="javascript:void(0);"><span class="feather-icon"><i data-feather="menu"></i></span></a>
 
-        <a class="navbar-brand font-weight-700" href="{{url('admin')}}">
+        <a class="navbar-brand font-weight-700" href="{{url('/')}}">
 
-            <img src="img/logo/logo.png" style="height: 40px;position: relative;" />
-                -PIMIS
+            <img src="img/logo/logoP.png" style="height: 40px;position: relative;" />
+               
         </a>
         <ul class="navbar-nav hk-navbar-content">
+
+            <li class="nav-item dropdown dropdown-notifications">
+                <h4><span class="badge badge-danger">1 USD | {{ App\Models\Taux::firstWhere('active', true)->taux}} CDF</span></h4>
+            </li>   
+
+            <li class="nav-item dropdown dropdown-notifications">
+                <a class="nav-link nav-link-hover dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><span class="feather-icon"><i
+                            data-feather="mail"></i></span><span class="badge-wrap"id="countmess" ></span></a>
+                <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                    <h6 class="dropdown-header">Messages <a class="" href="#" id="button-msg" data-active="msg" wire:click="$emit('msgUpdated')" data-section="msg">Voir tout</a></h6>
+                    <div class="notifications-nicescroll-bar" id="outputmess" >
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown dropdown-notifications">
+                <a class="nav-link nav-link-hover dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"><span class="feather-icon"><i
+                            data-feather="bell"></i></span><span class="badge-wrap" id="countnot"></span></a>
+                <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                    <h6 class="dropdown-header">Notifications <a href="javascript:void(0);" class="">Voir tout</a></h6>
+                    <div class="notifications-nicescroll-bar" id="outputnot">
+
+                    </div>
+                </div>
+            </li>
+
 
             <li class="nav-item dropdown dropdown-authentication">
                 <a class="nav-link dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
@@ -29,14 +58,12 @@
 
                 <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="flipInX" data-dropdown-out="flipOutX">
 
-                    <a class="dropdown-item" href="{{ url('users/1/edit') }}"><i class="dropdown-icon zmdi zmdi-account"></i><span>
-                            Profil</span></a>
-                    <a class="dropdown-item" href="{{ url('users') }}"><i class="dropdown-icon zmdi zmdi-card"></i><span>
-                            Balance</span></a>
+                    <a class="dropdown-item" href="#" id="button-profil" data-active="profil" wire:click="$emit('profilUpdated')" data-section="profil"><i class="dropdown-icon zmdi zmdi-account"></i>
+                            Profile</a>
 
                     <div class="dropdown-divider"></div>
                     <div class="sub-dropdown-menu show-on-hover">
-                        <a href="#" class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>
+                        <a class="dropdown-toggle dropdown-item no-caret"><i class="zmdi zmdi-check text-success"></i>Online</a>
                     </div>
 
                     <div class="dropdown-divider"></div>
@@ -49,30 +76,6 @@
                         @csrf
                     </form>
 
-                </div>
-            </li>
-
-            <li class="nav-item dropdown dropdown-notifications">
-                <a class="nav-link nav-link-hover dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><span class="feather-icon"><i
-                            data-feather="mail"></i></span><span class="badge-wrap"id="countmess" ></span></a>
-                <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                    <h6 class="dropdown-header">Messages <a href="javascript:void(0);" class="">View all</a></h6>
-                    <div class="notifications-nicescroll-bar" id="outputmess" >
-
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown dropdown-notifications">
-                <a class="nav-link nav-link-hover dropdown-toggle no-caret" href="#" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false"><span class="feather-icon"><i
-                            data-feather="bell"></i></span><span class="badge-wrap" id="countnot"></span></a>
-                <div class="dropdown-menu dropdown-menu-right" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
-                    <h6 class="dropdown-header">Notifications <a href="javascript:void(0);" class="">View all</a></h6>
-                    <div class="notifications-nicescroll-bar" id="outputnot">
-
-                    </div>
                 </div>
             </li>
 

@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Stock;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
 use App\Models\DemAch;
+use App\Models\Ligne;
+use App\Models\Price;
 use App\Models\ValidDa;
 
 use Livewire\Component;
@@ -14,9 +16,19 @@ class DaPrint extends Component
     public $products;
     public $ebs;
     public $das;
+    public $some;
+    public $bailleur;
     public $i = 1;
 
+    public $valid1;
+    public $valid2;
+    public $valid3;
+    public $valid4;
+
+    
+
     protected $listeners = [
+        'printDaRef'=> '$refresh',
         'printDa'
     ];
 
@@ -30,6 +42,22 @@ class DaPrint extends Component
         $this->valid2 = ValidDa::where("da", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidDa::where("da", $this->modelId)->where("niv", 3)->get();
         $this->valid4 = ValidDa::where("da", $this->modelId)->where("niv", 4)->get();
+        
+
+
+        $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
+            ->selectRaw("prices.prix * product_oders.quantite as price")
+            ->where('product_oders.etatBes', $this->das[0]->eb)
+            ->whereDate('prices.debut','<=', $this->das[0]->created_at)->whereDate('prices.fin','>=', $this->das[0]->created_at)
+            ->get('price')
+            ->sum('price');
+    }
+
+    public function ligneArt($modelId){
+        
+        $this->modelId = $modelId;
+        $this->emit('ligneArt',$this->modelId );
+
     }
 
     public function render()

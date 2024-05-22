@@ -16,8 +16,10 @@ class ProductOder extends Model
      */
     protected $fillable = [
         'product',
+        'reference',
         'etatBes',
         'quantite',
+        'ligne',
         'description',
         'active',
     ];

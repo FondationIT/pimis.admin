@@ -2,78 +2,31 @@
 <html>
 <head>
     <x-meta></x-meta>
-    <style>
-
-
-        svg {
-        max-width: 100%;
-        }
-
-        @-webkit-keyframes logo_kinetics {
-        to {
-            transform: rotate(360deg);
-        }
-        }
-
-        @keyframes logo_kinetics {
-        to {
-            transform: rotate(360deg);
-        }
-        }
-        .e-albania {
-        height: 100px;
-        position: relative;
-        width: 100px;
-        }
-        .e-albania svg:not(#orbit) {
-        -webkit-animation: logo_kinetics 2.5s linear infinite normal forwards;
-                animation: logo_kinetics 2.5s linear infinite normal forwards;
-        position: absolute;
-        top: -50%;
-        left: 0;
-        transform-origin: bottom center;
-        }
-        .login-logo svg:not(#orbit) {
-        -webkit-animation: logo_kinetics 2.5s linear infinite normal forwards;
-                animation: logo_kinetics 2.5s linear infinite normal forwards;
-        position: absolute;
-        top: -100%;
-        left: 0;
-        transform-origin: bottom center;
-        }
-
-        .logo-title {
-        font-family: "Helvetica Neue", Helvetica, sans-serif;
-        font-weight: normal;
-        font-size: 26px;
-        margin-top: 4px;
-        margin-bottom: 4px;
-        color:#d3a403;
-        }
-
-    </style>
+   
 
 </head>
 <body class="hold-transition login-page">
 
-    <div class="e-albania">
-        <img class="profile-user-img img-fluid img-circle"
-               src="{{asset('img/logo/logo.png')}}"
-               alt="User profile picture">
-        <svg viewBox="0 0 120 120" id=electron>
-          <circle fill=#d3a403 cx=10 cy=90 r="10"/>
-        </svg>
-      </div>
+   
 
-      <h1 class="logo-title">pimis</h1>
+
 
 
 <div class="container">
+
+    <div class="login-logo">
+        <div class="text-center">
+          <img class="profile-user-img img-fluid img-circle"
+               src="{{asset('img/logo/logo.png')}}"
+               alt="User profile picture">
+        </div>
+        <h3 style="color:#9e830a">PIMIS Admin</h3>
+    </div>
     <div class="row justify-content-center">
 
         <div style="width:350px;">
             <div class="card">
-                <div class="card-header">{{ __('Connexion') }}</div>
+                <div class="card-header">{{ __('CONNEXION') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -130,7 +83,7 @@
                 </div>
             </div>
             @if (Route::has('password.request'))
-                <a class="btn btn-link text-center" style="color: #1a1919" href="{{ route('password.request') }}">
+                <a class="btn btn-link text-center" style="color: #888" href="{{ route('password.request') }}">
                     {{ __('Mot de passe oublié?') }}
                 </a>
             @endif

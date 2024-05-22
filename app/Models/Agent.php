@@ -29,10 +29,13 @@ class Agent extends Authenticatable
         'birthdate',
         'adress',
         'service',
+        'fonction',
         'country',
         'region',
         'description',
         'etatcivil',
+        'nom2',
+        'contact',
         'active',
         'signature',
     ];
@@ -46,4 +49,9 @@ class Agent extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function users()
+    {
+        return $this->hasMany('App\User');
+    }
 }

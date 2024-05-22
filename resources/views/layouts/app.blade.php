@@ -1,6 +1,6 @@
 
   {{-- entete de page  --}}
-  @include('layouts.head');
+  @include('layouts.head')
 {{-- fin entete de page  --}}
 
 
@@ -27,13 +27,13 @@
     {{-- fin menu verital  --}}
 
     <!-- Main Content -->
-    <div class="hk-pg-wrapper">
+    <div class="hk-pg-wrapper pb-0">
 
         @yield('content')
 
     </div>
   </div>
   {{-- entete de page  --}}
-      @include('layouts.script');
+      @include('layouts.script')
     {{-- fin entete de page  --}}
 </body>

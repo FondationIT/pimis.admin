@@ -161,7 +161,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_3').length > 0 ){
 		var eChart_3 = echarts.init(document.getElementById('e_chart_3'));
 		var option2 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#528FEB'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -268,7 +268,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_4').length > 0 ){
 		var eChart_4 = echarts.init(document.getElementById('e_chart_4'));
 		var option3 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#528FEB'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -376,7 +376,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_5').length > 0 ){
 		var eChart_5 = echarts.init(document.getElementById('e_chart_5'));
 		var option4 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#528FEB'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',
@@ -494,7 +494,7 @@ var echartsConfig = function() {
 	if( $('#e_chart_6').length > 0 ){
 		var eChart_6 = echarts.init(document.getElementById('e_chart_6'));
 		var option5 = {
-			color: ['#bdbdbd', '#e2e2e2','#cecece','#d3a403'],
+			color: ['#bdbdbd', '#e2e2e2','#cecece','#528FEB'],
 			tooltip: {
 				show: true,
 				trigger: 'axis',

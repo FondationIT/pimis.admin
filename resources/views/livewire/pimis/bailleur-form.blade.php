@@ -51,12 +51,6 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="col-md-12 mb-10">
-                            <label for="adresse">Adresse</label>
-                            <input type="text" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="Adresse">
-                        </div>
-                    </div>
 
                     <div class="form-row">
                         <div class="col-md-12 mb-10">
@@ -64,10 +58,20 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-10">
 
-                                De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                De <input type="number" min="1" step=0.01 class="form-control @error('min1') is-invalid @enderror" wire:model.defer="state.min1" name="min1" placeholder="$">
+                                @error('min1')
+                                    <span class="text-red-600" role="alert" >
+                                        {{ $message }}
+                                    </span>
+                                @enderror
                                 </div>
                                 <div class="col-md-6 mb-10">
-                                A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                A <input type="number" min="1" step=0.01 class="form-control @error('max1') is-invalid @enderror" wire:model.defer="state.max1" name="max1" placeholder="$">
+                                @error('max1')
+                                    <span class="text-red-600" role="alert" >
+                                        {{ $message }}
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                         </div>
@@ -79,10 +83,20 @@
                             <div class="form-row">
                                 <div class="col-md-6 mb-10">
 
-                                   De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                   De <input type="number"min="1" step=0.01 class="form-control @error('min2') is-invalid @enderror" wire:model.defer="state.min2" name="min2" placeholder="$">
+                                   @error('min2')
+                                        <span class="text-red-600" role="alert" >
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6 mb-10">
-                                   A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                   A <input type="number" min="1" step=0.01 class="form-control @error('max2') is-invalid @enderror" wire:model.defer="state.max2" name="max2" placeholder="$">
+                                   @error('max2')
+                                        <span class="text-red-600" role="alert" >
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -94,10 +108,20 @@
 
                             <div class="form-row">
                                 <div class="col-md-6 mb-10">
-                                   De <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                    De <input type="number" min="1" step=0.01 class="form-control @error('min3') is-invalid @enderror" wire:model.defer="state.min3" name="min3" placeholder="$">
+                                   @error('min3')
+                                    <span class="text-red-600" role="alert" >
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                                 <div class="col-md-6 mb-10">
-                                   A <input type="number" class="form-control" wire:model.defer="state.adresse" name="adresse" placeholder="$">
+                                    A <input type="number" min="1" step=0.01 class="form-control @error('max3') is-invalid @enderror" wire:model.defer="state.max3" name="max3" placeholder="$">
+                                   @error('max3')
+                                    <span class="text-red-600" role="alert" >
+                                        {{ $message }}
+                                    </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\Article;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Categorie;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\NumberColumn;
@@ -14,11 +16,12 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class CategoriesTable extends LivewireDatatable
 {
-    public $model = Categorie::class;
+   
     public $modelId;
 
     protected $listeners = [
-        'categorieUpdated'=> '$refresh'
+        'categorieUpdated'=> '$refresh',
+        'productssUpdated'=> '$refresh'
     ];
 
     /**
@@ -35,10 +38,17 @@ class CategoriesTable extends LivewireDatatable
         Categorie::find($this->modelId)->update([
             'active' => 0,
         ]);
+        $prod = Product::where('categorie', $this->modelId)->get();
         Product::where('categorie', $this->modelId)->update([
             'active' => 0,
         ]);
-        $this->emit('productUpdated');
+        
+        foreach ($prod as $prod) {
+            Article::where('product', $prod->id)->update([
+                'active' => 0,
+            ]);
+        }
+        $this->emit('productssUpdated');
     }
 
     public function restoreCategorie($modelId){
@@ -49,26 +59,49 @@ class CategoriesTable extends LivewireDatatable
         Product::where('categorie',$this->modelId)->update([
             'active' => 1,
         ]);
-        $this->emit('productUpdated');
+        $this->emit('productssUpdated');
     }
+
+
+    public function builder()
+    {
+        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+            return Categorie::query()->orderBy("id", "DESC");
+        }else {
+            return Categorie::query()->orderBy("id", "DESC")
+            ->where('active', true);
+        }
+    }
+
+
     public function columns()
     {
-        return [
-            Column::name('name')
-                ->label('Name'),
+        if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
+            return [
+                Column::name('name')
+                    ->label('Name'),
 
-            BooleanColumn::name('active')
-                ->label('State'),
+                BooleanColumn::name('active')
+                    ->label('State'),
 
-            Column::callback(['id','active'], function ($id,$active) {
+                Column::callback(['id','active'], function ($id,$active) {
 
-                $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteCategorie(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
-                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nCategorieModalForms"><i class="icon-pencil"></i></a>';
-                if ($active == false) {
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreCategorie(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
-                }
-                    return '<div class="flex space-x-1 justify-around">'.$edit . $delete .'</div>';
-            })->unsortable(),
-        ];
+                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteCategorie(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
+                    $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nCategorieModalForms"><i class="icon-pencil"></i></a>';
+                    if ($active == false) {
+                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreCategorie(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
+                    }
+                        return '<div class="flex space-x-1 justify-around">'.$edit . $delete .'</div>';
+                })->unsortable(),
+            ];
+        }else {
+            return [
+                Column::name('name')
+                    ->label('Name'),
+
+                BooleanColumn::name('active')
+                    ->label('State'),
+            ];
+        }
     }
 }

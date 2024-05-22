@@ -11,8 +11,8 @@
           <img class="profile-user-img img-fluid img-circle"
                src="{{asset('img/logo/logo.png')}}"
                alt="User profile picture">
-        </div><br>
-        <a href=""><b style="color:#ff5e00">PIMIS</b></a>
+        </div>
+        <h3 style="color:#9e830a">PIMIS Admin</h3>
     </div>
     <div class="row justify-content-center">
 
