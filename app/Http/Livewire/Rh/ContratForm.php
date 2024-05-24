@@ -15,7 +15,7 @@ class ContratForm extends Component
     {
         return view('livewire.rh.contrat-form',
         [
-            'agent' => Agent::where("active", "1")->orderBy("id", "DESC")->get(),
+            'agent' => Agent::where("active", "1")->where('id','!=',3394)->orderBy("id", "DESC")->get(),
             'projet' => Projet::where("active", "1")->where("id", "!=", "3")->orderBy("id", "DESC")->get(),
             'projets' => Projet::where("active", "1")->orderBy("id", "DESC")->get(),
 

@@ -118,7 +118,7 @@ class AffectationsForm extends Component
     public function render()
     {
         return view('livewire.rh.affectations-form',[
-            'agents' => Agent::where("active", "1")->orderBy("id", "DESC")->get(),
+            'agents' => Agent::where("active", "1")->where('id','!=',3394)->orderBy("id", "DESC")->get(),
             'projets' => Projet::where("active", "1")->orderBy("id", "DESC")->get(),
         ]);
     }

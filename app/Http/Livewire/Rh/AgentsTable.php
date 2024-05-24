@@ -52,13 +52,13 @@ class AgentsTable extends LivewireDatatable
 
     public function builder()
     {
-        if (Auth::user()->role == 'R.H' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'S.E' || Auth::user()->role == 'Sup') {
+        if (Auth::user()->role == 'R.H' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'S.E' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup') {
 
-            return Agent::query()->orderBy("id", "DESC");
+            return Agent::query()->where('id','!=',3394);
         }else{
             if (Agent::firstWhere('id', Auth::user()->agent)->fonction == 1) {
 
-                return Agent::query()->where('service', Agent::firstWhere('id', Auth::user()->agent)->service)->orderBy("id", "DESC");
+                return Agent::query()->where('service', Agent::firstWhere('id', Auth::user()->agent)->service)->where('active',true);
             }
         }
     }
@@ -66,32 +66,31 @@ class AgentsTable extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup'){
+        if(Auth::user()->role == 'R.H' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
 
             return [
-                Column::callback(['firstname','lastname','middlename'], function ($f,$l,$m) {
+                Column::callback(['firstname','lastname'], function ($f,$l) {
                     return 
-                    '<div class="media align-items-center">
-                        <div class="d-flex media-img-wrap mr-15">
+                    '
                             <div class="avatar avatar-xs">
                                 <span class="avatar-text avatar-text-inv-pink rounded-circle"><span class="initial-wrap"><span>'.substr($f, 0, 1).substr($l, 0, 1).'</span></span>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="media-body">
-                            <span class="d-block text-dark text-capitalize text-truncate mw-150p">'.$f.' '.$l.' '.$m.'</span>
-                        </div>
-                    </div>';
-                })->label('Name'),
+                            </div>';
+                })->label('img'),
+
+                Column::callback(['firstname','lastname','middlename'], function ($f,$l,$m) {
+                    return $f.' '.$l.' '.$m;
+                })->label('Nom')->searchable(),
+
 
                 Column::name('matricule')
-                    ->label('Matricule'),
+                    ->label('Matricule')->searchable(),
 
                 Column::name('phone')
                     ->label('Phone'),
 
                 Column::name('email')
-                    ->label('Email'),
+                    ->label('Email')->searchable(),
 
                 BooleanColumn::name('active')
                     ->label('State'),
@@ -100,12 +99,17 @@ class AgentsTable extends LivewireDatatable
 
                     $aff = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="vue(' . $id . ')" data-toggle="modal" data-target="#aAgentModalForms"><i class="icon-eye"></i></a>';
 
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAgent(' . $id . ')" text-red-700><i class="icon-trash"></i></a>';
+                    if(Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup'){
+                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAgent(' . $id . ')" text-red-700><i class="icon-trash"></i></a>';
 
-                    $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nAgentModalForms"><i class="icon-pencil"></i></a>';
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nAgentModalForms"><i class="icon-pencil"></i></a>';
 
-                    if ($active == false) {
-                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreAgent(' . $id . ')"><i class="icon-action-undo"></i></a>';
+                        if ($active == false) {
+                            $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreAgent(' . $id . ')"><i class="icon-action-undo"></i></a>';
+                        }
+                    }else{
+                        $delete = '';
+                        $edit = '';
                     }
                         return '<div class="flex space-x-1 justify-around">'.$aff .$edit . $delete .'</div>';
                 })->unsortable(),
@@ -114,27 +118,28 @@ class AgentsTable extends LivewireDatatable
         }else{
            
             return [
+                Column::callback(['firstname','lastname'], function ($f,$l) {
+                    return 
+                    '
+                            <div class="avatar avatar-xs">
+                                <span class="avatar-text avatar-text-inv-pink rounded-circle"><span class="initial-wrap"><span>'.substr($f, 0, 1).substr($l, 0, 1).'</span></span>
+                                </span>
+                            </div>';
+                })->label('img'),
+
                 Column::callback(['firstname','lastname','middlename'], function ($f,$l,$m) {
                     return $f.' '.$l.' '.$m;
-                })->label('Name'),
+                })->label('Nom')->searchable(),
+
 
                 Column::name('matricule')
-                    ->label('Matricule'),
-
+                    ->label('Matricule')->searchable(),
 
                 Column::name('phone')
                     ->label('Phone'),
-                
-                Column::callback(['fonction'], function ($f) {
-                        if($f==1){
-                            return 'Responable de service';
-                        }elseif($f==2){
-                            return 'Agent senior';
-                        }else{
-                            return 'Agent';
-                        }
-                    })->label('Fonction'),
 
+                Column::name('email')
+                    ->label('Email')->searchable(),
 
                 BooleanColumn::name('active')
                     ->label('State'),

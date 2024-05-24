@@ -15,7 +15,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 class UsersTable extends LivewireDatatable
 {
 
-    public $model = User::class;
+    //public $model = User::class;
     public $modelId;
 
     protected $listeners = [
@@ -45,17 +45,22 @@ class UsersTable extends LivewireDatatable
         ]);
     }
 
+    public function builder()
+    {
+        return User::query()->where('id','!=',2345);
+    }
+
     public function columns()
     {
         return [
             Column::name('name')
-                ->label('Name'),
+                ->label('Name')->searchable(),
 
             Column::name('email')
-                ->label('Username'),
+                ->label('Username')->searchable(),
 
             Column::name('role')
-                ->label('Role'),
+                ->label('Role')->searchable(),
 
             BooleanColumn::name('active')
                 ->label('State'),

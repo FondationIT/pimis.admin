@@ -167,8 +167,6 @@
        <!-- Main content -->
        <!-- Row -->
        <livewire:pimis.users-table
-        model="App\Models\User"
-        searchable="name"
         exportable
         />
     </div>

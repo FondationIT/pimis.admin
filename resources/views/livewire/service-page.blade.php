@@ -27,8 +27,6 @@
            <!-- Main content -->
            <!-- Row -->
                 <livewire:rh.agents-table
-                model="App\Models\Agent"
-                searchable="firstname, email, matricule"
                 exportable
                 />
 
@@ -62,8 +60,6 @@
                <!-- Main content -->
                <!-- Row -->
                <livewire:rh.affectations-table
-                model="App\Models\Affectation"
-                searchable="agent, projet, lieu"
                 exportable
                 />
                <!-- /Row -->
@@ -136,7 +132,9 @@
 
                <!-- Main content -->
                <!-- Row -->
-               
+               <livewire:rh.om-table
+                exportable
+                />
                <!-- /Row -->
 
            </div>
