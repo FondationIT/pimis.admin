@@ -13,7 +13,7 @@
                 <form  wire:submit.prevent='submit' >
                   <div class="modal-body">
 
-                      <div hidden>{{$modelId}}</div>
+                      
 
                       <div class="form-row">
                           <div class="col-md-12 mb-10">
@@ -60,7 +60,7 @@
                               <option value="2">Appuis Projet</option>
 
                             </select>
-                            @error('projet')
+                            @error('cath')
                               <span class="text-red-600" role="alert">
                                   {{ $message }}
                               </span>

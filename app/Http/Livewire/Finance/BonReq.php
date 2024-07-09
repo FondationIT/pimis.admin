@@ -164,7 +164,75 @@ class BonReq extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2'){
+        if(Auth::user()->role == 'COMPT1'){
+            return [
+
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
+                })->label('Reference'),
+
+                Column::callback(['projet'], function ($projet) {
+                    return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
+                })->label('Projet'),
+
+                Column::name('created_at')
+                    ->label('Date'),
+
+                Column::callback(['agent'], function ($agent) {
+                    return User::find($agent)->name;
+                })->label('Agent'),
+
+                Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
+
+                    if ($active == true && $niv1 == true && $niv2 == true) {
+                        $delete = '<span class="badge badge-success">Approuvé</span>';
+                    }elseif($active == false){
+                        $delete = '<span class="badge badge-danger">Refusé</span>';
+                    }else{
+                        $delete = '<span class="badge badge-info">En attente</span>';
+                    }
+                        return $delete ;
+                })->unsortable()->label('Etat'),
+
+                Column::callback(['id','active','niv1','niv2','projet'], function ($id,$active,$niv1,$niv2,$projet) {
+
+                    if($projet == 3){
+
+                        if ($active == true && $niv1 == true && $niv2 == true) {
+
+                            $edit = '';
+                            $edit2 = '';
+                        }elseif($active == false){
+                            $edit = '';
+                            $edit2 ='';
+                        }else{
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="cApprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+    
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        }
+
+                    }else{
+                    
+                        if ($active == true && $niv1 == true && $niv2 == true) {
+                            $edit = '';
+                            $edit2 = '';
+                        }elseif($active == false){
+                            $edit = '';
+                            $edit2 ='';
+                        }elseif($niv2 == false && $niv1 == true && $active == true){
+                            $edit = '';
+                            $edit2 ='';
+                        }else{
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click="apprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        }
+                    }
+
+                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
+                })->unsortable(),
+            ];
+        }if(Auth::user()->role == 'COMPT2'){
             return [
 
                 Column::callback(['reference','id'], function ($reference,$id) {

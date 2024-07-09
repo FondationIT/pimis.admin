@@ -100,7 +100,7 @@
       <!-- Breadcrumb -->
       <nav class="hk-breadcrumb" aria-label="breadcrumb">
           <ol class="breadcrumb breadcrumb-light bg-transparent">
-              <li class="breadcrumb-item"><a href="#">Agent</a></li>
+              <li class="breadcrumb-item"><a href="#">Projet</a></li>
               <li class="breadcrumb-item active" aria-current="page">Demmande Interne</li>
           </ol>
       </nav>
@@ -191,5 +191,41 @@
     
  
 
+</section>
+
+<section id="congeP-section" class="section js-section u-category-media">
+  <!-- Breadcrumb -->
+  <nav class="hk-breadcrumb" aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light bg-transparent">
+          <li class="breadcrumb-item"><a href="#">Projet</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Conges</li>
+            </ol>
+        </nav>
+        <!-- /Breadcrumb -->
+           <!-- Content Wrapper. Contains page content -->
+            <div class="container">
+               <!-- Title -->
+                   <div class="hk-pg-header align-items-top">
+                     <div>
+                       <h3 class="hk-pg-title font-weight-600 mb-10">Conges agents</h3>
+                     </div>
+
+                     <div class="d-flex">
+                        <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('conge2Form')" data-target="#conge2ModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
+                     </div>
+                   </div>
+               <!-- /Title -->
+
+               <!-- Main content -->
+               <!-- Row -->
+
+                <livewire:agent.conge-table
+                searchable="reference"
+                exportable
+                />
+
+               <!-- /Row -->
+
+           </div>
 </section>
 </div>

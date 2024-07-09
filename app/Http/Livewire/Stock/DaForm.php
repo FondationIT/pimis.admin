@@ -18,6 +18,7 @@ class DaForm extends Component
     public $modelId = null;
     public $somme = 0;
     public $eb;
+    public $dat;
     protected $listeners = [
         'formDA',
     ];
@@ -39,8 +40,9 @@ class DaForm extends Component
         ])->validate();
 
         DB::beginTransaction();
+        $this->dat = date('Y-m-d');
         try {
-            $ref = 'DA-'.rand(10000,99999).'-FP'.rand(100,999);
+            $ref = 'DA-'.$this->dat.'-FP'.rand(100,999).Auth::user()->id.$this->eb[0]->id;
 
             DemAch::create([
                 'reference' => $ref,

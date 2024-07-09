@@ -66,9 +66,9 @@ class CategoriesTable extends LivewireDatatable
     public function builder()
     {
         if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
-            return Categorie::query()->orderBy("id", "DESC");
+            return Categorie::query();
         }else {
-            return Categorie::query()->orderBy("id", "DESC")
+            return Categorie::query()
             ->where('active', true);
         }
     }
@@ -79,7 +79,7 @@ class CategoriesTable extends LivewireDatatable
         if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
             return [
                 Column::name('name')
-                    ->label('Name'),
+                    ->label('Designation')->searchable(),
 
                 BooleanColumn::name('active')
                     ->label('State'),
@@ -97,7 +97,7 @@ class CategoriesTable extends LivewireDatatable
         }else {
             return [
                 Column::name('name')
-                    ->label('Name'),
+                    ->label('Designation')->searchable(),
 
                 BooleanColumn::name('active')
                     ->label('State'),

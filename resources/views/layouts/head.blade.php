@@ -6,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <!-- Favicon-->
-      <link rel="icon" href="img/logo/logo.png">
+      <link rel="icon" href="{{ asset('img/logo/logo.png') }}">
       <!-- Author Meta -->
-      <meta name="author" content="Davd Tino">
+      <meta name="author" content="Davd Cirakaza">
       <!-- Meta Description -->
       <meta name="description" content="">
       <!-- Meta Keyword -->

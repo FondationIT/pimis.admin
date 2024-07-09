@@ -281,6 +281,84 @@ class TrTable extends LivewireDatatable
 
                 })->label('Btn'),
             ];
+        }if (Auth::user()->role == 'COMPT1') {
+            return [
+                Column::callback(['reference','id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
+                })->label('Reference'),
+
+                Column::callback(['projet'], function ($projet) {
+                    return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
+                })->label('Projet')->filterable(),
+
+                Column::name('created_at')
+                    ->label('Date'),
+
+                Column::callback(['id'], function ($id) {
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    ->sum('price');
+                    return '$ '.$some;
+                })->label('Montant'),
+
+                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
+                        $delete = '<span class="badge badge-success">Approuvé</span>';
+                    }elseif($active == false){
+                        $delete = '<span class="badge badge-danger">Refusé</span>';
+                    }else{
+                        $delete = '<span class="badge badge-info">En attente</span>';
+                    }
+                        return $delete ;
+                })->unsortable()->label('Etat'),
+
+                Column::callback(['id','active','niv1','niv2','projet'], function ($id,$active,$niv1,$niv2,$projet) {
+
+                    if($projet == 3){
+                    
+                        if($active == true){
+
+                            if($niv1 == true && $niv2 == true){
+
+                                return '';
+                                
+                            }else{
+                                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="apprTr2('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+
+                                $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refTr('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+
+                                return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>';
+                            }
+                        }else if($active == false){
+
+                            return '<span class="badge badge-danger">Refusé</span>';
+
+                        }
+                    }else{
+
+                        if($active == true){
+
+                            if($niv1 == true){
+    
+                                return '';
+                                
+                            }else{
+                                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="apprTr('.$id.')" data-toggle="modal" data-target="#appEtBesModalForms"><i class="icon-like txt-danger"></i></a>';
+    
+                                $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refTr('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+    
+                                return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>';
+                            }
+                        }else if($active == false){
+    
+                            return '<span class="badge badge-danger">Refusé</span>';
+    
+                        }
+                    }
+                        
+
+                })->label('Btn'),
+            ];
         }if (Auth::user()->role == 'C.P') {
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {

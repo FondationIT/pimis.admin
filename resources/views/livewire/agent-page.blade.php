@@ -249,7 +249,6 @@
             <!-- Row -->
             
                 <livewire:stock.article-table
-                searchable="product, reference"
                 exportable
                 />
             
@@ -296,7 +295,6 @@
                             <h4>Categories</h4>
                             <div >
                                 <livewire:stock.categories-table
-                                model="App\Models\Categorie"
                                 />
                             </div>
                         </div>
@@ -306,7 +304,6 @@
                             <h4>Produits</h4>
                             <div >
                                 <livewire:stock.products-table
-                                searchable="agent, projet, lieu"
                                 exportable
                                 />
                             </div>

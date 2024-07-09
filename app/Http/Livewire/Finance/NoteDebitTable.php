@@ -110,7 +110,7 @@ class NoteDebitTable extends LivewireDatatable
 
     public function columns()
     {
-        if (Auth::user()->role == 'D.A.F') {
+        if (Auth::user()->role == 'COMPT1') {
 
 
             return [

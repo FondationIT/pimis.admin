@@ -51,10 +51,10 @@ class ArticleTable extends LivewireDatatable
     public function builder()
     {
         if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
-            return Article::query()->orderBy("id", "DESC");
+            return Article::join('products','products.id','=','articles.product');
         }else {
-            return Article::query()->orderBy("id", "DESC")
-            ->where('active', true);
+            return Article::join('products','products.id','=','articles.product')
+            ->where('articles.active', true);
         }
     }
 
@@ -64,11 +64,10 @@ class ArticleTable extends LivewireDatatable
 
             return [
 
-                Column::callback(['product','marque','model'], function ($designation,$marque,$model) {
+                Column::callback(['products.name','marque','model'], function ($designation,$marque,$model) {
 
-                    $designation = Product::where('id', $designation)->get();
-                    return $designation[0]->name.' '.$marque.' '.$model;
-                })->label('Desination'),
+                    return $designation.' '.$marque.' '.$model;
+                })->label('Desination')->searchable(),
 
                 Column::name('unite')
                     ->label('Unite'),

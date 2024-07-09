@@ -386,7 +386,7 @@
                                             <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" wire:click="$emit('bpUpdated')" data-open="bProjet" data-section="bonpayP">Bons de payement</a>
                                         </li>
                                         <li class="nav-item" id="bonpayF">
-                                            <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" data-open="bProjet" data-section="bonpayP">Demandes de congé</a>
+                                            <a class="nav-link" href="#" id="button-congeP" data-active="congeP" data-open="bProjet" data-section="congeP">Demandes de congé</a>
                                         </li>
 
                                     </ul>

@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('product_oders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
-            $table->foreignId('product')->constrained('articles');
+            $table->foreignId('product')->constrained('products');
             $table->foreignId('etatBes')->constrained('et_bes');
             $table->integer('quantite');
             $table->string('ligne')->nullable();
-            $table->text('description')->nullable();
+            $table->foreignId('description')->constrained('articles');
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

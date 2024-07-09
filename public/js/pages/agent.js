@@ -451,7 +451,7 @@ $('#trAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-rowTR'+count+'"><div class="col-md-5 mb-10"><textarea class="form-control prodND" name="product" required></textarea></div>'
+    aBPlus += '<div class="form-row form-row-all" id="form-rowTR'+count+'"><div class="col-md-5 mb-10"><textarea class="form-control prodTR" name="product" required></textarea></div>'
 
     aBPlus +='<div class="col-md-2 mb-10"><input type="texte" class="form-control uniteTR" name="unite" required></div>'
 

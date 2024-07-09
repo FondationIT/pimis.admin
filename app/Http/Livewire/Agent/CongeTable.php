@@ -103,7 +103,7 @@ class CongeTable extends LivewireDatatable
            return Conge::join('agents', 'agents.id', '=', 'conges.agent')
             ->where('agents.service', Agent::firstWhere('id', Auth::user()->agent)->service);
         }else{
-            return Conge::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC");
+            return Conge::query()->where("agent", Auth::user()->agent)->orderBy("id", "DESC");
         }
     }
 
@@ -228,7 +228,7 @@ class CongeTable extends LivewireDatatable
 
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="print('.$id.')" data-toggle="modal" data-target="#pModalForms">'.$reference.'</a>';
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="print('.$id.')" data-toggle="modal" data-target="#pCongeModalForms">'.$reference.'</a>';
                 })->label('Reference'),
 
                 Column::callback(['agent'], function ($agent) {

@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        //'http://pimis.org/admin/public/login',
+        //'http://pimis.org/admin/public/home'
     ];
 }

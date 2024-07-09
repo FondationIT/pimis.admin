@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" class="droite" style="width: 200px;position: relative;text-align: center" />
+                            <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                         </div>
                     </div>
 

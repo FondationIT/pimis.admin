@@ -54,9 +54,9 @@ class ProductsTable extends LivewireDatatable
     public function builder()
     {
         if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
-            return Product::query()->orderBy("id", "DESC");
+            return Product::query();
         }else {
-            return Product::query()->orderBy("id", "DESC")
+            return Product::query()
             ->where('active', true);
         }
     }
@@ -68,7 +68,7 @@ class ProductsTable extends LivewireDatatable
             return [
 
                 Column::name('name')
-                    ->label('Desination'),
+                    ->label('Desination')->searchable(),
 
                 Column::callback(['categorie'], function ($categorie) {
 
@@ -94,7 +94,7 @@ class ProductsTable extends LivewireDatatable
             return [
 
                 Column::name('name')
-                    ->label('Desination'),
+                    ->label('Desination')->searchable(),
 
                 Column::callback(['categorie'], function ($categorie) {
 

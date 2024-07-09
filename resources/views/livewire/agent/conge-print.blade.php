@@ -13,22 +13,22 @@
                 <div class="modal-body" id="printConge">
                     <div class="row">
 
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" style="width: 200px;position: relative;text-align: center" />
-                        </div>
+                       
 
-                        <div class="col-lg-6 fix" style="text-align: center">
+                        <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
                                 <h3>DEMANDE DE CONGE</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($conge)
+                                <p class="">N<sup>o</sup> : <b>@if ($conge)
                                     {{$conge[0]->reference}}
                                 @endif</b></p>
                             </div>
                         </div>
+                        <div class="col-lg-3 fix" style="text-align: center">
+                        </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" class="droite" style="width: 200px;position: relative;text-align: center" />
+                        <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                         </div>
                     </div>
 
@@ -155,7 +155,7 @@
                             <strong>Fondation Panzi</strong><br>
                             Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
                             Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
-                            <a href="fondationpanzirdc.org">fondationpanzirdc.org</a>
+                            <a href="fondationpanzirdc.org">panzi.org</a>
                             <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
 
                         </p>

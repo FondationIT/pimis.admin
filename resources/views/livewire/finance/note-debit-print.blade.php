@@ -98,7 +98,7 @@
                         
 
                                     <td>
-                                        <span>DAF</span><br><br>
+                                        <span>Chef comptable</span><br><br>
                                         @if (isset($valid1[0]) && !empty($valid1[0]))
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
                                                 Le {{$valid1[0]->updated_at->format('d/m/Y')}}

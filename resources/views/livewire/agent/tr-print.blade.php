@@ -12,11 +12,7 @@
                 </div>
 
                 <div class="modal-body card card-refresh" id="printTr">
-                    <!-- Preloader -->
-                    <div class="refresh-container">
-                        <div class="loader-pendulums"></div>
-                    </div>
-                    <!-- /Preloader -->
+                   
                     <div class="row">
 
                         <div class="col-lg-6 fix" style="">
@@ -33,7 +29,7 @@
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logoN.png" class="droite" style="width: 200px;position: relative;text-align: center" />
+                            <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                         </div>
                     </div>
 

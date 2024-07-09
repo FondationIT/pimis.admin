@@ -29,7 +29,7 @@ class ArticleForm extends Component
     public function editArticle($modelId){
         $this->modelId = $modelId;
 
-        $model = Product::find($this->modelId);
+        $model = Article::find($this->modelId);
         $this->state['product'] = $model->product;
         $this->state['model'] = $model->model;
         $this->state['unite'] = $model->unite;
