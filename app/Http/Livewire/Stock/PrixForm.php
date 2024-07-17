@@ -106,7 +106,7 @@ class PrixForm extends Component
     public function render()
     {
         return view('livewire.stock.prix-form',[
-            'products' => Article::where("active", "1")->orderBy("id", "DESC")->get(),
+            'products' => Article::where("active", "1")->orderBy("product")->get(),
 
         ]);
     }

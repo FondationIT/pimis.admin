@@ -13,18 +13,19 @@
                 <div class="modal-body" id="printMission">
                     <div class="row">
 
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logo1.png" style="width: 200px;position: relative;text-align: center" />
-                        </div>
+                        
 
-                        <div class="col-lg-6 fix" style="text-align: center">
+                        <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
                                 <h3>ORDRE DE MISSION</h3>
-                                <p class="center">N<sup>o</sup> : <b>@if ($ms)
+                                <p >N<sup>o</sup> : <b>@if ($ms)
                                     {{$ms[0]->reference}}
                                 @endif</b></p>
                             </div>
+                        </div>
+
+                        <div class="col-lg-3 fix" style="text-align: center">
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
@@ -71,7 +72,7 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Resouces humaines</strong></th>
+                                    <th class="center"><strong>Resouces humaines</strong></th>
                                 </tr>
                                 <tr>
 
@@ -79,7 +80,7 @@
                                         <br>
                                         @if ($ms)
 
-                                            <p>Fait à Bukavu Le {{$ms[0]->updated_at->format('d/m/Y')}}</p><br><br>
+                                            <p class="center">Fait à Bukavu Le {{$ms[0]->updated_at->format('d/m/Y')}}</p><br><br>
 
                                             <p class="center">{{ App\Models\User::firstWhere('id', $ms[0]->signature)->name}}<br>
                                             </p>

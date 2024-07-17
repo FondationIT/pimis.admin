@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="img/logo/logoN.png" class="droite" style="width: 200px;position: relative;text-align: center" />
+                            <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                         </div>
                     </div>
 
@@ -103,7 +103,9 @@
                                             <p class="center">{{ App\Models\User::firstWhere('id', $valid1[0]->user)->name}}<br>
                                                 Le {{$valid1[0]->updated_at->format('d/m/Y')}}
                                             </p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            @if (isset($valid1[0]) && !empty($valid1[0]))
+                                                <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid1[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

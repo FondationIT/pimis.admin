@@ -24,11 +24,12 @@ class DaForm extends Component
     ];
     public function formDA($modelId){
         $this->modelId = $modelId;
-        $this->somme  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.product')
+        $this->somme  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
             ->selectRaw("prices.prix * product_oders.quantite as price")
             ->where('product_oders.etatBes', $this->modelId)
             ->get('price')
             ->sum('price');
+
 
         $this->eb =Et_bes::where("id", $this->modelId)->get();
     }

@@ -121,12 +121,24 @@
                         
 
                                     <td>
-                                        <span>DAF</span><br><br>
-                                        @if (isset($valid3[0]) && !empty($valid3[0]))
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
-                                                Le {{$valid3[0]->updated_at->format('d/m/Y')}}
-                                            </p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                        @if (isset($trs[0]) && !empty($trs[0]))
+                                            @if ($trs[0]->projet == 3)
+                                                <span>D.AF</span><br><br>
+                                                @if (isset($valid3[0]) && !empty($valid3[0]))
+                                                    <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
+                                                        Le {{$valid3[0]->updated_at->format('d/m/Y')}}
+                                                    </p>
+                                                    <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                                @endif    
+                                            @else
+                                            <span>D.P</span><br><br>
+                                            @if (isset($valid3[0]) && !empty($valid3[0]))
+                                                <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
+                                                    Le {{$valid3[0]->updated_at->format('d/m/Y')}}
+                                                </p>
+                                                <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            @endif 
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>

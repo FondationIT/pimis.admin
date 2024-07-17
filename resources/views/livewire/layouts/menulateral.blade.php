@@ -84,12 +84,12 @@
                                     <li class="nav-item" id="conge">
                                         <a class="nav-link" href="#" id="button-conge" data-active="conge" wire:click="$emit('congeUpdated')" data-open="bFile" data-section="conge">Conge</a>
                                     </li>
-                                    <li class="nav-item" id="usTrans">
+                                    <!--<li class="nav-item" id="usTrans">
                                         <a class="nav-link" href="#" id="button-usTrans" data-active="usTrans" wire:click="$emit('dtUpdated')" data-open="bFile" data-section="usTrans">Demande de transport</a>
                                     </li>
                                     <li class="nav-item" id="contr">
                                         <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('contratUpdated')" data-open="bFile" data-section="contr">Contrat</a>
-                                    </li>
+                                    </li>-->
 
                                 </ul>
                             </li>
@@ -361,7 +361,7 @@
 
 
 
-                    @if (Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'D.P' || Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bProjet">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#projet">
                                 <span class="feather-icon"><i data-feather="activity"></i></span>

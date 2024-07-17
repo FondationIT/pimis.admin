@@ -117,19 +117,29 @@ class TrTable extends LivewireDatatable
     public function builder()
     {
 
-        if (Auth::user()->role == 'D.A.F') {
-
+        if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.P') {
 
             $trs = Tr::query()
             ->where('niv1', true)
             ->where('niv2', true)
+            ->where('projet', 3)
+            ->orderBy("id", "DESC");
+            return $trs;
+
+        }if (Auth::user()->role == 'D.P') {
+
+            $trs = Tr::query()
+            ->where('niv1', true)
+            ->where('niv2', true)
+            ->where('projet','!=', 3)
             ->orderBy("id", "DESC");
             return $trs;
 
         }else if (Auth::user()->role == 'C.P') {
 
 
-            $trs = Tr::query()
+            $trs = Tr::join('affectations', 'affectations.projet', '=', 'trs.projet')
+            ->where('affectations.agent', Auth::user()->agent)
             ->where('niv1', true)
             ->orderBy("id", "DESC");
             return $trs;
@@ -152,7 +162,8 @@ class TrTable extends LivewireDatatable
             
 
         }else{
-            return Tr::query()->orderBy("id", "DESC");
+            return Tr::join('affectations', 'affectations.projet', '=', 'trs.projet')
+            ->where('affectations.agent', Auth::user()->agent);
         }
     }
 
@@ -161,7 +172,7 @@ class TrTable extends LivewireDatatable
 
     public function columns()
     {
-        if (Auth::user()->role == 'D.A.F') {
+        if (Auth::user()->role == 'D.P' ) {
 
 
             return [

@@ -114,8 +114,12 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
     opacity: 1;
 }
 .prodT th,.prodT td{
-    border: 1px solid rgba(145, 145, 145, 0.317);
+    border: 1px solid rgba(20, 20, 20, 1);
     padding: none;
+}
+hr{
+  color:rgba(50, 50, 50, 1);
+  
 }
 
 img.droite {

@@ -39,7 +39,12 @@
                             <div class="col-lg-6" style="text-align: left">
                                 <p>Nom du demandeur : <strong>{{ App\Models\Agent::firstWhere('id', $conge[0]->agent)->firstname}} {{ App\Models\Agent::firstWhere('id', $conge[0]->agent)->lastname}} {{ App\Models\Agent::firstWhere('id', $conge[0]->agent)->middlename}}</strong></p>
                                 <p>Service du demandeur : <strong>{{ App\Models\Service::where('id',App\Models\Agent::firstWhere('id', $conge[0]->agent)->service)->get()[0]->name}}</strong></p>
-                                <p>Projet du demandeur : <strong>{{ App\Models\Projet::where('id',App\Models\Affectation::where('agent',$conge[0]->agent)->get()[0]->projet)->get()[0]->name}}</strong></p>
+
+
+
+
+
+                                <<p>Projet du demandeur : <strong>{{ App\Models\Projet::where('id',App\Models\Affectation::where('agent',$conge[0]->agent)->get()[0]->projet)->get()[0]->name}}</strong></p>
                                 <p>Poste du demandeur : <strong>{{ App\Models\Affectation::where('agent',$conge[0]->agent)->get()[0]->poste}}</strong></p>
                                 <p>Motif : <strong>{{$conge[0]->motif}}</strong></p>
                                 
@@ -60,33 +65,58 @@
 
                         <div class="col-lg-12" style="text-align: left">
                             <table class="table table-striped table-border mb-0 prodT">
-                                <tr>
-                                    <th><strong>Congé</strong></th><th><strong>Cumulé</strong></th><th><strong>Demandé</strong></th><th><strong>Accordé</strong></th><th><strong>Solde</strong></th>
-                                </tr>
-                                <tr>
-                                    <td>Annuel</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Deces 1er degre</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Deces 2er degre</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Mariage</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Maternite/Paternite</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Recuperation</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Demenagement</td><td></td><td></td><td></td><td></td>
-                                </tr>
-                                <tr>
-                                    <td>Non paye</td><td></td><td></td><td></td><td></td>
-                                </tr>
+                                @if ($conge)
+                                    <tr>
+                                        <th><strong>Congé</strong></th><th><strong>Cumulé</strong></th><th><strong>Demandé</strong></th><th><strong>Accordé</strong></th><th><strong>Solde</strong></th>
+                                    </tr>
+                                    @if($conge[0]->type == 1)
+                                        <tr>
+                                            <td>Annuel</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 2)
+                                        <tr>
+                                            <td>Deces 1er degre</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 3)
+                                        <tr>
+                                            <td>Deces 2er degre</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 4)
+                                        <tr>
+                                            <td>Mariage</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 5)
+                                        <tr>
+                                            <td>Maternite/Paternite</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 6)
+                                        <tr>
+                                            <td>Recuperation</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 7)
+                                        <tr>
+                                            <td>Demenagement</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+
+                                    @if($conge[0]->type == 8)
+                                        <tr>
+                                            <td>Non paye</td><td></td><td>{{$conge[0]->dure}} Jour(s)</td><td>{{$conge[0]->dure}} Jour(s)</td><td></td>
+                                        </tr>
+                                    @endif
+                                @endif
                                 
                                   
 
@@ -101,14 +131,6 @@
                                 Dans le cas de congé maladies,il faudra annexer à ce formulaire les pièces justificative;<br>
                                 Ce formulaire sera photocopié en trois exemplaire reapartes comme suit:
                             </p><br>
-                            
-                            <ul>
-                                <li>1. Une copie pour le classement;</li>
-                                <li>2. Une copie pour le superviseur de l'agent,</li>
-                                <li>3. Une copie gardée par l'interssé(e);</li>
-                                <li>4. L'original est gardée par l'administration.</li>
-                            </ul>
-                            <p>Le congé de circonstance autorisé par année est de 15 jours calendaires au maximum.</p>
                         </div>
 
                     </div>
