@@ -78,9 +78,22 @@ class DaTable extends LivewireDatatable
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
-            DemAch::find($this->modelId)->update([
-                'niv2' => 1,
-            ]);
+
+            if(Et_bes::find(DemAch::find($this->modelId)->eb)->projet == 3 || Et_bes::find(DemAch::find($this->modelId)->eb)->projet == 70 || Et_bes::find(DemAch::find($this->modelId)->eb)->projet == 71){
+
+                DemAch::find($this->modelId)->update([
+                    'niv2' => 1,
+                    'niv3' => 1,
+                ]);
+            }else{
+                DemAch::find($this->modelId)->update([
+                    'niv2' => 1,
+                ]);
+            }
+
+
+
+           
             ValidDa::create([
                 'user' => Auth::user()->id,
                 'signature' => Auth::user()->id,
@@ -268,11 +281,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -316,11 +329,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -356,11 +369,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -464,11 +477,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -512,11 +525,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -563,11 +576,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -591,11 +604,11 @@ class DaTable extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
-                })->label('D.A Ref'),
+                })->label('D.A Ref')->searchable(),
 
                 Column::callback(['eb'], function ($eb) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
-                })->label('B.R Ref'),
+                })->label('B.R Ref')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),

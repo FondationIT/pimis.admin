@@ -15,6 +15,7 @@ class TrOder extends Model
         'tr',
         'unite',
         'quantite',
+        'frequence',
         'ligne',
         'prix',
         'active',

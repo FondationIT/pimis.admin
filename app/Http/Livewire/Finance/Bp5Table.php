@@ -197,13 +197,13 @@ class Bp5Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
                     return 'Caisse '.Projet::where('id',$id)->get()[0]->name;
                     
-                })->label('Beneficiaire'),
+                })->label('Beneficiaire')->searchable(),
 
                 Column::callback('montant', function ($some) {
                     return '<span class="badge badge-danger">$ '.$some.'</span>';
@@ -260,14 +260,14 @@ class Bp5Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
                     return 'Caisse '.Projet::where('id',$id)->get()[0]->name;
                     
-                })->label('Beneficiaire'),
+                })->label('Beneficiaire')->searchable(),
 
                 Column::callback('montant', function ($some) {
                     return '<span class="badge badge-danger">$ '.$some.'</span>';
@@ -322,14 +322,14 @@ class Bp5Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
                     return 'Caisse '.Projet::where('id',$id)->get()[0]->name;
                     
-                })->label('Beneficiaire'),
+                })->label('Beneficiaire')->searchable(),
 
                 Column::callback('montant', function ($some) {
                     return '<span class="badge badge-danger">$ '.$some.'</span>';
@@ -384,14 +384,14 @@ class Bp5Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
                     return 'Caisse '.Projet::where('id',$id)->get()[0]->name;
                     
-                })->label('Beneficiaire'),
+                })->label('Beneficiaire')->searchable(),
 
                 Column::callback('montant', function ($some) {
                     return '<span class="badge badge-danger">$ '.$some.'</span>';
@@ -456,14 +456,14 @@ class Bp5Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
                     return 'Caisse '.Projet::where('id',$id)->get()[0]->name;
                     
-                })->label('Beneficiaire'),
+                })->label('Beneficiaire')->searchable(),
 
                 Column::callback('montant', function ($some) {
                     return '<span class="badge badge-danger">$ '.$some.'</span>';

@@ -34,7 +34,6 @@
               <div class="card-body">
                   <livewire:finance.bon-req 
                   wire:key='{{now()}}'
-                  searchable="reference,projet"
                   dates="created_at|d-m-Y"
                   exportable 
                   />
@@ -80,7 +79,6 @@
               <div class="card-body">
                   <livewire:stock.da-table 
                   wire:key='{{now()}}'
-                  searchable="reference,projet"
                   dates="created_at|d-m-Y"
                   exportable 
                   />
@@ -115,7 +113,7 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:stock.pv-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <livewire:stock.pv-table dates="created_at|d-m-Y" exportable/>
             <!-- /Row -->
 
         </div>
@@ -146,7 +144,7 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:stock.bc-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <livewire:stock.bc-table dates="created_at|d-m-Y" exportable/>
             <!-- /Row -->
 
         </div>
@@ -177,7 +175,6 @@
             <!-- Main content -->
             <!-- Row -->
             <livewire:stock.fournisseurs-table
-            searchable="reference"
             dates="created_at|d-m-Y"
             exportable
             />
@@ -246,7 +243,7 @@
 
           <!-- Main content -->
           <!-- Row -->
-          <livewire:stock.prix-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+          <livewire:stock.prix-table dates="created_at|d-m-Y" exportable/>
           <!-- /Row -->
 
       </div>
@@ -276,7 +273,7 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:stock.fprix-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+            <livewire:stock.fprix-table dates="created_at|d-m-Y" exportable/>
             <!-- /Row -->
 
         </div>
@@ -303,7 +300,7 @@
 
           <!-- Main content -->
           <!-- Row -->
-          <livewire:stock.br-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+          <livewire:stock.br-table dates="created_at|d-m-Y" exportable/>
           <!-- /Row -->
 
       </div>
@@ -331,7 +328,6 @@
         <!-- Main content -->
         <!-- Row -->
         <livewire:stock.di-table
-        searchable="reference,projet"
         dates="created_at|d-m-Y"
         exportable
         />

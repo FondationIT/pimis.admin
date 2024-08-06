@@ -35,7 +35,7 @@
 
                     <hr class="mbtm">
 
-                    <div class="row">
+                    <div class="row" style="margin: 30px;font-size:16px;">
                         @if ($ms)
                             <div class="col-lg-12" >
                                 <p>Délivré à:
@@ -101,7 +101,7 @@
                             <strong>Fondation Panzi</strong><br>
                             Avenue Jean Miruho 3,N<sup>o</sup>024, Quartier PANZI,<br>
                             Commune d'Ibanda, Ville de Bukavu en RB Congo<br>
-                            <a href="fondationpanzirdc.org">fondationpanzirdc.org</a>
+                            <a href="fondationpanzirdc.org">panzi.org</a>
                             <span style="text-align: right;float:right">Par <strong>{{Auth::user()->name}}</strong></span>
 
                         </p>

@@ -30,7 +30,7 @@ class TrPrint extends Component
         $this->valid1 = ValidTr::where("tr", $this->modelId)->where("niv", 1)->get();
         $this->valid2 = ValidTr::where("tr", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidTr::where("tr", $this->modelId)->where("niv", 3)->get();
-        $this->some = trOder::where('tr',$modelId)->selectRaw("prix * quantite as price")->get('price')
+        $this->some = trOder::where('tr',$modelId)->selectRaw("prix * quantite * frequence as price")->get('price')
         ->sum('price');
     }
     public function render()

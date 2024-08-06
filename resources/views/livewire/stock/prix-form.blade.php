@@ -67,7 +67,7 @@
                         <div class="form-row">
                             <div class="col-md-12 mb-10">
                                 <label for="prix">Prix *</label>
-                                <input type="number" step="any" min="0.000001" class="form-control @error('prix') is-invalid @enderror" wire:model.defer="state.prix" name="prix">
+                                <input type="number" step="any" min="0" class="form-control @error('prix') is-invalid @enderror" wire:model.defer="state.prix" name="prix">
                                 @error('prix')
                                     <span class="text-red-600" role="alert">
                                         {{ $message }}

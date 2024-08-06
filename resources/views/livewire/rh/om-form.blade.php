@@ -66,17 +66,17 @@
                                 <select class="form-control" id="moyenMs" required>
                                     <option value=""></option>
                                     
-                                    <option value="1">Véhicule</option>
-                                    <option value="1">Bateau</option>
-                                    <option value="1">Avion</option>
-                                    <option value="1">Moto</option>
-                                    <option value="1">véhicule Bateau</option>
-                                    <option value="1">véhicule Avion</option>
-                                    <option value="1">véhicule Bateau Avion</option>
-                                    <option value="1">véhicule Bateau Moto</option>
-                                    <option value="1">véhicule Avion Moto</option>
-                                    <option value="1">Avion Moto</option>
-                                    <option value="1">véhicule Moto</option>
+                                    <option value="Véhicule">Véhicule</option>
+                                    <option value="Bateau">Bateau</option>
+                                    <option value="Avion">Avion</option>
+                                    <option value="Moto">Moto</option>
+                                    <option value="véhicule Bateau">véhicule Bateau</option>
+                                    <option value="véhicule Avion">véhicule Avion</option>
+                                    <option value="véhicule Bateau Avion">véhicule Bateau Avion</option>
+                                    <option value="véhicule Bateau Moto">véhicule Bateau Moto</option>
+                                    <option value="véhicule Avion Moto">véhicule Avion Moto</option>
+                                    <option value="Avion Moto">Avion Moto</option>
+                                    <option value="véhicule Moto">véhicule Moto</option>
                                 </select>
                             </div>
 

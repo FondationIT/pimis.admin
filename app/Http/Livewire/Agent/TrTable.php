@@ -117,12 +117,9 @@ class TrTable extends LivewireDatatable
     public function builder()
     {
 
-        if (Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.P') {
+        if (Auth::user()->role == 'Sup' || Auth::user()->role == 'ADMIN') {
 
             $trs = Tr::query()
-            ->where('niv1', true)
-            ->where('niv2', true)
-            ->where('projet', 3)
             ->orderBy("id", "DESC");
             return $trs;
 
@@ -131,7 +128,6 @@ class TrTable extends LivewireDatatable
             $trs = Tr::query()
             ->where('niv1', true)
             ->where('niv2', true)
-            ->where('projet','!=', 3)
             ->orderBy("id", "DESC");
             return $trs;
 
@@ -141,7 +137,7 @@ class TrTable extends LivewireDatatable
             $trs = Tr::join('affectations', 'affectations.projet', '=', 'trs.projet')
             ->where('affectations.agent', Auth::user()->agent)
             ->where('niv1', true)
-            ->orderBy("id", "DESC");
+            ->orderBy("trs.id", "DESC");
             return $trs;
 
         }else if (Auth::user()->role == 'R.H') {
@@ -162,8 +158,8 @@ class TrTable extends LivewireDatatable
             
 
         }else{
-            return Tr::join('affectations', 'affectations.projet', '=', 'trs.projet')
-            ->where('affectations.agent', Auth::user()->agent);
+            return Tr::query()
+            ->where('agent', Auth::user()->id);
         }
     }
 
@@ -178,11 +174,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -232,11 +228,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -296,11 +292,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -374,11 +370,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -428,11 +424,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),
@@ -470,11 +466,11 @@ class TrTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-                })->label('Projet')->filterable(),
+                })->label('Projet'),
 
                 Column::name('created_at')
                     ->label('Date'),

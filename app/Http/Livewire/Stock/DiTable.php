@@ -109,18 +109,18 @@ class DiTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDi('.$id.')" data-toggle="modal" data-target="#pDiModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1'], function ($active,$niv1) {
 
@@ -157,18 +157,18 @@ class DiTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDi('.$id.')" data-toggle="modal" data-target="#pDiModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet')->filterable(),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1'], function ($active,$niv1) {
 

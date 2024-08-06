@@ -77,7 +77,7 @@
                         <div class="col-md-3 mb-10">
                             <label for="username">Quantité</label>
                             <div class="input-group">
-                                <input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required>
+                                <input type="number" step="any" min="0" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required>
                                 <div class="input-group-prepend">
                                     <span class="input-group-text uniteC" id="unite-1"></span>
                                 </div>

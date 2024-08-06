@@ -106,7 +106,7 @@ class MvmtTable extends LivewireDatatable
            return Mouvement::join('agents', 'agents.id', '=', 'mouvements.agent')
             ->where('agents.service', Agent::firstWhere('id', Auth::user()->agent)->service);
         }else{
-            return Mouvement::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC");
+            return Mouvement::query()->where("agent", Auth::user()->agent)->orderBy("id", "DESC");
         }
     }
 

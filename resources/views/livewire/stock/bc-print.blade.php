@@ -68,7 +68,7 @@
 
                                         <tr>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
+                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->produit)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
 
                                             <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->produit)->unite}}</td>
 

@@ -36,15 +36,15 @@ class BrTable extends LivewireDatatable
 
         return [
             Column::name('reference')
-                ->label('Reference'),
+                ->label('Reference')->searchable(),
 
             Column::callback(['projet'], function ($projet) {
                 return Projet::find($projet)->name;
-            })->label('Projet'),
+            })->label('Projet')->searchable(),
 
             Column::callback(['fournisseur'], function ($fourn) {
                 return Fournisseur::find($fourn)->name;
-            })->label('Fournisseur'),
+            })->label('Fournisseur')->searchable(),
 
             Column::callback(['active'], function ($active) {
                     $delete = '<span class="badge badge-info">En cours</span>';

@@ -169,18 +169,18 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet'),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
 
@@ -196,7 +196,7 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2','projet'], function ($id,$active,$niv1,$niv2,$projet) {
 
-                    if($projet == 3){
+                    if($projet == 3 || $projet == 70 || $projet == 71){
 
                         if ($active == true && $niv1 == true && $niv2 == true) {
 
@@ -237,18 +237,18 @@ class BonReq extends LivewireDatatable
 
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet'),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
 
@@ -289,18 +289,18 @@ class BonReq extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet'),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
 
@@ -338,18 +338,18 @@ class BonReq extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet'),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['id'], function ($id) {
 
@@ -367,18 +367,18 @@ class BonReq extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
-                })->label('Reference'),
+                })->label('Reference')->searchable(),
 
                 Column::callback(['projet'], function ($projet) {
                     return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.'';
-                })->label('Projet'),
+                })->label('Projet')->searchable(),
 
                 Column::name('created_at')
                     ->label('Date'),
 
                 Column::callback(['agent'], function ($agent) {
                     return User::find($agent)->name;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
 

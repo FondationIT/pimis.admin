@@ -143,7 +143,7 @@ class BcTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
@@ -159,7 +159,7 @@ class BcTable extends LivewireDatatable
                     }
                     
                     return $x;
-                })->label('Fournisseur'),
+                })->label('Fournisseur')->searchable(),
 
                 Column::name('lieu')
                     ->label('Lieu de livraison'),
@@ -202,7 +202,7 @@ class BcTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
@@ -218,7 +218,7 @@ class BcTable extends LivewireDatatable
                     }
                     
                     return $x;
-                })->label('Fournisseur'),
+                })->label('Fournisseur')->searchable(),
 
                 Column::name('lieu')
                     ->label('Lieu de livraison'),
@@ -260,7 +260,7 @@ class BcTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
@@ -276,7 +276,7 @@ class BcTable extends LivewireDatatable
                     }
                     
                     return $x;
-                })->label('Fournisseur'),
+                })->label('Fournisseur')->searchable(),
 
                 Column::name('lieu')
                     ->label('Lieu de livraison'),
@@ -327,7 +327,7 @@ class BcTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
@@ -343,7 +343,7 @@ class BcTable extends LivewireDatatable
                     }
                     
                     return $x;
-                })->label('Fournisseur'),
+                })->label('Fournisseur')->searchable(),
 
                 Column::name('lieu')
                     ->label('Lieu de livraison'),
@@ -398,7 +398,7 @@ class BcTable extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['da','proforma'], function ($da,$prof) {
                     if(Pv::where('da', $da)->exists()){
@@ -414,7 +414,7 @@ class BcTable extends LivewireDatatable
                     }
                     
                     return $x;
-                })->label('Fournisseur'),
+                })->label('Fournisseur')->searchable(),
 
                 Column::name('lieu')
                     ->label('Lieu de livraison'),

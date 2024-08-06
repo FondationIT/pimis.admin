@@ -23,7 +23,7 @@
                             <label for="type">Type</label>
                             <select class="form-control @error('type') is-invalid @enderror" wire:model.defer="state.type" wire:change="change($event.target.value)" name="type" >
                                 <option value=""></option>
-                                @if (Auth::user()->role == 'COMPT1')
+                                @if (Auth::user()->role == 'COMPT1' || Auth::user()->role == 'D.A.F')
                                     <option value="1">Projet</option>
                                 @endif
                                 @if (Auth::user()->role == 'R.H')

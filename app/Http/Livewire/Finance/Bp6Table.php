@@ -207,12 +207,12 @@ class Bp6Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
                 Column::callback(['bc','projet'], function ($id,$projet) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
                     
-                })->label('Justif'),
+                })->label('Justif')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
@@ -275,13 +275,13 @@ class Bp6Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['bc','projet'], function ($id,$projet) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
                     
-                })->label('Justif'),
+                })->label('Justif')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
@@ -342,13 +342,13 @@ class Bp6Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['bc','projet'], function ($id,$projet) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
                     
-                })->label('Justif'),
+                })->label('Justif')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
@@ -409,13 +409,13 @@ class Bp6Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['bc','projet'], function ($id,$projet) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
                     
-                })->label('Justif'),
+                })->label('Justif')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     
@@ -486,13 +486,13 @@ class Bp6Table extends LivewireDatatable
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBp('.$id.')" data-toggle="modal" data-target="#pBpModalForms">'.$reference.'</a>';
-                })->label('Reference BC'),
+                })->label('Reference BC')->searchable(),
 
 
                 Column::callback(['bc','projet'], function ($id,$projet) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printIndex('.$id.','.$projet.')" data-toggle="modal" data-target="#listePaieModalForms">'.PayementAgent::where('id',$id)->get()[0]->reference.'</i></a>';
                     
-                })->label('Justif'),
+                })->label('Justif')->searchable(),
 
                 Column::callback(['beneficiaire'], function ($id) {
                     

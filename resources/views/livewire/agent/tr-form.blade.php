@@ -61,7 +61,7 @@
 
                      <div class="form-row">
                          
-                         <div class="col-md-5 mb-10">
+                         <div class="col-md-3 mb-10">
                              <label for="product">Libellé</label>
                              <textarea class="form-control prodTR" name="product" required></textarea>
                          </div>
@@ -74,13 +74,19 @@
                          <div class="col-md-2 mb-10">
                              <label for="username">Quantité</label>
                              
-                            <input type="number" step="1" min="1" class="form-control QteTR" name="" required>
+                            <input type="number" step=".1" min="0" class="form-control QteTR" name="" required>
                          </div>
+
+                         <div class="col-md-2 mb-10">
+                            <label for="username">Frequence</label>
+                            
+                           <input type="number" step=".1" min="0" class="form-control FqcTR" name="" required>
+                        </div>
 
                          <div class="col-md-2 mb-10">
                             <label for="username">Prix U.</label>
                             
-                           <input type="number" step="1" min="1" class="form-control prixTR" name="" required>
+                           <input type="number" step=".0001" min="0" class="form-control prixTR" name="" required>
                         </div>
  
                          <div class="col-md-1 mb-10">

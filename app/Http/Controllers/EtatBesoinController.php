@@ -394,6 +394,7 @@ class EtatBesoinController extends Controller
                 'unite' => $data['unite'][$count],
                 'prix' => $data['prix'][$count],
                 'quantite' => $data['quantite'][$count],
+                'frequence' => $data['frequence'][$count],
             ]);
 
          }

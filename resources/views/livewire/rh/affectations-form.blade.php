@@ -1,5 +1,6 @@
 <div>
     <!-- Modal Affectation -->
+    
     <div class="modal fade" id="nAffectationModalForms" tabindex="-1" wire:ignore.self role="dialog" aria-labelledby="exampleModalEditor" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -11,43 +12,47 @@
                 </div>
 
                 <form  wire:submit.prevent='submit' >
-                  <div class="modal-body">
+                  <div class="modal-body" >
 
                       
 
-                      <div class="form-row">
+                      <div class="form-row" >
                           <div class="col-md-12 mb-10">
                               <label for="agent">Selectionner agent</label>
-                              <select class="form-control select2 @error('agent') is-invalid @enderror" wire:model.defer="state.agent" name="agent">
-                                  <option value=""></option>
-
-                                  @foreach ($agents as $agent)
-                                      <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname.' '.$agent->middlename}}</option>
-                                  @endforeach
-                              </select>
-                              @error('agent')
-                                <span class="text-red-600" role="alert">
-                                    {{ $message }}
-                                </span>
-                            @enderror
+                             
+                             
+                            <input list="brow" class="form-control @error('agent') is-invalid @enderror" wire:model.defer="state.agent" name="agent">
+                                <datalist id="brow">
+                                    @foreach ($agents as $agent)
+                                    <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname.' '.$agent->middlename}}</option>
+                                @endforeach
+                                </datalist>
                           </div>
+                          @error('agent')
+                          <span class="text-red-600" role="alert">
+                              {{ $message }}
+                          </span>
+                      @enderror
                       </div>
 
-                      <div class="form-row">
-                          <div class="col-md-12 mb-10">
+                      <div class="form-row" >
+                          <div class="col-md-12 mb-10" >
+                            <div >
                               <label for="projet">Selectionner projet</label>
-                              <select class="form-control select2 @error('projet') is-invalid @enderror" wire:model.defer="state.projet" name="projet">
+                              <select class="form-control select2 @error('projet') is-invalid @enderror" wire:model.defer="state.projet" name="projet" wire:ignore.self>
                                 <option value=""></option>
 
                                 @foreach ($projets as $projet)
                                     <option value="{{$projet->id}}">{{$projet->name}}</option>
                                 @endforeach
                               </select>
+                            </div>
                               @error('projet')
                                 <span class="text-red-600" role="alert">
                                     {{ $message }}
                                 </span>
-                            @enderror
+                                @enderror
+                            
                           </div>
                       </div>
 

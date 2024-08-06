@@ -34,15 +34,15 @@ class StockTable extends LivewireDatatable
 
         return [
             Column::name('reference')
-                ->label('Reference'),
+                ->label('Reference')->searchable(),
 
             Column::callback(['product'], function ($prod) {
                 return Article::find($prod)->marque.' '.Article::find($prod)->model.'<br> '.Article::find($prod)->description;
-            })->label('Projet'),
+            })->label('Produit')->searchable(),
 
             Column::callback(['project'], function ($projet) {
                 return Projet::find($projet)->name.' ('.Projet::find($projet)->reference.')';
-            })->label('Projet'),
+            })->label('Projet')->searchable(),
 
             Column::name('quantite')
                 ->label('Quantité'),

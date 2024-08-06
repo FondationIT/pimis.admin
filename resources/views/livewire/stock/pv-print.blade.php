@@ -44,13 +44,21 @@
                             <h5>Tableau comparatif</h5><br>
                             <div class="table-wrap">
                                 <div class="table-responsive" >
-                                    <table class="table  table-bordered table-striped mb-0">
+                                    <table class="table  table-bordered table-striped mb-0 prodT">
                                         <thead>
                                             <tr>
-                                                <th>Fournisseur</th>
-                                                <th>Unite</th>
+                                                <th rowspan="2"><strong>Articles</strong></th>
+                                                <th rowspan="2"><strong>Qté</strong></th>
+                                                <th rowspan="2"><strong>Unite</strong></th>
                                                 @foreach ($proforma as $prof)
-                                                <th>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</th>
+                                                <th colspan="2"><strong>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</strong></th>
+                                                
+                                                @endforeach
+                                            </tr>
+                                            <tr> 
+                                                @foreach ($proforma as $prof)
+                                                <td><strong>P.U</strong></td>
+                                                <td><strong>P.T</strong></td>
                                                 @endforeach
                                             </tr>
                                         </thead>
@@ -59,16 +67,35 @@
                                                 <tr>
 
                                                     <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
-                                                    <td>{{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
+                                                    <td>{{$prod->quantite}}</td>
+                                                    <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                     <td>
-                                                       <strong>$ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}</strong>
+                                                      $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
                                                     </td>
+                                                    <td>
+                                                        <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                     </td>
                                                     @endforeach
 
                                                 </tr>
 
                                             @endforeach
+                                            <tr>
+                                                <td style="text-align: center" colspan="3"><strong class="center">Total</strong></td>
+                                                @foreach ($proforma as $prof)
+                                                    @if($da)
+                                                        <td style="text-align: center" colspan="2">
+                                                            <strong>$ {{App\Models\ProductOder::join('prix_pvs', 'prix_pvs.produit', '=', 'product_oders.description')
+                                                            ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
+                                                            ->where('prix_pvs.proforma', $prof->id)
+                                                            ->where('product_oders.etatBes', $da[0]->eb)
+                                                            ->get('price')
+                                                            ->sum('price');}}</strong>
+                                                        </td>
+                                                    @endif
+                                                @endforeach
+                                            </tr>
                                         </tbody>
                                     </table>
 
@@ -106,17 +133,21 @@
                             
                         </div>
 
-                        @foreach ($agent as $ag)
-                            <div class="col-lg-12">
-                                <ol>
-                                    <li>
-                                        {{ App\Models\User::firstWhere('agent', $ag->agent)->name}}
-                                        
-                                        <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;margin-top:-10px;text-align:left" />
-                                    </li>
-                                </ol>
-                            </div>
-                        @endforeach
+
+                        <div class="col-lg-12" style="text-align: center">
+                            <table class="table table-striped table-border mb-0">
+                                <tr>
+                                    @foreach ($agent as $ag)
+                                        <td>
+    
+                                                <p class="center" >{{ App\Models\User::firstWhere('agent', $ag->agent)->name}}<br>
+                                                <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+    
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            </table>
+                        </div>
 
                         @endif
                     </div>

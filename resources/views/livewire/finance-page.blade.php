@@ -74,7 +74,6 @@
               <div class="card-body">
                   <livewire:finance.bon-req 
                   wire:key='{{now()}}'
-                  searchable="reference,projet"
                   dates="created_at|d-m-Y"
                   exportable 
                   />
@@ -121,7 +120,6 @@
               <div class="card-body">
                   <livewire:stock.da-table 
                   wire:key='{{now()}}'
-                  searchable="reference,projet"
                   dates="created_at|d-m-Y"
                   exportable 
                   />
@@ -153,7 +151,7 @@
 
           <!-- Main content -->
           <!-- Row -->
-          <livewire:stock.bc-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+          <livewire:stock.bc-table dates="created_at|d-m-Y" exportable/>
           <!-- /Row -->
 
       </div>
@@ -188,7 +186,6 @@
            <!-- Main content -->
            <!-- Row -->
             <livewire:rh.paiement-table
-            searchable="reference"
             exportable
             />
             <!-- /Row -->
@@ -233,7 +230,7 @@
 
         <!-- Main content -->
         <!-- Row -->
-        <livewire:finance.note-debit-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+        <livewire:finance.note-debit-table dates="created_at|d-m-Y" exportable/>
         <!-- /Row -->
 
     </div>
@@ -282,23 +279,23 @@
           <div class="tab-content">
             <div id="home" class="container tab-pane active"><br>
               <h5>Bon de paiement des achats</h5>
-              <livewire:finance.bp-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+              <livewire:finance.bp-table dates="created_at|d-m-Y" exportable/>
             </div>
             <div id="menu1" class="container tab-pane fade"><br>
               <h5>Bon de paiement des notes de debit</h5>
-              <livewire:finance.bp4-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+              <livewire:finance.bp4-table dates="created_at|d-m-Y" exportable/>
             </div>
             <div id="menu2" class="container tab-pane fade"><br>
               <h5>Bon de paiement des TDR</h5>
-              <livewire:finance.bp3-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+              <livewire:finance.bp3-table dates="created_at|d-m-Y" exportable/>
             </div>
             <div id="menu3" class="container tab-pane fade"><br>
               <h5>Bon de paiement des salaires</h5>
-              <livewire:finance.bp6-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+              <livewire:finance.bp6-table dates="created_at|d-m-Y" exportable/>
             </div>   
             <div id="menu4" class="container tab-pane fade"><br>
               <h5>Bon de paiement approvionnement caisse</h5>
-              <livewire:finance.bp5-table searchable="reference" dates="created_at|d-m-Y" exportable/>
+              <livewire:finance.bp5-table dates="created_at|d-m-Y" exportable/>
             </div>
           </div>
 

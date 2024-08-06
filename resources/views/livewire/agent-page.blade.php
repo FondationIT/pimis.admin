@@ -387,7 +387,6 @@
                 <div class="card-body">
                     <livewire:agent.eb-table 
                     wire:key='{{now()}}'
-                    searchable="reference,projet"
                     dates="created_at|d-m-Y"
                     exportable 
                     />
@@ -426,7 +425,10 @@
 
             <!-- Main content -->
             <!-- Row -->
-            <livewire:agent.tr-table />
+            <livewire:agent.tr-table 
+            dates="created_at|d-m-Y"
+            exportable
+            />
             <!-- /Row -->
 
         </div>

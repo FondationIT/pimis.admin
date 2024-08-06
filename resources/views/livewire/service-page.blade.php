@@ -97,7 +97,6 @@
                <div class="row">
 
                 <livewire:agent.mvmt-table
-                searchable="reference"
                 exportable
                 />
 
@@ -169,7 +168,6 @@
                <div class="row">
 
                 <livewire:agent.conge-table
-                searchable="reference"
                 exportable
                 />
 

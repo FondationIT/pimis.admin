@@ -89,7 +89,7 @@ $('#eBAdd').on('click', function(e){
     aBPlus += '<div class="col-md-5 mb-10"><select class="form-control descEB" name="description" id="prodE'+count+'"  onchange="afficheEB1Choix(this.value,'+count+')" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
-    aBPlus +='<div class="col-md-3 mb-10"><div class="input-group"><input type="number" class="form-control QteEB" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteC" id="unite-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
+    aBPlus +='<div class="col-md-3 mb-10"><div class="input-group"><input type="number" class="form-control step="any" min="0" QteEB" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteC" id="unite-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-row'+count+'" class="removeEB text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
@@ -328,7 +328,7 @@ $('#diAdd').on('click', function(e){
     aBPlus += '<div class="form-row form-row-all" id="form-rowDI'+count+'"><div class="col-md-7 mb-10"><select class="form-control select2 prodDI" name="product"  onchange="afficheDIChoix(this.value,'+count+')" id="prodDI'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
-    aBPlus +='<div class="col-md-4 mb-10"><div class="input-group"><input type="number" step="1" min="1" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteDI" id="uniteDI-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
+    aBPlus +='<div class="col-md-4 mb-10"><div class="input-group"><input type="number" step="any" min="0" class="form-control QteDI" name="username"  aria-describedby="inputGroupPrepend" required><div class="input-group-prepend"><span class="input-group-text uniteDI" id="uniteDI-'+count+'"></span></div><div class="invalid-feedback">Le nom d\'utilisateur est obligatoire</div></div></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowDI'+count+'" class="removeDI text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
@@ -451,13 +451,15 @@ $('#trAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-rowTR'+count+'"><div class="col-md-5 mb-10"><textarea class="form-control prodTR" name="product" required></textarea></div>'
+    aBPlus += '<div class="form-row form-row-all" id="form-rowTR'+count+'"><div class="col-md-3 mb-10"><textarea class="form-control prodTR" name="product" required></textarea></div>'
 
     aBPlus +='<div class="col-md-2 mb-10"><input type="texte" class="form-control uniteTR" name="unite" required></div>'
 
-    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step="1" min="1" class="form-control QteTR" name="" required></div>'
+    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step=".1" min="0" class="form-control QteTR" name="" required></div>'
 
-    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step="1" min="1" class="form-control prixTR" name="" required></div>'
+    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step=".1" min="0" class="form-control FqcTR" name="" required></div>'
+
+    aBPlus +='<div class="col-md-2 mb-10"><input type="number" step=".0001" min="0" class="form-control prixTR" name="" required></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowTR'+count+'" class="removeTR text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
@@ -493,6 +495,7 @@ trForm.onsubmit = function(e) {
   e.preventDefault();
    var produit = [];
    var qte = [];
+   var fqc = [];
    var unite = [];
    var prix = [];
    var agent = $('#agentTR').val()
@@ -505,6 +508,9 @@ trForm.onsubmit = function(e) {
    });
    $('.QteTR').each(function(){
     qte.push($(this).val());
+   });
+   $('.FqcTR').each(function(){
+    fqc.push($(this).val());
    });
    $('.uniteTR').each(function(){
     unite.push($(this).val());
@@ -522,7 +528,7 @@ trForm.onsubmit = function(e) {
     url: "/trReg",
     dataType: 'json',
 
-    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre)),
+    data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre)),
     beforeSend: function() {
         $('#btnTR').hide();
         $('#prldTR').show();
@@ -559,10 +565,11 @@ trForm.onsubmit = function(e) {
  }
 
 //
- function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre) {
+ function trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre) {
    return {
      "product":produit,
      "quantite": qte,
+     "frequence": fqc,
      "unite": unite,
      "prix": prix,
      "agent": agent,

@@ -62,18 +62,39 @@
                                             <td>{{$i++}}</td>
                                             <td>
                                                 @if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)
-                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                    @if($prod->ligne == '')
+                                                        <a href="#" title="Ajouter" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>
+                                                    @else
+                                                
+                                                        <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                    @endif
                                                 @elseif (Auth::user()->role == 'COMPT2' && $das[0]->niv3 == false)
-                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
-                                                @else<a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}">{{ $prod->ligne }}<a>@endif
+                                                    @if($prod->ligne == '')
+                                                        <a href="#" title="Ajouter" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>
+                                                    @else
+                                                
+                                                        <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
+                                                    @endif
+                                                @else
+                                                    @if($prod->ligne == '')
+                                                    
+                                                    @else
+                                                    <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}">{{ $prod->ligne }}<a>
+
+                                                    @endif
+                                                    
+                                                        
+                                                @endif
                                             </td>
                                             <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
-                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
+                                            <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+                                            @if(App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->exists())
+                                                <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
 
-                                            <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+                                                <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+                                            @endif
 
                                             
                                         </tr>
@@ -102,7 +123,19 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th><th><strong>Projet/Service</strong></th><th><strong>DAF</strong></th>
+                                    <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th>
+                                    
+                                        @if (isset($das[0]) && !empty($das[0]))
+                                            @if ($ebs[0]->projet == 3 || $ebs[0]->projet == 70 || $ebs[0]->projet == 71)
+                                               
+                                            @else
+                                                <th><strong>Projet/Service</strong></th>
+                                            @endif
+                                        @endif
+                                    
+                                    
+                                    
+                                    <th><strong>DAF</strong></th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -137,16 +170,26 @@
                                         @endif
                                     </td>
 
-                                    <td>
-                                        <span>Chef Projet</span><br><br>
-                                        @if (isset($valid3[0]) && !empty($valid3[0]))
+                                   
 
-                                            <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
-                                            Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
-
+                                        @if (isset($das[0]) && !empty($das[0]))
+                                            @if ($ebs[0]->projet == 3 || $ebs[0]->projet == 70 || $ebs[0]->projet == 71)
+                                               
+                                            @else
+                                            <td>
+                                                <span>Chef Projet</span><br><br>
+                                                @if (isset($valid3[0]) && !empty($valid3[0]))
+        
+                                                    <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
+                                                    Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
+                                                    <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+        
+                                                @endif
+                                            </td>
+                                            @endif
                                         @endif
-                                    </td>
+  
+                                    
 
                                     <td>
                                         <span>DAF</span><br><br>

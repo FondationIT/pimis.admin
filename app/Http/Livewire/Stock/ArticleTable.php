@@ -104,7 +104,7 @@ class ArticleTable extends LivewireDatatable
 
                     $designation = Product::where('id', $designation)->get();
                     return $designation[0]->name.' '.$marque.' '.$model;
-                })->label('Desination'),
+                })->label('Desination')->searchable(),
 
                 Column::name('unite')
                     ->label('Unite'),
