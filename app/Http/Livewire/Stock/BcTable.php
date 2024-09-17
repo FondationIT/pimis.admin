@@ -12,8 +12,10 @@ use App\Models\Br;
 use App\Models\BrOder;
 use App\Models\Et_bes;
 use App\Models\FournPrice;
+use App\Models\prixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
+use App\Models\PvAttr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -25,9 +27,18 @@ use Illuminate\Support\Facades\DB;
 
 class BcTable extends LivewireDatatable
 {
-    public $model = Bc::class;
+
 
     public $modelId;
+    public $products;
+    public $das;
+    public $some;
+    public $bcs;
+    public $ebs;
+    public $pvs;
+    public $pvAttr;
+    public $odrs;
+    public $prof;
 
     protected $listeners = [
         'bcUpdated' => '$refresh'
@@ -304,7 +315,23 @@ class BcTable extends LivewireDatatable
                         $bc = Bc::where("id", $id)->get();
                         $da = DemAch::where("id", $bc[0]->da)->get();
                         $eb = Et_bes::where("id", $da[0]->eb)->get();
-                        $x = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+                        $pvs = Pv::where("da", $bc[0]->da)->get();
+                        $pvAttr = PvAttr::where("da", $bc[0]->da)->get();
+
+                        $prof = Proforma::where("id", $bc[0]->proforma)->where("da", $bc[0]->da)->get();
+                                    
+                       // $z = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+
+                        $x = prixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                        ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
+                        ->selectRaw("product_oders.quantite as quantite")
+                        ->where("select_pvs.pv", $pvAttr[0]->id)
+                        ->where("select_pvs.proforma", $prof[0]->id)
+                        ->where("prix_pvs.pv", $pvs[0]->id)
+                        ->where("prix_pvs.proforma", $prof[0]->id)
+                        ->where("product_oders.etatBes", $eb[0]->id)
+                        ->get('quantite')->sum('quantite');
+
                         $y = BrOder::where('bc', $id)->get('quantite')->sum('quantite');
 
                         if ($x==$y) {
@@ -373,7 +400,22 @@ class BcTable extends LivewireDatatable
                         $bc = Bc::where("id", $id)->get();
                         $da = DemAch::where("id", $bc[0]->da)->get();
                         $eb = Et_bes::where("id", $da[0]->eb)->get();
-                        $x = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+                        $pvs = Pv::where("da", $bc[0]->da)->get();
+                        $pvAttr = PvAttr::where("da", $bc[0]->da)->get();
+
+                        $prof = Proforma::where("id", $bc[0]->proforma)->where("da", $bc[0]->da)->get();
+                                    
+                       // $z = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
+
+                        $x = prixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                        ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
+                        ->selectRaw("product_oders.quantite as quantite")
+                        ->where("select_pvs.pv", $pvAttr[0]->id)
+                        ->where("select_pvs.proforma", $prof[0]->id)
+                        ->where("prix_pvs.pv", $pvs[0]->id)
+                        ->where("prix_pvs.proforma", $prof[0]->id)
+                        ->where("product_oders.etatBes", $eb[0]->id)
+                        ->get('quantite')->sum('quantite');
                         $y = BrOder::where('bc', $id)->get('quantite')->sum('quantite');
 
                         if ($x==$y) {

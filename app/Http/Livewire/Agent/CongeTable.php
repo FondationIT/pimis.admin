@@ -102,6 +102,8 @@ class CongeTable extends LivewireDatatable
         }else if (Agent::firstWhere('id', Auth::user()->agent)->fonction == 1) {
            return Conge::join('agents', 'agents.id', '=', 'conges.agent')
             ->where('agents.service', Agent::firstWhere('id', Auth::user()->agent)->service);
+        }else if(Auth::user()->role == 'Sup'){
+            return Conge::query()->orderBy("id", "DESC");
         }else{
             return Conge::query()->where("agent", Auth::user()->agent)->orderBy("id", "DESC");
         }

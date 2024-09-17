@@ -117,7 +117,7 @@ class BpPrint extends Component
         }elseif($this->bps[0]->categorie == 3){
             $this->index = Tr::where("id", $this->bps[0]->bc)->get();
             $this->products = TrOder::where("tr", $this->index[0]->id)->get();
-            $this->some = TrOder::where('tr',$this->bps[0]->bc)->selectRaw("prix * quantite as price")->get('price')->sum('price');
+            $this->some = TrOder::where('tr',$this->bps[0]->bc)->selectRaw("prix * quantite * frequence as price")->get('price')->sum('price');
             $this->compte = Compte::where("type", 2)->where("proprietaire", 1)->get();
 
         }elseif($this->bps[0]->categorie == 4){

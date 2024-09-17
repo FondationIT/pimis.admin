@@ -185,6 +185,13 @@ class DaTable extends LivewireDatatable
         ]);
     }
 
+    public function restoreDa($modelId){
+        $this->modelId = $modelId;
+        DemAch::find($this->modelId)->update([
+            'active' => 1,
+        ]);
+    }
+
 
 
 
@@ -208,9 +215,9 @@ class DaTable extends LivewireDatatable
 
     public function logicAlg(){
         if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'){
-            return DemAch::query();
+            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb');
         }elseif(Auth::user()->role == 'LOG1'){
-            return DemAch::query();
+            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb');
         }elseif (Auth::user()->role == 'C.P') {
 
             $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
@@ -229,20 +236,22 @@ class DaTable extends LivewireDatatable
             return $das;
         }elseif (Auth::user()->role == 'COMPT1') {
 
-            $das = DemAch::query()
+            $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
             ->where('dem_aches.niv1', true);
             return $das;
         }else if(Auth::user()->role == 'D.A.F'){
-            return DemAch::query()->orderBy("id", "DESC")
-            ->where('dem_aches.niv1', true)
-            ->where('dem_aches.niv2', true)
-            ->where('dem_aches.niv3', true);
-        }else {
-            return DemAch::query()->orderBy("id", "DESC")
+            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
             ->where('dem_aches.niv1', true)
             ->where('dem_aches.niv2', true)
             ->where('dem_aches.niv3', true)
-            ->where('dem_aches.niv4', true);
+            ->orderBy("dem_aches.id", "DESC");
+        }else {
+            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
+            ->where('dem_aches.niv1', true)
+            ->where('dem_aches.niv2', true)
+            ->where('dem_aches.niv3', true)
+            ->where('dem_aches.niv4', true)
+            ->orderBy("dem_aches.id", "DESC");
         }
     }
 
@@ -251,8 +260,9 @@ class DaTable extends LivewireDatatable
     }
 
     public function filterData($data){
+        
         $query = $this->logicAlg()->whereDate('dem_aches.created_at','>=',$data['debut'])->whereDate('dem_aches.created_at','<=',$data['fin']);
-        $query = ($data['projet']== 0) ? $query : $query->where('dem_aches.projet', $data['projet']);
+        $query = ($data['projet']== 0) ? $query : $query->where('et_bes.projet', $data['projet']);
 
         return $this->statusData($data['status'], $query)->orderBy("dem_aches.id", "DESC");
     }
@@ -275,22 +285,25 @@ class DaTable extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2'){
+        if(Auth::user()->role == 'COMPT2'){
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
+
+                Column::name('motif')
+                    ->label('Motif'),
 
                 Column::name('created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv2')
+                BooleanColumn::name('dem_aches.niv2')
                     ->label('Comptable'),
 
                 Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
@@ -305,7 +318,7 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv2'], function ($id,$active,$niv2) {
+                Column::callback(['dem_aches.id','dem_aches.active','dem_aches.niv2'], function ($id,$active,$niv2) {
 
                     if ($active == true && $niv2 == true) {
                         $edit = '';
@@ -327,30 +340,33 @@ class DaTable extends LivewireDatatable
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv1')
+                BooleanColumn::name('dem_aches.niv1')
                     ->label('Logistique'),
 
-                BooleanColumn::name('niv2')
+                BooleanColumn::name('dem_aches.niv2')
                     ->label('Comptable'),
 
-                BooleanColumn::name('niv3')
+                BooleanColumn::name('dem_aches.niv3')
                     ->label('Chef Projet'),
 
-                BooleanColumn::name('niv4')
+                BooleanColumn::name('dem_aches.niv4')
                     ->label('D.A.F'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -367,18 +383,21 @@ class DaTable extends LivewireDatatable
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv1')
+                BooleanColumn::name('dem_aches.niv1')
                     ->label('Logistique'),
 
                 Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
@@ -393,7 +412,7 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
+                Column::callback(['dem_aches.id','dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
 
@@ -423,9 +442,9 @@ class DaTable extends LivewireDatatable
                         ->sum('price');
 
                         
-                            /*if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
+                            if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
                                 $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                            }else {*/
+                            }else {
                                 if (Proforma::where("da", $id)->exists()) {
                                     if($some <= $bailleur[0]->max1){
 
@@ -445,12 +464,13 @@ class DaTable extends LivewireDatatable
                                 if (PvAttr::where("da", $id )->exists()) {
                                     $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
                                 }
+                            }
 
                            // }
                             if (Bc::where("da", $id)->exists()) {
                                 //$dsa = '<span class="badge badge-success">Fini</span>';
                             }
-                        
+                            
 
 
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
@@ -459,8 +479,12 @@ class DaTable extends LivewireDatatable
                         $edit = '';
                         $edit2 = '';
                     }elseif($active == false){
-                        $edit = '';
                         $edit2 ='';
+                        if($niv1== false || $niv2== false || $niv3== false || $niv1== false){
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreDa(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
+                        }else{
+                            $edit = '';
+                        }
                     }else{
                         $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="lApprDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
@@ -475,21 +499,24 @@ class DaTable extends LivewireDatatable
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                BooleanColumn::name('niv3')
+                BooleanColumn::name('dem_aches.niv3')
                     ->label('Chef Projet'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -501,7 +528,7 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv3'], function ($id,$active,$niv3) {
+                Column::callback(['dem_aches.id','dem_aches.active','dem_aches.niv3'], function ($id,$active,$niv3) {
 
                     if ($active == true && $niv3 == true) {
                         $edit = '';
@@ -519,22 +546,28 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }else if(Auth::user()->role == 'D.A.F'){
+        }else if(Auth::user()->role == 'COMPT1'){
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                BooleanColumn::name('dem_aches.niv2')
+                    ->label('Comptable'),
+
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -546,7 +579,79 @@ class DaTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable(),
 
-                Column::callback(['id','active','niv4'], function ($id,$active,$niv4) {
+                Column::callback(['dem_aches.id','dem_aches.eb','dem_aches.active','dem_aches.niv2','dem_aches.created_at','dem_aches.niv4'], function ($id,$eb,$active,$niv2,$dt,$niv4) {
+
+                    $some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
+                    ->selectRaw("prices.prix * product_oders.quantite as price")
+                    ->where('product_oders.etatBes', $eb)
+                    ->whereDate('prices.debut','<=', $dt)->whereDate('prices.fin','>=', $dt)
+                    ->get('price')
+                    ->sum('price');
+
+                    if($some < 500){
+
+                        if ($active == true && $niv4 == true) {
+                            $edit = '';
+                            $edit2 = '';
+                        }elseif($active == false){
+                            $edit = '';
+                            $edit2 ='';
+                        }else{
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="dfApprDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+    
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        }
+
+                    }else{
+
+                        if ($active == true && $niv2 == true) {
+                            $edit = '';
+                            $edit2 = '';
+                        }elseif($active == false){
+                            $edit = '';
+                            $edit2 ='';
+                        }else{
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="fApprDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        }
+                    }
+
+                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
+                })->unsortable(),
+
+            ];
+        }else if(Auth::user()->role == 'D.A.F'){
+
+            return [
+
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
+                })->label('D.A Ref')->searchable(),
+
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
+                })->label('B.R Ref')->searchable(),
+
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
+                    ->label('Date'),
+
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
+                        $delete = '<span class="badge badge-success">Approuvé</span>';
+                    }elseif($active == false){
+                        $delete = '<span class="badge badge-danger">Refusé</span>';
+                    }else{
+                        $delete = '<span class="badge badge-info">En cours</span>';
+                    }
+                        return $delete ;
+                })->unsortable(),
+
+                Column::callback(['dem_aches.id','dem_aches.active','dem_aches.niv4'], function ($id,$active,$niv4) {
 
                     if ($active == true && $niv4 == true) {
                         $edit = '';
@@ -574,18 +679,21 @@ class DaTable extends LivewireDatatable
 
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -602,18 +710,21 @@ class DaTable extends LivewireDatatable
         }else{
             return [
 
-                Column::callback(['reference','id'], function ($reference,$id) {
+                Column::callback(['dem_aches.reference','dem_aches.id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$id.')" data-toggle="modal" data-target="#pDaModalForms">'.$reference.'</a>';
                 })->label('D.A Ref')->searchable(),
 
-                Column::callback(['eb'], function ($eb) {
-                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.Et_bes::find($eb)->reference.'</a>';
+                Column::callback(['et_bes.reference'], function ($eb) {
+                    return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$eb.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$eb.'</a>';
                 })->label('B.R Ref')->searchable(),
 
-                Column::name('created_at')
+                Column::name('motif')
+                    ->label('Motif'),
+
+                Column::name('dem_aches.created_at')
                     ->label('Date'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                Column::callback(['dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';

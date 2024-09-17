@@ -108,7 +108,7 @@
                                                         <td>{{$prod->quantite - App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite')}}</td>
                                                         <td>
                                                             
-                                                                <input type="number" style="width: 100px" id="prixBr" step=1 min=0 max={{$prod->quantite - App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite')}} class="form-control qteBr" required>
+                                                                <input type="number" style="width: 100px" id="prixBr" step=.1 min=0 max={{$prod->quantite - App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite')}} class="form-control qteBr" required>
                                                             
                                                         </td>
                                                         <td>

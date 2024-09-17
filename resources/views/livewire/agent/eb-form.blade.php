@@ -10,7 +10,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form id="registerEtBes" class="needs-validation" >
+                <form id="registerEtBes" class="needs-validation"  >
                 <div class="modal-body">
                     <div id="messageErrEtBes"></div>
 
@@ -22,13 +22,18 @@
                         </div>
                         <div class="col-md-6 mb-10">
                             <label for="projet">Selectionner projet</label>
+                           
                             <select class="form-control select2" id="projetEB" required>
                                 <option value=""></option>
-
-                                @foreach ($affectation as $aff)
-                                    <option value="{{$aff->projet}}">{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</option>
-                                @endforeach
-
+                                @if(Auth::user()->role == 'CHR')
+                                    @foreach ($projet as $projet)
+                                        <option value="{{$projet->id}}">{{$projet->name}}</option>
+                                    @endforeach
+                                @else
+                                    @foreach ($affectation as $aff)
+                                        <option value="{{$aff->projet}}">{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</option>
+                                    @endforeach
+                                @endif                                
                             </select>
                             <div class="invalid-feedback">
                                 Selectionner une option

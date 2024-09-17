@@ -2,17 +2,19 @@
 /* Tuto Alsacreations : Faites bonne impression - Feuille styles css imprimante */
 @page {
   /*size: landscape;*/
+  margin: 11mm 17mm 0mm 17mm;
 }
 
 body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© utilisÃ©e pour la taille de la police  */
 	background-color:#fff;
-  font-family: ;
+  /*font-family: ;*/
 	font-size:14pt;
+  color: #000;
 }
 
 #page { /* Modifications : suppression de la bordure - marges */
 	margin:0;
-	border:none;
+	border:1px solid #000;
 }
 
 
@@ -23,10 +25,6 @@ body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© ut
 }
 
 h1#top { /* Affichage du titre */
-	margin:0;
-	padding:0;
-	text-indent:0;
-	line-height:25pt;
 	font-size:25pt;
 }
 
@@ -87,7 +85,6 @@ p { /* Modifications : alignement du texte - marges - unitÃ© des marges, polic
 img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
   float:center;
   margin:3pt 6pt 3pt 6pt;
-  opacity: 1;
   position: fixed;
 
 }
@@ -113,13 +110,23 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
     padding: 0px;
     opacity: 1;
 }
-.prodT th,.prodT td{
-    border: 1px solid rgba(20, 20, 20, 1);
+.table{
+  padding: 0px;
+  margin: 0px;
+}
+.table th,.table td{
+    border: 1px solid #000;
     padding: none;
+    margin: 0px;
+    color: #000;
+    font-size:12pt;
+}
+.table tr{
+    padding: none;
+    margin: 0px;
 }
 hr{
-  color:rgba(50, 50, 50, 1);
-  
+  border: 1px solid #000; 
 }
 
 img.droite {
@@ -146,9 +153,20 @@ div.droite {
   }
 
   footer{
-    position: absolute;
+    position: fixed;
     width: 100%;
-    bottom: 0;
+    bottom: 0mm;
+    height : calc(20mm + 34px);
+  }
+  .bbody{
+    border: 1px solid #000;
+    width: 100%;
+    margin: 0mm 0mm 0mm 0mm;
+  }
+  header{
+    position: fixed;
+    width: 100%;
+    top: 0;
   }
 
   footer p{

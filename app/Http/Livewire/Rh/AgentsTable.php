@@ -99,7 +99,7 @@ class AgentsTable extends LivewireDatatable
 
                     $aff = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="vue(' . $id . ')" data-toggle="modal" data-target="#aAgentModalForms"><i class="icon-eye"></i></a>';
 
-                    if(Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup'){
+                    if( Auth::user()->role == 'ADMIN' || Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup'){
                         $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAgent(' . $id . ')" text-red-700><i class="icon-trash"></i></a>';
 
                         $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nAgentModalForms"><i class="icon-pencil"></i></a>';

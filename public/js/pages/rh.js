@@ -31,7 +31,7 @@ $('#partMSAdd').on('click', function(e){
     count = count + 1;
     var aBPlus ="";
 
-    aBPlus +='<div class="form-row form-row-all" id="form-rowMS'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartMs" id="agMS'+count+'" required></select></div>'
+    aBPlus +='<div class="form-row form-row-all" id="form-rowMS'+count+'"><div class="col-md-3 mb-10"></div><div class="col-md-6 mb-10"><select class="form-control fournPartMs select2ms" id="agMS'+count+'" required></select></div>'
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowMS'+count+'" class="removePartMS text-red-600"><i class="icon-close txt-danger"></i></a></div><div class="col-md-2 mb-10"></div></div>'
 
@@ -46,7 +46,7 @@ $('#partMSAdd').on('click', function(e){
 
     $('#autrePartMS').append(aBPlus);
     $('#agMS'+count).html(partPv);
-
+    $('.select2ms').select2()
 
     $('.removePartMS').on('click', function(e){
 

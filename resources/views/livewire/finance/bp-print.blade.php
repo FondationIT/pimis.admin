@@ -443,7 +443,7 @@
                                         <td>{{ $prod->libelle}}</td>
 
                                         <td>USD</td>
-                                        <td>{{ $prod->prix * $prod->quantite }}</td>
+                                        <td>{{ $prod->prix * $prod->quantite * $prod->frequence }}</td>
 
                                         <td></td>
 
@@ -561,7 +561,7 @@
                                 @if ($index)
 
                                     <p class="center">{{ App\Models\User::firstWhere('id', $bps[0]->signature)->name}}<br>
-                                    Le {{$index[0]->updated_at->format('d/m/Y')}}</p>
+                                    Le {{$bps[0]->created_at->format('d/m/Y')}}</p>
                                     <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $bps[0]->signature)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                 @endif

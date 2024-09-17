@@ -17,15 +17,15 @@ class DiPrint extends Component
     public $i = 1;
 
     protected $listeners = [
-        'printEb'
+        'printDi'
     ];
 
-    public function printEb($modelId){
+    public function printDi($modelId){
         $this->modelId = $modelId;
 
         $this->products = DiOder::where("di", $this->modelId)->orderBy("id", "DESC")->get();
         $this->dis = Di::where("id", $this->modelId)->get();
-        $this->valid1 = ValidDi::where("eb", $this->modelId)->where("niv", 1)->get();
+        $this->valid1 = ValidDi::where("di", $this->modelId)->where("niv", 1)->get();
     }
     public function render()
     {

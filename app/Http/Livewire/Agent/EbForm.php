@@ -6,6 +6,7 @@ use App\Models\Affectation;
 use App\Models\Article;
 use App\Models\Product;
 use App\Models\Categorie;
+use App\Models\Projet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -23,6 +24,7 @@ class EbForm extends Component
         return view('livewire.agent.eb-form',
         [
             'affectation' => Affectation::where("active", true)->where("agent", Auth::user()->agent)->orderBy("id", "DESC")->get(),
+            'projet' => Projet::where("active", "1")->orderBy("id", "DESC")->get(),
             'products' => Product::where("active", true)->orderBy("id", "DESC")->get(),
             'categories' => Categorie::where("active", true)->orderBy("id", "DESC")->get(),
             'articles' => Article::where("active", true)->orderBy("id", "DESC")->get(),

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Stock;
 
 use App\Models\DemAch;
 use App\Models\Bc;
+use App\Models\FournPrice;
 use App\Models\Proforma;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,7 @@ class BcForm extends Component
 
     public $da;
     public $prof;
+    public $ctr;
     public $modelId;
     public $modelProf;
     public $state = [];
@@ -31,6 +33,7 @@ class BcForm extends Component
         $this->da = DemAch::where("id", $this->modelId)->get();
         $this->prof = Proforma::where("id", $this->modelProf)->get();
 
+        $this->ctr = FournPrice::where("id", $this->modelProf)->get();
     }
 
     public function submit()

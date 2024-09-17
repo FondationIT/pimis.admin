@@ -43,6 +43,7 @@
                                 <option value="PERS">PERS</option>
                                 <option value="SECU">SECU</option>
                                 <option value="MAG">MAG</option>
+                                <option value="CHR">CHR</option>
                                 <option value="LOG2">LOG 2</option>
                                 <option value="LOG1">LOG 1</option>
                                 <option value="CAISS">CAISS</option>

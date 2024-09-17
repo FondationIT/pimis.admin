@@ -157,6 +157,11 @@ class TrTable extends LivewireDatatable
             ->where('affectations.agent', Auth::user()->agent);
             
 
+        }if(Auth::user()->role == 'COMPT1'){
+            
+            return Tr::query();
+            
+
         }else{
             return Tr::query()
             ->where('agent', Auth::user()->id);
@@ -184,7 +189,7 @@ class TrTable extends LivewireDatatable
                     ->label('Date'),
 
                 Column::callback(['id'], function ($id) {
-                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite * frequence as price")->get('price')
                     ->sum('price');
                     return '$ '.$some;
                 })->label('Montant'),
@@ -238,7 +243,7 @@ class TrTable extends LivewireDatatable
                     ->label('Date'),
 
                 Column::callback(['id'], function ($id) {
-                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite * frequence as price")->get('price')
                     ->sum('price');
                     return '$ '.$some;
                 })->label('Montant'),
@@ -302,7 +307,7 @@ class TrTable extends LivewireDatatable
                     ->label('Date'),
 
                 Column::callback(['id'], function ($id) {
-                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite * frequence as price")->get('price')
                     ->sum('price');
                     return '$ '.$some;
                 })->label('Montant'),
@@ -380,7 +385,7 @@ class TrTable extends LivewireDatatable
                     ->label('Date'),
 
                 Column::callback(['id'], function ($id) {
-                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite * frequence as price")->get('price')
                     ->sum('price');
                     return '$ '.$some;
                 })->label('Montant'),
@@ -476,7 +481,7 @@ class TrTable extends LivewireDatatable
                     ->label('Date'),
 
                 Column::callback(['id'], function ($id) {
-                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite as price")->get('price')
+                    $some = TrOder::where('tr',$id)->selectRaw("prix * quantite * frequence as price")->get('price')
                     ->sum('price');
                     return '$ '.$some;
                 })->label('Montant'),

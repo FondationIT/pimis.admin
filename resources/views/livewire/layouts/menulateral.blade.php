@@ -22,6 +22,7 @@
                     @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
                     @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
                     @if (Auth::user()->role == 'MAG')MAGASIN @endif
+                    @if (Auth::user()->role == 'CHR')CHARROI @endif 
                     @if (Auth::user()->role == 'SECU')SECURITE @endif         
                     @if (Auth::user()->role == 'PERS')USER @endif
                 </span></h4>

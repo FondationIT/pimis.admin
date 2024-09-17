@@ -560,5 +560,6 @@
     <livewire:agent.eb-print />
     <livewire:stock.da-print />
     <livewire:agent.di-form />
+    <livewire:agent.di-print />
 </div>
 

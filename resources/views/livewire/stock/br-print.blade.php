@@ -109,7 +109,7 @@
 
                                             <p class="center" >{{ App\Models\User::firstWhere('id', $br[0]->signature)->name}}<br>
                                             Le {{$ebs[0]->created_at->format('d/m/Y')}}</p>
-                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $ebs[0]->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
+                                            <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $br[0]->signature)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
                                         @endif
                                     </td>

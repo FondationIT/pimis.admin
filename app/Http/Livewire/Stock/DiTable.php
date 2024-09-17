@@ -80,11 +80,21 @@ class DiTable extends LivewireDatatable
 
     public function builder()
     {
-        if (Auth::user()->role == 'C.P') {
+        if (Auth::user()->role == 'Sup') {
+
+            return Di::query();
+        }if (Auth::user()->role == 'C.P') {
 
             $dis = Di::join('affectations', 'affectations.projet', '=', 'dis.projet')
             ->where('affectations.agent', Auth::user()->agent)
             ->where('affectations.cath', '1');
+            return $dis;
+        }if (Auth::user()->role == 'COMPT1') {
+
+            $dis = Di::query()
+            ->where('projet', 3)->orWhere('projet', 70)->orWhere('projet', 71)
+            ->where('active', true)
+            ->orderBy("id", "DESC");
             return $dis;
         }elseif (Auth::user()->role == 'MAG') {
 
@@ -103,7 +113,7 @@ class DiTable extends LivewireDatatable
 
     public function columns()
     {
-        if (Auth::user()->role == 'C.P') {
+        if (Auth::user()->role == 'C.P' || Auth::user()->role == 'COMPT1') {
 
 
             return [

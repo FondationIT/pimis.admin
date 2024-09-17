@@ -1,6 +1,6 @@
 <div>
     <div class="modal fade" id="pvModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">PV</h5>
@@ -46,14 +46,14 @@
                                                 <tr>
 
                                                     <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
-                                                    <td>{{$prod->quantite}} {{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
+                                                    <td>{{$prod->quantite}} {{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                     <td>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text" id="inputGroupPrepend">$</span>
                                                             </div>
-                                                            <input type="number" id="prixPv" min="0" class="form-control prixPv" required>
+                                                            <input type="number" id="prixPv" step=.00001 min=0 class="form-control prixPv" required>
                                                             
 
                                                             <input type="text" id="profPv" class="profPv"  value="{{$prof->id}}" hidden>

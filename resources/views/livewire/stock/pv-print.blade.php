@@ -11,27 +11,28 @@
                 </div>
 
                 <div class="modal-body" id="printPv">
+                    <header>
+                        <div class="row">
 
-                    <div class="row">
 
+                            <div class="col-lg-6 fix" style="">
+                                <div>
+                                    <br>
+                                    <h4>PROCES VERBAL D’OUVERTURE ET ANALYSE</h4>
+                                    <p class="">N<sup>o</sup> : <b>@if ($pvs)
+                                        {{$pvs[0]->reference}}
+                                    @endif</b></p>
+                                </div>
+                            </div>
 
-                        <div class="col-lg-6 fix" style="">
-                            <div>
-                                <br>
-                                <h4>PROCES VERBAL D’OUVERTURE ET ANALYSE</h4>
-                                <p class="">N<sup>o</sup> : <b>@if ($pvs)
-                                    {{$pvs[0]->reference}}
-                                @endif</b></p>
+                            <div class="col-lg-3 fix" style="text-align: center">
+                            </div>
+
+                            <div class="col-lg-3 fix" style="text-align: center">
+                                <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                             </div>
                         </div>
-
-                        <div class="col-lg-3 fix" style="text-align: center">
-                        </div>
-
-                        <div class="col-lg-3 fix" style="text-align: center">
-                            <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
-                        </div>
-                    </div>
+                    </header>
 
                     <hr class="mbtm">
 
@@ -44,7 +45,7 @@
                             <h5>Tableau comparatif</h5><br>
                             <div class="table-wrap">
                                 <div class="table-responsive" >
-                                    <table class="table  table-bordered table-striped mb-0 prodT">
+                                    <table class="table table-striped table-border mb-0 prodT">
                                         <thead>
                                             <tr>
                                                 <th rowspan="2"><strong>Articles</strong></th>

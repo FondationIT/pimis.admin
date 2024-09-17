@@ -175,7 +175,6 @@ class Bp3Table extends LivewireDatatable
         }else if (Auth::user()->role == 'COMPT1') {
 
             $bps = Bp::query()
-            ->where('niv1', true)
             ->where('categorie', 3)
             ->orderBy("id", "DESC");
             return $bps;

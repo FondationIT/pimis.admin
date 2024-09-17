@@ -8,7 +8,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form id="registerMs" class="needs-validation">
+                <form id="registerMs" class="needs-validation" >
                     <div class="modal-body">
                         <div id="messageErrMs"></div>
 
@@ -63,7 +63,7 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-10">
                                 <label>Moyen de transport</label>
-                                <select class="form-control" id="moyenMs" required>
+                                <select class="form-control select2" id="moyenMs" required>
                                     <option value=""></option>
                                     
                                     <option value="Véhicule">Véhicule</option>
@@ -91,9 +91,9 @@
 
                             </div>
 
-                            <div class="col-md-6 mb-10">
+                            <div class="col-md-6 mb-10" wire:ignore>
                                 <label>Les participants</label>
-                                <select class="form-control fournPartMs" id="agMS1" required>
+                                <select class="form-control fournPartMs select2" id="agMS1" required>
                                     <option value=""></option>
                                     @foreach ($agents as $agent)
                                         <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>

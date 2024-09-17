@@ -45,27 +45,36 @@ class PrixTable extends LivewireDatatable
             'active' => 1,
         ]);
     }
+
+    public function builder()
+    {
+        
+            return Article::join('prices','articles.id','=','prices.product')
+            ->join('products','products.id','=','articles.product');
+        
+    }
     public function columns()
     {
         return [
-            Column::callback(['product'], function ($x) {
-                return Product::find(Article::find($x)->product)->name.' '.Article::find($x)->marque.' '.Article::find($x)->model ;
-            })->label('Produit'),
+            Column::callback(['products.name','marque','model'], function ($designation,$marque,$model) {
 
-            Column::name('debut')
+                return $designation.' '.$marque.' '.$model;
+            })->label('Desination')->searchable(),
+
+            Column::name('prices.debut')
                 ->label('Debut'),
 
-            Column::name('fin')
+            Column::name('prices.fin')
                 ->label('Fin'),
 
-            Column::name('prix')
+            Column::name('prices.prix')
                 ->label('Prix'),
 
 
-            BooleanColumn::name('active')
+            BooleanColumn::name('prices.active')
                 ->label('State'),
 
-            Column::callback(['id','active'], function ($id,$active) {
+            Column::callback(['prices.id','prices.active'], function ($id,$active) {
 
                 $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deletePrix(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
                 $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nPrixModalForms"><i class="icon-pencil"></i></a>';
