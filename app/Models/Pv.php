@@ -18,6 +18,7 @@ class Pv extends Model
         'da',
         'reference',
         'dateC',
+        'type',
         'titre',
         'observation',
         'active',

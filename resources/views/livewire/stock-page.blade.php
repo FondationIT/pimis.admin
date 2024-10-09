@@ -97,7 +97,7 @@
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
                 <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
-                <li class="breadcrumb-item active" aria-current="page">PV d'analyse</li>
+                <li class="breadcrumb-item active" aria-current="page">Cotation</li>
             </ol>
         </nav>
         <!-- /Breadcrumb -->
@@ -106,7 +106,7 @@
             <!-- Title -->
                 <div class="hk-pg-header align-items-top">
                   <div>
-                    <h3 class="hk-pg-title font-weight-600 mb-10">PV d'analyse</h3>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Cotation</h3>
                   </div>
                 </div>
             <!-- /Title -->
@@ -118,6 +118,34 @@
 
         </div>
     </section>
+
+
+    <section id="pvAttrS-section" class="section js-section u-category-media">
+      <!-- Breadcrumb -->
+      <nav class="hk-breadcrumb" aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-light bg-transparent">
+              <li class="breadcrumb-item"><a href="#">Stock & Logistique</a></li>
+              <li class="breadcrumb-item active" aria-current="page">PV</li>
+          </ol>
+      </nav>
+      <!-- /Breadcrumb -->
+      <!-- Content Wrapper. Contains page content -->
+       <div class="container">
+          <!-- Title -->
+              <div class="hk-pg-header align-items-top">
+                <div>
+                  <h3 class="hk-pg-title font-weight-600 mb-10">PV</h3>
+                </div>
+              </div>
+          <!-- /Title -->
+
+          <!-- Main content -->
+          <!-- Row -->
+          <livewire:stock.pv-attr-table dates="created_at|d-m-Y" exportable/>
+          <!-- /Row -->
+
+      </div>
+  </section>
 
 
 
@@ -149,6 +177,8 @@
 
         </div>
     </section>
+
+
 
     <section id="fournS-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
@@ -311,7 +341,7 @@
     <nav class="hk-breadcrumb" aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-light bg-transparent">
             <li class="breadcrumb-item"><a href="#">Agent</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Demmande Interne</li>
+            <li class="breadcrumb-item active" aria-current="page">Demande Interne</li>
         </ol>
     </nav>
     <!-- Content Wrapper. Contains page content -->
@@ -319,7 +349,7 @@
         <!-- Title -->
             <div class="hk-pg-header align-items-top">
               <div>
-                <h3 class="hk-pg-title font-weight-600 mb-10">Demmande Interne</h3>
+                <h3 class="hk-pg-title font-weight-600 mb-10">Demande Interne</h3>
               </div>
 
             </div>

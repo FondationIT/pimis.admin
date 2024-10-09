@@ -4,7 +4,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Demmande d'achat</h5>
+                    <h5 class="modal-title">Demande d'achat</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -17,7 +17,7 @@
                         <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
-                                <h3>DEMMANDE D'ACHAT</h3>
+                                <h3>DEMANDE D'ACHAT</h3>
                                 <p class="">N<sup>o</sup> : <b>@if ($ebs)
                                     {{$das[0]->reference}}
                                 @endif</b></p>
@@ -124,7 +124,7 @@
                             <div class="col-lg-12" style="text-align: center">
                                 <table class="table table-striped table-border mb-0">
                                     <tr>
-                                        <th><strong>Demmandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th>
+                                        <th><strong>Demandeur</strong></th><th><strong>Logistique</strong></th><th><strong>Finance</strong></th>
                                         
                                             @if (isset($das[0]) && !empty($das[0]))
                                                 @if ($ebs[0]->projet == 3 || $ebs[0]->projet == 70 || $ebs[0]->projet == 71)

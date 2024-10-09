@@ -77,7 +77,7 @@ class PrixTable extends LivewireDatatable
             Column::callback(['prices.id','prices.active'], function ($id,$active) {
 
                 $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deletePrix(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
-                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nPrixModalForms"><i class="icon-pencil"></i></a>';
+                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#prixModalForms"><i class="icon-pencil"></i></a>';
                 if ($active == false) {
                     $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restorePrix(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
                 }

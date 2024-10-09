@@ -51,7 +51,7 @@
                                     </li>
 
                                     <li class="nav-item" id="aCatPrix">
-                                        <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('articleUpdated')" data-open="bFile" data-section="aCatPrix">Catalogue de prix</a>
+                                        <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('articleUpdated')" data-open="bFile" data-section="aCatPrix">Articles & Prix</a>
                                     </li>
 
 
@@ -68,11 +68,11 @@
                                     </li>
 
                                     <li class="nav-item" id="di">
-                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demmande interne</a>
+                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demande interne</a>
                                     </li>
 
                                     <!--<li class="nav-item" id="di">
-                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demmande pret</a>
+                                        <a class="nav-link" href="#" id="button-di" data-active="di" wire:click="$emit('diUpdated')" data-open="bFile" data-section="di">Demande pret</a>
                                     </li>
 
                                     <li class="nav-item" id="di">
@@ -221,7 +221,10 @@
                                         @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
 
                                             <li class="nav-item" id="pvS">
-                                                <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" wire:click="$emit('pvUpdated')" data-section="pvS">PV d'analyse</a>
+                                                <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" wire:click="$emit('pvUpdated')" data-section="pvS">Cotation</a>
+                                            </li>    
+                                            <li class="nav-item" id="pvAttrS">
+                                                <a class="nav-link" href="#" id="button-pvAttrS" data-active="pvAttrS" data-open="bStock" wire:click="$emit('pvAttrUpdated')" data-section="pvAttrS">PV</a>
                                             </li>
                                             <li class="nav-item" id="bonComS">
                                                 <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" wire:click="$emit('bcUpdated')" data-section="bonComS">Bons de commande</a>
@@ -253,7 +256,7 @@
                                                 <a class="nav-link" href="#" id="button-entreeS" data-active="entreeS" data-open="bStock" wire:click="$emit('brUpdated')" data-section="entreeS">Bons de reception</a>
                                             </li>
                                             <li class="nav-item" id="diS">
-                                                <a class="nav-link" href="#" id="button-diS" data-active="diS" wire:click="$emit('diUpdated')" data-open="bStock" data-section="diS">Demmande interne</a>
+                                                <a class="nav-link" href="#" id="button-diS" data-active="diS" wire:click="$emit('diUpdated')" data-open="bStock" data-section="diS">Demande interne</a>
                                             </li>
                                         @endif
                                         <li class="nav-item" id="invS">
@@ -381,7 +384,7 @@
                                             <a class="nav-link" href="#" id="button-demAchP" data-active="demAchP" wire:click="$emit('demAchUpdated')" data-open="bProjet" data-section="demAchP">Demandes d'achat</a>
                                         </li>
                                         <li class="nav-item" id="diP">
-                                            <a class="nav-link" href="#" id="button-diP" data-active="diP" wire:click="$emit('diUpdated')" data-open="bProjet" data-section="diP">Demmande interne</a>
+                                            <a class="nav-link" href="#" id="button-diP" data-active="diP" wire:click="$emit('diUpdated')" data-open="bProjet" data-section="diP">Demande interne</a>
                                         </li>
                                         <li class="nav-item" id="bonpayP">
                                             <a class="nav-link" href="#" id="button-bonpayP" data-active="bonpayP" wire:click="$emit('bpUpdated')" data-open="bProjet" data-section="bonpayP">Bons de payement</a>

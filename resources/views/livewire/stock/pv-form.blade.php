@@ -21,11 +21,17 @@
                                 @endif
 
                             </div>
-                            <div class="col-md-8 mb-10">
-                                <label>Titre PV</label>
-                                <input type="text" class="form-control" id="titrePv" required>
+                            @if ($bailleur)
+                                @if ($bailleur[0]->min1 <= $some && $some <= $bailleur[0]->max1)
+                                <input type="text" id="titrePv" class="form-control" value="Achat directe" hidden>
+                                @else
+                                    <div class="col-md-8 mb-10">
+                                        <label>Titre PV</label>
+                                        <input type="text" class="form-control" id="titrePv" required>
 
-                            </div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         <hr>
                         <div class="col-sm">
@@ -72,39 +78,57 @@
 
                                 </div>
                             </div>
-                        </div><hr>
-                        <div class="form-row">
-
-                            <div class="col-md-6 mb-10">
-                                <label>Date de cloture</label>
-                                <input type="date" class="form-control" id="datePv" required>
-                            </div>
-                            
-                            <input id="allPartPVPlus" value="{{$agents}}" hidden>
-                            <div class="col-md-6 mb-10">
-                                <label>Observation</label>
-                                <textarea type="" class="form-control" id="obsPv" required></textarea>
-                            </div>
-                        </div><hr>
-
-                        <div class="form-row">
-                            <div class="col-md-3 mb-10">
-
-                            </div>
-
-                            <div class="col-md-6 mb-10">
-                                <label>Les participants</label>
-                                <select class="form-control fournPartPV" id="agPv1" required>
-                                    <option value=""></option>
-                                    @foreach ($agents as $agent)
-                                        <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-10">
-
-                            </div>
                         </div>
+                        <input id="allPartPVPlus" value="{{$agents}}" hidden>
+                        @if ($bailleur)
+                            @if ($bailleur[0]->min1 <= $some && $some <= $bailleur[0]->max1)
+                            <input  class="form-control" id="datePv" value=""  hidden>
+                            <input  class="form-control" id="obsPv" value="" hidden>
+                            <input  class="form-control" id="typePv" value="1" hidden>
+                            <input  class="form-control" id="fournPartPV" value="" hidden>
+                            @else
+
+                                 @if ($bailleur[0]->min2 <= $some && $some <= $bailleur[0]->max1)
+                                    <input class="form-control" id="typePv" value="2" hidden>
+                                 @else
+                                    <input class="form-control" id="typePv" value="3" hidden>
+                                 @endif
+                                <hr>
+                                <div class="form-row">
+
+                                    <div class="col-md-6 mb-10">
+                                        <label>Date de cloture</label>
+                                        <input type="date" class="form-control" id="datePv" required>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-md-6 mb-10">
+                                        <label>Observation</label>
+                                        <textarea type="" class="form-control" id="obsPv" required></textarea>
+                                    </div>
+                                </div><hr>
+
+                                <div class="form-row">
+                                    <div class="col-md-3 mb-10">
+
+                                    </div>
+
+                                    <div class="col-md-6 mb-10">
+                                        <label>Les participants</label>
+                                        <select class="form-control fournPartPV" id="agPv1" required>
+                                            <option value=""></option>
+                                            @foreach ($agents as $agent)
+                                                <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-10">
+
+                                    </div>
+                                </div>
+                                
+                            @endif
+                        @endif
                         <div id="autrePartPV">
                         </div>
                         <a href="#" id="partPVAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>

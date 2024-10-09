@@ -12,7 +12,8 @@ class PvAttr extends Model
     protected $fillable = [
         'da',
         'reference',
-        'titre',
+        'titre',    
+        'type',
         'observation',
         'justification',
         'active',

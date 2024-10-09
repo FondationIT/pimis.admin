@@ -126,49 +126,113 @@ class EtatBesoinController extends Controller
 
     public function pv(Request $data)
     {
-        DB::beginTransaction();
-        $this->dat = date('Y-m-d');
-        //DB::rollback();
+        if ($data['typePv'] == 1){
 
-        $ref = 'PV-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
-        Pv::create([
-            'reference' => $ref,
-            'da' => $data['daPv'],
-            'titre' => $data['titrePv'],
-            'dateC' => $data['datePv'],
-            'observation' => $data['obsPv'],
-            'signature' => Auth::user()->id,
+            DB::beginTransaction();
+            $this->dat = date('Y-m-d');
+            //DB::rollback();
 
-        ]);
-
-        $pv = Pv::firstWhere('reference', $ref )->id;
-
-        //$data = json_decode($data->getBody());
-        for($count = 0; $count<count($data['agPv']); $count++)
-         {
-            $ref1 = 'AGPV-'.$ref.$count;
-            signaturePv::create([
-                'reference' => $ref1,
-                'pv' => $pv,
-                'agent' => $data['agPv'][$count],
-            ]);
-         }
-
-
-         for($count = 0; $count<count($data['prixPv']); $count++)
-         {
-            $ref2 = 'PRPV-'.$ref.$count;
-            prixPv::create([
-                'reference' => $ref2,
-                'pv' => $pv,
+            $ref = 'PV-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
+            Pv::create([
+                'reference' => $ref,
+                'da' => $data['daPv'],
+                'type' =>$data['typePv'],
+                'titre' => $data['titrePv'],
+                'dateC' => $this->dat,
+                'observation' => '-',
                 'signature' => Auth::user()->id,
-                'produit' => $data['prodPv'][$count],
-                'proforma' => $data['profPv'][$count],
-                'prix' => $data['prixPv'][$count],
-            ]);
-         }
 
-        DB::commit();
+            ]);
+            $pv = Pv::firstWhere('reference', $ref )->id;
+            for($count = 0; $count<count($data['prixPv']); $count++)
+            {
+                $refp = 'PRPV-'.$ref.$count;
+                prixPv::create([
+                    'reference' => $refp,
+                    'pv' => $pv,
+                    'signature' => Auth::user()->id,
+                    'produit' => $data['prodPv'][$count],
+                    'proforma' => $data['profPv'][$count],
+                    'prix' => $data['prixPv'][$count],
+                ]);
+            }
+
+            $ref1 = 'PV-ATTR-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
+            PvAttr::create([
+                'reference' => $ref1,
+                'da' => $data['daPv'],
+                'type' =>$data['typePv'],
+                'titre' => $data['titrePv'],
+                'justification' => '-',
+                'observation' => '-',
+                'signature' => Auth::user()->id,
+
+            ]);
+            $pv1 = PvAttr::firstWhere('reference', $ref1 )->id;
+            
+            for($count = 0; $count<count($data['prodPv']); $count++)
+            {
+                $ref2 = 'PRPV-ATTR-'.$ref1.$count;
+                SelectPv::create([
+                    'reference' => $ref2,
+                    'pv' => $pv1,
+                    'signature' => Auth::user()->id,
+                    'produit' => $data['prodPv'][$count],
+                    'proforma' => $data['profPv'][$count],
+                ]);
+            }
+
+            DB::commit();
+
+            return true;
+
+        }else{
+            
+            DB::beginTransaction();
+            $this->dat = date('Y-m-d');
+            //DB::rollback();
+
+            $ref = 'PV-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
+            Pv::create([
+                'reference' => $ref,
+                'da' => $data['daPv'],
+                'type' =>$data['typePv'],
+                'titre' => $data['titrePv'],
+                'dateC' => $data['datePv'],
+                'observation' => $data['obsPv'],
+                'signature' => Auth::user()->id,
+
+            ]);
+
+            $pv = Pv::firstWhere('reference', $ref )->id;
+
+            //$data = json_decode($data->getBody());
+            for($count = 0; $count<count($data['agPv']); $count++)
+            {
+                $ref1 = 'AGPV-'.$ref.$count;
+                signaturePv::create([
+                    'reference' => $ref1,
+                    'pv' => $pv,
+                    'agent' => $data['agPv'][$count],
+                ]);
+            }
+
+
+            for($count = 0; $count<count($data['prixPv']); $count++)
+            {
+                $ref2 = 'PRPV-'.$ref.$count;
+                prixPv::create([
+                    'reference' => $ref2,
+                    'pv' => $pv,
+                    'signature' => Auth::user()->id,
+                    'produit' => $data['prodPv'][$count],
+                    'proforma' => $data['profPv'][$count],
+                    'prix' => $data['prixPv'][$count],
+                ]);
+            }
+
+            DB::commit();
+        }
 
         return true;
 
@@ -185,6 +249,7 @@ class EtatBesoinController extends Controller
         PvAttr::create([
             'reference' => $ref,
             'da' => $data['daPv'],
+            'type' =>$data['typePv'],
             'titre' => $data['titrePv'],
             'justification' => $data['justPv'],
             'observation' => $data['obsPv'],

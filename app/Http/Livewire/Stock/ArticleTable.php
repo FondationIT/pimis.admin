@@ -74,10 +74,16 @@ class ArticleTable extends LivewireDatatable
 
                 Column::callback(['id'], function ($id) {
                     $today = date('Y-m-d');
-                    $delete = '<span class="badge badge-danger">Expiré</span>';
-                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
-                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
-                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
+                    
+                    if (Price::where('product', $id)->where('active', true)->exists()) {
+                         if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()){  
+                            $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
+                            $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
+                         }else{
+                            $delete = '<span class="badge badge-warning">Expiré</span>';
+                         }
+                    }else{
+                        $delete = '<span class="badge badge-danger">Inexistant</span>';
                     }
                     return $delete;
                 })->label('Prix'),
@@ -110,11 +116,16 @@ class ArticleTable extends LivewireDatatable
                     ->label('Unite'),
                 Column::callback(['id'], function ($id) {
                     $today = date('Y-m-d');
-                    $delete = '<span class="badge badge-danger">Expiré</span>';
-                    if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()) {
-                        $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
-                        $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
-                    }
+                    if (Price::where('product', $id)->where('active', true)->exists()) {
+                        if (Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->exists()){  
+                           $delete = Price::where('product', $id)->whereDate('debut','<=', $today)->whereDate('fin','>=', $today)->where('active', true)->get();
+                           $delete = '<span class="badge badge-success">$'.$delete[0]->prix.'</span>';
+                        }else{
+                           $delete = '<span class="badge badge-warning">Expiré</span>';
+                        }
+                   }else{
+                       $delete = '<span class="badge badge-danger">Inexistant</span>';
+                   }
                     return $delete;
                 })->label('Prix'),
 

@@ -224,7 +224,7 @@
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
                 <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Catalogue de prix</li>
+                <li class="breadcrumb-item active" aria-current="page">Articles & Prix</li>
             </ol>
         </nav>
         <!-- /Breadcrumb -->
@@ -233,7 +233,7 @@
             <!-- Title -->
                 <div class="hk-pg-header align-items-top">
                   <div>
-                    <h3 class="hk-pg-title font-weight-600 mb-10">Catalogue de prix</h3>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Articles & Prix</h3>
                   </div>
                   @if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                     <div class="d-flex">
@@ -444,7 +444,7 @@
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
                 <li class="breadcrumb-item"><a href="#">Informations generales</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Demmande Interne</li>
+                <li class="breadcrumb-item active" aria-current="page">Demande Interne</li>
             </ol>
         </nav>
         <!-- Content Wrapper. Contains page content -->
@@ -452,7 +452,7 @@
             <!-- Title -->
                 <div class="hk-pg-header align-items-top">
                   <div>
-                    <h3 class="hk-pg-title font-weight-600 mb-10">Demmande Interne</h3>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Demande Interne</h3>
                   </div>
 
                   <div class="d-flex">

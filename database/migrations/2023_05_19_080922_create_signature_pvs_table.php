@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->foreignId('pv')->constrained('pvs');
             $table->string('agent')->constrained('users');
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

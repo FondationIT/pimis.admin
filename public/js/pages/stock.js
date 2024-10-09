@@ -203,7 +203,9 @@ $('#partPVAdd').on('click', function(e){
 
 
 var comm1Form = document.getElementById('registerPv');
+
 comm1Form.onsubmit = function(e) {
+    e.preventDefault();
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -215,6 +217,7 @@ comm1Form.onsubmit = function(e) {
    var profPv = [];
    var prodPv = [];
    var daPv = $('#daPv').val()
+   var typePv = $('#typePv').val()
    var titrePv = $('#titrePv').val()
    var datePv = $('#datePv').val()
    var obsPv = $('#obsPv').val()
@@ -240,7 +243,7 @@ comm1Form.onsubmit = function(e) {
     url: "/pvReg",
     dataType: 'json',
 
-    data: JSON.stringify(pvFormToJSON(daPv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+    data: JSON.stringify(pvFormToJSON(daPv,typePv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
     beforeSend: function() {
         $('#btnPv').hide();
         $('#prldPv').show();
@@ -282,10 +285,11 @@ comm1Form.onsubmit = function(e) {
 
 
 
-function pvFormToJSON(daPv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
+function pvFormToJSON(daPv,typePv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv) {
     return {
       "titrePv":titrePv,
       "daPv": daPv,
+      "typePv":typePv,
       "datePv":datePv,
       "obsPv": obsPv,
       "justPv": justPv,
@@ -393,6 +397,7 @@ comm13Form.onsubmit = function(e) {
    var fournPv = [];
    var prodPv = [];
    var daPv = $('#daPv2').val()
+   var typePv = $('#typePv2').val()
    var titrePv = $('#titrePv2').val()
    var obsPv = $('#obsPv2').val()
    var justPv = $('#justPv2').val()
@@ -414,7 +419,7 @@ comm13Form.onsubmit = function(e) {
     url: "/pvAttrReg",
     dataType: 'json',
 
-    data: JSON.stringify(pv2FormToJSON(daPv,titrePv,fournPv,obsPv,justPv,agPv,prodPv)),
+    data: JSON.stringify(pv2FormToJSON(daPv,typePv,titrePv,fournPv,obsPv,justPv,agPv,prodPv)),
     beforeSend: function() {
         $('#btnPv2').hide();
         $('#prldPv2').show();
@@ -456,11 +461,12 @@ comm13Form.onsubmit = function(e) {
 
 
 
-function pv2FormToJSON(daPv,titrePv,fournPv,obsPv,justPv,agPv,prodPv) {
+function pv2FormToJSON(daPv,typePv,titrePv,fournPv,obsPv,justPv,agPv,prodPv) {
     return {
       "titrePv":titrePv,
       "fournPv": fournPv,
       "daPv": daPv,
+      "typePv":typePv,
       "obsPv": obsPv,
       "justPv": justPv,
       "agPv":agPv,
