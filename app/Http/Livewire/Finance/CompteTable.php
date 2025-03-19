@@ -56,15 +56,12 @@ class CompteTable extends LivewireDatatable
     {
 
         return [
-            Column::callback(['reference','id'], function ($reference,$id) {
-                return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded">'.$reference.'</a>';
-            })->label('Reference'),
 
             Column::name('intitule')
-                ->label('Intitulé'),
+                ->label('Intitulé')->searchable(),
 
             Column::name('numero')
-                ->label('Numero'),
+                ->label('Numero')->searchable(),
 
             Column::callback(['proprietaire','type'], function ($id,$cat) {
                 if($cat == 1){
@@ -74,10 +71,10 @@ class CompteTable extends LivewireDatatable
                 }else if($cat == 2){
                     return Agent::where('id',$id)->get()[0]->firstname;
                 }
-            })->label('Proprietaire'),
+            })->label('Proprietaire')->searchable(),
 
             Column::name('banque')
-                ->label('Banque'),
+                ->label('Banque')->searchable(),
 
         ];
     }
