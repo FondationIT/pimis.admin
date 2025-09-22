@@ -35,6 +35,12 @@
     <link href="{{  asset('vendors/ion-rangeslider/css/ion.rangeSlider.css') }}" rel="stylesheet" type="text/css">
     <link href="{{  asset('vendors/ion-rangeslider/css/ion.rangeSlider.skinHTML5.css') }}" rel="stylesheet" type="text/css">
 
+    <!-- Team Dropdown CSS -->
+    <link href="{{  asset('vendors/team_dropdown/dist/css/team_dropdown.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- Duration CSS -->
+    <link href="{{  asset('vendors/duration/dist/css/duration.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- select2 CSS -->
     <link href="{{  asset('vendors/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 

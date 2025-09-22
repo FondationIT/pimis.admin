@@ -499,6 +499,26 @@ trForm.onsubmit = function(e) {
    var projet = $('#projetTR').val()
    var type = $('#typeTR').val()
    var titre = $('#titreTR').val()
+    // New Data
+   var equipe = $('#equipe').val()
+   var objectif = $('#obj_m').val()
+   var activite = $('#activite_m').val()
+   var resultat = $('#rslt_m').val()
+   var debut = $('#startDate').val()
+   var fin = $('#endDate').val()
+
+   const details = {
+    "equipe": equipe,
+    "objectif": objectif,
+    "activite": activite,
+    "resultat": resultat,
+    "debut": debut,
+    "fin": fin
+   };
+
+   
+   
+
 
    $('.prodTR').each(function(){
     produit.push($(this).val()); 
@@ -522,7 +542,7 @@ trForm.onsubmit = function(e) {
     url: "/trReg",
     dataType: 'json',
 
-    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre)),
+    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre,details)),
     beforeSend: function() {
         $('#btnTR').hide();
         $('#prldTR').show();
@@ -549,17 +569,24 @@ trForm.onsubmit = function(e) {
 
 
     },
-    error: function(jqXHR, textStatus, data){
+    error: function(jqXHR, textStatus, errorThrown){
         $('#prldTR').hide();
         $('#btnTR').show();
-        $('#messageErrTR').html(data)
+
+        // jqXHR.responseJSON has your JSON error
+        if (jqXHR.responseJSON) {
+            $('#messageErrTR').html(jqXHR.responseJSON.message);
+            console.error(jqXHR.responseJSON);
+        } else {
+            $('#messageErrTR').html('An unknown error occurred');
+        }
     }
 });
 
  }
 
 //
- function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre) {
+ function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre,details) {
    return {
      "product":produit,
      "quantite": qte,
@@ -569,5 +596,6 @@ trForm.onsubmit = function(e) {
      "projet": projet,
      "type": type,
      "titre": titre,
+     "details":details
    };
  }

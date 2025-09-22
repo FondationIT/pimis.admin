@@ -27,6 +27,7 @@ use App\Models\StatutAgent;
 use App\Models\Stock;
 use App\Models\Tr;
 use App\Models\TrOder;
+use App\Models\TrDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -363,40 +364,91 @@ class EtatBesoinController extends Controller
 
     public function tr(Request $data)
     {
-        DB::beginTransaction();
-        //DB::rollback();
-
-        //$data = json_decode($data->getBody());
-        $ref = 'TR-'.rand(10000,99999).'-FP'.rand(100,999);
-        Tr::create([
-            'reference' => $ref,
-            'agent' => $data['agent'],
-            'projet' => $data['projet'],
-            'type' => $data['type'],
-            'titre' => $data['titre'],
-        ]);
-        $tr = Tr::firstWhere('reference', $ref )->id;
-        for($count = 0; $count<count($data['product']); $count++)
-         {
-            $ref = 'TR-ODR-'.$tr.rand(10000,99999).''.$count;
-            TrOder::create([
+        try {
+            DB::beginTransaction();
+            //DB::rollback();
+            $details = $data['details'];
+    
+            //$data = json_decode($data->getBody());
+            $ref = 'TR-'.rand(10000,99999).'-FP'.rand(100,999);
+            
+            Tr::create([
                 'reference' => $ref,
-                'libelle' => $data['product'][$count],
-                'tr' => $tr,
-                'unite' => $data['unite'][$count],
-                'prix' => $data['prix'][$count],
-                'quantite' => $data['quantite'][$count],
+                'agent' => $data['agent'],
+                'projet' => $data['projet'],
+                'type' => $data['type'],
+                'titre' => $data['titre'],
             ]);
+            $tr = Tr::firstWhere('reference', $ref )->id;
+            for($count = 0; $count<count($data['product']); $count++){
+                $orderRef = 'TR-ODR-'.$tr.rand(10000,99999).''.$count;
+                TrOder::create([
+                    'reference' => $orderRef,
+                    'libelle' => $data['product'][$count],
+                    'tr' => $tr,
+                    'unite' => $data['unite'][$count],
+                    'prix' => $data['prix'][$count],
+                    'quantite' => $data['quantite'][$count],
+                ]);
+    
+            }
 
-         }
+            $equipeData = explode(';', $details['equipe']);
+            $activiteData = explode(';', $details['activite']);
 
-        DB::commit();
+            foreach ($equipeData as $key => $value) {
+                try {
+                    TrEquipe::create([
+                        'tr_ref'=>$ref,
+                        'user'=>$value['equipe']
+                    ]);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+            }
 
-        return true;
+            foreach ($activiteData as $key => $value) {
+                try {
+                    TrActivite::create([
+                        'tr_ref'=>$ref,
+                        'activite'=>$value['activite']
+                    ]);
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+            }
+
+            TrDetail::create([
+                'tr_ref'=>$ref,
+                'objectif'=>$details['objectif'],
+                'resultat'=>$details['resultat'],
+                'de'=>$details['debut'],
+                'a'=>$details['fin']
+            ]);
+    
+            DB::commit();
+            return true;
+        } catch (\Throwable $th) {
+            DB::rollBack(); // don’t forget to rollback on error
+
+            return response()->json([
+                'status'  => 'error',
+                'message' => $th->getMessage(),
+                'file'    => $th->getFile(),
+                'line'    => $th->getLine(),
+                'trace'   => $th->getTraceAsString(),
+            ], 500);
+        }
+        
+
 
     }
 
 
+
+    // public function tr_details(Request $data)
+    // {
+    // }
 
     public function miss(Request $data)
     {

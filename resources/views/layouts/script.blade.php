@@ -54,6 +54,13 @@
     <!-- EChartJS JavaScript -->
     <script src="{{  asset('vendors/echarts/dist/echarts-en.min.js')}}"></script>
 
+    <!-- Team Drop JavaScript -->
+    <script src="{{  asset('vendors/team_dropdown/dist/js/team_dropdown.min.js')}}"></script>
+
+    <!-- Team Drop JavaScript -->
+    <script src="{{  asset('vendors/duration/dist/css/duration.js')}}"></script>
+    
+
     <!-- Init JavaScript -->
     <script src="{{  asset('dist/js/init.js')}}"></script>
     <script src="{{  asset('dist/js/dashboard2-data.js')}}"></script>
