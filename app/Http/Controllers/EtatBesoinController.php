@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\AgentMission;
 use App\Models\Br;
 use App\Models\BrOder;
@@ -27,6 +28,8 @@ use App\Models\StatutAgent;
 use App\Models\Stock;
 use App\Models\Tr;
 use App\Models\TrOder;
+use App\Models\TrEquipe;
+use App\Models\TrActivite;
 use App\Models\TrDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -393,35 +396,40 @@ class EtatBesoinController extends Controller
     
             }
 
-            $equipeData = explode(';', $details['equipe']);
-            $activiteData = explode(';', $details['activite']);
+            $equipeData = array_filter(array_map('trim', explode(';', $details['equipe'])));
+            $activiteData = array_filter(array_map('trim', explode(';', $details['activite'])));
 
-            foreach ($equipeData as $key => $value) {
+            Log::error("TrEquipe insert data: ".json_encode($equipeData));
+            Log::error("TrActivity insert data: ".json_encode($activiteData));
+
+            // Insert equipe
+            foreach ($equipeData as $user) {
                 try {
                     TrEquipe::create([
-                        'tr_ref'=>$ref,
-                        'user'=>$value['equipe']
+                        'tr_ref' => $ref,
+                        'user' => $user
                     ]);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    Log::error("TrEquipe insert failed: ".$th->getMessage());
                 }
             }
 
-            foreach ($activiteData as $key => $value) {
+            // Insert activite
+            foreach ($activiteData as $activite) {
                 try {
                     TrActivite::create([
-                        'tr_ref'=>$ref,
-                        'activite'=>$value['activite']
+                        'tr_ref' => $ref,
+                        'activite' => $activite
                     ]);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    Log::error("TrActivite insert failed: ".$th->getMessage());
                 }
             }
 
             TrDetail::create([
                 'tr_ref'=>$ref,
                 'objectif'=>$details['objectif'],
-                'resultat'=>$details['resultat'],
+                'resultat'=>$details['resultat'] . ' ' . implode(' ', [$details['activite'], $details['equipe']]),
                 'de'=>$details['debut'],
                 'a'=>$details['fin']
             ]);

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tr_equipe', function (Blueprint $table) {
+        Schema::create('tr_equipes', function (Blueprint $table) {
             $table->id();
             $table->string('tr_ref');
             $table->foreign('tr_ref')->references('reference')->on('trs');
