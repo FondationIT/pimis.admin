@@ -20,9 +20,8 @@
                             <label>Type de contrat</label>
                             <select class="form-control @error('type') is-invalid @enderror"  wire:model.defer="state.type">
                                 <option value=""></option>
-                                <option value="CDD">CDD</option>
-                                <option value="Consultance">Consultance</option>
-                                <option value="Volontariat">Volontariat</option>
+                                <option value="1">CDD</option>
+                                <option value="2">Consultant</option>
 
                             </select>
                             @error('type')

@@ -98,6 +98,6 @@ class ArticleForm extends Component
     }
     public function render()
     {
-        return view('livewire.stock.article-form',['products' => Product::where("active", "1")->orderBy("id", "DESC")->get(),]);
+        return view('livewire.stock.article-form',['products' => Product::where("active", "1")->orderBy("name", "DESC")->get(),]);
     }
 }

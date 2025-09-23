@@ -2,12 +2,12 @@
 <html>
 <head>
     <x-meta></x-meta>
-   
+
 
 </head>
 <body class="hold-transition login-page">
 
-   
+
 
 
 
@@ -16,7 +16,7 @@
 
     <div class="login-logo">
         <div class="text-center">
-          <img class="profile-user-img img-fluid img-circle"
+          <img class="profile-user-img " style="border-radius:20%"
                src="{{asset('img/logo/logo.png')}}"
                alt="User profile picture">
         </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
             @if (Route::has('password.request'))
-                <a class="btn btn-link text-center" style="color: #888" href="{{ route('password.request') }}">
+                <a class="btn btn-link text-center" href="{{ route('password.request') }}">
                     {{ __('Mot de passe oublié?') }}
                 </a>
             @endif
@@ -94,21 +94,21 @@
 
  <x-script></x-script>
 
- <script>
+    <script>
         $(document).ready(function() {
-    $("#show_hide_password a").on('click', function(event) {
-        event.preventDefault();
-        if($('#show_hide_password input').attr("type") == "text"){
-            $('#show_hide_password input').attr('type', 'password');
-            $('.ii').addClass( "fa-eye-slash" );
-            $('.ii').removeClass( "fa-eye" );
-        }else if($('#show_hide_password input').attr("type") == "password"){
-            $('#show_hide_password input').attr('type', 'text');
-            $('.ii').removeClass( "fa-eye-slash" );
-            $('.ii').addClass( "fa-eye" );
-        }
-    });
-});
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if($('#show_hide_password input').attr("type") == "text"){
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('.ii').addClass( "fa-eye-slash" );
+                    $('.ii').removeClass( "fa-eye" );
+                }else if($('#show_hide_password input').attr("type") == "password"){
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('.ii').removeClass( "fa-eye-slash" );
+                    $('.ii').addClass( "fa-eye" );
+                }
+            });
+        });
     </script>
 </body>
 </html>

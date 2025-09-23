@@ -134,9 +134,17 @@ class PaiementTable extends LivewireDatatable
 
                 Column::name('reference')
                     ->label('Reference'),
-    
-                Column::name('type')
-                    ->label('Type'),
+
+                Column::callback(['type'], function ($type) {
+
+                    if ($type == 1) {
+                        $ret = 'CDD';
+                    }else{
+                        $ret = 'Consultant';
+                    }
+
+                        return  $ret;
+                })->label('Type'),
     
                 Column::name('month')
                     ->label('Mois'),
@@ -180,9 +188,17 @@ class PaiementTable extends LivewireDatatable
                 Column::name('reference')
                     ->label('Reference'),
     
-                Column::name('type')
-                    ->label('Type'),
-    
+                Column::callback(['type'], function ($type) {
+
+                    if ($type == 1) {
+                        $ret = 'CDD';
+                    }else{
+                        $ret = 'Consultant';
+                    }
+
+                        return  $ret;
+                })->label('Type'),
+
                 Column::name('month')
                     ->label('Mois'),
     
@@ -350,8 +366,16 @@ class PaiementTable extends LivewireDatatable
                 Column::name('reference')
                     ->label('Reference'),
     
-                Column::name('type')
-                    ->label('Type'),
+                Column::callback(['type'], function ($type) {
+
+                    if ($type == 1) {
+                        $ret = 'CDD';
+                    }else{
+                        $ret = 'Consultant';
+                    }
+
+                        return  $ret;
+                })->label('Type'),
     
                 Column::name('month')
                     ->label('Mois'),

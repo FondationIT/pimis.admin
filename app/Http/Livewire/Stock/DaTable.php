@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 
 class DaTable extends LivewireDatatable
 {
-    public $modelId,$data,$pv;
+    public $modelId,$data,$pv,$prof;
 
     protected $listeners = [
         'demAchUpdated' => '$refresh',
@@ -62,10 +62,9 @@ class DaTable extends LivewireDatatable
         //$this->dispatchBrowserEvent('formProforma');
     }
 
-    public function formBC($modelId){
-        $this->modelId = $modelId;
-        $this->emit('formBC',$this->modelId );
-        //$this->dispatchBrowserEvent('formProforma');
+
+    public function formBC($modelId,$modelProf){
+        $this->emit('formBC',$modelId,$modelProf);
     }
 
     public function editBC($modelId){
@@ -93,7 +92,7 @@ class DaTable extends LivewireDatatable
 
 
 
-           
+
             ValidDa::create([
                 'user' => Auth::user()->id,
                 'signature' => Auth::user()->id,
@@ -195,7 +194,7 @@ class DaTable extends LivewireDatatable
 
 
 
-    
+
     ///////////////////////////////////////////////////////////
     /////////////// FILTER DATA  /////////////////////////////
     ////////////////////////////////////////////////////////
@@ -260,7 +259,7 @@ class DaTable extends LivewireDatatable
     }
 
     public function filterData($data){
-        
+
         $query = $this->logicAlg()->whereDate('dem_aches.created_at','>=',$data['debut'])->whereDate('dem_aches.created_at','<=',$data['fin']);
         $query = ($data['projet']== 0) ? $query : $query->where('et_bes.projet', $data['projet']);
 
@@ -427,7 +426,7 @@ class DaTable extends LivewireDatatable
                         $ebs = Et_bes::where("id", $das[0]->eb)->get();
                         $projet = Projet::where("id", $ebs[0]->projet)->get();
                         $bailleur = Bailleur::where("id", $projet[0]->bailleur)->get();
-                        
+
 
                         //$bb = '{"bad":'.$bb.'}';
 
@@ -441,10 +440,12 @@ class DaTable extends LivewireDatatable
                         ->get('price')
                         ->sum('price');
 
-                        
-                            if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
-                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.')" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
-                            }else {
+
+                           /* if (FournPrice::where("product", $article[0]->description)->where("fin",">=", now())->exists()) {
+                                $this->prof = DemAch::where('id',$id)->get();
+                                echo $this->prof;
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.', 8)" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
+                            }else {8*/
                                 if (Proforma::where("da", $id)->exists()) {
                                     if($some <= $bailleur[0]->max1){
 
@@ -459,18 +460,18 @@ class DaTable extends LivewireDatatable
                                 if (Pv::where("da", $id)->exists()) {
                                     $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
                                 }
-                                
-                                
+
+
                                 if (PvAttr::where("da", $id )->exists()) {
                                     $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
                                 }
-                            }
+                            //}
 
                            // }
                             if (Bc::where("da", $id)->exists()) {
                                 //$dsa = '<span class="badge badge-success">Fini</span>';
                             }
-                            
+
 
 
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';
@@ -598,7 +599,7 @@ class DaTable extends LivewireDatatable
                             $edit2 ='';
                         }else{
                             $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="dfApprDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
-    
+
                             $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refDa('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                         }
 

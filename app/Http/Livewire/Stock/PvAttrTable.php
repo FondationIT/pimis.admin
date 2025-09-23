@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 class PvAttrTable extends LivewireDatatable
 {
-    public $model = PvAttr::class;
+    //public $model = PvAttr::class;
     public $modelId;
 
     protected $listeners = [
@@ -36,12 +36,23 @@ class PvAttrTable extends LivewireDatatable
         $this->emit('printPvAttr',$this->modelId );
     }
 
+    public function builder()
+    {
+        return PvAttr::query()
+        ->where("pv_attrs.type", '!=', 1)
+        ->where("pv_attrs.titre", '!=', 'Achat directe')
+        ->where("pv_attrs.titre", '!=', 'Achat direct')
+        //->whereDate('pv_attrs.created_at', '>=', '2025-08-01')
+        ->orderBy("pv_attrs.id", "DESC");
+
+    }
+
     public function columns()
     {
         return [
             Column::callback(['reference','id'], function ($reference,$id) {
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printPv('.$id.')" data-toggle="modal" data-target="#pPvAttrModalForms">'.$reference.'</a>';
-            })->label('Reference PV'),
+            })->label('Reference PV')->searchable(),
 
             Column::callback(['da'], function ($da) {
 

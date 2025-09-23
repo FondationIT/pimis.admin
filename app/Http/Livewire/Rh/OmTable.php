@@ -68,6 +68,6 @@ class OmTable extends LivewireDatatable
                 ->label('Retour'),
         ];
 
-        
+
     }
 }

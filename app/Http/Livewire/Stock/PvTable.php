@@ -37,11 +37,11 @@ class PvTable extends LivewireDatatable
 
     public function columns()
     {
-        
+
         return [
             Column::callback(['reference','id'], function ($reference,$id) {
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printPv('.$id.')" data-toggle="modal" data-target="#pPvModalForms">'.$reference.'</a>';
-            })->label('Reference PV'),
+            })->label('Reference PV')->searchable(),
 
             Column::callback(['da'], function ($da) {
 

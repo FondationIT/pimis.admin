@@ -41,7 +41,7 @@ $('#partMSAdd').on('click', function(e){
         item1= item.firstname;
         item2= item.lastname;
         partPv += '<option value='+item.id+'>'+item1+' '+item2+'.</option>';
-        //$('#fournP1').html(fournP);
+       
     });
 
     $('#autrePartMS').append(aBPlus);
@@ -223,7 +223,7 @@ $.each(prCtr, function(i, item) {
 
     item1= item.name;
     partCtr += '<option value='+item.id+'>'+item1+'.</option>';
-    //$('#fournP1').html(fournP);
+
 });
 
 $('#autreCTR').append(aBPlus);
@@ -260,7 +260,7 @@ function showPart(e) {
         prCtr22 =JSON.parse(prCtr22)
         var prCtr1 = prCtr22.filter(function(v) {
             return v.id == e.value;
-    
+
          })
 
         $('#projetCtr1').html('<option value="'+e.value+'">'+prCtr1[0].name+'</option>')
@@ -268,9 +268,9 @@ function showPart(e) {
         if(e.value == 3){
 
             $('#ctrAdd').show();
-    
+
         }else{
-    
+
             $('#ctrAdd').hide();
         }
     }

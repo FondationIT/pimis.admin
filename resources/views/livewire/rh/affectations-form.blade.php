@@ -21,12 +21,12 @@
                               <label for="agent">Selectionner agent</label>
                              
                              
-                            <input list="brow" class="form-control @error('agent') is-invalid @enderror" wire:model.defer="state.agent" name="agent">
-                                <datalist id="brow">
-                                    @foreach ($agents as $agent)
+                            <select class="form-control @error('agent') is-invalid @enderror" wire:model.defer="state.agent" name="agent">
+                                <option value=""></option>
+                                @foreach ($agents as $agent)
                                     <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname.' '.$agent->middlename}}</option>
                                 @endforeach
-                                </datalist>
+                            </select>
                           </div>
                           @error('agent')
                           <span class="text-red-600" role="alert">
@@ -39,7 +39,7 @@
                           <div class="col-md-12 mb-10" >
                             <div >
                               <label for="projet">Selectionner projet</label>
-                              <select class="form-control select2 @error('projet') is-invalid @enderror" wire:model.defer="state.projet" name="projet" wire:ignore.self>
+                              <select class="form-control select2 @error('projet') is-invalid @enderror" wire:model.defer="state.projet" name="projet">
                                 <option value=""></option>
 
                                 @foreach ($projets as $projet)

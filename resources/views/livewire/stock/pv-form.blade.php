@@ -51,7 +51,7 @@
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                    <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
                                                     <td>{{$prod->quantite}} {{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                     <td>

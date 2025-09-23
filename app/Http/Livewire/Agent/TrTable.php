@@ -326,7 +326,7 @@ class TrTable extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2','projet'], function ($id,$active,$niv1,$niv2,$projet) {
 
-                    if($projet == 3){
+                    if($projet == 3 || $projet == 70 || $projet == 71){
                     
                         if($active == true){
 

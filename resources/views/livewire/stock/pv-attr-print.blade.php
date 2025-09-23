@@ -1,7 +1,7 @@
 <div>
 
     <div class="modal fade" id="pPvAttrModalForms" tabindex="-1" role="dialog" wire:ignore.self aria-labelledby="exampleModalEditor" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Proces Verbale</h5>
@@ -9,16 +9,16 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-
+                
                 <div class="modal-body" id="printPvAttr">
-                    <header>
+                    <div>
                         <div class="row">
 
 
                             <div class="col-lg-6 fix" style="">
                                 <div>
                                     <br>
-                                    <h4>PROCES VERBAL D’OUVERTURE, ANALYSE ET <br>ATTRIBUTION DE MARCHE</br></h4>
+                                    <h4>PROCES VERBAL D’OUVERTURE, ANALYSE ET <br>ATTRIBUTION DE MARCHE</h4>
                                     <p class="">N<sup>o</sup> : <b>@if ($pvs)
                                         {{$pvs[0]->reference}}
                                     @endif</b></p>
@@ -32,9 +32,12 @@
                                 <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
                             </div>
                         </div>
-                    </header>
-
+                        
+                    </div>
                     <hr class="mbtm">
+
+
+                    
 
                     <div class="row">
                         @if ($pvs)
@@ -48,36 +51,50 @@
                                     <table class="table table-striped table-border mb-0 prodT">
                                         <thead>
                                             <tr>
-                                                <th rowspan="2"><strong>Articles</strong></th>
-                                                <th rowspan="2"><strong>Qté</strong></th>
-                                                <th rowspan="2"><strong>Unite</strong></th>
+                                                <td rowspan="2"><strong>Articles</strong></td>
+                                                <td rowspan="2"><strong>Qté</strong></td>
+                                                <td rowspan="2"><strong>Unite</strong></td>
                                                 @foreach ($proforma as $prof)
-                                                <th colspan="2"><strong>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</strong></th>
+                                                <td colspan="2"><strong>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</strong></td>
                                                 
                                                 @endforeach
+                                                <td rowspan="2"><strong>Attr</strong></td>
                                             </tr>
                                             <tr> 
                                                 @foreach ($proforma as $prof)
                                                 <td><strong>P.U</strong></td>
                                                 <td><strong>P.T</strong></td>
                                                 @endforeach
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                    <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
                                                     <td>{{$prod->quantite}}</td>
                                                     <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                     @foreach ($proforma as $prof)
-                                                    <td>
-                                                      $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
-                                                    </td>
-                                                    <td>
-                                                        <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
-                                                     </td>
+                                                        @if(App\Models\SelectPv::where('produit', $prod->description)->where('proforma', $prof->id)->exists())
+                                                            <td style="background-color: rgba(175, 175, 175, 0.4) ">
+                                                            $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                            </td>
+                                                            <td style="background-color: rgba(175, 175, 175, 0.4)">
+                                                                <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                            </td>
+                                                        
+                                                        @else
+                                                            
+                                                            <td>
+                                                            $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                            </td>
+                                                            <td>
+                                                                <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                            </td>
+                                                        @endif
                                                     @endforeach
+                                                    <td></td>
 
                                                 </tr>
 
@@ -109,12 +126,12 @@
                         
                         <div class="col-lg-12">
                             <br>
-                            <p>L’an <strong>{{date('Y', strtotime($pvs[0]->dateC))}}</strong>, le <strong>{{$pvs[0]->created_at->format('d')}}<sup>èm</sup></strong> jour du mois de <strong>{{$pvs[0]->created_at->format('F')}}</strong>,<br>
+                            <p>L’an <strong>{{date('Y', strtotime($pv[0]->dateC))}}</strong>, le <strong>{{$pvs[0]->created_at->format('d')}}<sup>èm</sup></strong> jour du mois de <strong>{{$pvs[0]->created_at->format('F')}}</strong>,<br>
                                 Nous membres de la commission de <strong>{{$pvs[0]->titre}}</strong> réunis, nous avons procédé a (l’ouverture), a (l’analyse), a (l’attribution) du marché <strong>{{$pvs[0]->titre}}</strong>. (d’entreprises), (des firmes) ont été consultées.
                             </p><br>
 
                             <p>
-                                A la date de clôture, <strong>{{date('d-m-Y', strtotime($pvs[0]->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés. 
+                                A la date de clôture, <strong>{{date('d-m-Y', strtotime($pv[0]->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés. 
                             </p>
 
                             <p>

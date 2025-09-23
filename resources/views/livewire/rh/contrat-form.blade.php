@@ -30,9 +30,9 @@
                             <label>Type de contrat</label>
                             <select class="form-control" id="typeCtr" required>
                                 <option value=""></option>
-                                <option value="CDD">CDD</option>
-                                <option value="Consultance">Consultance</option>
-                                <option value="Volontariat">Volontariat</option>
+                                <option value="1">CDD</option>
+                                <option value="2">Consultance NI</option>
+                                <option value="3">Consultance I</option>
 
                             </select>
                         </div>

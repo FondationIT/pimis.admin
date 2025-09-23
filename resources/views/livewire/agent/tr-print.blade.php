@@ -111,7 +111,7 @@
 
                                     <td>
                                         @if (isset($trs[0]) && !empty($trs[0]))
-                                            @if ($trs[0]->projet == 3)
+                                            @if ($trs[0]->projet == 3 || $trs[0]->projet == 70 || $trs[0]->projet == 71)
                                                 <span>Chef Comptable</span><br><br>
                                                 @if (isset($valid2[0]) && !empty($valid2[0]))
                                                     <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>

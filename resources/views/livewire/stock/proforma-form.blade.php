@@ -38,6 +38,8 @@
                                 @if ($da)
                                 <input type="text" class="form-control" value="{{$da[0]->reference}}" readonly>
                                 <input type="text" id="daProf" class="form-control" value="{{$da[0]->id}}" hidden>
+                                <input type="text" id="dataProforma" class="form-control" value="{{$fournisseurs}}" hidden>
+
                                 @endif
 
                             </div>
@@ -48,6 +50,7 @@
                                 @endif
 
                             </div>
+
                         </div>
                         <hr>
 
@@ -197,7 +200,7 @@
 
         </div>
     </div>
-    
+
 
 </div>
 

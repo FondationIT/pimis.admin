@@ -22,7 +22,11 @@ class JpForm extends Component
 
         $this->paie = PayementAgent::where('id', $this->modelId)->get();
 
-        $this->contrat = Contrat::where('type', $this->paie[0]->type)->whereDate('fin','>=', $this->paie[0]->month)->where('active', true)->where('statut', true)->get();
+        if($this->paie[0]->type == 1){
+            $this->contrat = Contrat::where('type', $this->paie[0]->type)->whereDate('fin','>=', $this->paie[0]->month)->where('active', true)->where('statut', true)->get();
+        }else{
+            $this->contrat = Contrat::where('type', '!=', 1)->whereDate('fin','>=', $this->paie[0]->month)->where('active', true)->where('statut', true)->get();
+        }
 
     }
 

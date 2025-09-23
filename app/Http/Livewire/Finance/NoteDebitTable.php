@@ -160,6 +160,21 @@ class NoteDebitTable extends LivewireDatatable
 
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
+
+                Column::callback(['id','active','niv1','reference'], function ($id,$active,$niv1,$ref) {
+                    if ($active == true && $niv1 == true) {
+
+                        if (Bp::where("bc", $id)->where('categorie', 4)->exists()){
+
+                            return '<span class="badge badge-success">BP Déjà fait</span>';
+                        }else{
+                            
+                                return '<span class="badge badge-info">BP ...</span>';
+                            
+                        }
+                    }
+
+                })->label('BP'),
             ];
         } if (Auth::user()->role == 'COMPT2') {
             return [
@@ -238,6 +253,21 @@ class NoteDebitTable extends LivewireDatatable
                     }
                         return $delete ;
                 })->unsortable()->label('Etat'),
+
+                Column::callback(['id','active','niv1'], function ($id,$active,$niv1) {
+                    if ($active == true && $niv1 == true) {
+
+                        if (Bp::where("bc", $id)->where('categorie', 4)->exists()){
+
+                            return '<span class="badge badge-success">BP Déjà fait</span>';
+                        }else{
+                            
+                                return '<span class="badge badge-info">BP ...</span>';
+                            
+                        }
+                    }
+
+                })->label('BP'),
             ];
         }
     }

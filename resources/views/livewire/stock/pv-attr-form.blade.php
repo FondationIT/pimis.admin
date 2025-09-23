@@ -43,7 +43,7 @@
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                    <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
                                                     <td>{{$prod->quantite}} {{App\Models\Article::firstWhere('id', $prod->product)->unite}}</td>
                                                     <input type="text" id="prodPv2" class="prodPv2" value="{{$prod->description}}" hidden>
                                                     <td>

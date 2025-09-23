@@ -43,6 +43,7 @@
                                 </div>
                                 <div class="col-lg-6 droite" style="text-align: right">
                                     <p>EB-Ref : <strong>{{ $ebs[0]->reference}}</strong></p>
+                                    <p>Categorie : <strong>{{ App\Models\Categorie::firstWhere('id', $ebs[0]->categorie)->name}}</strong></p>
                                     <p>Date : <strong>{{$das[0]->created_at->format('d/m/Y')}}</strong></p>
                                 </div>
                             @endif
@@ -87,7 +88,7 @@
                                                             
                                                     @endif
                                                 </td>
-                                                <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
+                                                <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
                                                 <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
 

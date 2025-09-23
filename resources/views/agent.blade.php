@@ -10,6 +10,8 @@
 <livewire:agent.tr-print />
 <livewire:rh.om-print />
 <livewire:rh.liste-paie />
+<livewire:stock.pv-print />
+<livewire:stock.pv-attr-print />
 
 
 

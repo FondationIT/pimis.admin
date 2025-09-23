@@ -17,8 +17,7 @@
 
 
 <livewire:stock.bc-print />
-<livewire:stock.pv-print />
-<livewire:stock.pv-attr-print />
+
 <livewire:stock.br-print />
 
 

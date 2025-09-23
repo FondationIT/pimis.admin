@@ -63,7 +63,7 @@
                                                     @foreach ($product as $prod)
                                                         <tr>
 
-                                                            <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                            <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
                                                             <td>{{$prod->quantite}}</td>
                                                             <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                             @foreach ($proforma as $prof)
@@ -73,6 +73,8 @@
                                                             <td>
                                                                 <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
                                                             </td>
+                                                            
+
                                                             @endforeach
 
                                                         </tr>
@@ -146,10 +148,10 @@
                                                         <td rowspan="2"><strong>Unite</strong></td>
                                                         @foreach ($proforma as $prof)
                                                         <td colspan="2"><strong>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</strong></td>
-                                                        
+
                                                         @endforeach
                                                     </tr>
-                                                    <tr> 
+                                                    <tr>
                                                         @foreach ($proforma as $prof)
                                                         <td><strong>P.U</strong></td>
                                                         <td><strong>P.T</strong></td>
@@ -199,7 +201,7 @@
 
 
 
-                                
+
                                 <div class="col-lg-12">
                                     <br>
                                     <p>L’an <strong>{{date('Y', strtotime($pvs[0]->dateC))}}</strong>, le <strong>{{$pvs[0]->created_at->format('d')}}<sup>èm</sup></strong> jour du mois de <strong>{{$pvs[0]->created_at->format('F')}}</strong>,<br>
@@ -207,7 +209,7 @@
                                     </p><br>
 
                                     <p>
-                                        A la date de clôture, <strong>{{date('d-m-Y', strtotime($pvs[0]->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés. 
+                                        A la date de clôture, <strong>{{date('d-m-Y', strtotime($pvs[0]->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés.
                                     </p>
 
                                     <p>
@@ -220,7 +222,7 @@
                                     <p>Ainsi fait à Bukavu, le {{$pvs[0]->created_at->format('d-m-y')}}</p><br>
 
                                     <h5>Les membres de la commission:</h5><br>
-                                    
+
                                 </div>
 
 
@@ -229,7 +231,7 @@
                                         <tr>
                                             @if($pvs[0]->type == 1)
                                                 <td>
-                    
+
                                                     <p class="center" >{{ App\Models\User::firstWhere('id', Auth::user()->id)->name}}<br>
                                                     @if($ag->active == true)
                                                         <img class="signn1" src="{{ asset('storage/'.Auth::user()->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
@@ -239,13 +241,13 @@
                                             @else
                                                 @foreach ($agent as $ag)
                                                     <td>
-                
+
                                                             <p class="center" >{{ App\Models\User::firstWhere('agent', $ag->agent)->name}}<br>
                                                             @if($ag->active == true)
                                                                 <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
                                                             @endif
                                                             </p>
-                
+
                                                     </td>
                                                 @endforeach
                                             @endif

@@ -230,7 +230,8 @@
 
 
 
-       <section id="missR-section" class="section js-section u-category-media">
+
+<section id="missR-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
@@ -238,32 +239,51 @@
                 <li class="breadcrumb-item active" aria-current="page">Missions</li>
             </ol>
         </nav>
-        <!-- /Breadcrumb -->
-           <!-- Content Wrapper. Contains page content -->
-            <div class="container">
-               <!-- Title -->
-                   <div class="hk-pg-header align-items-top">
-                     <div>
-                       <h3 class="hk-pg-title font-weight-600 mb-10">Missions agents</h3>
-                     </div>
-
-                     <div class="d-flex">
-                     </div>
-                   </div>
-               <!-- /Title -->
-
-               <!-- Main content -->
-               <!-- Row -->
-               <livewire:rh.om-table
-                exportable
-                />
-               <!-- /Row -->
-
-           </div>
-       </section>
+    <!-- /Breadcrumb -->
+    <!-- Content Wrapper. Contains page content -->
+     <div class="container">
+        <!-- Title -->
+            <div class="hk-pg-header align-items-top">
+                <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Missions agents</h3>
+                </div>
+            </div>
+        <!-- /Title -->
 
 
-       <section id="congeR-section" class="section js-section u-category-media">
+        <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#homeM">Liste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu1M">Rapport</a>
+                </li>
+            </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div id="homeM" class="container tab-pane active"><br>
+              <h5>Liste</h5>
+              <livewire:rh.om-table dates="created_at|d-m-Y" exportable/>
+            </div>
+            <div id="menu1M" class="container tab-pane fade"><br>
+              <h5>Rapport</h5>
+              <livewire:rh.rap-mission dates="created_at|d-m-Y" exportable/>
+            </div>
+
+          </div>
+
+
+
+
+
+    </div>
+  </section>
+
+
+
+<section id="congeR-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
@@ -271,48 +291,64 @@
                 <li class="breadcrumb-item active" aria-current="page">Conges</li>
             </ol>
         </nav>
-        <!-- /Breadcrumb -->
-           <!-- Content Wrapper. Contains page content -->
-            <div class="container">
-               <!-- Title -->
-                   <div class="hk-pg-header align-items-top">
-                     <div>
-                       <h3 class="hk-pg-title font-weight-600 mb-10">Conges agents</h3>
-                     </div>
-
-                     <div class="d-flex">
-                     </div>
-                   </div>
-               <!-- /Title -->
-
-               <!-- Main content -->
-               <!-- Row -->
-
-            <livewire:agent.conge-table
-            exportable
-            />
-
-               <!-- /Row -->
-
-           </div>
-       </section>
+    <!-- /Breadcrumb -->
+    <!-- Content Wrapper. Contains page content -->
+     <div class="container">
+        <!-- Title -->
+            <div class="hk-pg-header align-items-top">
+                <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Conges agents</h3>
+                </div>
+            </div>
+        <!-- /Title -->
 
 
+        <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#homeC">Liste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu1C">Rapport</a>
+                </li>
+            </ul>
 
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div id="homeC" class="container tab-pane active"><br>
+              <h5>Liste</h5>
+              <livewire:agent.conge-table dates="created_at|d-m-Y" exportable/>
+            </div>
+            <div id="menu1C" class="container tab-pane fade"><br>
+              <h5>Rapport</h5>
+              <livewire:rh.rap-conge dates="created_at|d-m-Y" exportable/>
+            </div>
 
-
-
-
-
-
-
-
+          </div>
 
 
 
 
 
- 
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
 

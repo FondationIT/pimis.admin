@@ -121,7 +121,7 @@ class CongeTable extends LivewireDatatable
 
                 Column::callback(['agent'], function ($agent) {
                     return Agent::find($agent)->firstname.' '.Agent::find($agent)->lastname.' '.Agent::find($agent)->middlename;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::name('type')
                     ->label('Type de Conge'),
@@ -149,10 +149,10 @@ class CongeTable extends LivewireDatatable
                     }
                         return $delete ;
                 })->label('Etat'),
-    
+
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
-    
-    
+
+
                     if ($active == true && $niv1 == true && $niv2 == true) {
                         $edit = '<span class="badge badge-success">Ok</span>';
                         $edit2 = '';
@@ -178,7 +178,7 @@ class CongeTable extends LivewireDatatable
 
                 Column::callback(['agent'], function ($agent) {
                     return Agent::find($agent)->firstname.' '.Agent::find($agent)->lastname.' '.Agent::find($agent)->middlename;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::name('type')
                     ->label('Type de Conge'),
@@ -206,7 +206,7 @@ class CongeTable extends LivewireDatatable
                     }
                         return $delete ;
                 })->label('Etat'),
-    
+
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
 
@@ -235,7 +235,7 @@ class CongeTable extends LivewireDatatable
 
                 Column::callback(['agent'], function ($agent) {
                     return Agent::find($agent)->firstname.' '.Agent::find($agent)->lastname.' '.Agent::find($agent)->middlename;
-                })->label('Agent'),
+                })->label('Agent')->searchable(),
 
                 Column::name('type')
                     ->label('Type de Conge'),

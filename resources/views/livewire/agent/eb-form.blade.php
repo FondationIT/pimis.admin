@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-md-6 mb-10">
                             <label for="projet">Selectionner projet</label>
-                           
+
                             <select class="form-control select2" id="projetEB" required>
                                 <option value=""></option>
                                 @if(Auth::user()->role == 'CHR')
@@ -33,7 +33,7 @@
                                     @foreach ($affectation as $aff)
                                         <option value="{{$aff->projet}}">{{App\Models\Projet::firstWhere('id', $aff->projet)->name}}</option>
                                     @endforeach
-                                @endif                                
+                                @endif
                             </select>
                             <div class="invalid-feedback">
                                 Selectionner une option

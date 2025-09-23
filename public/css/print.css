@@ -2,7 +2,7 @@
 /* Tuto Alsacreations : Faites bonne impression - Feuille styles css imprimante */
 @page {
   /*size: landscape;*/
-  margin: 11mm 17mm 0mm 17mm;
+  margin: 10mm 17mm 10mm 17mm;
 }
 
 body { /* Modifications : la couleur de fond de page - la police - l'unitÃ© utilisÃ©e pour la taille de la police  */
@@ -78,9 +78,7 @@ p { /* Modifications : alignement du texte - marges - unitÃ© des marges, polic
 .fix{
     position: absolute;
 }
-.mbtm{
-    margin-top: 100px;
-}
+
 
 img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
   float:center;
@@ -112,7 +110,7 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
 }
 .table{
   padding: 0px;
-  margin: 0px;
+  /*margin: 0px;*/
 }
 .table th,.table td{
     border: 1px solid #000;
@@ -125,6 +123,13 @@ img { /* Modifications : couleur de la bordure - unitÃ©s et marges */
     padding: none;
     margin: 0px;
 }
+thead {
+  display: table-header-group;
+  }
+tfoot {
+  display: table-footer-group;
+  bottom: 0;
+  }
 hr{
   border: 1px solid #000; 
 }
@@ -153,22 +158,18 @@ div.droite {
   }
 
   footer{
-    position: fixed;
     width: 100%;
-    bottom: 0mm;
-    height : calc(20mm + 34px);
-  }
-  .bbody{
-    border: 1px solid #000;
-    width: 100%;
-    margin: 0mm 0mm 0mm 0mm;
+    bottom: 0;
   }
   header{
-    position: fixed;
     width: 100%;
     top: 0;
   }
 
   footer p{
-    font-size:10pt;
+    font-size:2pt;
+  }
+  .tablePrt{
+    height: 100%;
+    width: 100%;
   }

@@ -25,7 +25,7 @@ class EbTable extends LivewireDatatable
         'filterEb',
         'resetFilterEb'
     ];
-    
+
     public function printEb($modelId){
         $this->modelId = $modelId;
         $this->emit('printEb',$this->modelId );
@@ -95,6 +95,14 @@ class EbTable extends LivewireDatatable
 
             BooleanColumn::name('niv2')
                 ->label('Projet'),
+
+            Column::callback(['active','niv1','niv2','id'], function ($active,$niv1,$niv2,$id) {
+                $mod = '';
+                if ($active != true || $niv1 != true) {
+                    $mod = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="ref('.$id.')" data-toggle="modal" data-target=""><i class="icon-pencil txt-danger"></i></a>';
+                }
+                return $mod ;
+            })->unsortable(),
 
             Column::callback(['active','niv1','niv2'], function ($active,$niv1,$niv2) {
 

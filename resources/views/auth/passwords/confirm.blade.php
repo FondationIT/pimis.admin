@@ -8,11 +8,11 @@
 <div class="container">
     <div class="login-logo">
         <div class="text-center">
-          <img class="profile-user-img img-fluid img-circle"
+          <img class="profile-user-img " style="border-radius:20%"
                src="{{asset('img/logo/logo.png')}}"
                alt="User profile picture">
-        </div><br>
-        <a href=""><b style="color:#ff5e00">PIMIS</b></a>
+        </div>
+        <h3 style="color:#9e830a">PIMIS Admin</h3>
     </div>
     <div class="row justify-content-center">
 
@@ -57,7 +57,7 @@
                 </div>
             </div>
             @if (Route::has('password.request'))
-                <a class="btn btn-link text-center" style="color: #888" href="{{ route('password.request') }}">
+                <a class="btn btn-link text-center" href="{{ route('password.request') }}">
                     {{ __('Mot de passe oublié?') }}
                 </a>
             @endif

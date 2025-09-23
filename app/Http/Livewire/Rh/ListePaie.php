@@ -30,7 +30,9 @@ class ListePaie extends Component
         
 
         $this->lp = PayementAgent::where("id", $this->modelId)->get();
-        $this->agents = ModelsListePaie::where("pymt", $this->modelId)->orderBy("id", "DESC")->get();
+        $this->agents = ModelsListePaie::join('contrats', 'contrats.id', '=', 'liste_paies.contrat')
+            ->where("liste_paies.pymt", $this->modelId)
+            ->orderBy("liste_paies.id", "DESC")->get();
 
         $this->valid1 = ValidPaie::where("paie", $this->modelId)->where("niv", 1)->get();
         $this->valid2 = ValidPaie::where("paie", $this->modelId)->where("niv", 2)->get();

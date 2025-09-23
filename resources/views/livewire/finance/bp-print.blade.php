@@ -51,7 +51,11 @@
 
                     <table style="border: 1px solid;width: 100%">
                         <tr style="border: 2px solid;width: 100%;text-align:center">
-                            <td ><table style="border: 2px solid;width: 100%;text-align:center"><tr>BON DE PAIEMENT</tr></table></td>
+                            <td ><table style="border: 2px solid;width: 100%;text-align:center"><tr>BON DE PAIEMENT
+                                <p class="center">N<sup>o</sup> : <b>@if ($bps)
+                                    {{$bps[0]->reference}}
+                                @endif</b>
+                            </p></tr></table></td>
                         </tr>
                     </table><br>
                     <table style="border: 1px solid;width: 100%;border-top:none">
@@ -413,7 +417,7 @@
 
                                     <tr style="border: 1px solid;width: 100%;text-align:center">
                                         <td></td>
-                                        <td>{{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
+                                        <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->produit)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
 
                                         <td>USD</td>
                                         <td>{{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
@@ -544,7 +548,7 @@
                         <tr style="border: none;width: 100%;text-align:center">
                             <th><strong>Demande par</strong></th>
                             @if ($bps)
-                                @if($index[0]->projet != 1)
+                                @if($index[0]->projet != 3 || $index[0]->projet != 70 || $index[0]->projet != 71)
                                 <th><strong>Verifie par</strong></th>
                                 @endif
                             
@@ -568,7 +572,7 @@
                             </td>
 
                             @if ($bps)
-                                @if($index[0]->projet != 1)
+                                @if($index[0]->projet != 3 || $index[0]->projet != 70 || $index[0]->projet != 71)
                                     <td>
                                         <span></span><br><br>
                                         @if (isset($valid1[0]) && !empty($valid1[0]))

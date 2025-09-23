@@ -116,6 +116,16 @@ class AffectationsTable extends LivewireDatatable
 
                 BooleanColumn::name('active')
                     ->label('State'),
+                
+                Column::callback(['affectations.id','affectations.active'], function ($id,$active) {
+
+                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="deleteAffectation(' . $id . ')"><i class="icon-trash txt-danger"></i></a>';
+                    //$edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" wire:click="edit(' . $id . ')" data-toggle="modal" data-target="#nAffectationModalForms"><i class="icon-pencil"></i></a>';
+                    if ($active == false) {
+                        $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="restoreAffectation(' . $id . ')"><i class="icon-action-undo txt-danger"></i></a>';
+                    }
+                        return '<div class="flex space-x-1 justify-around">'. $delete .'</div>';
+                })->unsortable(),
             ];
 
         }

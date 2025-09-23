@@ -23,6 +23,7 @@ class PvAttrPrint extends Component
     public $proforma;
     public $agent;
     public $pvs;
+    public $pv;
     public $i = 1;
     protected $listeners = [
         'printPvAttr'
@@ -33,6 +34,8 @@ class PvAttrPrint extends Component
 
         $this->pvs = PvAttr::where("id", $this->modelId)->get();
         //$this->products = ProductOder::where("etatBes", $this->das[0]->eb)->orderBy("id", "DESC")->get();
+
+        $this->pv = Pv::where("da", $this->pvs[0]->da)->get();
 
         $this->da =DemAch::where("id", $this->pvs[0]->da)->get();
 

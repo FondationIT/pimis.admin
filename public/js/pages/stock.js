@@ -1,20 +1,8 @@
+
 function allFournPlus(prodd){
 
-
-    //prod = JSON.stringify($(this).data("row"))
-
-    var pr = $('#allFournPlus' + prodd).val();
-    pr =JSON.parse(pr)
-    pr = pr.bad
-    fournP = '<option value=""  ></option>';
-    $.each(pr, function(i, item) {
-
-        item1= item.name;
-        fournP += '<option value='+item.id+'>'+item1+'</option>';
-        //$('#fournP1').html(fournP);
-    });
-
 }
+
 
 var count = 1;
 $('#profAdd').on('click', function(e){
@@ -29,6 +17,15 @@ $('#profAdd').on('click', function(e){
 
     aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowP'+count+'" class="removeProf text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
 
+    var pr = $('#dataProforma').val();
+    pr =JSON.parse(pr)
+    fournP = '<option value=""  ></option>';
+    $.each(pr, function(i, item) {
+
+        item1= item.name;
+        fournP += '<option value='+item.id+'>'+item1+'</option>';
+        
+    });
 
     $('#autreProf').append(aBPlus);
     $('#fournP'+count).html(fournP);
