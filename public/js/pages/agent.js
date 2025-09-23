@@ -3,7 +3,7 @@
         function scrollBottom(element) {
             element.scroll({ top: element.scrollHeight, behavior: "smooth"})
         }
-    
+
         scrollBottom(x);
 
 
@@ -19,7 +19,7 @@ prod = JSON.parse(prod)
 
 
 function afficheEBChoix(texte,id){
-    
+
     $('#unite-'+id).html('');
     $('#prodE'+id).html('');
 
@@ -33,7 +33,7 @@ function afficheEBChoix(texte,id){
         return v.product == texte.item.id;
 
      })
-    
+
     prodE1 = '<option value=""  ></option>';
     $.each(arr, function(i, item) {
        item1= texte.item.name+' '+item.marque+' '+item.model;
@@ -41,7 +41,7 @@ function afficheEBChoix(texte,id){
 
    });
    $('#prodE'+id).html(prodE1);
-    
+
 }
 
 function afficheEB1Choix(texte,id){
@@ -85,7 +85,7 @@ $('#eBAdd').on('click', function(e){
     count = count + 1;
     var aBPlus ="";
     aBPlus += '<div class="form-row form-row-all" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control select2 prodEB" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
-    
+
     aBPlus += '<div class="col-md-5 mb-10"><select class="form-control descEB" name="description" id="prodE'+count+'"  onchange="afficheEB1Choix(this.value,'+count+')" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
@@ -96,7 +96,7 @@ $('#eBAdd').on('click', function(e){
 
     $('#autreEB').append(aBPlus);
     $('#prodEB'+count).html(prodEB);
-    
+
 
 
     $('.removeEB').on('click', function(e){
@@ -155,7 +155,7 @@ commForm.onsubmit = function(e) {
    $('.QteEB').each(function(){
     qte.push($(this).val());
    });
-   
+
 
 
 
@@ -241,7 +241,7 @@ function imprimer(divName) {
 
     //var originalContents = document.body.innerHTML;
     //document.body.innerHTML = printContents;
-    
+
 
     //window.print();
     //document.body.innerHTML = originalContents;
@@ -321,7 +321,7 @@ function afficheProjectChoix(id){
 
 
 var count = 1;
-$('#diAdd').on('click', function(e){ 
+$('#diAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
@@ -335,7 +335,7 @@ $('#diAdd').on('click', function(e){
 
     $('#autreDI').append(aBPlus);
     $('#prodDI'+count).html(prodDI);
-    
+
 
 
     $('.removeDI').on('click', function(e){
@@ -379,7 +379,7 @@ commForm.onsubmit = function(e) {
    $('.QteDI').each(function(){
     qte.push($(this).val());
    });
-   
+
 
 
 
@@ -447,7 +447,7 @@ commForm.onsubmit = function(e) {
 
 
 var count = 1;
-$('#trAdd').on('click', function(e){ 
+$('#trAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
@@ -463,10 +463,37 @@ $('#trAdd').on('click', function(e){
 
 
     $('#autreTR').append(aBPlus);
-    
+
 
 
     $('.removeTR').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
+
+$('#trActAdd').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+    aBPlus += '<div class="form-row form-row-all" id="form-rowActTR'+count+'"><div class="col-md-3 mb-10"><input type="texte" class="form-control dateAct" name="dateAct" required></div>'
+
+    aBPlus +='<div class="col-md-5 mb-10"><textarea class="form-control actAct" name="actAct" required></textarea></div>'
+
+    aBPlus +='<div class="col-md-3 mb-10"><textarea class="form-control obsAct" name="obsAct"></textarea></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowActTR'+count+'" class="removeActTR text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
+
+
+    $('#autreActTR').append(aBPlus);
+
+
+
+    $('.removeActTR').on('click', function(e){
 
         e.preventDefault();
         var delete_row = $(this).data("row");
@@ -516,12 +543,12 @@ trForm.onsubmit = function(e) {
     "fin": fin
    };
 
-   
-   
+
+
 
 
    $('.prodTR').each(function(){
-    produit.push($(this).val()); 
+    produit.push($(this).val());
    });
    $('.QteTR').each(function(){
     qte.push($(this).val());
@@ -532,7 +559,7 @@ trForm.onsubmit = function(e) {
    $('.prixTR').each(function(){
     prix.push($(this).val());
    });
-   
+
 
 
 

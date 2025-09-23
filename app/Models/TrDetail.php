@@ -10,10 +10,8 @@ class TrDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tr_ref',
         'objectif',
         'resultat',
-        'de',
-        'a'
+        'dure'
     ];
 }

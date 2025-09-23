@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('tr_activites', function (Blueprint $table) {
             $table->id();
-            $table->string('tr_ref');
-            $table->foreign('tr_ref')->references('reference')->on('trs');
+            $table->foreignId('tr')->constrained('trs');
+            $table->string('date');
             $table->string('activite');
+            $table->string('observation')->nullable();
             $table->timestamps();
         });
     }

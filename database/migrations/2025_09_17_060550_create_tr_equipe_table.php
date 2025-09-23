@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('tr_equipes', function (Blueprint $table) {
             $table->id();
-            $table->string('tr_ref');
-            $table->foreign('tr_ref')->references('reference')->on('trs');
-            $table->foreignId('user')->constrained('agents');
+            $table->foreignId('tr')->constrained('trs');
+            $table->foreignId('agent')->constrained('agents');
             $table->timestamps();
         });
     }
