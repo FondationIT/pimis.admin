@@ -480,7 +480,19 @@ $('#trActAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-rowActTR'+count+'"><div class="col-md-3 mb-10"><input type="texte" class="form-control dateAct" name="dateAct" required></div>'
+    aBPlus += `<div class="form-row form-row-all activity_data" id="form-rowActTR'${count}'"><div class="col-md-3 mb-10">
+                    <div class="date-display">
+                        <div>
+                            <span>De</span>
+                            <input type="date" data-title="De" name="from-date">
+                        </div>
+                        <div>
+                            <span>A</span>
+                            <input type="date" data-title="A" name="to-date">
+                        </div>
+                    </div>
+
+                </div>`
 
     aBPlus +='<div class="col-md-5 mb-10"><textarea class="form-control actAct" name="actAct" required></textarea></div>'
 
@@ -557,7 +569,7 @@ trForm.onsubmit = function(e) {
         if (rowHasError) {
             $('#messageErrTR').html("Veuillez sélectionner à la fois la date de début et la date de fin.");
             $('#messageErrTR').classList.add('error-val');
-            return; 
+            return;
         }
 
         allActivityData.push({
