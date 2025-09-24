@@ -10,6 +10,7 @@ class TrActivite extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tr',
         'date',
         'activite',
         'observation',

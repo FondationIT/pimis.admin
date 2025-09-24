@@ -397,48 +397,48 @@ class EtatBesoinController extends Controller
             }
 
             $equipeData = array_filter(array_map('trim', explode(';', $details['equipe'])));
-            $activiteData = array_filter(array_map('trim', explode(';', $details['activite'])));
-
-            Log::error("TrEquipe insert data: ".json_encode($equipeData));
-            Log::error("TrActivity insert data: ".json_encode($activiteData));
 
             // Insert equipe
             foreach ($equipeData as $user) {
                 try {
                     TrEquipe::create([
-                        'tr_ref' => $ref,
-                        'user' => $user
+                        'tr' => $tr,
+                        'agent' => $user
                     ]);
                 } catch (\Throwable $th) {
-                    Log::error("TrEquipe insert failed: ".$th->getMessage());
+                    Log::error("TrEquipe (".$user.") insert failed: ".$th->getMessage());
                 }
             }
 
             // Insert activite
-            foreach ($activiteData as $activite) {
+            foreach ($details['activites'] as $activite) {
                 try {
                     TrActivite::create([
-                        'tr_ref' => $ref,
-                        'activite' => $activite
+                        'tr' => $tr,
+                        'date' => $activite['jour'],
+                        'activite' => $activite['activite'],
+                        'observation' => $activite['observation']
                     ]);
                 } catch (\Throwable $th) {
-                    Log::error("TrActivite insert failed: ".$th->getMessage());
+                    Log::error("TrActivite (".$activite['jour'].") insert failed: ".$th->getMessage());
                 }
             }
-
-            TrDetail::create([
-                'tr_ref'=>$ref,
-                'objectif'=>$details['objectif'],
-                'resultat'=>$details['resultat'] . ' ' . implode(' ', [$details['activite'], $details['equipe']]),
-                'de'=>$details['debut'],
-                'a'=>$details['fin']
-            ]);
+            try {
+                TrDetail::create([
+                    'tr'=>$tr,
+                    'objectif'=>$details['objectif'],
+                    'resultat'=>$details['resultat'],
+                    'dure'=>$details['dure'],
+                ]);
+            } catch (\Throwable $th) {
+                Log::error("TrDetail (".$tr.") insert failed: ".$th->getMessage());
+            }
     
             DB::commit();
             return true;
         } catch (\Throwable $th) {
             DB::rollBack(); // don’t forget to rollback on error
-
+            Log::error($th->getMessage());
             return response()->json([
                 'status'  => 'error',
                 'message' => $th->getMessage(),
@@ -452,11 +452,6 @@ class EtatBesoinController extends Controller
 
     }
 
-
-
-    // public function tr_details(Request $data)
-    // {
-    // }
 
     public function miss(Request $data)
     {

@@ -47,3 +47,21 @@
 .mission-dates .mission-field {
   flex: 1;
 }
+.date-display{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.date-display > div{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.date-display > div input{
+  width: 100%;
+  text-align: center;
+  border: 1px solid transparent;
+}
+.error-val {
+    color: red;
+}

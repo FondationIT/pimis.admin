@@ -83,7 +83,7 @@
                             </div>
                             <div class="col-md-6 mb-10">
                                 <label for="dure">Durée</label>
-                                <input type="datetime-local" id="dure" name="dure" class="form-control">
+                                <textarea class="form-control actAct" id="dure" name="dure"></textarea>
                             </div>
                         </div>
 
@@ -92,11 +92,21 @@
 
                         <h5 class="mb-3">PROGRAMME D'ACTIVITÉS</h5>
 
-                        <div class="form-row">
+                        <div class="form-row activity_data" id="activity_data">
 
                             <div class="col-md-3 mb-10">
                                 <label for="">Jour/Date</label>
-                                <input type="texte" class="form-control dateAct" name="dateAct">
+                                <div class="date-display">
+                                    <div>
+                                        <span>De</span>
+                                        <input type="date" id="from-date" data-title="De" name="from-date">
+                                    </div>
+                                    <div>
+                                        <span>A</span>
+                                        <input type="date" id="to-date" data-title="A" name="to-date">
+                                    </div>
+                                </div>
+                                
                             </div>
 
                             <div class="col-md-5 mb-10">
@@ -113,8 +123,7 @@
 
                             </div>
                         </div>
-                        <div id="autreActTR">
-                        </div>
+                        <div id="autreActTR"></div>
                         <a href="#" id="trActAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
 
 
@@ -165,3 +174,5 @@
          </div>
      </div>
  </div>
+
+ 

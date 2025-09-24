@@ -10,6 +10,7 @@ class TrEquipe extends Model
     use HasFactory;
 
     protected $fillable = [
+        'tr',
         'agent'
     ];
 }
