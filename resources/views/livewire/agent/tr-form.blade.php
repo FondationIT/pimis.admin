@@ -90,49 +90,93 @@
 
                         <hr>
 
-                     <div class="form-row">
-                         
-                         <div class="col-md-5 mb-10">
-                             <label for="product">Libellé</label>
-                             <textarea class="form-control prodTR" name="product" required></textarea>
-                         </div>
+                        <h5 class="mb-3">PROGRAMME D'ACTIVITÉS</h5>
 
-                            <div class="col-md-2 mb-10">
-                                <label for="">Unité</label>
-                                <input type="texte" class="form-control uniteTR" name="unite">
+                        <div class="form-row activity_data" id="activity_data">
+
+                            <div class="col-md-3 mb-10">
+                                <label for="">Jour/Date</label>
+                                <div class="date-display">
+                                    <div>
+                                        <span>De</span>
+                                        <input type="date" id="from-date" data-title="De" name="from-date">
+                                    </div>
+                                    <div>
+                                        <span>A</span>
+                                        <input type="date" id="to-date" data-title="A" name="to-date">
+                                    </div>
+                                </div>
+                                
                             </div>
 
-                         <div class="col-md-2 mb-10">
-                             <label for="username">Quantité</label>
-                             
-                            <input type="number" step="1" min="1" class="form-control QteTR" name="" required>
-                         </div>
+                            <div class="col-md-5 mb-10">
+                                <label for="">Activité</label>
+                                <textarea class="form-control actAct" name="actAct"></textarea>
+                            </div>
 
-                         <div class="col-md-2 mb-10">
-                            <label for="username">Prix U.</label>
-                            
-                           <input type="number" step="1" min="1" class="form-control prixTR" name="" required>
+                            <div class="col-md-3 mb-10">
+                                <label for="">Observation</label>
+                                <textarea class="form-control obsAct" name="obsAct"></textarea>
+                            </div>
+
+                            <div class="col-md-1 mb-10">
+
+                            </div>
                         </div>
- 
-                         <div class="col-md-1 mb-10">
- 
-                         </div>
-                     </div>
-                     <div id="autreTR">
-                     </div>
-                     <a href="#" id="trAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
-                     <hr>
- 
-                 </div>
-                 <div class="modal-footer">
-                     <button class="btn btn-primary" id="btnTR" type="submit">Valider</button>
-                     <div class="loader-pendulums" id="prldTR" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
-                 </div>
-             </form>
+                        <div id="autreActTR"></div>
+                        <a href="#" id="trActAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
+
+
+
+                        <hr>
+                        <h5 class="mb-3">BUDGET</h5>
+                        <div class="form-row">
+
+                            <div class="col-md-3 mb-10">
+                                <label for="product">Libellé</label>
+                                <textarea class="form-control prodTR" name="product" required></textarea>
+                            </div>
+
+                            <div class="col-md-2 mb-10">
+                                <label for="product">Unité</label>
+                                <input type="texte" class="form-control uniteTR" name="unite" required>
+                            </div>
+
+                            <div class="col-md-2 mb-10">
+                                <label for="username">Quantité</label>
+                                
+                                <input type="number" step=".1" min="0" class="form-control QteTR" name="" required>
+                            </div>
+
+                            <div class="col-md-2 mb-10">
+                                <label for="username">Frequence</label>
+                                
+                            <input type="number" step=".1" min="0" class="form-control FqcTR" name="" required>
+                            </div>
+
+                            <div class="col-md-2 mb-10">
+                                <label for="username">Prix U.</label>
+                                
+                            <input type="number" step=".0001" min="0" class="form-control prixTR" name="" required>
+                            </div>
+    
+                            <div class="col-md-1 mb-10">
+    
+                            </div>
+                        </div>
+                        <div id="autreTR">
+                        </div>
+                        <a href="#" id="trAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
+                        <hr>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" id="btnTR" type="submit">Valider</button>
+                        <div class="loader-pendulums" id="prldTR" style="font-size:2rem;position:relative;margin:0px;padding:0px;display:none;top:0px;"></div>
+                    </div>
+                </form>
              </div>
 
          </div>
      </div>
  </div>
-
- 

@@ -534,6 +534,7 @@ trForm.onsubmit = function(e) {
   e.preventDefault();
     var produit = [];
     var qte = [];
+    var fqc = [];
     var unite = [];
     var prix = [];
     var agent = $('#agentTR').val()
@@ -618,7 +619,7 @@ trForm.onsubmit = function(e) {
     url: "/trReg",
     dataType: 'json',
 
-    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre)),
+    data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details)),
     beforeSend: function() {
         $('#btnTR').hide();
         $('#prldTR').show();
@@ -662,7 +663,7 @@ trForm.onsubmit = function(e) {
  }
 
 //
- function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre) {
+ function trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details) {
    return {
      "product":produit,
      "quantite": qte,

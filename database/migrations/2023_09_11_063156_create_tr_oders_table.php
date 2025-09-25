@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('libelle');
             $table->foreignId('tr')->constrained('trs');
             $table->string('unite');
+            $table->integer('frequence');
             $table->integer('quantite');
             $table->string('ligne')->nullable();
             $table->float('prix');
