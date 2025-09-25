@@ -84,8 +84,8 @@ $('#eBAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control prodEB select2eb" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
-
+    aBPlus += '<div class="form-row form-row-all" id="form-row'+count+'"><div class="col-md-3 mb-10"><select class="form-control select2 prodEB" name="product"  onchange="afficheEBChoix(this.value,'+count+')" id="prodEB'+count+'" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
+    
     aBPlus += '<div class="col-md-5 mb-10"><select class="form-control descEB" name="description" id="prodE'+count+'"  onchange="afficheEB1Choix(this.value,'+count+')" required></select><div class="invalid-feedback">Selectionner un produit</div></div>'
 
 
@@ -96,7 +96,7 @@ $('#eBAdd').on('click', function(e){
 
     $('#autreEB').append(aBPlus);
     $('#prodEB'+count).html(prodEB);
-    $('.select2eb').select2()
+    
 
 
     $('.removeEB').on('click', function(e){
@@ -477,6 +477,33 @@ $('#trAdd').on('click', function(e){
 
 });
 
+
+$('#trActAdd').on('click', function(e){
+    e.preventDefault();
+    count = count + 1;
+    var aBPlus ="";
+    aBPlus += '<div class="form-row form-row-all" id="form-rowActTR'+count+'"><div class="col-md-3 mb-10"><input type="texte" class="form-control dateAct" name="dateAct" required></div>'
+
+    aBPlus +='<div class="col-md-5 mb-10"><textarea class="form-control actAct" name="actAct" required></textarea></div>'
+
+    aBPlus +='<div class="col-md-3 mb-10"><textarea class="form-control obsAct" name="obsAct"></textarea></div>'
+
+    aBPlus += '<div class="col-md-1 mb-10"><label for=""></label><a href="#" name="remove" data-row="form-rowActTR'+count+'" class="removeActTR text-red-600"><i class="icon-close txt-danger"></i></a></div></div>'
+
+
+    $('#autreActTR').append(aBPlus);
+
+
+
+    $('.removeActTR').on('click', function(e){
+
+        e.preventDefault();
+        var delete_row = $(this).data("row");
+        $('#' + delete_row).remove();
+    });
+
+});
+
 ///////////////////////////////////////////////////////////////////////
 
            //   VALIDATION FORMULAIRE TERME DE REFERENCE  //
@@ -495,7 +522,6 @@ trForm.onsubmit = function(e) {
   e.preventDefault();
    var produit = [];
    var qte = [];
-   var fqc = [];
    var unite = [];
    var prix = [];
    var agent = $('#agentTR').val()
@@ -528,7 +554,7 @@ trForm.onsubmit = function(e) {
     url: "/trReg",
     dataType: 'json',
 
-    data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre)),
+    data: JSON.stringify(trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre)),
     beforeSend: function() {
         $('#btnTR').hide();
         $('#prldTR').show();
@@ -555,17 +581,24 @@ trForm.onsubmit = function(e) {
 
 
     },
-    error: function(jqXHR, textStatus, data){
+    error: function(jqXHR, textStatus, errorThrown){
         $('#prldTR').hide();
         $('#btnTR').show();
-        $('#messageErrTR').html(data)
+
+        // jqXHR.responseJSON has your JSON error
+        if (jqXHR.responseJSON) {
+            $('#messageErrTR').html(jqXHR.responseJSON.message);
+            console.error(jqXHR.responseJSON);
+        } else {
+            $('#messageErrTR').html('An unknown error occurred');
+        }
     }
 });
 
  }
 
 //
- function trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre) {
+ function trFormToJSON(produit,qte,unite,prix,agent,projet,type,titre) {
    return {
      "product":produit,
      "quantite": qte,
@@ -576,5 +609,6 @@ trForm.onsubmit = function(e) {
      "projet": projet,
      "type": type,
      "titre": titre,
+     "details":details
    };
  }

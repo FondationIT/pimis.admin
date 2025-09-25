@@ -30,5 +30,3 @@ Route::post('/msReg', [App\Http\Controllers\EtatBesoinController::class, 'miss']
 Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr'])->name('ctrReg');
 Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
 
-
-

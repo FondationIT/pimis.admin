@@ -31,4 +31,19 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function users(Request $data)
+    {
+        DB::beginTransaction();
+        //DB::rollback();
+
+        //$data = json_decode($data->getBody());
+        $ref = 'ND-'.rand(10000,99999).'-FP'.rand(100,999);
+        
+
+        DB::commit();
+
+        return true;
+
+    }
+
 }

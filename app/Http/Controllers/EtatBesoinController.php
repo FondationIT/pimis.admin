@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Log;
 use App\Models\AgentMission;
 use App\Models\Br;
 use App\Models\BrOder;
@@ -27,6 +28,9 @@ use App\Models\StatutAgent;
 use App\Models\Stock;
 use App\Models\Tr;
 use App\Models\TrOder;
+use App\Models\TrEquipe;
+use App\Models\TrActivite;
+use App\Models\TrDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -435,41 +439,92 @@ class EtatBesoinController extends Controller
 
     public function tr(Request $data)
     {
-        DB::beginTransaction();
-        $this->dat = date('Y-m-d');
+        try {
+            DB::beginTransaction();
+            $this->dat = date('Y-m-d');
         //DB::rollback();
-
-        //$data = json_decode($data->getBody());
-        $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
-        Tr::create([
-            'reference' => $ref,
-            'agent' => $data['agent'],
-            'projet' => $data['projet'],
-            'type' => $data['type'],
-            'titre' => $data['titre'],
-        ]);
-        $tr = Tr::firstWhere('reference', $ref )->id;
-        for($count = 0; $count<count($data['product']); $count++)
-         {
-            $ref1 = 'TR-ODR-'.$ref.$count;
-            TrOder::create([
-                'reference' => $ref1,
-                'libelle' => $data['product'][$count],
-                'tr' => $tr,
-                'unite' => $data['unite'][$count],
-                'prix' => $data['prix'][$count],
-                'quantite' => $data['quantite'][$count],
-                'frequence' => $data['frequence'][$count],
+            $details = $data['details'];
+    
+            //$data = json_decode($data->getBody());
+            $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
+            
+            Tr::create([
+                'reference' => $ref,
+                'agent' => $data['agent'],
+                'projet' => $data['projet'],
+                'type' => $data['type'],
+                'titre' => $data['titre'],
             ]);
+            $tr = Tr::firstWhere('reference', $ref )->id;
+            for($count = 0; $count<count($data['product']); $count++){
+                $orderRef1 = 'TR-ODR-'.$ref.$count;
+                TrOder::create([
+                    'reference' => $orderRef1,
+                    'libelle' => $data['product'][$count],
+                    'tr' => $tr,
+                    'unite' => $data['unite'][$count],
+                    'prix' => $data['prix'][$count],
+                    'quantite' => $data['quantite'][$count],
+                    'frequence' => $data['frequence'][$count],
+            ]);
+    
+            }
 
-         }
+            $equipeData = array_filter(array_map('trim', explode(';', $details['equipe'])));
 
-        DB::commit();
+            // Insert equipe
+            foreach ($equipeData as $user) {
+                try {
+                    TrEquipe::create([
+                        'tr' => $tr,
+                        'agent' => $user
+                    ]);
+                } catch (\Throwable $th) {
+                    Log::error("TrEquipe (".$user.") insert failed: ".$th->getMessage());
+                }
+            }
 
-        return true;
+            // Insert activite
+            foreach ($details['activites'] as $activite) {
+                try {
+                    TrActivite::create([
+                        'tr' => $tr,
+                        'date' => $activite['jour'],
+                        'activite' => $activite['activite'],
+                        'observation' => $activite['observation']
+                    ]);
+                } catch (\Throwable $th) {
+                    Log::error("TrActivite (".$activite['jour'].") insert failed: ".$th->getMessage());
+                }
+            }
+            try {
+                TrDetail::create([
+                    'tr'=>$tr,
+                    'objectif'=>$details['objectif'],
+                    'resultat'=>$details['resultat'],
+                    'dure'=>$details['dure'],
+                ]);
+            } catch (\Throwable $th) {
+                Log::error("TrDetail (".$tr.") insert failed: ".$th->getMessage());
+            }
+    
+            DB::commit();
+            return true;
+        } catch (\Throwable $th) {
+            DB::rollBack(); // don’t forget to rollback on error
+            Log::error($th->getMessage());
+            return response()->json([
+                'status'  => 'error',
+                'message' => $th->getMessage(),
+                'file'    => $th->getFile(),
+                'line'    => $th->getLine(),
+                'trace'   => $th->getTraceAsString(),
+            ], 500);
+        }
+        
+
 
     }
-
 
 
     public function miss(Request $data)
