@@ -482,7 +482,19 @@ $('#trActAdd').on('click', function(e){
     e.preventDefault();
     count = count + 1;
     var aBPlus ="";
-    aBPlus += '<div class="form-row form-row-all" id="form-rowActTR'+count+'"><div class="col-md-3 mb-10"><input type="texte" class="form-control dateAct" name="dateAct" required></div>'
+    aBPlus += `<div class="form-row form-row-all activity_data" id="form-rowActTR'${count}'"><div class="col-md-3 mb-10">
+                    <div class="date-display">
+                        <div>
+                            <span>De</span>
+                            <input type="date" data-title="De" name="from-date">
+                        </div>
+                        <div>
+                            <span>A</span>
+                            <input type="date" data-title="A" name="to-date">
+                        </div>
+                    </div>
+
+                </div>`
 
     aBPlus +='<div class="col-md-5 mb-10"><textarea class="form-control actAct" name="actAct" required></textarea></div>'
 
@@ -520,14 +532,66 @@ trForm.onsubmit = function(e) {
         }
     });
   e.preventDefault();
-   var produit = [];
-   var qte = [];
-   var unite = [];
-   var prix = [];
-   var agent = $('#agentTR').val()
-   var projet = $('#projetTR').val()
-   var type = $('#typeTR').val()
-   var titre = $('#titreTR').val()
+    var produit = [];
+    var qte = [];
+    var unite = [];
+    var prix = [];
+    var agent = $('#agentTR').val()
+    var projet = $('#projetTR').val()
+    var type = $('#typeTR').val()
+    var titre = $('#titreTR').val()
+        // New Data
+    var equipe = $('#equipe').val()
+    var objectif = $('#obj_m').val()
+    var resultat = $('#rslt_m').val()
+    var dure = $('#dure').val()
+
+    const activities_container = document.querySelectorAll('.activity_data');
+    const allActivityData = [];
+
+    for (const row of activities_container) {
+        const from_date   = row.querySelector('[name="from-date"]'); // different input
+        const to_date     = row.querySelector('[name="to-date"]');
+        const activite    = row.querySelector('[name="actAct"]').value;
+        const observation = row.querySelector('[name="obsAct"]').value;
+        const jour = `De ${from_date.value} à ${to_date.value}`;
+
+        let rowHasError = false;
+
+        if (!from_date.value) {
+            from_date.classList.add('error-val');
+            rowHasError = true;
+        }
+
+        if (!to_date.value) {
+            to_date.classList.add('error-val');
+            rowHasError = true;
+        }
+
+        if (rowHasError) {
+            $('#messageErrTR').html("Veuillez sélectionner à la fois la date de début et la date de fin.");
+            $('#messageErrTR').classList.add('error-val');
+            return;
+        }
+
+        allActivityData.push({
+            jour: jour,
+            activite: activite,
+            observation: observation
+        });
+    }
+
+   const details = {
+        "equipe": equipe,
+        "objectif": objectif,
+        "resultat": resultat,
+        "dure": dure,
+        "activites": allActivityData
+   };
+
+
+
+
 
    $('.prodTR').each(function(){
     produit.push($(this).val());
