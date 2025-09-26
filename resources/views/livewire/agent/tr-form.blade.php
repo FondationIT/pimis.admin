@@ -75,7 +75,7 @@
                                 <label>Equipe</label>
                                 <div class="team-selector">
                                     <div class="selected-users" id="selectedUsers"></div>
-                                    <div class="dropdown" id="dropdown">
+                                    <div class="team-dropdown" id="team_dropdown">
                                         <input type="text" class="form-control" id="equipe" name='equipe' placeholder="Search by name or ID...">
                                         <ul id="userList"></ul>
                                     </div>

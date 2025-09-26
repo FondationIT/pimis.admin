@@ -15,7 +15,7 @@
   min-height: 40px;
 }
 
-.tag {
+.team-tag {
   background: #3e6699;
   color: #fff;
   padding: 3px 8px;
@@ -25,13 +25,13 @@
   font-size: 14px;
 }
 
-.tag .remove {
+.team-tag .remove {
   margin-left: 5px;
   cursor: pointer;
   font-weight: bold;
 }
 
-.dropdown {
+.team-dropdown {
   position: absolute;
   top: 100%;
   left: 0;
@@ -46,7 +46,7 @@
   border-radius: 0 0 4px 4px;
 }
 
-.dropdown input {
+.team-dropdown input {
   width: 100%;
   padding: 8px;
   border: none;
@@ -55,17 +55,17 @@
   outline: none;
 }
 
-.dropdown ul {
+.team-dropdown ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.dropdown li {
+.team-dropdown li {
   padding: 8px;
   cursor: pointer;
 }
 
-.dropdown li:hover {
+.team-dropdown li:hover {
   background: #f0f0f0;
 }
