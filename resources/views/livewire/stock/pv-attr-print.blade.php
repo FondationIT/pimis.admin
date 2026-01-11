@@ -55,7 +55,7 @@
                                                 <td rowspan="2"><strong>Qté</strong></td>
                                                 <td rowspan="2"><strong>Unite</strong></td>
                                                 @foreach ($proforma as $prof)
-                                                <td colspan="2"><strong>{{App\Models\Fournisseur::firstWhere('id', $prof->fournisseur)->name}}</strong></td>
+                                                <td colspan="2"><strong>{{App\Models\Fournisseur::where('id', $prof->fournisseur)->first()->name}}</strong></td>
                                                 
                                                 @endforeach
                                                 <td rowspan="2"><strong>Attr</strong></td>
@@ -72,27 +72,35 @@
                                             @foreach ($product as $prod)
                                                 <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                    <td>{{App\Models\Product::where('id', App\Models\Article::where('id', $prod->description)->first()->product)->first()->name}} {{App\Models\Article::where('id', $prod->description)->first()->marque}} {{App\Models\Article::where('id', $prod->description)->first()->model}}</td>
                                                     <td>{{$prod->quantite}}</td>
-                                                    <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
+                                                    <td>{{App\Models\Article::where('id', $prod->description)->first()->unite}}</td>
                                                     @foreach ($proforma as $prof)
-                                                        @if(App\Models\SelectPv::where('produit', $prod->description)->where('proforma', $prof->id)->exists())
-                                                            <td style="background-color: rgba(175, 175, 175, 0.4) ">
-                                                            $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
-                                                            </td>
-                                                            <td style="background-color: rgba(175, 175, 175, 0.4)">
-                                                                <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
-                                                            </td>
-                                                        
-                                                        @else
+                                                        @php
+                                                            try {
+                                                        @endphp
+                                                            @if(App\Models\SelectPv::where('produit', $prod->description)->where('proforma', $prof->id)->exists())
+                                                                <td style="background-color: rgba(175, 175, 175, 0.4) ">
+                                                                $ {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                </td>
+                                                                <td style="background-color: rgba(175, 175, 175, 0.4)">
+                                                                    <strong>$  {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                </td>
                                                             
-                                                            <td>
-                                                            $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
-                                                            </td>
-                                                            <td>
-                                                                <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
-                                                            </td>
-                                                        @endif
+                                                            @else
+                                                                
+                                                                <td>
+                                                                $ {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                </td>
+                                                                <td>
+                                                                    <strong>$  {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                </td>
+                                                            @endif
+                                                        @php
+                                                            } catch (\Throwable $th) {
+                                                                echo '<td>'.$prod->produit.'</td><td>'.$th->getMessage().'</td>';
+                                                            }
+                                                        @endphp
                                                     @endforeach
                                                     <td></td>
 
@@ -148,21 +156,41 @@
                             <p>Ainsi fait à Bukavu, le {{$pvs[0]->created_at->format('d-m-y')}}</p><br>
 
                             <h5>Les membres de la commission:</h5><br>
+
+                            
                             
                         </div>
 
 
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
+                                @php
+                                    $signature = null;
+                                @endphp
                                 <tr>
-                                    @foreach ($agent as $ag)
+                                    @foreach ($commission_members as $member)
+                                        <td><b>{{ $member->name }}</b></td>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    @foreach ($commission_members_validation as $key => $validation)
+                                        @php
+                                            if($key == 'niv_1'){
+                                                $signature=App\Models\User::where('role','D.O')->where('active',1)->value('signature');
+                                            }
+                                            if($key == 'niv_2'){
+                                                $signature=App\Models\User::where('role','D.A.F')->where('active',1)->value('signature');
+                                            }
+                                            if($key == 'niv_3'){
+                                                $signature=App\Models\User::where('role','D.P')->where('active',1)->value('signature');
+                                            }
+                                        @endphp
                                         <td>
-                                            
-                                                <p class="center" >{{ App\Models\User::firstWhere('agent', $ag->agent)->name}}<br>
-                                                    @if($ag->active == true)
-                                                        <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
-                                                    @endif
-    
+                                            @if($validation)
+                                                <img class="signn1" src="{{ asset('storage/'.$signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+                                            @else
+                                                <span class="secondary" style="font-size: small;">En attente</span>
+                                            @endif
                                         </td>
                                     @endforeach
                                 </tr>

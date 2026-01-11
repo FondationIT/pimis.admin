@@ -1,11 +1,11 @@
 <div>
-    <section id="dash-section" class="section js-section u-category-media">
-        <!-- Breadcrumb -->
+    <section id="home_dash-section" class="section js-section u-category-media is-shown p-2">
+        {{-- <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light bg-transparent">
                 <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
             </ol>
-        </nav>
+        </nav> 
         <!-- /Breadcrumb -->
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
@@ -40,11 +40,11 @@
                     </div>
                 </div>
             </div>
-        <!-- /Main Content -->
+        <!-- /Main Content --> --}}
 
             <!-- Main content -->
 
-            <!--
+            
             <div class="row">
                 <div class="col-xl-12">
                     <div class="hk-row">
@@ -56,15 +56,17 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between mb-5">
                                                 <div>
-                                                    <span class="d-block font-15 text-dark font-weight-500">Agents</span>
+                                                    <span class="d-block font-15 text-dark font-weight-500">Notification</span>
                                                 </div>
                                                 <div>
-                                                    <span class="badge badge-primary  badge-sm">+10%</span>
+                                                    @if(isset($unreadCount) && $unreadCount > 0)
+                                                        <span class="badge badge-primary  badge-sm">{{ $unreadCount}}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div>
-                                                <span class="d-block display-5 text-dark mb-5">12K</span>
-                                                <small class="d-block">172,458 Target Users</small>
+                                                <span class="d-block display-5 text-dark mb-5">Demande d'achat</span>
+                                                <small class="d-block">Votre attention est plus requise pour les DA</small>
                                             </div>
                                         </div>
                                     </div>
@@ -74,15 +76,15 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between mb-5">
                                                 <div>
-                                                    <span class="d-block font-15 text-dark font-weight-500">Users</span>
+                                                    <span class="d-block font-15 text-dark font-weight-500">Taux de Change</span>
                                                 </div>
-                                                <div>
+                                                {{-- <div>
                                                     <span class="badge badge-danger   badge-sm">+10%</span>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <div>
-                                                <span class="d-block display-5 text-dark mb-5">68M</span>
-                                                <small class="d-block">90M Targeted</small>
+                                                <span class="d-block display-5 text-dark mb-5">{{ App\Models\Taux::firstWhere('active', true)->taux}} FC</span>
+                                                <small class="d-block">1 USD</small>
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +112,7 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between mb-5">
                                                 <div>
-                                                    <span class="d-block font-15 text-dark font-weight-500">Earnings</span>
+                                                    <span class="d-block font-15 text-dark font-weight-500">Travaux Journalier</span>
                                                 </div>
                                                 <div>
                                                     <span class="badge badge-warning  badge-sm">+60%</span>
@@ -253,34 +255,12 @@
                         </div>
                         <div class="col-lg-5">
                             <div class="card">
-                                <div class="card-header card-header-action">
-                                    <h6>Visit by Traffic Types</h6>
-                                    <div class="d-flex align-items-center card-action-wrap">
-                                        <div class="inline-block dropdown">
-                                            <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="ion ion-ios-more"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Separated link</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Calendar</h6>
                                 </div>
+
                                 <div class="card-body">
-                                    <div id="e_chart_3" style="height:250px;"></div>
-                                    <div class="hk-legend-wrap mt-20">
-                                        <div class="hk-legend">
-                                            <span class="d-10 bg-purple rounded-circle d-inline-block"></span><span>18-24</span>
-                                        </div>
-                                        <div class="hk-legend">
-                                            <span class="d-10 bg-grey-light-1 rounded-circle d-inline-block"></span><span>25-34</span>
-                                        </div>
-                                        <div class="hk-legend">
-                                            <span class="d-10 bg-grey-light-2  rounded-circle d-inline-block"></span><span>35-44</span>
-                                        </div>
-                                    </div>
+                                    <div id="calendar"></div>
                                 </div>
                             </div>
                             <div class="card">
@@ -428,9 +408,9 @@
                     </div>
                 </div>
             </div>
-             -->
+            
 
-        </div>
+        {{-- </div> --}}
     </section>
 
 </div>

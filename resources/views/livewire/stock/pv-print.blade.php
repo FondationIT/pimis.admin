@@ -166,13 +166,41 @@
                                                             <td>{{$prod->quantite}}</td>
                                                             <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                             @foreach ($proforma as $prof)
-                                                            <td>
-                                                            $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
-                                                            </td>
-                                                            <td>
-                                                                <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
-                                                            </td>
+                                                                @php
+                                                                    try {
+                                                                        $prix = App\Models\prixPv::where('produit', $prod->description)
+                                                                            ->where('proforma', $prof->id)
+                                                                            ->first();
+
+                                                                        if ($prix) {
+                                                                @endphp
+
+                                                                            <td>
+                                                                                $ {{ $prix->prix }}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <strong>$ {{ $prix->prix * $prod->quantite }}</strong>
+                                                                            </td>
+
+                                                                @php
+                                                                        } else {
+                                                                @endphp
+                                                                            <td> 0.00 </td>
+                                                                            <td> 0.00 </td>
+
+                                                                @php
+                                                                        }
+                                                                    } catch (\Exception $e) {
+                                                                @endphp
+
+                                                                    <td colspan="2">Error: {{ $e->getMessage() }}</td>
+
+                                                                @php
+                                                                    }
+                                                                @endphp
                                                             @endforeach
+
 
                                                         </tr>
 

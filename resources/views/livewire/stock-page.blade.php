@@ -17,6 +17,7 @@
                   </div>
                 </div>
             <!-- /Title -->
+            
 
             <!-- Main content -->
             <!-- Row -->
@@ -28,7 +29,7 @@
               <div class="card-body">
                   <livewire:filter.bon-req-filter>
               </div>
-          </div>
+            </div>
      
           <div class="card">
               <div class="card-body">
@@ -89,9 +90,6 @@
         </div>
     </section>
 
-
-
-
     <section id="pvS-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
         <nav class="hk-breadcrumb" aria-label="breadcrumb">
@@ -145,11 +143,7 @@
           <!-- /Row -->
 
       </div>
-  </section>
-
-
-
-
+    </section>
 
     <section id="bonComS-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
@@ -177,8 +171,6 @@
 
         </div>
     </section>
-
-
 
     <section id="fournS-section" class="section js-section u-category-media">
         <!-- Breadcrumb -->
@@ -212,9 +204,6 @@
 
         </div>
     </section>
-
-
-
 
     <section id="compteS-section" class="section js-section u-category-media">
       <!-- Breadcrumb -->

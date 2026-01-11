@@ -42,8 +42,6 @@ class DaPrint extends Component
         $this->valid2 = ValidDa::where("da", $this->modelId)->where("niv", 2)->get();
         $this->valid3 = ValidDa::where("da", $this->modelId)->where("niv", 3)->get();
         $this->valid4 = ValidDa::where("da", $this->modelId)->where("niv", 4)->get();
-        
-
 
         $this->some  = ProductOder::join('prices', 'prices.product', '=', 'product_oders.description')
             ->selectRaw("prices.prix * product_oders.quantite as price")
@@ -59,6 +57,7 @@ class DaPrint extends Component
         $this->emit('ligneArt',$this->modelId );
 
     }
+
 
     public function render()
     {

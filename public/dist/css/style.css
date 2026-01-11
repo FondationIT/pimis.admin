@@ -14514,3 +14514,110 @@ div.mce-menu .mce-menu-item-sep, .mce-menu-item-sep:hover {
   /* IE11 */ }
 
 /*# sourceMappingURL=style.css.map */
+
+.notif-item:hover {
+    background: #f3f6f9;
+    cursor: pointer;
+}
+
+.notif-item .badge {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hover-bg:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transition: 0.2s;
+}
+
+/* .tab-pane {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.tab-pane.tab_active {
+    display: block;
+    opacity: 1;
+} */
+
+#notifTabs {
+    display: flex;
+    flex-wrap: nowrap;        /* prevent wrapping */
+    overflow-x: auto;         /* allow horizontal scroll */
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 4px;                 /* optional spacing */
+}
+
+#notifTabs::-webkit-scrollbar {
+    height: 6px;              /* customize scrollbar */
+}
+
+#notifTabs .nav-tab-item {
+    flex: 0 0 auto;            /* prevent shrinking */
+}
+
+#notifTabs .nav-tab-link {
+  color: #798088;
+  width: fit-content;
+  min-width: 80px;
+  height: 30px;
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-tab-link[aria-selected='true']{
+  background: #c8d1e1 !important;
+  font-weight: bold;
+}
+
+/* .tab-content>.tab-pane.tab_active{
+  display: block;
+  opacity: 1;
+} */
+.notif-main-msg{
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: .5rem;
+}
+.notif-initial-cont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bolder;
+  flex-direction: column;
+  text-align: center;
+}
+.notif-initial-cont span{
+  font-size: .6em;
+  color: #ffffff;
+}
+
+.mh-70dvh {
+    max-height: 64dvh;
+}
+
+.tab-pane.tab_active{
+  display: block;
+}
+
+.tab-pane .notfound{
+  margin-inline: auto;
+  text-align: center;
+}
+
+

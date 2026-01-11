@@ -1,0 +1,147 @@
+CREATE TABLE default_msg (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    type VARCHAR(50) NOT NULL DEFAULT 'general', -- general | system | warning | success
+    message TEXT NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+
+CREATE TABLE notifications (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    agent BIGINT UNSIGNED NOT NULL,
+    msg_id BIGINT UNSIGNED NOT NULL,
+
+    task VARCHAR(255) NOT NULL,
+
+    is_niv1 BOOLEAN NOT NULL DEFAULT 0,
+    is_niv2 BOOLEAN NOT NULL DEFAULT 0,
+    is_niv3 BOOLEAN NOT NULL DEFAULT 0,
+    is_niv4 BOOLEAN NOT NULL DEFAULT 0,
+
+    is_read BOOLEAN NOT NULL DEFAULT 0,
+    is_delegated BOOLEAN NOT NULL DEFAULT 0,
+
+    delegated_by BIGINT UNSIGNED NULL,
+
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_notifications_agent
+        FOREIGN KEY (agent) REFERENCES agents(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_notifications_msg
+        FOREIGN KEY (msg_id) REFERENCES default_msg(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_notifications_delegated_by
+        FOREIGN KEY (delegated_by) REFERENCES agents(id)
+        ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+
+DELIMITER $$
+
+CREATE TRIGGER trg_notifications_bi
+BEFORE INSERT ON notifications
+FOR EACH ROW
+BEGIN
+    IF NEW.is_delegated = 1 AND NEW.delegated_by IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'delegated_by must be set when is_delegated = true';
+    END IF;
+
+    IF NEW.is_delegated = 0 THEN
+        SET NEW.delegated_by = NULL;
+    END IF;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER trg_notifications_bu
+BEFORE UPDATE ON notifications
+FOR EACH ROW
+BEGIN
+    IF NEW.is_delegated = 1 AND NEW.delegated_by IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'delegated_by must be set when is_delegated = true';
+    END IF;
+
+    IF NEW.is_delegated = 0 THEN
+        SET NEW.delegated_by = NULL;
+    END IF;
+END$$
+
+DELIMITER ;
+
+CREATE TABLE `roles` (
+  `id` bigint NOT NULL,
+  `title` varchar(20) NOT NULL,
+  `full_title` varchar(255) NOT NULL,
+  `status` varchar(12) NOT NULL DEFAULT 'active',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO roles (id, title, full_title, status, created_at, updated_at) VALUES
+(1001,'Sup','SUPER USER','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1002,'ADMIN','ADMIN','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1003,'S.E','EXECUTIVE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1004,'D.A.F','Directeur Administratif et Financier','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1005,'D.P','PROGRAMME','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1006,'C.P','COORDINATION','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1007,'R.H','RESOURCES HUMAINES','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1008,'A.I','AUDIT INTERNE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1009,'COMPT2','COMPTABILITE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1010,'COMPT1','CHEF COMPTABLE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1011,'CAISS','CAISSE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1012,'D.O','Directeur d''Operation','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1013,'LOG1','LOGISTIQUE DIRECTION','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1014,'LOG2','LOGISTIQUE OPERATION','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1015,'MAG','MAGASIN','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1016,'CHR','CHARROI','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1017,'SECU','SECURITE','active','2026-01-06 13:01:35','2026-01-06 13:01:35'),
+(1018,'PERS','USER','active','2026-01-06 13:01:35','2026-01-06 13:01:35');
+
+CREATE TABLE pv_attr_commission_signatures (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    pv_attr BIGINT UNSIGNED NOT NULL,
+
+    niv_1 BOOLEAN DEFAULT(0),
+    niv_2 BOOLEAN DEFAULT(0),
+    niv_3 BOOLEAN DEFAULT(0),
+
+    comments JSON NULL,
+
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_pv_niveau_pv_attr
+        FOREIGN KEY (pv_attr)
+        REFERENCES pv_attrs(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
+
+create table user_role(
+	id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    user BIGINT UNSIGNED,
+    role BIGINT,
+    CONSTRAINT fk_user_role_user
+        FOREIGN KEY (user)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+	CONSTRAINT fk_user_role
+        FOREIGN KEY (role)
+        REFERENCES roles(id)
+        ON DELETE CASCADE
+);

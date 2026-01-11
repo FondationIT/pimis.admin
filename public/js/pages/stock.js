@@ -617,3 +617,36 @@ function brFormToJSON(bc,projet,fournisseur,personne,lieu,bordereau,etat,prod,qt
       "comment": comment
     };
   }
+
+document.addEventListener('DOMContentLoaded', function () {
+    let action = null;
+    let ref = null;
+
+    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    const confirmBtn = document.getElementById('confirmBtn');
+    const message = document.getElementById('confirmMessage');
+
+    document.querySelectorAll('.confirm-action').forEach(btn => {
+        btn.addEventListener('click', function () {
+            action = this.dataset.action;
+            ref = this.dataset.ref;
+
+            message.textContent =
+                action === 'approve'
+                    ? 'Are you sure you want to APPROVE this item?'
+                    : 'Are you sure you want to REJECT this item?';
+
+            confirmBtn.className =
+                action === 'approve'
+                    ? 'btn btn-success btn-sm'
+                    : 'btn btn-danger btn-sm';
+
+            modal.show();
+        });
+    });
+
+    confirmBtn.addEventListener('click', function () {
+        Livewire.emit('validateAttr', ref, action);
+        modal.hide();
+    });
+});

@@ -23,7 +23,9 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-
+  <!-- Calendar plugin CSS -->
+    <link href="{{  asset('vendors/fullcalendar/packages/core/index.global.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{  asset('vendors/fullcalendar/packages/daygrid/index.global.min.css') }}" rel="stylesheet" type="text/css"/>
 	<!-- Bootstrap Dropzone CSS -->
 	<link href="{{  asset('vendors/dropify/dist/css/dropify.css') }}" rel="stylesheet" type="text/css"/>
 

@@ -13,7 +13,7 @@
    @include('service')
  @endif
 
- @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+ @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'MAG'  || Auth::user()->role == 'D.O' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
     @include('stock')
  @endif
 

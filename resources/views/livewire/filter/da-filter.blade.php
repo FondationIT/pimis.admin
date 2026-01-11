@@ -1,5 +1,22 @@
+
 <div>
-    <form wire:submit.prevent='filterData' wire:reset.prevent=''>
+    <!-- Status Tabs -->
+    <div class="mb-3 border-b border-gray-200">
+        <ul class="nav nav-tabs">
+            <li class="nav-item cursor-pointer">
+                <a class="nav-link active" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',3)">En cours</a>
+            </li>
+            <li class="nav-item cursor-pointer">
+                   <a class="nav-link" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',1)">Approuver</a>
+            </li>
+            <li class="nav-item cursor-pointer">
+                <a class="nav-link" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',2)">Refuser</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Filters -->
+    <form wire:submit.prevent='filterData'>
         <div class="form-row">
             <div hidden>{{$modelId}}</div>
             
@@ -8,17 +25,13 @@
                     <div class="col-md-3 mb-10">
                         <input class="form-control @error('debut') is-invalid @enderror" wire:model.defer="state.debut" type="date">
                         @error('debut')
-                            <span class="text-red-600" role="alert" >
-                                {{ $message }}
-                            </span>
+                            <span class="text-red-600">{{ $message }}</span>
                         @enderror
-                    </div>-
+                    </div>
                     <div class="col-md-3 mb-10">
                         <input class="form-control @error('fin') is-invalid @enderror" wire:model.defer="state.fin" type="date">
                         @error('fin')
-                            <span class="text-red-600" role="alert" >
-                                {{ $message }}
-                            </span>
+                            <span class="text-red-600">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-3 mb-10">
@@ -34,39 +47,20 @@
                                     <option value="{{$aff->id}}">{{$aff->name}}</option>
                                 @endforeach
                             @endif
-
                         </select>
                         @error('projet')
-                            <span class="text-red-600" role="alert" >
-                                {{ $message }}
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="col-md-2 mb-10">
-                        <select class="form-control @error('status') is-invalid @enderror" wire:model.defer="state.status" type="text">
-                            <option value="">Status</option>
-                            <option value="0">Tous</option>
-                            <option value="1">Approuver</option>
-                            <option value="2">En cours</option>
-                            <option value="3">Refuser</option>
-                        </select>
-                        @error('status')
-                            <span class="text-red-600" role="alert" >
-                                {{ $message }}
-                            </span>
+                            <span class="text-red-600">{{ $message }}</span>
                         @enderror
                     </div>
                 </div>
             </div>
-
 
             <div class="col-md-1 mb-10">
                 <button class="btn btn-primary" wire:loading.attr='disabled' type="submit">Filter</button>
             </div>
 
             <div class="col-md-1 mb-10">
-                <button class="btn btn-secondary" type="reset" wire:loading.attr='disabled' wire:click='resetForm' >Reinitialiser</button>
+                <button class="btn btn-secondary" type="reset" wire:loading.attr='disabled' wire:click='resetForm'>Réinitialiser</button>
             </div>
         </div>
     </form>

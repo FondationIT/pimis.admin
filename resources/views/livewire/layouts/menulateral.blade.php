@@ -6,26 +6,8 @@
         <div class="nicescroll-bar">
             <div class="navbar-nav-wrap">
                 <div class="nav-header">
-                    <h4><span style="color: #F5BF60">
-
-                    @if (Auth::user()->role == 'Sup')SUPER USER @endif
-                    @if (Auth::user()->role == 'ADMIN')ADMIN @endif
-                    @if (Auth::user()->role == 'S.E')EXECUTIVE @endif
-                    @if (Auth::user()->role == 'D.A.F')DAF @endif
-                    @if (Auth::user()->role == 'D.P')PROGRAMME @endif
-                    @if (Auth::user()->role == 'C.P')COORDINATION @endif
-                    @if (Auth::user()->role == 'R.H')RESOURCES HUMAINES @endif
-                    @if (Auth::user()->role == 'A.I')AUDIT INTERNE @endif
-                    @if (Auth::user()->role == 'COMPT2')COMTABILITE @endif
-                    @if (Auth::user()->role == 'COMPT1')CHEF COMPTABLE @endif
-                    @if (Auth::user()->role == 'CAISS')CAISSSE @endif
-                    @if (Auth::user()->role == 'LOG1')LOGISTIQUE DIRECTION @endif
-                    @if (Auth::user()->role == 'LOG2')LOGISTIQUE OPERATION @endif
-                    @if (Auth::user()->role == 'MAG')MAGASIN @endif
-                    @if (Auth::user()->role == 'CHR')CHARROI @endif
-                    @if (Auth::user()->role == 'SECU')SECURITE @endif
-                    @if (Auth::user()->role == 'PERS')USER @endif
-                </span></h4>
+                    <h4><span style="color: #F5BF60">{{ $roleLabel }}</span></h4>
+                
             </div>
             <hr class="nav-separator">
 
@@ -35,6 +17,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="button-dash" data-active="dash" data-activ="" data-section="dash">
                            Tableau de bord
+                        </a>
+                    </li>
+                    <li class="nav-item" id="home_dash">
+                        <a class="nav-link" href="#" id="button-home_dash" data-active="home_dash" wire:click="$emit('dashUpdated')" data-open="bFile" data-section="home_dash">
+                        {{-- <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#fichier_drp"> --}}
+                            <span class="feather-icon"><i data-feather="home"></i></span>
+                            <span class="nav-link-text">Accueil</span>
                         </a>
                     </li>
 
@@ -53,7 +42,6 @@
                                     <li class="nav-item" id="aCatPrix">
                                         <a class="nav-link" href="#" id="button-aCatPrix" data-active="aCatPrix" wire:click="$emit('articleUpdated')" data-open="bFile" data-section="aCatPrix">Articles & Prix</a>
                                     </li>
-
 
                                     <li class="nav-item" id="fichSt">
                                         <a class="nav-link" href="#" id="button-fichSt" data-active="fichSt" wire:click="$emit('fichStUpdated')" data-open="bFile" data-section="fichSt">Fiche de stock</a>
@@ -206,7 +194,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bStock">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
                                 <span class="feather-icon"><i data-feather="package"></i></span>
@@ -215,7 +203,7 @@
                             <ul id="stock" class="nav flex-column collapse collapse-level-1">
                                 <li class="nav-item">
                                     <ul class="nav flex-column">
-                                        @if (Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'LOG1' || Auth::user()->role == 'D.O' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                                             <li class="nav-item" id="bonReqS">
                                                 <a class="nav-link" href="#" id="button-bonReqS" data-active="bonReqS" wire:click="$emit('bonReqUpdated')" data-open="bStock" data-section="bonReqS">Bons de réquisition</a>
                                             </li>
@@ -224,7 +212,7 @@
                                             </li>
                                         @endif
 
-                                        @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                        @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
 
                                             <li class="nav-item" id="pvS">
                                                 <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" wire:click="$emit('pvUpdated')" data-section="pvS">Analyse</a>

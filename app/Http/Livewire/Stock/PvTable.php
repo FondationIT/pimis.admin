@@ -22,8 +22,28 @@ class PvTable extends LivewireDatatable
     public $modelId;
 
     protected $listeners = [
-        'pvUpdated' => '$refresh'
+        'pvUpdated' => '$refresh',
+        'searchEB' => 'applySearch'
     ];
+
+    public function applySearch($value)
+    {
+        $this->search = preg_replace('/\s+/', ' ', trim($value));
+    }
+
+    // public function builder()
+    // {
+    //     $query = Pv::query();
+
+    //     // Global search
+    //     if (!empty($this->search)) {
+    //         $searchTerm = '%' . $this->search . '%';
+    //         $query->where('reference', 'LIKE', $searchTerm);
+    //     }
+
+    //     return $query;
+    // }
+
 
     public function printDa($modelId){
         $this->modelId = $modelId;

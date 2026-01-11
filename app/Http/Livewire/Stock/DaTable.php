@@ -27,12 +27,25 @@ use Illuminate\Support\Facades\DB;
 class DaTable extends LivewireDatatable
 {
     public $modelId,$data,$pv,$prof;
+    public $statusFilter = 0;
+    public $search = '';
 
     protected $listeners = [
         'demAchUpdated' => '$refresh',
+        'dataStatus' => 'filterDataByStatus',
         'filterDa',
-        'resetFilterDa'
+        'resetFilterDa',
+        'searchDA' => 'applySearch'
     ];
+
+    public function applySearch($value)
+    {
+        $this->search = preg_replace('/\s+/', ' ', trim($value));
+    }
+
+    public function filterDataByStatus($value){
+        $this->statusFilter = $value;
+    }
 
     public function printDa($modelId){
         $this->modelId = $modelId;
@@ -192,9 +205,6 @@ class DaTable extends LivewireDatatable
     }
 
 
-
-
-
     ///////////////////////////////////////////////////////////
     /////////////// FILTER DATA  /////////////////////////////
     ////////////////////////////////////////////////////////
@@ -212,45 +222,59 @@ class DaTable extends LivewireDatatable
         return $this->getBuilder();
     }
 
+    public function updated($name, $value)
+    {
+        if ($name === 'statusFilter') {
+            $this->builder();
+        }
+    }
+    
     public function logicAlg(){
+        $query = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb');
+
+        // GLOBAL SEARCH FROM NOTIFICATION
+        if (!empty($this->search)) {
+            $query->where(function ($q) {
+                $q->where('dem_aches.reference', 'LIKE', '%' . $this->search . '%');
+            });
+        }
+
+
         if(Auth::user()->role == 'LOG2' || Auth::user()->role == 'Sup'){
-            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb');
-        }elseif(Auth::user()->role == 'LOG1'){
-            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb');
+            return sortDaByStatus($query, $this->statusFilter);
+        }elseif(Auth::user()->role == 'LOG1' || Auth::user()->role == 'D.O'){
+            return sortDaByStatus($query, $this->statusFilter);
         }elseif (Auth::user()->role == 'C.P') {
-
-            $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
-            ->join('affectations', 'affectations.projet', '=', 'et_bes.projet')
-            ->where('affectations.agent', Auth::user()->agent)
-            ->where('dem_aches.niv1', true)
-            ->where('dem_aches.niv2', true)
-            ->where('affectations.cath', '1');
-            return $das;
+            $query->join('affectations', 'affectations.projet', '=', 'et_bes.projet');
+            $cols=[
+                'affectations.agent'=>Auth::user()->agent,
+                'dem_aches.niv1'=>true,
+                'dem_aches.niv2'=>true,
+                'affectations.cath'=>'1'
+            ];
+            return sortDaByStatus($query, $this->statusFilter, $cols);
         }elseif (Auth::user()->role == 'COMPT2') {
-
-           $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
-            ->join('affectations', 'affectations.projet', '=', 'et_bes.projet')
-            ->where('affectations.agent', Auth::user()->agent)
-            ->where('dem_aches.niv1', true);
-            return $das;
+            $query->join('affectations', 'affectations.projet', '=', 'et_bes.projet');
+            $cols=[
+                'affectations.agent'=>Auth::user()->agent,
+                'dem_aches.niv1'=>true
+            ];
+            // logger('COMPT2 USER', [sortDaByStatus($query, $this->statusFilter, $cols)->toSql()]);
+            return sortDaByStatus($query, $this->statusFilter, $cols);
         }elseif (Auth::user()->role == 'COMPT1') {
-
-            $das = DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
-            ->where('dem_aches.niv1', true);
-            return $das;
+            $cols=[
+                'dem_aches.niv1'=>true
+            ];
+            return sortDaByStatus($query, $this->statusFilter, $cols);
         }else if(Auth::user()->role == 'D.A.F'){
-            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
-            ->where('dem_aches.niv1', true)
-            ->where('dem_aches.niv2', true)
-            ->where('dem_aches.niv3', true)
-            ->orderBy("dem_aches.id", "DESC");
+            $cols=[
+                'dem_aches.niv1'=>true,
+                'dem_aches.niv2'=>true,
+                'dem_aches.niv3'=>true
+            ];
+            return sortDaByStatus($query, $this->statusFilter, $cols);
         }else {
-            return DemAch::join('et_bes', 'et_bes.id', '=', 'dem_aches.eb')
-            ->where('dem_aches.niv1', true)
-            ->where('dem_aches.niv2', true)
-            ->where('dem_aches.niv3', true)
-            ->where('dem_aches.niv4', true)
-            ->orderBy("dem_aches.id", "DESC");
+            return sortDaByStatus($query, $this->statusFilter);
         }
     }
 
@@ -260,21 +284,15 @@ class DaTable extends LivewireDatatable
 
     public function filterData($data){
 
+        // PZ/fpit5311!
+        // cd domains/pimis.org/public_html/admin
+        // composer dump-autoload --no-scripts
+
+
         $query = $this->logicAlg()->whereDate('dem_aches.created_at','>=',$data['debut'])->whereDate('dem_aches.created_at','<=',$data['fin']);
         $query = ($data['projet']== 0) ? $query : $query->where('et_bes.projet', $data['projet']);
 
         return $this->statusData($data['status'], $query)->orderBy("dem_aches.id", "DESC");
-    }
-
-    public function statusData($status, $query){
-        if ($status == 1){
-            $query = $query->active();
-        }elseif($status == 2){
-            $query = $query->enCours();
-        }elseif($status == 3){
-            $query = $query->inactive();
-        }
-        return $query;
     }
 
 
@@ -284,6 +302,7 @@ class DaTable extends LivewireDatatable
 
     public function columns()
     {
+        $statuData = 'approved';
         if(Auth::user()->role == 'COMPT2'){
 
             return [
@@ -378,7 +397,7 @@ class DaTable extends LivewireDatatable
                 })->unsortable(),
 
             ];
-        }else if(Auth::user()->role == 'LOG1'){
+        }else if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'D.O'){
 
             return [
 
@@ -734,6 +753,7 @@ class DaTable extends LivewireDatatable
                     }else{
                         $delete = '<span class="badge badge-info">En cours</span>';
                     }
+
                         return $delete ;
                 })->unsortable()
             ];

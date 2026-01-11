@@ -14,6 +14,7 @@ use Livewire\Component;
 class UserForm extends Component
 {
     use WithFileUploads;
+    public $roles = [];
     public $state = [];
     public $modelId = null;
     public $fileName;
@@ -21,6 +22,11 @@ class UserForm extends Component
         'userForm',
         'editUser',
     ];
+
+    public function mount()
+    {
+        $this->roles = getRoles();
+    }
 
     public function userForm(){
         $this->reset('state');

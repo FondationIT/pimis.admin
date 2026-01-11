@@ -1,4 +1,19 @@
 <div>
+    <!-- Status Tabs -->
+    <div class="mb-3 border-b border-gray-200">
+        <ul class="nav nav-tabs">
+            <li class="nav-item cursor-pointer">
+                <a class="nav-link active" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',3)">En cours</a>
+            </li>
+            <li class="nav-item cursor-pointer">
+                   <a class="nav-link" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',1)">Approuver</a>
+            </li>
+            <li class="nav-item cursor-pointer">
+                <a class="nav-link" data-bs-toggle="tab" wire:click.prevent="$emit('dataStatus',2)">Refuser</a>
+            </li>
+        </ul>
+    </div>
+
     <form wire:submit.prevent='filterEb'>
         <div class="form-row">
             <div hidden>{{$modelId}}</div>
@@ -37,7 +52,7 @@
                         @enderror
                     </div>
 
-                    <div class="col-md-2 mb-10">
+                    {{-- <div class="col-md-2 mb-10">
                         <select class="form-control @error('status') is-invalid @enderror" wire:model.defer="state.status" type="text">
                             <option value="">Status</option>
                             <option value="0">Tous</option>
@@ -50,7 +65,7 @@
                                 {{ $message }}
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 

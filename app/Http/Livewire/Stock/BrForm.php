@@ -44,6 +44,7 @@ class BrForm extends Component
         $this->projet = Projet::where("id", $this->eb[0]->projet)->get();
 
         $this->pvAttr = PvAttr::where("da", $this->bc[0]->da)->get();
+
         
 
         $this->product = ProductOder::join('select_pvs', 'select_pvs.produit', '=', 'product_oders.description')

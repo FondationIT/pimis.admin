@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Services\NotificationService;
+use App\Http\Controllers\AccessCardManagement;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,4 +32,25 @@ Route::post('/trReg', [App\Http\Controllers\EtatBesoinController::class, 'tr'])-
 Route::post('/msReg', [App\Http\Controllers\EtatBesoinController::class, 'miss'])->name('msReg');
 Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr'])->name('ctrReg');
 Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
+Route::get('/fp/user/business-card/{id}', [AccessCardManagement::class, 'BusinessCardDisplay'])->name('business_card.show');
 
+Route::get('/notifications', function (NotificationService $notify) {
+    try {
+        return response()->json(
+            $notify->getUserNotifications(Auth::user()->agent)
+        );
+    } catch (\Throwable $th) {
+        //throw $th;
+        return response()->json(['error' => 'Unable to fetch notifications', 'message' => $th->getMessage()], 500);
+    }
+
+})->name('notification.fetch');
+
+Route::post('/notifications/mark-read', function (NotificationService $notify) {
+    $notify->markAsRead(auth()->id());
+    return response()->json(['status' => 'ok']);
+})->name('notification.read');
+
+Route::get('/scanner', [AccessCardManagement::class, 'scanIndex'])->name('scanner.index');
+Route::post('/scanner/result', [AccessCardManagement::class, 'storeScanResult'])->name('scanner.result');
+Route::post('/scanner/upload-image', [AccessCardManagement::class, 'uploadQrImage'])->name('scanner.upload-image');

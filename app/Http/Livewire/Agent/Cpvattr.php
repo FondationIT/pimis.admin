@@ -2,7 +2,12 @@
 
 namespace App\Http\Livewire\Agent;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\UserRole;
 use App\Models\DemAch;
+use App\Models\PvAttr;
+use App\Models\PvAttrCommissionSignatures;
 use App\Models\signaturePv;
 use App\Models\SignaturePVAttr;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +18,11 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
-
+use App\Services\NotificationService;
 class Cpvattr extends LivewireDatatable
 {
     public $modelId;
-
+    protected NotificationService $notificationService;
     public function printPv($modelId){
         $this->modelId = $modelId;
         $this->emit('printPvAttr',$this->modelId );
@@ -27,19 +32,61 @@ class Cpvattr extends LivewireDatatable
         $this->modelId = $modelId;
         $this->emit('printDa',$this->modelId );
     }
-
-    public function signer($modelId){
-        DB::beginTransaction();
-        try {
-            $this->modelId = $modelId;
-            SignaturePVAttr::find($this->modelId)->update([
-                'active' => 1,
-            ]);
-            DB::commit();
-        } catch (\Throwable $th) {
-
-            DB::rollBack();
+    public function boot(NotificationService $notificationService){
+        $this->notificationService = $notificationService;
+    }
+    public function signer($signatureId, $pvId){
+        $allusers = User::all();
+        foreach($allusers as $user){
+            $role = Role::where('title',$user->role)->value('id');
+            // User::where('id', $user->id)->update(['role' => ]);
+            if($role != null){
+                UserRole::Create([
+                    'user' => $user->id,
+                    'role' => $role
+                ]);
+            }
         }
+
+        DB::beginTransaction();
+        $pvRef = PvAttr::where('id', $pvId)->first();
+
+        try {
+            $exists = PvAttrCommissionSignatures::where('pv_attr', $pvId)->exists();
+
+            if (!$exists) {
+                PvAttrCommissionSignatures::create([
+                    'pv_attr' => $pvId,
+                ]);
+
+                SignaturePVAttr::where('id', $signatureId)
+                    ->update(['status' => 'in_progress']);
+            }
+
+            DB::commit();
+            // Notify relevant parties
+            $this->notificationService->sendNotification([
+                'agent' => getAdministratorUsers(),
+                'msg_id' => 3,
+                'task' => ''.$pvRef->reference,
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        // DB::beginTransaction();
+        // try {
+        //     $this->modelId = $modelId;
+        //     SignaturePVAttr::find($this->modelId)->update([
+        //         'active' => 1,
+        //     ]);
+        //     DB::commit();
+        // } catch (\Throwable $th) {
+
+        //     DB::rollBack();
+        // }
+        // logger()->info('Signer PV Attr ID: '.$modelId);
     }
 
     public function builder()
@@ -73,12 +120,26 @@ class Cpvattr extends LivewireDatatable
             Column::name('pv_attrs.created_at')
                 ->label('Date'),
 
-            Column::callback(['signature_p_v_attrs.active','signature_p_v_attrs.id'], function ($active,$id) {
+            Column::callback(['signature_p_v_attrs.status','signature_p_v_attrs.id', 'pv_attrs.id'], function ($status,$id, $pvId) {
+                $badgeClass = match ($status) {
+                    'in_progress' => 'info',
+                    'approved' => 'success',
+                    'rejected' => 'danger',
+                    default    => 'warning',
+                };
 
-                if ($active == false) {
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="signer('.$id.')" data-toggle="modal" ><span class="badge badge-info">Signer</span></a>';
+                $statusConverter = [
+                    'in_progress' => 'En attente',
+                    'approved' => 'Approuvé',
+                    'rejected' => 'Rejeté',
+                ];
+
+                if ($status == 'pending') {
+                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="signer('.$id.','.$pvId.')" data-toggle="modal" >
+                    <span class="badge badge-warning">Procéder</span>
+                    </a>';
                 }else{
-                    $delete = '<span class="badge badge-success">Deja</span>';
+                    $delete = "<span class=\"badge badge-{$badgeClass}\">" . $statusConverter[strtolower($status)] . "</span>";
                 }
 
 

@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         //\App\Models\User::factory(10)->create();
-
+        $this->call(ApiKeySeeder::class);
         
 
         $service = [
@@ -79,6 +79,7 @@ class DatabaseSeeder extends Seeder
         foreach ($service as $serv){
             \App\Models\Service::create($serv);
         }
+        
         \App\Models\Agent::create([
             'id' => 3394,
             'firstname' => 'David',
@@ -144,6 +145,7 @@ class DatabaseSeeder extends Seeder
             'user' =>2345,
             'taux' => 2500.00,
         ]);
+
 
     }
 }

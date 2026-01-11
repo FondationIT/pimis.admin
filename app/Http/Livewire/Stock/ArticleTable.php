@@ -50,7 +50,7 @@ class ArticleTable extends LivewireDatatable
 
     public function builder()
     {
-        if(Auth::user()->role == 'LOG1' || Auth::user()->role == 'Sup'){
+        if(Auth::user()->role == 'LOG1'  || Auth::user()->role == 'D.O' || Auth::user()->role == 'Sup'){
             return Article::join('products','products.id','=','articles.product');
         }else {
             return Article::join('products','products.id','=','articles.product')
@@ -60,7 +60,7 @@ class ArticleTable extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
+        if(Auth::user()->role == 'LOG1'  || Auth::user()->role == 'D.O' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup'){
 
             return [
 

@@ -89,39 +89,53 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $existingItems = [];
+                                            @endphp
                                             @foreach ($product as $prod)
-                                                <tr>
+                                                @php
+                                                    $key = $prod->description . '_' . $prod->quantite;
+                                                    // Eviter les doublons dans l'affichage des produits
+                                                    if (in_array($key, $existingItems)) {
+                                                        continue;
+                                                    }else{
+                                                        $existingItems[] = $key;
+                                                        $productInstance = App\Models\Product::firstWhere('id', $prod->product);
+                                                        $articleInstance = App\Models\Article::firstWhere('id', $prod->description);
+                                                        $brOrderQtSum = App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite');
+                                                @endphp
+                                                        <tr>
 
-                                                    <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
-                                                    <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
+                                                            <td>{!! $productInstance->name ?? "<b>unkown-product</b>"!!} {!! $articleInstance->marque ?? "<b>unkown-marque</b>"!!} {!! $articleInstance->model ?? "<b>unkown-model</b>"!!} {!! $articleInstance->description ?? "<b>unkown-description</b>"!!}</td>
+                                                            <td>{!! $articleInstance->unite ?? "<b>unkown-unite</b>" !!}</td>
 
-                                                    @if ($prod->quantite == App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite'))
+                                                            @if ($prod->quantite == $brOrderQtSum)
 
-                                                        <td><x-icons.check-circle class="text-green-600 mx-auto" /></td>
-                                                        <td><x-icons.check-circle class="text-green-600 mx-auto" /></td>
-                                                        <td>Tout est déjà receptionné</td>
-                                                            
-                                                    @else
-                                                            
-                                                        
+                                                                <td><x-icons.check-circle class="text-green-600 mx-auto" /></td>
+                                                                <td><x-icons.check-circle class="text-green-600 mx-auto" /></td>
+                                                                <td>Tout est déjà receptionné</td>
+                                                                    
+                                                            @else
+                                                                    
+                                                                
 
-                                                        <td>{{$prod->quantite - App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite')}}</td>
-                                                        <td>
-                                                            
-                                                                <input type="number" style="width: 100px" id="prixBr" step=.1 min=0 max={{$prod->quantite - App\Models\BrOder::where('bc', $bc[0]->id)->where('produit', $prod->description)->get('quantite')->sum('quantite')}} class="form-control qteBr" required>
-                                                            
-                                                        </td>
-                                                        <td>
-                                                            
-                                                            <textarea class="form-control observationBr" style="width: 200px"  name="comment" required></textarea>
-                                                            
-                                                        </td>
-                                                        <input type="text" id="prodBr" class="prodBr" value="{{$prod->description}}" hidden>
-                                                    @endif
-                                                    
-                                                    
-
-                                                </tr>
+                                                                <td>{{$prod->quantite - $brOrderQtSum}}</td>
+                                                                <td>
+                                                                    
+                                                                        <input type="number" style="width: 100px" id="prixBr" step=.1 min=0 max={{$prod->quantite - $brOrderQtSum}} class="form-control qteBr" required>
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    
+                                                                    <textarea class="form-control observationBr" style="width: 200px"  name="comment" required></textarea>
+                                                                    
+                                                                </td>
+                                                                <input type="text" id="prodBr" class="prodBr" value="{{$prod->description}}" hidden>
+                                                            @endif
+                                                        </tr>
+                                                @php
+                                                    }
+                                                @endphp
 
                                             @endforeach
                                         </tbody>

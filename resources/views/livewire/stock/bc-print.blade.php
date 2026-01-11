@@ -66,15 +66,32 @@
                                 @if ($products)
                                     @foreach ($products as $prod)
 
+                                        
+
                                         <tr>
+                                            @php
+                                                try {
+                                            @endphp
+                                                <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->produit)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
 
-                                            <td>{{$i++}}</td><td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->produit)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->produit)->marque.' '.App\Models\Article::firstWhere('id', $prod->produit)->model.' '.App\Models\Article::firstWhere('id', $prod->produit)->description}}</td>
+                                                <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->produit)->unite}}</td>
 
-                                            <td>{{ App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->produit)->unite}}</td>
-
-                                            <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix }}</td>
-
-                                            <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
+                                            @php
+                                                } catch (\Throwable $th) {
+                                                    echo '<td>'.$th->getMessage().'</td><td>'.$th->getMessage().'</td>';
+                                                }
+                                            @endphp
+                                            @php
+                                                try {
+                                            @endphp
+                                                <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix }}</td>
+    
+                                                <td>$ {{ App\Models\PrixPv::where('proforma', $prof[0]->id)->where('produit', $prod->produit)->where('pv', $pvs[0]->id)->get()[0]->prix * App\Models\ProductOder::where('etatBes', $das[0]->eb)->where('description', $prod->produit)->get()[0]->quantite }}</td>
+                                            @php
+                                                } catch (\Throwable $th) {
+                                                    echo '<td>$0.00</td><td>$0.00</td>';
+                                                }
+                                            @endphp
                                         </tr>
 
                                     @endforeach

@@ -23,13 +23,20 @@ class EbTable extends LivewireDatatable
     protected $listeners = [
         'ebUpdated' => '$refresh',
         'filterEb',
-        'resetFilterEb'
+        'resetFilterEb',
+        'searchEB' => 'applySearch'
     ];
+
+    public function applySearch($value)
+    {
+        $this->search = preg_replace('/\s+/', ' ', trim($value));
+    }
 
     public function printEb($modelId){
         $this->modelId = $modelId;
         $this->emit('printEb',$this->modelId );
     }
+    
 
 
     ///////////////////////////////////////////////////////////
@@ -53,9 +60,26 @@ class EbTable extends LivewireDatatable
         return $this->getBuilder();
     }
 
-    public function getBuilder(){
-        return (is_null($this->data)) ? Et_bes::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC") : $this->filterData($this->data);
+    public function getBuilder()
+    {
+        $query = is_null($this->data) 
+            ? Et_bes::query()->where("agent", Auth::user()->id)
+            : $this->filterData($this->data);
+
+        // GLOBAL SEARCH
+        if (!empty($this->search)) {
+            $query->where(function ($q) {
+                $q->where('reference', 'LIKE', '%' . $this->search . '%');
+            });
+        }
+
+        return $query->orderBy("id", "DESC");
     }
+
+    // public function getBuilder(){
+        
+    //     return (is_null($this->data)) ? Et_bes::query()->where("agent", Auth::user()->id)->orderBy("id", "DESC") : $this->filterData($this->data);
+    // }
 
     public function filterData($data){
         $query = Et_bes::query()->whereDate('created_at','>=',$data['debut'])->whereDate('created_at','<=',$data['fin']);

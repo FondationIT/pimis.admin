@@ -80,13 +80,13 @@ $(document).ready(function(){
         });
     });
 
-     // HOME SLICK
-  $('#home-slick').slick({
-    autoplay: true,
-    infinite: true,
-    speed: 500,
-    arrows: true,
-  });
+    // HOME SLICK
+    $('#home-slick').slick({
+        autoplay: true,
+        infinite: true,
+        speed: 500,
+        arrows: true,
+    });
 
 
- });
+});

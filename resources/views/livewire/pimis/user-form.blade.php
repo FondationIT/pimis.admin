@@ -40,7 +40,10 @@
                             <label for="role">Selectionner role</label>
                             <select class="form-control select2 @error('role') is-invalid @enderror" wire:model.defer="state.role" name="role">
                                 <option value=""></option>
-                                <option value="PERS">PERS</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->title }}">{{ $role->title }}</option>
+                                @endforeach
+                                {{-- <option value="PERS">PERS</option>
                                 <option value="SECU">SECU</option>
                                 <option value="MAG">MAG</option>
                                 <option value="CHR">CHR</option>
@@ -55,7 +58,7 @@
                                 <option value="D.P">D.P</option>
                                 <option value="D.A.F">D.A.F</option>
                                 <option value="S.E">S.E</option>
-                                <option value="ADMIN">ADMIN</option>
+                                <option value="ADMIN">ADMIN</option> --}}
                             </select>
                             @error('role')
                                 <span class="text-red-600" role="alert" >

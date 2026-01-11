@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
+use App\Models\PvAttrCommissionSignatures;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
 use App\Models\DemAch;
@@ -25,12 +26,52 @@ class PvAttrPrint extends Component
     public $pvs;
     public $pv;
     public $i = 1;
+    public $commission_members;
+    public $commission_members_validation=[
+        'niv_1'=>false,
+        'niv_2'=>false,
+        'niv_3'=>false,
+    ];
     protected $listeners = [
         'printPvAttr'
     ];
 
+    public function pvAttrValidation($pvAttrId){
+        $signatures = PvAttrCommissionSignatures::where('pv_attr', $pvAttrId)->first();
+
+        if($signatures){
+            $this->commission_members_validation = [
+                'niv_1'=>$signatures->niv_1,
+                'niv_2'=>$signatures->niv_2,
+                'niv_3'=>$signatures->niv_3,
+            ];
+        }
+    }
+
+    public function mount()
+    {
+        $this->commission_members = getAdministratorUsers(true)
+        ->map(function ($member) {
+
+            // Append niv as a dynamic attribute on the model
+            match ($member->role) {
+                'D.O'   => $member->niv = 1,
+                'D.A.F' => $member->niv = 2,
+                'D.P'   => $member->niv = 3,
+                default => $member->niv = 99,
+            };
+
+            return $member;
+        })
+        ->sortBy('niv')
+        ->values();
+    }
+
     public function printPvAttr($modelId){
         $this->modelId = $modelId;
+
+        // initialize validation status
+        $this->pvAttrValidation($this->modelId);
 
         $this->pvs = PvAttr::where("id", $this->modelId)->get();
         //$this->products = ProductOder::where("etatBes", $this->das[0]->eb)->orderBy("id", "DESC")->get();

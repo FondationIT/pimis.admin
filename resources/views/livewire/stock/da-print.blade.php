@@ -58,7 +58,9 @@
                                         <th><strong>N<sup>o</sup></strong></th><th><strong>ligne</strong></th><th><strong>Design</strong></th><th><strong>Qte</strong></th><th><strong>Unite</strong></th><th><strong>P.U.E</strong></th><th><strong>P.T.E</strong></th>
                                     </tr>
                                     @if ($products)
+                                    
                                         @foreach ($products as $prod)
+                                        
                                             <tr>
 
                                                 <td>{{$i++}}</td>

@@ -21,14 +21,27 @@ use Illuminate\Support\Facades\DB;
 class BrTable extends LivewireDatatable
 {
     public $model = Br::class;
-    public $modelId;
+    public $modelId, $statusFilter = 0;
     protected $listeners = [
-        'brUpdated' => '$refresh'
+        'brUpdated' => '$refresh',
+        'dataStatus' => 'filterDataByStatus',
+        'searchBR' => 'applySearch'
     ];
 
     public function printBr($modelId){
         $this->modelId = $modelId;
         $this->emit('printBr',$this->modelId );
+    }
+
+    public function filterDataByStatus($value){
+        $this->statusFilter = $value;
+    }
+
+    public function updated($name, $value)
+    {
+        if ($name === 'statusFilter') {
+            $this->builder();
+        }
     }
 
     public function columns()

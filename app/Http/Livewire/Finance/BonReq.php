@@ -16,17 +16,31 @@ use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Facades\DB;
-
+use App\Services\NotificationService;
+use App\Http\Livewire\NotificationCenter;
 
 class BonReq extends LivewireDatatable
 {
+    protected NotificationService $notificationService;
     public $modelId,$data;
+    public $search = '';
 
     protected $listeners = [
         'bonReqUpdated' => '$refresh',
         'filterBReq',
-        'resetFilterBReq'
+        'resetFilterBReq',
+        'searchEB' => 'applySearch'
     ];
+
+    public function applySearch($value)
+    {
+        $this->search = preg_replace('/\s+/', ' ', trim($value));
+    }
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     public function printEb($modelId){
         $this->modelId = $modelId;
@@ -38,10 +52,13 @@ class BonReq extends LivewireDatatable
         $this->emit('formDA',$this->modelId );
     }
 
-    public function apprEb($modelId){
+    public function apprEb($modelId, $task){
         
         $this->modelId = $modelId;
-        $this->emit('formEbAppr',$this->modelId );
+        // $this->emit('formEbAppr',$this->modelId );
+        
+        $this->notificationService->markRead(Auth::user()->role,$task);
+        $this->emit('refreshNotifications');
     }
     public function cApprEb($modelId){
         DB::beginTransaction();
@@ -66,7 +83,7 @@ class BonReq extends LivewireDatatable
         }
     }
 
-    public function refEb($modelId){
+    public function refEb($modelId, $task){
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
@@ -82,6 +99,11 @@ class BonReq extends LivewireDatatable
             ]);
 
             DB::commit();
+
+            $this->notificationService->markRead(Auth::user()->role,$task);
+
+            $this->emit('refreshNotifications');
+            
         } catch (\Throwable $th) {
 
             DB::rollBack();
@@ -127,8 +149,14 @@ class BonReq extends LivewireDatatable
             return $et_bes;
         }elseif (Auth::user()->role == 'COMPT2') {
 
-            $et_bes = Et_bes::join('affectations', 'affectations.projet', '=', 'et_bes.projet')
-            ->where('affectations.agent', Auth::user()->agent);
+            $et_bes = Et_bes::join('affectations', 'affectations.projet', '=', 'et_bes.projet');
+            // GLOBAL SEARCH FROM NOTIFICATION
+            if (!empty($this->search)) {
+                $et_bes->where(function ($q) {
+                    $q->where('et_bes.reference', 'LIKE', '%' . $this->search . '%');
+                });
+            }
+            $et_bes->where('affectations.agent', Auth::user()->agent);
             return $et_bes;
         }else{
             return Et_bes::query();
@@ -233,9 +261,11 @@ class BonReq extends LivewireDatatable
                 })->unsortable(),
             ];
         }if(Auth::user()->role == 'COMPT2'){
+            // $refNo;
             return [
 
                 Column::callback(['reference','id'], function ($reference,$id) {
+                    $refNo = $reference;
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printEb('.$id.')" data-toggle="modal" data-target="#pEtBesModalForms">'.$reference.'</a>';
                 })->label('Reference')->searchable(),
 
@@ -262,7 +292,7 @@ class BonReq extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
+                Column::callback(['id','reference','active','niv1','niv2'], function ($id,$reference,$active,$niv1,$niv2) {
 
 
                     if ($active == true && $niv1 == true && $niv2 == true) {
@@ -275,9 +305,9 @@ class BonReq extends LivewireDatatable
                         $edit = '';
                         $edit2 ='';
                     }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click="apprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click.prevent="apprEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click.prevent="refEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }
 
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
@@ -324,9 +354,9 @@ class BonReq extends LivewireDatatable
                         $edit = '';
                         $edit2 ='';
                     }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="cApprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click.prevent="cApprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click.prevent="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }
 
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;

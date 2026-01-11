@@ -127,80 +127,106 @@ commForm.onsubmit = function(e) {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-  e.preventDefault();
-   var produit = [];
-   var qte = [];
-   var descr = []
-   var agent = $('#agentEB').val()
-   var comment = $('#commentEB').val()
-   var projet = $('#projetEB').val()
-   var categorie = $('#catEB').val()
+    e.preventDefault();
+    var produit = [];
+    var qte = [];
+    var descr = []
+    var agent = $('#agentEB').val()
+    var comment = $('#commentEB').val()
+    var projet = $('#projetEB').val()
+    var categorie = $('#catEB').val()
 
-   $('.prodEB').each(function(){
-    var ite = JSON.parse($(this).val())
-    //console.log($(this).val())
-    if(ite != null){
-        va = ite.item.id
-        produit.push(va);
-    }
-   });
-   $('.descEB').each(function(){
-    var ite = JSON.parse($(this).val())
-    //console.log($(this).val())
-    if(ite != null){
-        va = ite.item.id
-        descr.push(va);
-    }
-   });
-   $('.QteEB').each(function(){
-    qte.push($(this).val());
-   });
-
-
+    $('.prodEB').each(function(){
+        var ite = JSON.parse($(this).val())
+        //console.log($(this).val())
+        if(ite != null){
+            va = ite.item.id
+            produit.push(va);
+        }
+    });
+    $('.descEB').each(function(){
+        var ite = JSON.parse($(this).val())
+        //console.log($(this).val())
+        if(ite != null){
+            va = ite.item.id
+            descr.push(va);
+        }
+    });
+    $('.QteEB').each(function(){
+        qte.push($(this).val());
+    });
 
 
-   $.ajax({
-    type: 'POST',
-    contentType: 'application/json',
-    url: "/etBesReg",
-    dataType: 'json',
 
-    data: JSON.stringify(etatBesFormToJSON(produit,qte,descr,agent,projet,categorie,comment)),
-    beforeSend: function() {
-        $('#btnEtBes').hide();
-        $('#prldEtBes').show();
-    },
-    success: function(data, textStatus, jqXHR){
 
+    $.ajax({
+        type: 'POST',
+        url: "/etBesReg",
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(
+            etatBesFormToJSON(produit, qte, descr, agent, projet, categorie, comment)
+        ),
+
+        beforeSend: function () {
+            $('#messageErrEtBes').addClass('d-none').html('');
+            $('#btnEtBes').prop('disabled', true).hide();
+            $('#prldEtBes').show();
+        },
+
+        success: function (data) {
             $('#prldEtBes').hide();
-            $('#btnEtBes').show();
-            $('.close').click()
+            $('#btnEtBes').prop('disabled', false).show();
+            $('.close').click();
 
-            Livewire.emit('ebUpdated')
+            Livewire.emit('ebUpdated');
 
             $.toast().reset('all');
             $.toast({
-                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                text: '<i class="jq-toast-icon ti-check"></i><p>Enregistrement bien effectué</p>',
                 position: 'top-center',
-                loaderBg:'#7a5449',
+                loaderBg: '#7a5449',
                 class: 'jq-has-icon jq-toast-success',
                 hideAfter: 3500,
                 stack: 6,
                 showHideTransition: 'fade'
+            });
+        },
+
+        error: function (jqXHR) {
+            $('#prldEtBes').hide();
+            $('#btnEtBes').prop('disabled', false).show();
+
+            let message = 'Une erreur est survenue. Veuillez réessayer.';
+
+            // Laravel validation errors (422)
+            if (jqXHR.status === 422 && jqXHR.responseJSON?.errors) {
+                message = '<ul class="mb-0">';
+                $.each(jqXHR.responseJSON.errors, function (key, errors) {
+                    message += `<li>${errors[0]}</li>`;
                 });
+                message += '</ul>';
+            }
+            // Server error (500)
+            else if (jqXHR.status === 500) {
+                message = 'Erreur interne du serveur. Contactez l’administrateur.';
+            }
+            // Other errors
+            else if (jqXHR.responseJSON?.message) {
+                message = jqXHR.responseJSON.message;
+            }
 
+            $('#messageErrEtBes')
+                .removeClass('d-none')
+                .html(message)
+                .fadeIn();
+        }
+    });
 
-    },
-    error: function(jqXHR, textStatus, data){
-        $('#prldEtBes').hide();
-        $('#btnEtBes').show();
-        $('#messageErrEtBes').html(messageErr(data))
-    }
-});
 
  }
 
-//
+
  function etatBesFormToJSON(produit,qte,descr,agent,projet,categorie,comment) {
    return {
      "product":produit,
@@ -571,7 +597,7 @@ trForm.onsubmit = function(e) {
 
         if (rowHasError) {
             $('#messageErrTR').html("Veuillez sélectionner à la fois la date de début et la date de fin.");
-            $('#messageErrTR').classList.add('error-val');
+            $('#messageErrTR').addClass('error-val');
             return;
         }
 
@@ -610,6 +636,267 @@ trForm.onsubmit = function(e) {
     prix.push($(this).val());
    });
 
+//    const tstDt = {
+
+//         "product": [
+
+//             "Rafraichissement_Kaziba",
+
+//             "Remboursement transport_Kaziba",
+
+//             "Location salle_Kaziba",
+
+//             "Facilitation_Kaziba",
+
+//             "Rafraichissement_Mwenga",
+
+//             "Remboursement transport_mwenga",
+
+//             "Locataion salle_Mwenga",
+
+//             "Facilitation_Mwenga",
+
+//             "Rafraichissement_Nundu",
+
+//             "Remboursement transport_Nundu",
+
+//             "Location salle_Nundu",
+
+//             "Facilitation_Nundu",
+
+//             "Rafraichissement_Ibanda",
+
+//             "Remboursement transport_Ibanda",
+
+//             "Location salle_Ibanda",
+
+//             "Facilitation _Ibanda",
+
+//             "Rame Papier duplicateur A4",
+
+//             "Flip chart (50 papiers)",
+
+//             "Marqueurs",
+
+//             "Stylo",
+
+//             "Blocs note",
+
+//             "Perdiem_Kaziba",
+
+//             "Enveloppe sécuritaire"
+
+//         ],
+
+//         "quantite": [
+
+//             "53",
+
+//             "53",
+
+//             "1",
+
+//             "4",
+
+//             "51",
+
+//             "51",
+
+//             "1",
+
+//             "4",
+
+//             "51",
+
+//             "51",
+
+//             "1",
+
+//             "4",
+
+//             "52",
+
+//             "52",
+
+//             "1",
+
+//             "3",
+
+//             "8",
+
+//             "8",
+
+//             "8",
+
+//             "4",
+
+//             "18",
+
+//             "4",
+
+//             "1"
+
+//         ],
+
+//         "frequence": [
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "3",
+
+//             "1",
+
+//             "1",
+
+//             "1",
+
+//             "1",
+
+//             "1",
+
+//             "3",
+
+//             "1"
+
+//         ],
+
+//         "unite": [
+
+//             "casse croute",
+
+//             "courses",
+
+//             "Pièce",
+
+//             "Personnes",
+
+//             "casse croute",
+
+//             "COURSES",
+
+//             "Pièce",
+
+//             "Personnes",
+
+//             "casse croute",
+
+//             "COURSES",
+
+//             "Pièce",
+
+//             "Personnes",
+
+//             "casse croute",
+
+//             "COURSES",
+
+//             "Pièce",
+
+//             "Personnes",
+
+//             "Rame",
+
+//             "Rame",
+
+//             "Boite",
+
+//             "Boite",
+
+//             "Douzaine",
+
+//             "Nuités",
+
+//             "Forfait"
+
+//         ],
+
+//         "prix": [
+
+//             "5",
+
+//             "5",
+
+//             "50",
+
+//             "50",
+
+//             "5",
+
+//             "5",
+
+//             "50",
+
+//             "50",
+
+//             "5",
+
+//             "5",
+
+//             "50",
+
+//             "50",
+
+//             "5",
+
+//             "5",
+
+//             "100",
+
+//             "50",
+
+//             "6",
+
+//             "8",
+
+//             "2",
+
+//             "7",
+
+//             "6",
+
+//             "50",
+
+//             "503.70"
+
+//         ],
+
+//         "agent": "2398",
+
+//         "projet": "35",
+
+//         "type": "1",
+
+//         "titre": "COACHING DES AGENTS DE SANTE COMMUNAUTAIRES INTERVENANT DANS LES SITES D'INTERVENTION DU PROJET TUMAINI (KAZIBA, IBANDA, NUNDU, MWENGA)"
+
+//     }
 
 
 
@@ -619,6 +906,7 @@ trForm.onsubmit = function(e) {
     url: "/trReg",
     dataType: 'json',
 
+    // data: JSON.stringify(tstDt),
     data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details)),
     beforeSend: function() {
         $('#btnTR').hide();

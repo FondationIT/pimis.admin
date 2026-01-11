@@ -34,44 +34,86 @@ use App\Models\TrDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Services\NotificationService;
 
 class EtatBesoinController extends Controller
 {
+    protected NotificationService $notificationService;
     public $dat;
+
+    public function __construct(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     public function create(Request $data)
     {
-        DB::beginTransaction();
-        $this->dat = date('Y-m-d');
-        //DB::rollback();
+        try {
+            DB::beginTransaction();
 
-        //$data = json_decode($data->getBody());
-        $ref = 'EB-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
-        Et_bes::create([
-            'reference' => $ref,
-            'agent' => $data['agent'],
-            'projet' => $data['projet'],
-            'categorie' => $data['categorie'],
-            'comment' => $data['comment'],
-        ]);
-        $etB = Et_bes::firstWhere('reference', $ref )->id;
-        for($count = 0; $count<count($data['product']); $count++)
-         {
-            $ref1 = 'CMD-'.$ref.$count;
-            ProductOder::create([
-                'reference' => $ref1,
-                'product' => $data['product'][$count],
-                'etatBes' => $etB,
-                'quantite' => $data['quantite'][$count],
-                'description' => $data['description'][$count],
+            $date = now()->format('Y-m-d');
+
+            $ref = 'EB-' . $date . '-FP' . rand(100, 999) . $data->projet . Auth::id();
+
+            $etBes = Et_bes::create([
+                'reference' => $ref,
+                'agent'     => Auth::id(),
+                'projet'    => $data->projet,
+                'categorie' => $data->categorie,
+                'comment'   => $data->comment,
             ]);
-         }
 
-        DB::commit();
+            foreach ($data->product as $index => $product) {
+                $ref1 = 'CMD-' . $ref . $index;
 
-        return true;
+                ProductOder::create([
+                    'reference'   => $ref1,
+                    'product'     => $product,
+                    'etatBes'     => $etBes->id,
+                    'quantite'    => $data->quantite[$index] ?? null,
+                    'description' => $data->description[$index] ?? null,
+                ]);
+            }
 
+            // Send notification once (using main reference)
+            $this->notificationService->sendNotification([
+                'agent'        => 3402,
+                'msg_id'       => 2,
+                'task'         => $ref,
+                'is_delegated' => false,
+                'delegated_by' => null,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'ref'     => $ref,
+            ], 201);
+
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+
+            // Log full error for developers
+            Log::error('EB creation failed', [
+                'user_id' => Auth::id(),
+                'error'   => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            // Return safe error to frontend
+            return response()->json([
+                'success' => false,
+                'message' => 'Échec de l’enregistrement.',
+                'debug'   => config('app.debug') ? $e->getMessage() : null
+            ], 500);
+        }
     }
+
+
 
     public function approuve(Request $data)
     {
@@ -437,92 +479,129 @@ class EtatBesoinController extends Controller
     }
 
 
-    public function tr(Request $data)
-    {
-        try {
-            DB::beginTransaction();
-            $this->dat = date('Y-m-d');
-        //DB::rollback();
-            $details = $data['details'];
+    // public function tr(Request $data)
+    // {
+    //     try {
+    //         DB::beginTransaction();
+    //         $this->dat = date('Y-m-d');
+    //     //DB::rollback();
+    //         $details = $data['details'];
     
-            //$data = json_decode($data->getBody());
-            $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
+    //         //$data = json_decode($data->getBody());
+    //         $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
             
-            Tr::create([
-                'reference' => $ref,
-                'agent' => $data['agent'],
-                'projet' => $data['projet'],
-                'type' => $data['type'],
-                'titre' => $data['titre'],
-            ]);
-            $tr = Tr::firstWhere('reference', $ref )->id;
-            for($count = 0; $count<count($data['product']); $count++){
-                $orderRef1 = 'TR-ODR-'.$ref.$count;
-                TrOder::create([
-                    'reference' => $orderRef1,
-                    'libelle' => $data['product'][$count],
-                    'tr' => $tr,
-                    'unite' => $data['unite'][$count],
-                    'prix' => $data['prix'][$count],
-                    'quantite' => $data['quantite'][$count],
-                    'frequence' => $data['frequence'][$count],
-            ]);
+    //         Tr::create([
+    //             'reference' => $ref,
+    //             'agent' => $data['agent'],
+    //             'projet' => $data['projet'],
+    //             'type' => $data['type'],
+    //             'titre' => $data['titre'],
+    //         ]);
+    //         $tr = Tr::firstWhere('reference', $ref )->id;
+    //         for($count = 0; $count<count($data['product']); $count++){
+    //             $orderRef1 = 'TR-ODR-'.$ref.$count;
+    //             TrOder::create([
+    //                 'reference' => $orderRef1,
+    //                 'libelle' => $data['product'][$count],
+    //                 'tr' => $tr,
+    //                 'unite' => $data['unite'][$count],
+    //                 'prix' => $data['prix'][$count],
+    //                 'quantite' => $data['quantite'][$count],
+    //                 'frequence' => $data['frequence'][$count],
+    //         ]);
     
-            }
+    //         }
 
-            $equipeData = array_filter(array_map('trim', explode(';', $details['equipe'])));
+    //         $equipeData = array_filter(array_map('trim', explode(';', $details['equipe'])));
 
-            // Insert equipe
-            foreach ($equipeData as $user) {
-                try {
-                    TrEquipe::create([
-                        'tr' => $tr,
-                        'agent' => $user
-                    ]);
-                } catch (\Throwable $th) {
-                    Log::error("TrEquipe (".$user.") insert failed: ".$th->getMessage());
-                }
-            }
+    //         // Insert equipe
+    //         foreach ($equipeData as $user) {
+    //             try {
+    //                 TrEquipe::create([
+    //                     'tr' => $tr,
+    //                     'agent' => $user
+    //                 ]);
+    //             } catch (\Throwable $th) {
+    //                 Log::error("TrEquipe (".$user.") insert failed: ".$th->getMessage());
+    //             }
+    //         }
 
-            // Insert activite
-            foreach ($details['activites'] as $activite) {
-                try {
-                    TrActivite::create([
-                        'tr' => $tr,
-                        'date' => $activite['jour'],
-                        'activite' => $activite['activite'],
-                        'observation' => $activite['observation']
-                    ]);
-                } catch (\Throwable $th) {
-                    Log::error("TrActivite (".$activite['jour'].") insert failed: ".$th->getMessage());
-                }
-            }
-            try {
-                TrDetail::create([
-                    'tr'=>$tr,
-                    'objectif'=>$details['objectif'],
-                    'resultat'=>$details['resultat'],
-                    'dure'=>$details['dure'],
-                ]);
-            } catch (\Throwable $th) {
-                Log::error("TrDetail (".$tr.") insert failed: ".$th->getMessage());
-            }
+    //         // Insert activite
+    //         foreach ($details['activites'] as $activite) {
+    //             try {
+    //                 TrActivite::create([
+    //                     'tr' => $tr,
+    //                     'date' => $activite['jour'],
+    //                     'activite' => $activite['activite'],
+    //                     'observation' => $activite['observation']
+    //                 ]);
+    //             } catch (\Throwable $th) {
+    //                 Log::error("TrActivite (".$activite['jour'].") insert failed: ".$th->getMessage());
+    //             }
+    //         }
+    //         try {
+    //             TrDetail::create([
+    //                 'tr'=>$tr,
+    //                 'objectif'=>$details['objectif'],
+    //                 'resultat'=>$details['resultat'],
+    //                 'dure'=>$details['dure'],
+    //             ]);
+    //         } catch (\Throwable $th) {
+    //             Log::error("TrDetail (".$tr.") insert failed: ".$th->getMessage());
+    //         }
     
-            DB::commit();
-            return true;
-        } catch (\Throwable $th) {
-            DB::rollBack(); // don’t forget to rollback on error
-            Log::error($th->getMessage());
-            return response()->json([
-                'status'  => 'error',
-                'message' => $th->getMessage(),
-                'file'    => $th->getFile(),
-                'line'    => $th->getLine(),
-                'trace'   => $th->getTraceAsString(),
-            ], 500);
-        }
+    //         DB::commit();
+    //         return true;
+    //     } catch (\Throwable $th) {
+    //         DB::rollBack(); // don’t forget to rollback on error
+    //         Log::error($th->getMessage());
+    //         return response()->json([
+    //             'status'  => 'error',
+    //             'message' => $th->getMessage(),
+    //             'file'    => $th->getFile(),
+    //             'line'    => $th->getLine(),
+    //             'trace'   => $th->getTraceAsString(),
+    //         ], 500);
+    //     }
         
 
+
+    // }
+
+    public function tr(Request $data)
+    {
+        DB::beginTransaction();
+        $this->dat = date('Y-m-d');
+        //DB::rollback();
+
+        //$data = json_decode($data->getBody());
+        $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
+        Tr::create([
+            'reference' => $ref,
+            'agent' => $data['agent'],
+            'projet' => $data['projet'],
+            'type' => $data['type'],
+            'titre' => $data['titre'],
+        ]);
+        $tr = Tr::firstWhere('reference', $ref )->id;
+        for($count = 0; $count<count($data['product']); $count++)
+         {
+            $ref1 = 'TR-ODR-'.$ref.$count;
+            TrOder::create([
+                'reference' => $ref1,
+                'libelle' => $data['product'][$count],
+                'tr' => $tr,
+                'unite' => $data['unite'][$count],
+                'prix' => $data['prix'][$count],
+                'quantite' => $data['quantite'][$count],
+                'frequence' => $data['frequence'][$count],
+            ]);
+
+         }
+
+        DB::commit();
+
+        return true;
 
     }
 
