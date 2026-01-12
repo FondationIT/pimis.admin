@@ -1,1 +1,5 @@
 php -S 127.0.0.1:8000 -t public -d "openssl.local_cert=127.0.0.1+1.pem" -d "openssl.local_pk=127.0.0.1+1-key.pem"
+
+fpit:  ssh: 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
+
+SHA256:RGN5tkMGtiyrVxc3SXN/dFCj4+L2mi/dGrVTt2WNyZg it@panzi.org
