@@ -161,7 +161,7 @@
                                     <div id="e_chart_4" style="height:300px;"></div>
                                 </div>
                             </div>
-                            <div class="card">
+                            {{-- <div class="card">
                                 <div class="card-header card-header-action">
                                     <h6>Country Stats</h6>
                                     <div class="d-flex align-items-center card-action-wrap">
@@ -251,7 +251,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-lg-5">
                             <div class="card">
@@ -308,7 +308,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                {{-- <div class="card-body">
                                     <div class="user-activity user-activity-sm">
                                         <div class="media">
                                             <div class="media-img-wrap">
@@ -401,7 +401,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         
                         </div>
