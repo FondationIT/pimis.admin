@@ -11,7 +11,7 @@ use App\Models\FournPrice;
 use App\Models\Nd;
 use App\Models\NdOder;
 use App\Models\PayementAgent;
-use App\Models\prixPv;
+use App\Models\PrixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
