@@ -15,7 +15,7 @@ use App\Models\Nd;
 use App\Models\NdOder;
 use App\Models\PartContrat;
 use App\Models\PayementAgent;
-use App\Models\prixPv;
+use App\Models\PrixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
@@ -99,7 +99,7 @@ class BpForm extends Component
 
             $this->prof = Proforma::where("id", $this->bcs[0]->proforma)->where("da", $this->pvs[0]->da)->get();
             $this->pvAttr = PvAttr::where("da", $this->bcs[0]->da)->get();
-            //$this->products = prixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
+            //$this->products = PrixPv::where("pv", $this->pvs[0]->id)->where("proforma", $this->prof[0]->id)->orderBy("id", "DESC")->get();
 
             
 

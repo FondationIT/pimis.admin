@@ -12,7 +12,7 @@ use App\Models\Br;
 use App\Models\BrOder;
 use App\Models\Et_bes;
 use App\Models\FournPrice;
-use App\Models\prixPv;
+use App\Models\PrixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\PvAttr;
@@ -322,7 +322,7 @@ class BcTable extends LivewireDatatable
                                     
                        // $z = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
 
-                        $x = prixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                        $x = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
                         ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
                         ->selectRaw("product_oders.quantite as quantite")
                         ->where("select_pvs.pv", $pvAttr[0]->id)
@@ -407,7 +407,7 @@ class BcTable extends LivewireDatatable
                                     
                        // $z = ProductOder::where('etatBes', $eb[0]->id)->get('quantite')->sum('quantite');
 
-                        $x = prixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+                        $x = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
                         ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
                         ->selectRaw("product_oders.quantite as quantite")
                         ->where("select_pvs.pv", $pvAttr[0]->id)

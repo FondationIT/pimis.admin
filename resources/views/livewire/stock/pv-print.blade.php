@@ -168,7 +168,7 @@
                                                             @foreach ($proforma as $prof)
                                                                 @php
                                                                     try {
-                                                                        $prix = App\Models\prixPv::where('produit', $prod->description)
+                                                                        $prix = App\Models\PrixPv::where('produit', $prod->description)
                                                                             ->where('proforma', $prof->id)
                                                                             ->first();
 

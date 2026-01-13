@@ -59,7 +59,7 @@
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text" id="inputGroupPrepend">$</span>
                                                             </div>
-                                                            <input type="number" id="prixPv" step=.00001 min=0 class="form-control prixPv" required>
+                                                            <input type="number" id="PrixPv" step=.00001 min=0 class="form-control PrixPv" required>
                                                             
 
                                                             <input type="text" id="profPv" class="profPv"  value="{{$prof->id}}" hidden>

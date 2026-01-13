@@ -19,7 +19,7 @@ use App\Models\PayementAgent;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
-use App\Models\prixPv;
+use App\Models\PrixPv;
 use App\Models\PvAttr;
 use App\Models\SelectPv;
 use App\Models\signaturePv;
@@ -190,16 +190,16 @@ class EtatBesoinController extends Controller
 
             ]);
             $pv = Pv::firstWhere('reference', $ref )->id;
-            for($count = 0; $count<count($data['prixPv']); $count++)
+            for($count = 0; $count<count($data['PrixPv']); $count++)
             {
                 $refp = 'PRPV-'.$ref.$count;
-                prixPv::create([
+                PrixPv::create([
                     'reference' => $refp,
                     'pv' => $pv,
                     'signature' => Auth::user()->id,
                     'produit' => $data['prodPv'][$count],
                     'proforma' => $data['profPv'][$count],
-                    'prix' => $data['prixPv'][$count],
+                    'prix' => $data['PrixPv'][$count],
                 ]);
             }
 
@@ -264,16 +264,16 @@ class EtatBesoinController extends Controller
             }
 
 
-            for($count = 0; $count<count($data['prixPv']); $count++)
+            for($count = 0; $count<count($data['PrixPv']); $count++)
             {
                 $ref2 = 'PRPV-'.$ref.$count;
-                prixPv::create([
+                PrixPv::create([
                     'reference' => $ref2,
                     'pv' => $pv,
                     'signature' => Auth::user()->id,
                     'produit' => $data['prodPv'][$count],
                     'proforma' => $data['profPv'][$count],
-                    'prix' => $data['prixPv'][$count],
+                    'prix' => $data['PrixPv'][$count],
                 ]);
             }
 

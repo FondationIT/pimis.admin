@@ -81,19 +81,19 @@
                                                         @endphp
                                                             @if(App\Models\SelectPv::where('produit', $prod->description)->where('proforma', $prof->id)->exists())
                                                                 <td style="background-color: rgba(175, 175, 175, 0.4) ">
-                                                                $ {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
                                                                 </td>
                                                                 <td style="background-color: rgba(175, 175, 175, 0.4)">
-                                                                    <strong>$  {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                    <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
                                                                 </td>
                                                             
                                                             @else
                                                                 
                                                                 <td>
-                                                                $ {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
                                                                 </td>
                                                                 <td>
-                                                                    <strong>$  {{ App\Models\prixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                    <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
                                                                 </td>
                                                             @endif
                                                         @php
