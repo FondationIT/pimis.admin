@@ -11,7 +11,7 @@ use App\Models\FournPrice;
 use App\Models\Nd;
 use App\Models\NdOder;
 use App\Models\PayementAgent;
-use App\Models\prixPv;
+use App\Models\PrixPv;
 use App\Models\ProductOder;
 use App\Models\Proforma;
 use App\Models\Pv;
@@ -53,7 +53,6 @@ class BpPrint extends Component
 
         $this->bps = Bp::where("id", $this->modelId)->get();
 
-        
 
         if($this->bps[0]->categorie == 2){
             $this->bcs = Bc::where("id", $this->bps[0]->bc)->get();
