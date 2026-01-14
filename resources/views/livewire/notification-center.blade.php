@@ -53,6 +53,9 @@
         <div class="tab-content notiftab-content mh-70dvh overflow-auto">
             
             @if ($tabs)
+                @php
+                logger('Rendering Notification Tabs', ['Tabs' => $tabs]);
+                @endphp
                 @foreach($tabs as $prefix => $list)
                     <div class="tab-pane fade {{ $loop->first ? 'active show' : '' }}"
                          id="tab_{{ $prefix }}"
@@ -60,28 +63,32 @@
                          aria-labelledby="tab-{{ $prefix }}-tab">
 
                         @forelse($list as $k => $notif)
-                        @php
-                            $dOpen = 'bFile';
-                            $OpenSection = $sectionToOpen[$prefix];
-                            if(trim($u_role) == 'COMPTABILITE'){
-                                if($prefix == 'EB'){
-                                    $OpenSection = 'bonReqF';
-                                    $dOpen = 'bFinance';
+                            @php
+                                $dOpen = 'bFile';
+                                $OpenSection = $sectionToOpen[$prefix];
+                                if(trim($u_role) == 'COMPTABILITE'){
+                                    if($prefix == 'EB'){
+                                        $OpenSection = 'bonReqF';
+                                        $dOpen = 'bFinance';
+                                    }
                                 }
-                            }
-                        @endphp
+                                $task = is_array($notif) ? $notif['task'] : $notif->task;
+                                $message = is_array($notif) ? $notif['message'] : $notif->message;
+                                $created_at = is_array($notif) ? $notif['created_at'] : $notif->created_at;
+                            @endphp
+
                             <div class="notif-item p-2 mb-1 rounded hover-bg" data-open="{{ $dOpen }}" data-active="{{ $OpenSection }}"
                                 data-section="{{ $OpenSection }}"
-                                wire:click="$emit('search{{ str_replace('-', '', $prefix) }}', '{{ $notif->task }}')">
+                                wire:click="$emit('search{{ str_replace('-', '', $prefix) }}', '{{ $task }}')">
                                 <div class="notif-main-msg">
                                     <div class="notif-initial-cont bg-primary"><span>{{ $prefix }}</span></div>
                                     <div class="small text-muted">
-                                        {!! str_replace('-', "<b class='fw-bold text-primary' id='ref_num{$k}'>{$notif->task}</b>", $notif->message) !!}
+                                        {!! str_replace('-', "<b class='fw-bold text-primary' id='ref_num{$k}'>{$task}</b>", $message) !!}
                                     </div>
                                 </div>
 
                                 <div class="small text-right text-secondary mt-1">
-                                    {{ $this->timeAgo($notif->created_at) }}
+                                    {{ $this->timeAgo($created_at) }}
                                 </div>
 
                             </div>

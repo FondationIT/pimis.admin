@@ -590,7 +590,7 @@
                                 <span></span><br><br>
                                 @if (isset($valid2[0]) && !empty($valid2[0]))
 
-                                    <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->name}}<br>
+                                    <p class="center">{{ App\Models\User::firstWhere('id', $valid2[0]->user)->where('role','D.P')->first()->name}}<br>
                                     Le {{$valid2[0]->updated_at->format('d/m/Y')}}</p>
                                     <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid2[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 
@@ -602,7 +602,7 @@
                                     <span></span><br><br>
                                     @if (isset($valid3[0]) && !empty($valid3[0]))
 
-                                        <p class="center">{{ App\Models\User::firstWhere('id', $valid3[0]->user)->name}}<br>
+                                        <p class="center">{{ App\Models\User::where('id', $valid3[0]->user)->where('role','D.A.F')->first()->name}}<br>
                                         Le {{$valid3[0]->updated_at->format('d/m/Y')}}</p>
                                         <img class="signn" src="{{ asset('storage/'.App\Models\User::firstWhere('id', $valid3[0]->user)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top:-80px;" />
 

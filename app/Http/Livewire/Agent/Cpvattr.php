@@ -103,8 +103,7 @@ class Cpvattr extends LivewireDatatable
 
     public function columns()
     {
-
-        return [
+        $columns =[
             Column::callback(['pv_attrs.reference','pv_attrs.id'], function ($reference,$id) {
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printPv('.$id.')" data-toggle="modal" data-target="#pPvAttrModalForms">'.$reference.'</a>';
             })->label('Reference PV')->searchable(),
@@ -120,20 +119,23 @@ class Cpvattr extends LivewireDatatable
             Column::name('pv_attrs.created_at')
                 ->label('Date'),
 
-            Column::callback(['signature_p_v_attrs.status','signature_p_v_attrs.id', 'pv_attrs.id'], function ($status,$id, $pvId) {
-                $badgeClass = match ($status) {
-                    'in_progress' => 'info',
-                    'approved' => 'success',
-                    'rejected' => 'danger',
-                    default    => 'warning',
-                };
+        ];
 
-                $statusConverter = [
-                    'in_progress' => 'En attente',
-                    'approved' => 'Approuvé',
-                    'rejected' => 'Rejeté',
-                ];
+        $columns[] = Column::callback(['signature_p_v_attrs.status','signature_p_v_attrs.id', 'pv_attrs.id'], function ($status,$id, $pvId) {
+            $badgeClass = match ($status) {
+                'in_progress' => 'info',
+                'approved' => 'success',
+                'rejected' => 'danger',
+                default    => 'warning',
+            };
 
+            $statusConverter = [
+                'pending' => 'En opération',
+                'in_progress' => 'En attente',
+                'approved' => 'Approuvé',
+                'rejected' => 'Rejeté',
+            ];
+            if(in_array(Auth::user()->role, ['LOG1', 'ADMIN'])) {
                 if ($status == 'pending') {
                     $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="signer('.$id.','.$pvId.')" data-toggle="modal" >
                     <span class="badge badge-warning">Procéder</span>
@@ -141,10 +143,13 @@ class Cpvattr extends LivewireDatatable
                 }else{
                     $delete = "<span class=\"badge badge-{$badgeClass}\">" . $statusConverter[strtolower($status)] . "</span>";
                 }
+            }else{
+                $delete = '<span class="badge badge-light">'.$statusConverter[strtolower($status)].'</span>';
+            }
+                return $delete ;
+        })->unsortable()->label('Statut');
+        
 
-
-                    return $delete ;
-            })->unsortable(),
-        ];
+        return $columns;
     }
 }
