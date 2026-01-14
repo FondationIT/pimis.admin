@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class Menu extends Component
 {
+    protected $listeners = ['refreshMenu' => '$refresh'];
     public function render()
     {
         return view('livewire.layouts.menu');

@@ -51,7 +51,8 @@ class NotificationCenter extends Component
 
     protected $listeners = [
         'refreshNotifications' => 'loadNotifications',
-        'requestUnreadCount'
+        'requestUnreadCount',
+        'notificationRead' => 'MarkReadNotifications',
         // 'brUpdated' => '$refresh',
         // 'dataStatus' => 'filterDataByStatus',
     ];
@@ -78,6 +79,16 @@ class NotificationCenter extends Component
 
         // Group unread notifications
         $this->tabs = $this->notificationService->groupByPrefix($this->unread);
+    }
+
+    public function MarkReadNotifications($task)
+    {
+        if (!$task) {
+            logger()->error('No task provided for marking notifications as read.');
+        }
+
+        $this->notificationService->markRead($task);
+        $this->emitSelf('refreshNotifications');
     }
 
     public function requestUnreadCount()

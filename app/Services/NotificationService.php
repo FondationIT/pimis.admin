@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
 
 class NotificationService
@@ -59,7 +60,7 @@ class NotificationService
     {
         try {
             // Base query with join
-            $baseQuery = Notification::whereJsonContains('agents', $userId)
+            $baseQuery = Notification::whereJsonContains('agents', str($userId))
                 ->join('default_msg', 'default_msg.id', '=', 'notifications.msg_id')
                 ->select(
                     'notifications.*',
@@ -144,12 +145,43 @@ class NotificationService
         return $groups;
     }
 
-    public function markRead($userRole, $id)
+    public function markRead($task,$userRole=false)
     {
         try {
-            $niv = $this->notifRoleColms[$userRole][0];
-            logger('Through: '.$niv);
-            // $query = Notification::query();
+            $notification = Notification::where('task', trim($task))->firstOrFail();
+
+            if(!$userRole){
+                $read_user = $notification->agents;
+
+                $allDone = true;
+
+                // Mark current agent as read
+                $key = array_search(Auth::user()->agent, $read_user);
+                if ($key !== false) {
+                    $read_user[$key] = $read_user[$key] . '_r';
+                }
+
+                foreach ($read_user as $value) {
+                    if (!str_ends_with((string) $value, '_r')) {
+                        $allDone = false;
+                        break;
+                    }
+                }
+
+                // Update notification
+                Notification::where('task', trim($task))->update([
+                    'agents'  => $read_user,
+                    'is_read' => $allDone,
+                ]);
+            }
+
+            // return true;
+
+
+            // $niv = $this->notifRoleColms[$userRole][0];
+            // logger('Through: '.$niv);
+
+            // 
             // if($niv != 'is_niv4') {
             //     if (is_numeric($id)) {
             //         $query->where('id', $id);
@@ -161,10 +193,11 @@ class NotificationService
     
             //     $query->where('id', $id)->orWhere('task', trim($id))->update(['is_niv4' => 1, 'is_read' => true]);
             // }
-            return true;
+            // return true;
+
         } catch (\Throwable $e) {
             logger('Error marking notification as read: '.$e->getMessage());
-            return false;
+            // return false;
         }
         
         // $this->loadNotifications();
