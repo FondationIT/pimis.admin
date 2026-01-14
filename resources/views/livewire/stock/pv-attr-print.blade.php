@@ -169,7 +169,7 @@
                                 @endphp
                                 <tr>
                                     @foreach ($commission_members as $member)
-                                        <td><b>{{ $member->name }}</b></td>
+                                        <td class="fw-bold text-uppercase">{{ $member->name }}</td>
                                     @endforeach
                                 </tr>
                                 <tr>

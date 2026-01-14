@@ -18,6 +18,7 @@ use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 use Illuminate\Support\Facades\DB;
+use Templately\Core\Importer\Runners\Finalizer;
 
 class PvAttrTable extends LivewireDatatable
 {
@@ -67,11 +68,13 @@ class PvAttrTable extends LivewireDatatable
         if (!$niv) {
             throw new \Exception('Unauthorized role');
         }
-        
+        logger('Validate PV Attr', ['Id' => $pvAttr,'Ref' => $pvAttrRef, 'Action' => $action, 'Niv' => $niv]);
         $pvAttrCom = PvAttrCommissionSignatures::where('pv_attr', $pvAttr->id);
         $pvAttrCom->update([
             $niv => $actionValue
         ]);
+
+        // Finalize the signature and update PV Attr status when all levels are approved to proceed
 
         $is_complete =$pvAttrCom->where('niv_1',1)->where('niv_2',1)->where('niv_3',1)->first();
         if($is_complete){
@@ -86,6 +89,9 @@ class PvAttrTable extends LivewireDatatable
                 DB::rollBack();
             }
         }
+
+        // update the user Notification
+        $this->emit('notificationRead',$pvAttrRef );
 
 //         correct
 
