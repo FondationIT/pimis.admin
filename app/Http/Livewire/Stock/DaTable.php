@@ -15,6 +15,8 @@ use App\Models\Bc;
 use App\Models\FournPrice;
 use App\Models\ProductOder;
 use App\Models\PvAttr;
+use App\Models\PvAttrCommissionersConcents;
+use App\Models\PvCommissionersConcents;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -276,6 +278,7 @@ class DaTable extends LivewireDatatable
         }else {
             return sortDaByStatus($query, $this->statusFilter);
         }
+
     }
 
     public function getBuilder(){
@@ -283,11 +286,6 @@ class DaTable extends LivewireDatatable
     }
 
     public function filterData($data){
-
-        // PZ/fpit5311!
-        // cd domains/pimis.org/public_html/admin
-        // composer dump-autoload --no-scripts
-
 
         $query = $this->logicAlg()->whereDate('dem_aches.created_at','>=',$data['debut'])->whereDate('dem_aches.created_at','<=',$data['fin']);
         $query = ($data['projet']== 0) ? $query : $query->where('et_bes.projet', $data['projet']);
@@ -418,17 +416,17 @@ class DaTable extends LivewireDatatable
                 BooleanColumn::name('dem_aches.niv1')
                     ->label('Logistique'),
 
-                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
+                // Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
-                        $delete = '<span class="badge badge-success">Approuvé</span>';
-                    }elseif($active == false){
-                        $delete = '<span class="badge badge-danger">Refusé</span>';
-                    }else{
-                        $delete = '<span class="badge badge-info">En cours</span>';
-                    }
-                        return $delete ;
-                })->unsortable(),
+                //     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
+                //         $delete = '<span class="badge badge-success">Approuvé</span>';
+                //     }elseif($active == false){
+                //         $delete = '<span class="badge badge-danger">Refusé</span>';
+                //     }else{
+                //         $delete = '<span class="badge badge-info">En cours</span>';
+                //     }
+                //         return $delete ;
+                // })->unsortable(),
 
                 Column::callback(['dem_aches.id','dem_aches.active','dem_aches.niv1','dem_aches.niv2','dem_aches.niv3','dem_aches.niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
@@ -446,8 +444,26 @@ class DaTable extends LivewireDatatable
                         $projet = Projet::where("id", $ebs[0]->projet)->get();
                         $bailleur = Bailleur::where("id", $projet[0]->bailleur)->get();
 
+                        
+                        $pv_instance = Pv::where("da", $id);
+                        $pvAttr_instance = PvAttr::where("da", $id );
+                        $pvAttr_commission_all_consent_signed_instances = null;
+                        $pvAttr_commission_all_consent_signed_count = 0;
+                        $is_pv_exist = $pv_instance->exists();
+                        $is_pvAttr_exist = $pvAttr_instance->exists();
+                        $is_pv_exist = $pv_instance->exists();
+                        $is_bc_exist = Bc::where("da", $id)->exists();
 
-                        //$bb = '{"bad":'.$bb.'}';
+                        if($is_pvAttr_exist){
+                            $pvAttr_commission_all_consent_signed_instances = PvAttrCommissionersConcents::where('pv_attr', $pvAttr_instance->first()->id)->whereIn('is_approved', ['approved','rejected']);
+                            $pvAttr_commission_all_consent_signed_count = $pvAttr_commission_all_consent_signed_instances->count();
+                        }
+
+                        if($is_pv_exist){
+                            $pv_commission_all_consent_signed_instances = PvCommissionersConcents::where('pv', $pv_instance->first()->id);
+                            $pv_commission_all_approved_consent_signed_count = $pv_commission_all_consent_signed_instances->where('is_approved', 'approved')->count();
+                            $pv_commission_all_rejected_consent_signed_count = $pv_commission_all_consent_signed_instances->where('is_approved', 'rejected')->count();
+                        }
 
 
                         $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formProforma('.$id.')" data-toggle="modal" data-target="#proformaModalForms"><span class="badge badge-info">Suivant</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
@@ -465,32 +481,39 @@ class DaTable extends LivewireDatatable
                                 echo $this->prof;
                                 $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="formBC('.$id.', 8)" data-toggle="modal" data-target="#bcModalForms"><span class="badge badge-secondary">Faire un BC</span></a>';
                             }else {8*/
-                                if (Proforma::where("da", $id)->exists()) {
-                                    if($some <= $bailleur[0]->max1){
 
-                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Cotation</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-
-                                    }else{
-                                        $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Analyse</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-                                    }
-
-                                }
-
-                                if (Pv::where("da", $id)->exists()) {
-                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-                                }
-
-
-                                if (PvAttr::where("da", $id )->exists()) {
-                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
-                                }
-                            //}
-
-                           // }
-                            if (Bc::where("da", $id)->exists()) {
-                                //$dsa = '<span class="badge badge-success">Fini</span>';
+                        if (Proforma::where("da", $id)->exists()) {
+                            if($some <= $bailleur[0]->max1){
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Cotation</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                            }else{
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPV('.$id.')" data-toggle="modal" data-target="#pvModalForms"><span class="badge badge-info">Analyse</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
                             }
+                        }
 
+                        if ($is_pv_exist) {
+                            // Have all members signed
+                            if($pv_commission_all_approved_consent_signed_count == $pv_instance->first()->commission_count){
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                            }elseif($pv_commission_all_rejected_consent_signed_count > 0){
+                                $dsa = '<span class="badge badge-danger p-1 text-teal-600 hover:bg-teal-600 rounded">Rejeté par la Commission</span>';
+                            }else{
+                                $dsa = '<span class="badge badge-warning p-1 text-teal-600 hover:bg-teal-600 rounded">En attente de la Commission</span>';
+                            }
+                        }
+
+                        if ($is_pvAttr_exist) {
+                            if(!$pvAttr_commission_all_consent_signed_instances->first()){
+                                $dsa = '<span class="badge badge-info p-1 text-teal-600 hover:bg-teal-600 rounded">En Attente</span>';
+                            }elseif($pvAttr_commission_all_consent_signed_count > 2){
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
+                            }else{
+                                $dsa = '<span class="badge badge-success p-1 text-teal-600 hover:bg-teal-600 rounded">En Deliberation</span>';
+                            }
+                        }
+
+                        if ($is_bc_exist) {
+                            $dsa = '<span class="badge badge-success p-1 text-teal-600 hover:bg-teal-600 rounded">BC Déjà Établi</span>';
+                        }
 
 
                         $edit = '<div class="flex space-x-1 justify-around">'. $dsa .'</div>';

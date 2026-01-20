@@ -58,7 +58,7 @@ class PvTable extends LivewireDatatable
     public function columns()
     {
 
-        return [
+        $columns = [
             Column::callback(['reference','id'], function ($reference,$id) {
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printPv('.$id.')" data-toggle="modal" data-target="#pPvModalForms">'.$reference.'</a>';
             })->label('Reference PV')->searchable(),
@@ -72,11 +72,48 @@ class PvTable extends LivewireDatatable
                 ->label('Titre'),
 
             Column::name('created_at')
-                ->label('Date'),
-
-
-            BooleanColumn::name('active')
-                ->label('State'),
+                ->label('Date')
         ];
+
+
+        // if (in_array(Auth::user()->agent, getAdministratorUsers())) {
+            // $columns[] =
+            //     Column::callback(['id','reference'], function ($id,$pvRef) {
+            //         $pvAttrComNivInstance = PvCommissionSignatures::where('pv', $id);
+            //         if ($pvAttrComNivInstance->exists()) {
+            //             return '
+            //                 <div class="d-flex gap-4 align-items-center justify-content-center">
+            //                     <button
+            //                         class="btn btn-sm rounded-pill px-2 py-1 fw-semibold confirm-action"
+            //                         style="background-color:#076d22; color:#ffff"
+            //                         data-bs-toggle="modal"
+            //                         data-bs-target="#confirmModal"
+            //                         data-action="approve"
+            //                         data-ref="'.$pvRef.'"
+            //                         >
+            //                         ✔
+            //                     </button>
+
+            //                     <button
+            //                         class="btn btn-sm rounded-pill px-2 py-1 fw-semibold confirm-action"
+            //                         style="background-color:#730d09; color:#ffff;"
+            //                         data-bs-toggle="modal"
+            //                         data-bs-target="#confirmModal"
+            //                         data-action="rejet"
+            //                         data-ref="'.$pvRef.'"
+            //                         >
+            //                         ✖
+            //                     </button>
+            //                 </div>';
+            //         }
+            //         return '<span class="text-muted fw-bold">En operation</span>';
+            //     })->label('Validation');
+        // }
+
+        $columns[] = 
+            BooleanColumn::name('active')
+                ->label('State');
+
+        return $columns;
     }
 }

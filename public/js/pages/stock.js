@@ -220,10 +220,13 @@ comm1Form.onsubmit = function(e) {
    var obsPv = $('#obsPv').val()
    var justPv = $('#justPv').val()
 
-   $('.fournPartPV').each(function(){
-    agPv.push($(this).val());
-   });
-   $('.prixPv').each(function(){
+    $('#selectedAgents .selected-item').each(function () {
+        agPv.push(
+            $(this).find('span[data-id]').data('id')
+        );
+    });
+
+   $('.PrixPv').each(function(){
     prixPv.push($(this).val());
    });
    $('.profPv').each(function(){
@@ -394,7 +397,7 @@ comm13Form.onsubmit = function(e) {
    var fournPv = [];
    var prodPv = [];
    var daPv = $('#daPv2').val()
-   var typePv = $('#typePv2').val()
+   var typePv = $('#typePv2').val() || 2
    var titrePv = $('#titrePv2').val()
    var obsPv = $('#obsPv2').val()
    var justPv = $('#justPv2').val()
@@ -445,7 +448,9 @@ comm13Form.onsubmit = function(e) {
     error: function(jqXHR, textStatus, data){
         $('#prldPv2').hide();
         $('#btnPv2').show();
-        $('#messageErrPv2').html(messageErr(data))
+        console.log(textStatus,data, pv2FormToJSON(daPv,typePv,titrePv,fournPv,obsPv,justPv,agPv,prodPv));
+        $('#messageErrPv2').html(data.responseText)
+        
     }
 });
 
@@ -466,7 +471,7 @@ function pv2FormToJSON(daPv,typePv,titrePv,fournPv,obsPv,justPv,agPv,prodPv) {
       "typePv":typePv,
       "obsPv": obsPv,
       "justPv": justPv,
-      "agPv":agPv,
+    //   "agPv":agPv,
       "prodPv": prodPv
     };
   }

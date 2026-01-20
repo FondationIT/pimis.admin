@@ -15,6 +15,7 @@ class NotificationCenter extends Component
     public $userInstance = null;
     public $unread = [0];
     public $tabs = [];
+    public bool $dropdownOpen = false;
     public $tabsFullTitle = [
         // 'GENERAL' => 'Notifications Générales',
         'EB' => 'Etats de Besoin',
@@ -53,8 +54,6 @@ class NotificationCenter extends Component
         'refreshNotifications' => 'loadNotifications',
         'requestUnreadCount',
         'notificationRead' => 'MarkReadNotifications',
-        // 'brUpdated' => '$refresh',
-        // 'dataStatus' => 'filterDataByStatus',
     ];
 
 

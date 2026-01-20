@@ -9,7 +9,7 @@ use App\Models\Bc;
 use App\Models\Fournisseur;
 use App\Models\Proforma;
 use App\Models\PvAttr;
-use App\Models\PvAttrCommissionSignatures;
+use App\Models\PvAttrCommissionersConcents;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Mediconesystems\LivewireDatatables\Column;
@@ -62,21 +62,19 @@ class PvAttrTable extends LivewireDatatable
     public function validateAttr($pvAttrRef, $action)
     {
         $pvAttr = PvAttr::where('reference', $pvAttrRef)->first();
-        $actionValue = ($action === 'approve') ? 1 : 0;
 
         $niv = $this->fetchUserNiv();
         if (!$niv) {
             throw new \Exception('Unauthorized role');
         }
-        logger('Validate PV Attr', ['Id' => $pvAttr,'Ref' => $pvAttrRef, 'Action' => $action, 'Niv' => $niv]);
-        $pvAttrCom = PvAttrCommissionSignatures::where('pv_attr', $pvAttr->id);
-        $pvAttrCom->update([
-            $niv => $actionValue
+        $pvAttrCom = PvAttrCommissionersConcents::where('pv_attr', $pvAttr->id);
+        $pvAttrCom->where('agent',Auth::user()->agent)->update([
+            'is_approved' => 'approved'
         ]);
 
         // Finalize the signature and update PV Attr status when all levels are approved to proceed
 
-        $is_complete =$pvAttrCom->where('niv_1',1)->where('niv_2',1)->where('niv_3',1)->first();
+        $is_complete =$pvAttrCom->where('is_approved','approved')->count() > 2;
         if($is_complete){
             DB::beginTransaction();
             try {
@@ -101,7 +99,7 @@ class PvAttrTable extends LivewireDatatable
 
 //         $key = Auth::user()->role == 'D.O'?'niv_1':Auth::user()->role == 'D.A.F'?'niv_2':'niv_3';
 
-//         PvAttrCommissionSignatures::where('pv_attr', $pvAttr->id)->update([
+//         PvAttrCommissionersConcents::where('pv_attr', $pvAttr->id)->update([
 //             $key => $action
 //         ]);
 
@@ -150,10 +148,12 @@ class PvAttrTable extends LivewireDatatable
             $columns[] =
                 Column::callback(['id','reference'], function ($id,$pvAttrRef) {
                     $niv = $this->fetchUserNiv();
-                    $pvAttrComNivInstance = PvAttrCommissionSignatures::where('pv_attr', $id);
-                    $pvAttrComNivValidation = $pvAttrComNivInstance->value($niv);
-                    if ($pvAttrComNivInstance->exists()) {
-                        if (is_null($pvAttrComNivValidation)) {
+                    $pvAttrComInstance = PvAttrCommissionersConcents::where('pv_attr', $id)->where('agent',Auth::user()->agent)->first();
+                    if ($pvAttrComInstance) {
+                        
+                        $is_approved = strtolower(trim($pvAttrComInstance->is_approved));
+
+                        if ($is_approved != 'approved' && $is_approved != 'rejected') {
                             return '
                                 <div class="d-flex gap-4 align-items-center justify-content-center">
                                     <button
@@ -180,10 +180,13 @@ class PvAttrTable extends LivewireDatatable
                                 </div>
 
                             ';
-                        } elseif ($pvAttrComNivValidation == 1) {
-                            return '<span class="text-success fw-bold">Approuver</span>';
-                        } else {
-                            return '<span class="text-danger fw-bold">Rejeter</span>';
+                        } 
+
+                        if ($is_approved == 'approved') {
+                            return '<span class="text-success fw-bold">Approuved</span>';
+                        }
+                        if ($is_approved == 'rejected') {
+                            return '<span class="text-danger fw-bold">Rejeted</span>';
                         }
                     }
                     return '<span class="text-muted fw-bold">En operation</span>';

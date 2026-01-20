@@ -101,8 +101,6 @@ function handleSectionTrigger (element) {
   // Highlight clicked button and show view
   const btnAct = `${element.dataset.active}`
 
-  console.log('TEST: '+btnAct);
-  
 
   if(document.getElementById(btnAct)){
     document.getElementById(btnAct).classList.add('active')
@@ -114,6 +112,7 @@ function handleSectionTrigger (element) {
 
   // Display the current section
   const sectionId = `${element.dataset.section}-section`
+  console.log('SECTION: '+sectionId, document.getElementById(sectionId));
   if(document.getElementById(sectionId)){
     document.getElementById(sectionId).classList.add('is-shown')
   }

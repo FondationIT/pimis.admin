@@ -18,7 +18,7 @@ class ComptLigneForm extends Component
   
     public $modelId;
     public $eb;
-    public $type;
+    public $type=1;
     public $product =[];
 
     protected $listeners = [
@@ -30,9 +30,7 @@ class ComptLigneForm extends Component
     public function formEbAppr($modelId){
         $this->modelId = $modelId;
         $this->eb = $modelId;
-        $this->type = 1;
         $this->product = ProductOder::where("etatBes", $this->modelId)->get();   
-
     }
 
     public function formTrAppr($modelId){

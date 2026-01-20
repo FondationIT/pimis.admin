@@ -3,7 +3,9 @@
         aria-haspopup="true" aria-expanded="false">
         <span class="feather-icon"><i data-feather="bell"></i></span>
         @if($unread && count($unread) > 0)
-            <span class="badge badge-wrap badge-danger" id="countnot">{{ count($unread) }}</span>
+            <span class="badge badge-wrap badge-danger">
+                {{ count($unread) }}
+            </span>
         @endif
     </a>
 
@@ -53,9 +55,6 @@
         <div class="tab-content notiftab-content mh-70dvh overflow-auto">
             
             @if ($tabs)
-                @php
-                logger('Rendering Notification Tabs', ['Tabs' => $tabs]);
-                @endphp
                 @foreach($tabs as $prefix => $list)
                     <div class="tab-pane fade {{ $loop->first ? 'active show' : '' }}"
                          id="tab_{{ $prefix }}"

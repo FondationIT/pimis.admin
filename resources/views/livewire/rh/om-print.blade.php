@@ -11,10 +11,7 @@
                 </div>
 
                 <div class="modal-body" id="printMission">
-                    <div class="row">
-
-                        
-
+                    <div class="row pb-3">
                         <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
@@ -39,9 +36,25 @@
                         @if ($ms)
                             <div class="col-lg-12" >
                                 <p>Délivré à:
-                                    <ul>
+                                    {{-- <ul>
                                         @foreach ($agent as $ag)
                                             <li>- {{ App\Models\Agent::firstWhere('id', $ag->agent)->firstname}} {{ App\Models\Agent::firstWhere('id', $ag->agent)->lastname}} {{ App\Models\Agent::firstWhere('id', $ag->agent)->middlename}}</li>
+                                        @endforeach
+                                    </ul> --}}
+                                    @php
+                                        $agentsMap = \App\Models\Agent::whereIn('id', $agent->pluck('agent'))->get()->keyBy('id');
+                                    @endphp
+
+                                    <ul class="list-unstyled row">
+                                        @foreach ($agent as $ag)
+                                            @php $a = $agentsMap[$ag->agent]; @endphp
+
+                                            <li class="col-6 col-md-4 col-lg-3 mb-2 d-flex">
+                                                <span class="me-2 px-2">•</span>
+                                                <span>
+                                                    {{ $a->firstname }} {{ $a->lastname }} {{ $a->middlename }}
+                                                </span>
+                                            </li>
                                         @endforeach
                                     </ul>
                                 </p>
