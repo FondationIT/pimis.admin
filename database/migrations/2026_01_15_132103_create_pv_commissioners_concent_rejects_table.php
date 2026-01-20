@@ -13,18 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pv_attr_commission_signatures', function (Blueprint $table) {
+        Schema::create('pv_commissioners_concent_rejects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pv_attr')->constrained('pv_attrs')
+            $table->foreignId('pv_commission_id')->constrained('pv_commissioners_concents')
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();
-
-            $table->boolean('niv_1')->default(false);
-            $table->boolean('niv_2')->default(false);
-            $table->boolean('niv_3')->default(false);
-
-            $table->json('comments')->nullable();
-
+            $table->foreignId('changed_by')->constrained('agents')
+                  ->cascadeOnDelete()
+                  ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pv_attr_commission_signatures');
+        Schema::dropIfExists('pv_commissioners_concent_rejects');
     }
 };

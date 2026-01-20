@@ -61,8 +61,9 @@
 
     <!-- Toastr CSS -->
     <link href="{{ asset('vendors/jquery-toast-plugin/dist/jquery.toast.min.css')}}" rel="stylesheet" type="text/css">
-
-
+    
+    
+    <link href="{{ asset('vendors/partnerSelect/partnerSelect.css')}}" rel="stylesheet" type="text/css">
 
 
 

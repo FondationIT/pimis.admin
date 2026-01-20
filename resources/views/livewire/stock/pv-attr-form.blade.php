@@ -84,22 +84,11 @@
 
                             </div>
 
-                            <div class="col-md-6 mb-10">
-                                <label>Les participants</label>
-                                <select class="form-control fournPartPV2" id="agPv21" required>
-                                    <option value=""></option>
-                                    @foreach ($agents as $agent)
-                                        <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            
                             <div class="col-md-3 mb-10">
 
                             </div>
                         </div>
-                        <div id="autrePartPV2">
-                        </div>
-                        <a href="#" id="partPVAdd2" style="float: right;"><i class="icon-plus txt-danger"></i></a>
                     </div>
 
                     <div class="modal-footer">

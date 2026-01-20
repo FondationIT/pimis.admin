@@ -186,10 +186,12 @@
                                             }
                                         @endphp
                                         <td>
-                                            @if($validation)
+                                            @if(is_string($validation))
+                                                <span class="secondary" style="font-size: small;">En attente</span>
+                                            @elseif(!is_string($validation) && $validation === true)
                                                 <img class="signn1" src="{{ asset('storage/'.$signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
                                             @else
-                                                <span class="secondary" style="font-size: small;">En attente</span>
+                                                <span class="text-danger" style="font-size: small;">Rejeté</span>
                                             @endif
                                         </td>
                                     @endforeach

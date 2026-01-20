@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->foreignId('signature')->constrained('users');
             $table->foreignId('da')->constrained('dem_aches');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('titre');
             $table->text('observation');
             $table->text('justification');

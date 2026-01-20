@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Stock;
 
-use App\Models\PvAttrCommissionSignatures;
+use App\Models\PvAttrCommissionersConcents;
 use App\Models\ProductOder;
 use App\Models\Et_bes;
 use App\Models\DemAch;
@@ -37,14 +37,26 @@ class PvAttrPrint extends Component
     ];
 
     public function pvAttrValidation($pvAttrId){
-        $signatures = PvAttrCommissionSignatures::where('pv_attr', $pvAttrId)->first();
+        
+        $commission_members = getAdministratorUsers(true);
 
-        if($signatures){
-            $this->commission_members_validation = [
-                'niv_1'=>$signatures->niv_1,
-                'niv_2'=>$signatures->niv_2,
-                'niv_3'=>$signatures->niv_3,
-            ];
+        foreach($commission_members as $member){
+            $role = $member->role;
+            $is_approved = PvAttrCommissionersConcents::where('pv_attr', $pvAttrId)->where('agent', $member->agent)->whereIn('is_approved', ['approved','rejected'])->value('is_approved');
+            $is_signed = is_null($is_approved) ? 'En attente' : ($is_approved == 'approved' ? true : false);
+            if($role == 'D.O'){
+                $this->commission_members_validation['niv_1'] = $is_signed;
+            }elseif($role == 'D.A.F'){
+                $this->commission_members_validation['niv_2'] = $is_signed;
+            }elseif($role == 'D.P'){
+                $this->commission_members_validation['niv_3'] = $is_signed;
+            }
+
+            // match ($role) {
+            //     'D.O'   => $this->commission_members_validation['niv_1'] = $is_signed,
+            //     'D.A.F' => $this->commission_members_validation['niv_2'] = $is_signed,
+            //     'D.P'   => $this->commission_members_validation['niv_3'] = $is_signed,
+            // };
         }
     }
 

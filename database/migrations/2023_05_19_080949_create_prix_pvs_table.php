@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('pv')->constrained('pvs');
             $table->string('produit')->constrained('articles');
             $table->foreignId('proforma')->constrained('proformas');
-            $table->float('prix');
+            $table->decimal('prix', 10, 6);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

@@ -196,7 +196,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'D.P' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bStock">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#stock">
                                 <span class="feather-icon"><i data-feather="package"></i></span>
@@ -214,29 +214,37 @@
                                             </li>
                                         @endif
 
-                                        @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
-
+                                        @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'D.P' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                                            @if(Auth::user()->role != 'D.P' )
                                             <li class="nav-item" id="pvS">
                                                 <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" wire:click="$emit('pvUpdated')" data-section="pvS">Analyse</a>
                                             </li>
-                                            <li class="nav-item" id="pvAttrS">
-                                                <a class="nav-link" href="#" id="button-pvAttrS" data-active="pvAttrS" data-open="bStock" wire:click="$emit('pvAttrUpdated')" data-section="pvAttrS">Attribution</a>
-                                            </li>
-                                            <li class="nav-item" id="bonComS">
-                                                <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" wire:click="$emit('bcUpdated')" data-section="bonComS">Bons de commande</a>
-                                            </li>
-                                            <li class="nav-item" id="fournS">
-                                                <a class="nav-link" href="#" id="button-fournS" data-active="fournS" wire:click="$emit('fournisseurUpdated')" data-open="bStock" data-section="fournS">Fournisseurs</a>
-                                            </li>
-                                            <li class="nav-item" id="compteS">
-                                                <a class="nav-link" href="#" id="button-compteS" data-active="compteS" wire:click="$emit('compteUpdated')" data-open="bStock" data-section="compteS">Compte Fournisseur</a>
-                                            </li>
-                                            <li class="nav-item" id="prixMarcS">
-                                                <a class="nav-link" href="#" id="button-prixMarcS" data-active="prixMarcS" data-open="bStock" wire:click="$emit('prixUpdated')" data-section="prixMarcS">Prix du marche</a>
-                                            </li>
-                                            <li class="nav-item" id="contPrixS">
-                                                <a class="nav-link" href="#" id="button-contPrixS" data-active="contPrixS" data-open="bStock" wire:click="$emit('fprixUpdated')" data-section="contPrixS">Contrat & Prix</a>
-                                            </li>
+                                            @endif
+                                            @if(Auth::user()->role == 'D.P' )
+                                                <li class="nav-item" id="pvAttrS">
+                                                    <a class="nav-link" href="#" id="button-pvAttrS" data-active="pvAttrS" data-open="bStock" wire:click="$emit('pvAttrUpdated')" data-section="pvAttrS">Attribution</a>
+                                                </li>
+                                            @else
+                                                <li class="nav-item" id="pvAttrS">
+                                                    <a class="nav-link" href="#" id="button-pvAttrS" data-active="pvAttrS" data-open="bStock" wire:click="$emit('pvAttrUpdated')" data-section="pvAttrS">Attribution</a>
+                                                </li>
+                                                
+                                                <li class="nav-item" id="bonComS">
+                                                    <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" wire:click="$emit('bcUpdated')" data-section="bonComS">Bons de commande</a>
+                                                </li>
+                                                <li class="nav-item" id="fournS">
+                                                    <a class="nav-link" href="#" id="button-fournS" data-active="fournS" wire:click="$emit('fournisseurUpdated')" data-open="bStock" data-section="fournS">Fournisseurs</a>
+                                                </li>
+                                                <li class="nav-item" id="compteS">
+                                                    <a class="nav-link" href="#" id="button-compteS" data-active="compteS" wire:click="$emit('compteUpdated')" data-open="bStock" data-section="compteS">Compte Fournisseur</a>
+                                                </li>
+                                                <li class="nav-item" id="prixMarcS">
+                                                    <a class="nav-link" href="#" id="button-prixMarcS" data-active="prixMarcS" data-open="bStock" wire:click="$emit('prixUpdated')" data-section="prixMarcS">Prix du marche</a>
+                                                </li>
+                                                <li class="nav-item" id="contPrixS">
+                                                    <a class="nav-link" href="#" id="button-contPrixS" data-active="contPrixS" data-open="bStock" wire:click="$emit('fprixUpdated')" data-section="contPrixS">Contrat & Prix</a>
+                                                </li>
+                                            @endif
                                         @endif
 
                                         @if (Auth::user()->role == 'MAG' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
@@ -255,9 +263,11 @@
                                                 <a class="nav-link" href="#" id="button-diS" data-active="diS" wire:click="$emit('diUpdated')" data-open="bStock" data-section="diS">Demande interne</a>
                                             </li>
                                         @endif
+                                        @if(Auth::user()->role != 'D.P' )
                                         <li class="nav-item" id="invS">
                                             <a class="nav-link" href="#" id="button-invS" data-active="invS" data-open="bStock" wire:click="$emit('invUpdated')" data-section="invS">Inventaire</a>
                                         </li>
+                                        @endif
 
                                     </ul>
                                 </li>
@@ -361,7 +371,7 @@
 
 
 
-                    @if (Auth::user()->role == 'D.P' || Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'D.P' || Auth::user()->role == 'D.O' || Auth::user()->role == 'C.P' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bProjet">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#projet">
                                 <span class="feather-icon"><i data-feather="activity"></i></span>

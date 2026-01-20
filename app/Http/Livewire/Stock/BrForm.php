@@ -46,7 +46,6 @@ class BrForm extends Component
         $this->pvAttr = PvAttr::where("da", $this->bc[0]->da)->get();
 
         
-
         $this->product = ProductOder::join('select_pvs', 'select_pvs.produit', '=', 'product_oders.description')
              ->where("etatBes", $this->da[0]->eb)
              ->where("select_pvs.pv", $this->pvAttr[0]->id)
@@ -62,11 +61,6 @@ class BrForm extends Component
             $fourn = FournPrice::where("product", $this->product[0]->description)->get();
             $this->fournisseur = Fournisseur::where("id", $fourn[0]->fournisseur)->get();
         }
-
-
-        
-        
-
 
     }
 

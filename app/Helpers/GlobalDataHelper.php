@@ -28,7 +28,7 @@ if(!function_exists('getAdministratorUsers')){
         if($getInstance){
             return $administrators;
         }else{
-            return array_unique($administrators->pluck('agent')->toArray());
+            return array_unique($administrators->pluck('agent')->map(fn($item) => (string) $item)->toArray());
         }
     }
 }

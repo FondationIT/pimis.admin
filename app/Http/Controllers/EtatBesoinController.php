@@ -21,6 +21,8 @@ use App\Models\Proforma;
 use App\Models\Pv;
 use App\Models\PrixPv;
 use App\Models\PvAttr;
+use App\Models\PvCommissionersConcents;
+use App\Models\PvAttrCommissionersConcents;
 use App\Models\SelectPv;
 use App\Models\signaturePv;
 use App\Models\SignaturePVAttr;
@@ -190,7 +192,7 @@ class EtatBesoinController extends Controller
 
             ]);
             $pv = Pv::firstWhere('reference', $ref )->id;
-            for($count = 0; $count<count($data['PrixPv']); $count++)
+            for($count = 0; $count<count($data['prixPv']); $count++)
             {
                 $refp = 'PRPV-'.$ref.$count;
                 PrixPv::create([
@@ -199,7 +201,7 @@ class EtatBesoinController extends Controller
                     'signature' => Auth::user()->id,
                     'produit' => $data['prodPv'][$count],
                     'proforma' => $data['profPv'][$count],
-                    'prix' => $data['PrixPv'][$count],
+                    'prix' => $data['prixPv'][$count],
                 ]);
             }
 
@@ -250,21 +252,45 @@ class EtatBesoinController extends Controller
 
             ]);
 
-            $pv = Pv::firstWhere('reference', $ref )->id;
+            $pvinstance = Pv::where('reference', $ref );
+            $pv = $pvinstance->first()->id;
 
             //$data = json_decode($data->getBody());
-            for($count = 0; $count<count($data['agPv']); $count++)
+            foreach ($data['agPv'] as $index => $agent)
             {
-                $ref1 = 'AGPV-'.$ref.$count;
-                signaturePv::create([
-                    'reference' => $ref1,
+                $pvCom = PvCommissionersConcents::create([
                     'pv' => $pv,
-                    'agent' => $data['agPv'][$count],
+                    'agent' => $agent,
                 ]);
+
+                if($pvCom){
+                    $this->notificationService->sendNotification([
+                        'agent'        => $agent,
+                        'msg_id'       => 3,
+                        'task'         => $ref,
+                        'is_delegated' => false,
+                        'delegated_by' => null,
+                    ]);
+                }
             }
+            $pvinstance->update([
+                'commission_count' => count($data['agPv']),
+            ]);
+            // for($count = 0; $count<count($data['agPv']); $count++)
+            // {
+                
+
+            //     // $ref1 = 'AGPV-'.$ref.$count;
+            //     // signaturePv::create([
+            //     //     'reference' => $ref1,
+            //     //     'pv' => $pv,
+            //     //     'agent' => $data['agPv'][$count],
+            //     // ]);
+
+            // }
 
 
-            for($count = 0; $count<count($data['PrixPv']); $count++)
+            for($count = 0; $count<count($data['prixPv']); $count++)
             {
                 $ref2 = 'PRPV-'.$ref.$count;
                 PrixPv::create([
@@ -273,7 +299,7 @@ class EtatBesoinController extends Controller
                     'signature' => Auth::user()->id,
                     'produit' => $data['prodPv'][$count],
                     'proforma' => $data['profPv'][$count],
-                    'prix' => $data['PrixPv'][$count],
+                    'prix' => $data['prixPv'][$count],
                 ]);
             }
 
@@ -287,11 +313,10 @@ class EtatBesoinController extends Controller
 
     public function pvAttr(Request $data)
     {
-        DB::beginTransaction();
         $this->dat = date('Y-m-d');
-        //DB::rollback();
-
         $ref = 'PV-ATTR-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
+        DB::beginTransaction();
+        
         PvAttr::create([
             'reference' => $ref,
             'da' => $data['daPv'],
@@ -303,18 +328,36 @@ class EtatBesoinController extends Controller
 
         ]);
 
-        $pv = PvAttr::firstWhere('reference', $ref )->id;
+        $pv = PvAttr::firstWhere('reference', $ref );
 
         //$data = json_decode($data->getBody());
-        for($count = 0; $count<count($data['agPv']); $count++)
-         {
-            $ref1 = 'AGPV-ATTR-'.$ref.$count;
-            SignaturePVAttr::create([
-                'reference' => $ref1,
-                'pv' => $pv,
-                'agent' => $data['agPv'][$count],
-            ]);
-         }
+        // for($count = 0; $count<count($data['agPv']); $count++)
+        // {
+        // $ref1 = 'AGPV-ATTR-'.$ref.$count;
+        // SignaturePVAttr::create([
+        //     'reference' => $ref1,
+        //     'pv' => $pv,
+        //     'agent' => $data['agPv'][$count],
+        // ]);
+        // }
+        // $administationUsers = getAdministratorUsers();
+        // foreach ($administationUsers as $index => $adminU)
+        // {
+        //     $pvAttrCom = PvAttrCommissionersConcents::create([
+        //         'pv_attr' => $pv,
+        //         'agent' => $adminU,
+        //     ]);
+
+        //     if($pvAttrCom){
+        //         $this->notificationService->sendNotification([
+        //             'agent'        => $adminU,
+        //             'msg_id'       => 3,
+        //             'task'         => $ref,
+        //             'is_delegated' => false,
+        //             'delegated_by' => null,
+        //         ]);
+        //     }
+        // }
 
 
          for($count = 0; $count<count($data['prodPv']); $count++)
@@ -322,7 +365,7 @@ class EtatBesoinController extends Controller
             $ref2 = 'PRPV-ATTR-'.$ref.$count;
             SelectPv::create([
                 'reference' => $ref2,
-                'pv' => $pv,
+                'pv' => $pv->id,
                 'signature' => Auth::user()->id,
                 'produit' => $data['prodPv'][$count],
                 'proforma' => $data['fournPv'][$count],
@@ -330,6 +373,24 @@ class EtatBesoinController extends Controller
          }
 
         DB::commit();
+
+        DB::afterCommit(function() use ($pv){
+            $commissioners = getAdministratorUsers(); // getAdministratorUsers() returns ['774','535','445'] list of agents
+            $rows = collect($commissioners)->map(function($agentId) use ($pv) {
+                return [
+                    'agent' => $agentId,
+                    'pv_attr' => $pv->id
+                ];
+            })->toArray();
+            if($pv){
+                PvAttrCommissionersConcents::upsert(
+                    $rows,
+                    ['agent', 'pv_attr'], // unique key columns
+                    ['updated_at']         // columns to update if exists
+                );
+                logger("PV Attribution initiated for PV ID: ".$pv->id);
+            }
+        });
 
         return true;
 
