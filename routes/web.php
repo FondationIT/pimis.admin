@@ -46,10 +46,10 @@ Route::get('/notifications', function (NotificationService $notify) {
 
 })->name('notification.fetch');
 
-Route::post('/notifications/mark-read', function (NotificationService $notify) {
-    $notify->markAsRead(auth()->id());
-    return response()->json(['status' => 'ok']);
-})->name('notification.read');
+// Route::post('/notifications/mark-read', function (NotificationService $notify) {
+//     $notify->markAsRead(auth()->id());
+//     return response()->json(['status' => 'ok']);
+// })->name('notification.read');
 
 Route::get('/scanner', [AccessCardManagement::class, 'scanIndex'])->name('scanner.index');
 Route::post('/scanner/result', [AccessCardManagement::class, 'storeScanResult'])->name('scanner.result');

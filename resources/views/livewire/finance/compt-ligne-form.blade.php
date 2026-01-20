@@ -35,9 +35,6 @@
                                         <tbody>
                                             @foreach ($product as $prod)
                                                 <tr>
-
-                                                    
-
                                                     @if ($type == 1)
 
                                                         <td>{{App\Models\Product::firstWhere('id', $prod->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>

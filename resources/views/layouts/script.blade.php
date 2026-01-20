@@ -90,6 +90,8 @@
     <script src="{{  asset('vendors/fullcalendar/packages/daygrid/index.global.min.js') }}"></script>
 
     <script src="{{  asset('vendors/calendar-script/calendar_script.js') }}"></script>
+    
+    <script src="{{  asset('vendors/partnerSelect/partner-select.js') }}"></script>
 
 
 

@@ -113,7 +113,7 @@
 
                                     </div>
 
-                                    <div class="col-md-6 mb-10">
+                                    {{-- <div class="col-md-6 mb-10">
                                         <label>Les participants</label>
                                         <select class="form-control fournPartPV" id="agPv1" required>
                                             <option value=""></option>
@@ -121,17 +121,95 @@
                                                 <option value="{{$agent->id}}">{{$agent->firstname.' '.$agent->lastname}}</option>
                                             @endforeach
                                         </select>
+                                    </div> --}}
+
+
+                                    <div class="col-12 mb-3">
+                                        <label class="form-label">Les participants</label>
+
+                                        <div class="multi-select">
+                                            <button type="button" class="form-control w-100 text-start" id="toggleDropdown">
+                                                Sélectionner les participants
+                                            </button>
+
+                                            <div class="multi-select-dropdown w-100" id="agentDropdown">
+                                                @foreach ($agents as $agent)
+                                                    <label class="dropdown-item">
+                                                        <input type="checkbox"
+                                                            class="agent-checkbox"
+                                                            value="{{ $agent->id }}"
+                                                            data-name="{{ $agent->firstname.' '.$agent->lastname }}">
+                                                        {{ $agent->firstname.' '.$agent->lastname }}
+                                                    </label>
+                                                @endforeach
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="col-12">
+                                        <label class="form-label">Participants sélectionnés</label>
+                                        <div id="selectedAgents" class="selected-box w-100"></div>
+                                    </div>
+
+                                    <script>
+                                        const toggleBtn = document.getElementById('toggleDropdown');
+                                        const dropdown = document.getElementById('agentDropdown');
+                                        const selectedBox = document.getElementById('selectedAgents');
+
+                                        toggleBtn.addEventListener('click', () => {
+                                            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+                                        });
+
+                                        document.addEventListener('click', (e) => {
+                                            if (!e.target.closest('.multi-select')) {
+                                                dropdown.style.display = 'none';
+                                            }
+                                        });
+
+                                        document.querySelectorAll('.agent-checkbox').forEach(cb => {
+                                            cb.addEventListener('change', updateSelected);
+                                        });
+
+                                        function updateSelected() {
+                                            selectedBox.innerHTML = '';
+                                            const checked = document.querySelectorAll('.agent-checkbox:checked');
+
+                                            toggleBtn.textContent = checked.length
+                                                ? checked.length + ' participant(s) sélectionné(s)'
+                                                : 'Sélectionner les participants';
+
+                                            checked.forEach(cb => {
+                                                const div = document.createElement('div');
+                                                div.className = 'selected-item';
+                                                div.innerHTML = `
+                                                    <i>✔</i>
+                                                    ${cb.dataset.name}
+                                                    <span data-id="${cb.value}">×</span>
+                                                `;
+                                                selectedBox.appendChild(div);
+                                            });
+                                        }
+
+                                        selectedBox.addEventListener('click', (e) => {
+                                            if (e.target.tagName === 'SPAN') {
+                                                const id = e.target.dataset.id;
+                                                document.querySelector(`.agent-checkbox[value="${id}"]`).checked = false;
+                                                updateSelected();
+                                            }
+                                        });
+                                    </script>
+
+{{-- 
                                     <div class="col-md-3 mb-10">
 
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 
                             @endif
                         @endif
-                        <div id="autrePartPV">
-                        </div>
-                        <a href="#" id="partPVAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a>
+                        {{-- <div id="autrePartPV">
+                        </div> --}}
+                        {{-- <a href="#" id="partPVAdd" style="float: right;"><i class="icon-plus txt-danger"></i></a> --}}
                     </div>
 
                     <div class="modal-footer">
@@ -144,3 +222,6 @@
         </div>
     </div>
 </div>
+
+
+

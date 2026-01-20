@@ -52,38 +52,44 @@ class BonReq extends LivewireDatatable
         $this->emit('formDA',$this->modelId );
     }
 
-    public function apprEb($modelId, $task){
+    public function apprEb($modelId, $task=null){
         
         $this->modelId = $modelId;
-        // $this->emit('formEbAppr',$this->modelId );
-        
-        $this->notificationService->markRead(Auth::user()->role,$task);
-        $this->emit('refreshNotifications');
-    }
-    public function cApprEb($modelId){
-        DB::beginTransaction();
-        try {
-            $this->modelId = $modelId;
-            Et_bes::find($this->modelId)->update([
-                'niv2' => 1,
-            ]);
-            ValidEb::create([
-                'user' => Auth::user()->id,
-                'signature' => Auth::user()->id,
-                'eb' => $this->modelId,
-                'resp' => true,
-                'niv' => 2,
-                'motif' => 'Tout es prevu',
-            ]);
-
-            DB::commit();
-        } catch (\Throwable $th) {
-
-            DB::rollBack();
+        $this->emit('formEbAppr',$this->modelId );
+        if($task){
+            $this->notificationService->markRead(Auth::user()->role,$task);
+            $this->emit('refreshNotifications');
         }
     }
+    public function cApprEb($modelId, $task)
+    {
+        DB::transaction(function () use ($modelId, $task) {
+
+            Et_bes::where('id', $modelId)->update([
+                'niv2' => 1,
+            ]);
+
+            ValidEb::create([
+                'user'      => Auth::id(),
+                'signature' => Auth::id(),
+                'eb'        => $modelId,
+                'resp'      => true,
+                'niv'       => 2,
+                'motif'     => 'Tout es prevu',
+            ]);
+
+            DB::afterCommit(function () use ($modelId) {
+                logger()->info('EB Approved', [
+                    'eb_id' => $modelId,
+                    'user'  => Auth::id(),
+                ]);
+            });
+        });
+    }
+
 
     public function refEb($modelId, $task){
+        // logger('Inf Ref',['Task '.$task]);
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
@@ -100,13 +106,20 @@ class BonReq extends LivewireDatatable
 
             DB::commit();
 
-            $this->notificationService->markRead(Auth::user()->role,$task);
+            // $this->notificationService->markRead(Auth::user()->role,$task);
 
-            $this->emit('refreshNotifications');
+            // $this->emit('refreshNotifications');
+            return true;
             
         } catch (\Throwable $th) {
-
             DB::rollBack();
+
+            logger()->error('Error Rejecting EB', [
+                'eb_id' => $modelId,
+                'error' => $th->getMessage(),
+            ]);
+
+            throw $th;
         }
     }
 
@@ -222,7 +235,7 @@ class BonReq extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2','projet'], function ($id,$active,$niv1,$niv2,$projet) {
+                Column::callback(['id','reference','active','niv1','niv2','projet'], function ($id,$reference,$active,$niv1,$niv2,$projet) {
 
                     if($projet == 3 || $projet == 70 || $projet == 71){
 
@@ -234,9 +247,9 @@ class BonReq extends LivewireDatatable
                             $edit = '';
                             $edit2 ='';
                         }else{
-                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="cApprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="cApprEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
     
-                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                         }
 
                     }else{
@@ -251,9 +264,9 @@ class BonReq extends LivewireDatatable
                             $edit = '';
                             $edit2 ='';
                         }else{
-                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click="apprEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  data-toggle="modal" data-target="#appEtBesModalForms"  rounded" wire:click="apprEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
-                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refEb(\''.$id.'\',\''.$reference.'\')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                         }
                     }
 

@@ -97,7 +97,7 @@
                                                     <span class="d-block font-15 text-dark font-weight-500">Projets</span>
                                                 </div>
                                                 <div>
-                                                    <span class="badge badge-primary  badge-sm">-1.5%</span>
+                                                    {{-- <span class="badge badge-primary  badge-sm">-1.5%</span> --}}
                                                 </div>
                                             </div>
                                             <div>
@@ -115,12 +115,12 @@
                                                     <span class="d-block font-15 text-dark font-weight-500">Travaux Journalier</span>
                                                 </div>
                                                 <div>
-                                                    <span class="badge badge-warning  badge-sm">+60%</span>
+                                                    {{-- <span class="badge badge-warning  badge-sm">+60%</span> --}}
                                                 </div>
                                             </div>
                                             <div>
-                                                <span class="d-block display-5 text-dark mb-5">$89M</span>
-                                                <small class="d-block">$100M Targeted</small>
+                                                <span class="d-block display-5 text-dark mb-5">--</span>
+                                                <small class="d-block">-- Targeted</small>
                                             </div>
                                         </div>
                                     </div>

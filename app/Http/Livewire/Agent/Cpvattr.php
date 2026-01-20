@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\UserRole;
 use App\Models\DemAch;
 use App\Models\PvAttr;
-use App\Models\PvAttrCommissionSignatures;
 use App\Models\signaturePv;
 use App\Models\SignaturePVAttr;
 use Illuminate\Support\Facades\Auth;
@@ -52,24 +51,24 @@ class Cpvattr extends LivewireDatatable
         $pvRef = PvAttr::where('id', $pvId)->first();
 
         try {
-            $exists = PvAttrCommissionSignatures::where('pv_attr', $pvId)->exists();
+            // $exists = PvAttrCommissionSignatures::where('pv_attr', $pvId)->exists();
 
-            if (!$exists) {
-                PvAttrCommissionSignatures::create([
-                    'pv_attr' => $pvId,
-                ]);
+            // if (!$exists) {
+            //     PvAttrCommissionSignatures::create([
+            //         'pv_attr' => $pvId,
+            //     ]);
 
-                SignaturePVAttr::where('id', $signatureId)
-                    ->update(['status' => 'in_progress']);
-            }
+            //     SignaturePVAttr::where('id', $signatureId)
+            //         ->update(['status' => 'in_progress']);
+            // }
 
             DB::commit();
             // Notify relevant parties
-            $this->notificationService->sendNotification([
-                'agent' => getAdministratorUsers(),
-                'msg_id' => 3,
-                'task' => ''.$pvRef->reference,
-            ]);
+            // $this->notificationService->sendNotification([
+            //     'agent' => getAdministratorUsers(),
+            //     'msg_id' => 3,
+            //     'task' => ''.$pvRef->reference,
+            // ]);
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
@@ -91,18 +90,41 @@ class Cpvattr extends LivewireDatatable
 
     public function builder()
     {
-        return SignaturePVAttr::join('pv_attrs', 'pv_attrs.id', '=', 'signature_p_v_attrs.pv')
-        ->where("signature_p_v_attrs.agent", Auth::user()->agent)
-        ->where("pv_attrs.type", '!=', 1)
-        ->where("pv_attrs.titre", '!=', 'Achat directe')
-        ->where("pv_attrs.titre", '!=', 'Achat direct')
-        //->whereDate('pv_attrs.created_at', '>=', '2025-08-01')
-        ->orderBy("pv_attrs.id", "DESC");
+        $pvInstance = PVAttr::query()
+        ->leftJoin('pv_attr_commissioners_concents as pacc', 'pacc.pv_attr', '=', 'pv_attrs.id')
+        ->leftJoin('users as u', 'u.agent', '=', 'pacc.agent')
+        ->select([
+            'pv_attrs.id',
+            'pv_attrs.da',
+            'pv_attrs.reference',
+            'pv_attrs.created_at',
+            'pv_attrs.updated_at',
+
+            DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.is_approved END) AS do_is_approved"),
+            DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.comment END)     AS do_comment"),
+
+            DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.is_approved END) AS daf_is_approved"),
+            DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.comment END)     AS daf_comment"),
+
+            DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.is_approved END) AS dp_is_approved"),
+            DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.comment END)     AS dp_comment"),
+        ])
+        ->groupBy(
+            'pv_attrs.id',
+            'pv_attrs.da',
+            'pv_attrs.reference',
+            'pv_attrs.created_at',
+            'pv_attrs.updated_at'
+        )
+        ->orderByDesc('pv_attrs.id');
+
+        return PVAttr::query()->fromSub($pvInstance, 'pv_attrs');
 
     }
 
     public function columns()
-    {
+    {   
+        $administrators = getAdministratorUsers(true);
         $columns =[
             Column::callback(['pv_attrs.reference','pv_attrs.id'], function ($reference,$id) {
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printPv('.$id.')" data-toggle="modal" data-target="#pPvAttrModalForms">'.$reference.'</a>';
@@ -113,43 +135,43 @@ class Cpvattr extends LivewireDatatable
                 return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printDa('.$da.')" data-toggle="modal" data-target="#pDaModalForms">'.DemAch::find($da)->reference.'</a>';
             })->label('Reference DA'),
 
-            Column::name('pv_attrs.titre')
-                ->label('Titre'),
+            Column::callback(['do_is_approved','do_comment'],function($is_approved,$comment){
+                logger()->info('DO Approval: ', ['is_approved' => $is_approved, 'comment' => $comment]);
+                $text = empty($is_approved) && $is_approved !== 0 ? '-' : $is_approved;
+                return '<span class="p-1 text-teal-600 hover:bg-teal-600 rounded">'.$text.'</span>';
+            })->label('D.O')->unsortable()->searchable(false),
 
-            Column::name('pv_attrs.created_at')
-                ->label('Date'),
+            Column::callback(['daf_is_approved','daf_comment'],function($is_approved,$comment){
+                $text = empty($is_approved) && $is_approved !== 0 ? '-' : $is_approved;
+                return '<span class="p-1 text-teal-600 hover:bg-teal-600 rounded">'.$text.'</span>';
+            })->label('D.A.F')->unsortable()->searchable(false),
+
+            Column::callback(['dp_is_approved','dp_comment'],function($is_approved,$comment){
+                $text = empty($is_approved) && $is_approved !== 0 ? '-' : $is_approved;
+                return '<span class="p-1 text-teal-600 hover:bg-teal-600 rounded">'.$text.'</span>';
+            })->label('D.P')->unsortable()->searchable(false),
+            
+            Column::callback(['do_is_approved','daf_is_approved','dp_is_approved'], function ($do,$daf,$dp) {
+                $status = '-';
+                
+
+                if ((empty($do) && $do !== 0) || (empty($daf) && $daf !== 0) || (empty($dp) && $dp !== 0)) {
+                    return '<span class="p-1 text-teal-600 hover:bg-teal-600 rounded">'.$status.'</span>';
+                }
+
+                if(strtolower($do) === 'approved' && strtolower($daf) === 'approved' && strtolower($dp) === 'approved'){
+                    $status = 'Approuvé';
+                }elseif(strtolower($do) === 'rejected' || strtolower($daf) === 'rejected' || strtolower($dp) === 'rejected'){
+                    $status = 'Rejeté';
+                }else{
+                    $status = 'En operation';
+                }
+                $statusColor = $status == 'Approuvé' ? 'success' : ($status == 'Rejeté' ? 'danger' : 'warning');
+
+                return '<span class="badge badge-'.$statusColor.' p-1 text-teal-600 hover:bg-teal-600  rounded" >'.$status.'</span>';
+            })->label('Status')->unsortable()->searchable(false)
 
         ];
-
-        $columns[] = Column::callback(['signature_p_v_attrs.status','signature_p_v_attrs.id', 'pv_attrs.id'], function ($status,$id, $pvId) {
-            $badgeClass = match ($status) {
-                'in_progress' => 'info',
-                'approved' => 'success',
-                'rejected' => 'danger',
-                default    => 'warning',
-            };
-
-            $statusConverter = [
-                'pending' => 'En opération',
-                'in_progress' => 'En attente',
-                'approved' => 'Approuvé',
-                'rejected' => 'Rejeté',
-            ];
-            if(in_array(Auth::user()->role, ['LOG1', 'ADMIN'])) {
-                if ($status == 'pending') {
-                    $delete = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="signer('.$id.','.$pvId.')" data-toggle="modal" >
-                    <span class="badge badge-warning">Procéder</span>
-                    </a>';
-                }else{
-                    $delete = "<span class=\"badge badge-{$badgeClass}\">" . $statusConverter[strtolower($status)] . "</span>";
-                }
-            }else{
-                $delete = '<span class="badge badge-light">'.$statusConverter[strtolower($status)].'</span>';
-            }
-                return $delete ;
-        })->unsortable()->label('Statut');
-        
-
         return $columns;
     }
 }

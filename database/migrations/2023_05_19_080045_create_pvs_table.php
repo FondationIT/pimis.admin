@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('dateC');
             $table->text('observation');
             $table->boolean('active')->default(true);
+            $table->integer('commission_count')->default(0);
             $table->timestamps();
         });
     }

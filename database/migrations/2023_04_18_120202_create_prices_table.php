@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('product')->constrained('articles');
             $table->date('debut');
             $table->date('fin');
-            $table->float('prix');
+            $table->decimal('prix', 10, 6);
             $table->boolean('active')->default(true);
             $table->timestamps();
         });
