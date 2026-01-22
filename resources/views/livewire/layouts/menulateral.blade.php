@@ -79,14 +79,12 @@
                                     <li class="nav-item" id="contr">
                                         <a class="nav-link" href="#" id="button-contr" data-active="contr" wire:click="$emit('contratUpdated')" data-open="bFile" data-section="contr">Contrat</a>
                                     </li>-->
-                                    @if(Auth::user()->role == 'LOG1' )
-                                        <li class="nav-item" id="usCpv">
-                                            <a class="nav-link" href="#" id="button-usCpv" data-active="usCpv" wire:click="$emit('cpvUpdated')" data-open="bFile" data-section="usCpv">Commission d'analyse</a>
-                                        </li>
-                                        <li class="nav-item" id="usCpvattr">
-                                            <a class="nav-link" href="#" id="button-usCpvattr" data-active="usCpvattr" wire:click="$emit('cpvattrUpdated')" data-open="bFile" data-section="usCpvattr">Commission d'attribution</a>
-                                        </li>
-                                    @endif
+                                    <li class="nav-item" id="usCpv">
+                                        <a class="nav-link" href="#" id="button-usCpv" data-active="usCpv" wire:click="$emit('cpvUpdated')" data-open="bFile" data-section="usCpv">Commission d'analyse</a>
+                                    </li>
+                                    <li class="nav-item" id="usCpvattr">
+                                        <a class="nav-link" href="#" id="button-usCpvattr" data-active="usCpvattr" wire:click="$emit('cpvattrUpdated')" data-open="bFile" data-section="usCpvattr">Commission d'attribution</a>
+                                    </li>
 
                                 </ul>
                             </li>

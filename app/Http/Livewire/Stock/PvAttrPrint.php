@@ -85,14 +85,14 @@ class PvAttrPrint extends Component
         // initialize validation status
         $this->pvAttrValidation($this->modelId);
 
-        $this->pvs = PvAttr::where("id", $this->modelId)->get();
-        //$this->products = ProductOder::where("etatBes", $this->das[0]->eb)->orderBy("id", "DESC")->get();
+        $this->pvs = PvAttr::where("id", $this->modelId)->first();
+        //$this->products = ProductOder::where("etatBes", $this->das[0]->eb)->orderBy("id", "DESC")->first();
 
-        $this->pv = Pv::where("da", $this->pvs[0]->da)->get();
+        $this->pv = Pv::where("da", $this->pvs[0]->da)->first();
 
-        $this->da =DemAch::where("id", $this->pvs[0]->da)->get();
+        $this->da =DemAch::where("id", $this->pvs[0]->da)->first();
 
-        $this->proforma = Proforma::where("da", $this->pvs[0]->da)->get();
+        $this->proforma = Proforma::where("da", $this->pvs[0]->da)->first();
 
         $this->product = ProductOder::where("etatBes", $this->da[0]->eb)->get();
 

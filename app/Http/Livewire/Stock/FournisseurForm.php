@@ -109,6 +109,7 @@ class FournisseurForm extends Component
 
     public function render()
     {
-        return view('livewire.stock.fournisseur-form',['categories' => Categorie::where("active", "1")->orderBy("id", "DESC")->get(),]);
+        $categories=Categorie::where("active", "1")->orderBy("id", "DESC")->get();
+        return view('livewire.stock.fournisseur-form',['categories' => $categories]);
     }
 }

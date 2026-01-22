@@ -69,7 +69,7 @@ class PvAttrTable extends LivewireDatatable
         }
         $pvAttrCom = PvAttrCommissionersConcents::where('pv_attr', $pvAttr->id);
         $pvAttrCom->where('agent',Auth::user()->agent)->update([
-            'is_approved' => 'approved'
+            'is_approved' => $action
         ]);
 
         // Finalize the signature and update PV Attr status when all levels are approved to proceed
@@ -107,22 +107,34 @@ class PvAttrTable extends LivewireDatatable
         // logger('Validate PV Attr', ['Id' =>,'Ref' => $pvAttrRef, 'Action' => $action]);
         $this->emitSelf('$refresh');
     }
+    public function approveCommission($pvAttrId)
+    {
+        $pvAttr = PvAttr::find($pvAttrId);
+        $this->validateAttr($pvAttr->reference, 'approved');
+    }
+
+    public function rejectCommission($pvAttrId)
+    {
+        $pvAttr = PvAttr::find($pvAttrId);
+        $this->validateAttr($pvAttr->reference, 'rejected');
+    }
 
     public function builder()
     {
         $query = PvAttr::query();
-        if (!empty($this->search)) {
-            $query->where(function ($q) {
-                $q->where('pv_attrs.reference', 'LIKE', '%' . $this->search . '%');
-            });
-        }
+        // if (!empty($this->search)) {
+        //     $query->where(function ($q) {
+        //         $q->where('pv_attrs.reference', 'LIKE', '%' . $this->search . '%');
+        //     });
+        // }
 
         $query->where("pv_attrs.type", '!=', 1)
         ->whereNotIn("pv_attrs.titre", ['Achat directe','Achat direct'])
         //->whereDate('pv_attrs.created_at', '>=', '2025-08-01')
-        ->orderBy("pv_attrs.id", "DESC");
+        ->orderBy("pv_attrs.created_at", "DESC");
 
         return $query;
+        
 
     }
 
@@ -153,31 +165,23 @@ class PvAttrTable extends LivewireDatatable
                         
                         $is_approved = strtolower(trim($pvAttrComInstance->is_approved));
 
-                        if ($is_approved != 'approved' && $is_approved != 'rejected') {
+                        if (in_array($is_approved, ['approved','approve']) && in_array($is_approved, ['approved','approve'])) {
                             return '
-                                <div class="d-flex gap-4 align-items-center justify-content-center">
-                                    <button
-                                        class="btn btn-sm rounded-pill px-2 py-1 fw-semibold confirm-action"
-                                        style="background-color:#076d22; color:#ffff"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmModal"
-                                        data-action="approve"
-                                        data-ref="'.$pvAttrRef.'"
-                                        >
-                                        ✔
-                                    </button>
+                            <div class="status-wrapper">
+                                <button class="status-btn success confirm-action"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmModal"
+                                data-action="approve"
+                                data-ref="'.$pvAttrRef.'"
+                                title="Approve" wire:click="approveCommission('.$id.')">✓</button>
 
-                                    <button
-                                        class="btn btn-sm rounded-pill px-2 py-1 fw-semibold confirm-action"
-                                        style="background-color:#730d09; color:#ffff;"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#confirmModal"
-                                        data-action="rejet"
-                                        data-ref="'.$pvAttrRef.'"
-                                        >
-                                        ✖
-                                    </button>
-                                </div>
+                                <button class="status-btn error confirm-action"
+                                data-bs-toggle="modal"
+                                data-bs-target="#confirmModal"
+                                data-action="rejet"
+                                data-ref="'.$pvAttrRef.'"
+                                title="Reject" wire:click="rejectCommission('.$id.')">✕</button>
+                            </div>
 
                             ';
                         } 

@@ -317,18 +317,81 @@ class EtatBesoinController extends Controller
         $ref = 'PV-ATTR-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
         DB::beginTransaction();
         
-        PvAttr::create([
-            'reference' => $ref,
-            'da' => $data['daPv'],
-            'type' =>$data['typePv'],
-            'titre' => $data['titrePv'],
-            'justification' => $data['justPv'],
-            'observation' => $data['obsPv'],
-            'signature' => Auth::user()->id,
+            PvAttr::create([
+                'reference' => $ref,
+                'da' => $data['daPv'],
+                'type' =>$data['typePv'],
+                'titre' => $data['titrePv'],
+                'justification' => $data['justPv'],
+                'observation' => $data['obsPv'],
+                'signature' => Auth::user()->id,
 
-        ]);
+            ]);
 
-        $pv = PvAttr::firstWhere('reference', $ref );
+        DB::commit();
+
+        DB::afterCommit(function() use ($ref){
+            $pvInstance = PvAttr::where('reference', $ref );
+
+            if(!$pvInstance->exists()){
+                Log::error("PV Attribution initiation failed: PV with reference ".$ref." not found.");
+                return;
+            }
+            $pv = $pvInstance->first();
+            $commissioners = getAdministratorUsers(); // getAdministratorUsers() returns ['774','535','445'] list of agents
+            foreach ($commissioners as $adminU)
+            {
+                $pvAttrCom = PvAttrCommissionersConcents::create([
+                    'pv_attr' => $pv->id,
+                    'agent' => $adminU,
+                ]);
+
+                if($pvAttrCom){
+                    $this->notificationService->sendNotification([
+                        'agent'        => $adminU,
+                        'msg_id'       => 3,
+                        'task'         => $ref,
+                        'is_delegated' => false,
+                        'delegated_by' => null,
+                    ]);
+                }else{
+                    $pvInstance->delete();
+                    Log::error("PV Attribution commissioner insert failed for agent ID: ".$adminU." and PV Attr ID: ".$pv->id);
+                }
+            }
+            $insertedInstances = PvAttrCommissionersConcents::where('pv_attr', $pv->id)->count();
+            if($insertedInstances === 0){
+                Log::error("PV Attribution initiation failed: No commissioners were inserted for PV Attr ID: ".$pv->id);
+                return;
+            }else{
+                // $pvInstance->update([
+                //     'commission_count' => $insertedInstances,
+                // ]);
+                Log::info("PV Attribution initiated for PV Attr ID: ".$pv->id);
+                
+            }
+
+        //     $rows = collect($commissioners)->map(function($agentId) use ($pv) {
+        //         return [
+        //             'agent' => $agentId,
+        //             'pv_attr' => $pv->id
+        //         ];
+        //     })->toArray();
+        //     if($pv){
+        //         PvAttrCommissionersConcents::upsert(
+        //             $rows,
+        //             ['agent', 'pv_attr'], // unique key columns
+        //             ['updated_at']         // columns to update if exists
+        //         );
+        //         logger("PV Attribution initiated for PV ID: ".$pv->id);
+        //     }
+        });
+
+
+
+
+
+        // $pv = PvAttr::firstWhere('reference', $ref );
 
         //$data = json_decode($data->getBody());
         // for($count = 0; $count<count($data['agPv']); $count++)
@@ -360,37 +423,37 @@ class EtatBesoinController extends Controller
         // }
 
 
-         for($count = 0; $count<count($data['prodPv']); $count++)
-         {
-            $ref2 = 'PRPV-ATTR-'.$ref.$count;
-            SelectPv::create([
-                'reference' => $ref2,
-                'pv' => $pv->id,
-                'signature' => Auth::user()->id,
-                'produit' => $data['prodPv'][$count],
-                'proforma' => $data['fournPv'][$count],
-            ]);
-         }
+        //  for($count = 0; $count<count($data['prodPv']); $count++)
+        //  {
+        //     $ref2 = 'PRPV-ATTR-'.$ref.$count;
+        //     SelectPv::create([
+        //         'reference' => $ref2,
+        //         'pv' => $pv->id,
+        //         'signature' => Auth::user()->id,
+        //         'produit' => $data['prodPv'][$count],
+        //         'proforma' => $data['fournPv'][$count],
+        //     ]);
+        //  }
 
-        DB::commit();
+        // DB::commit();
 
-        DB::afterCommit(function() use ($pv){
-            $commissioners = getAdministratorUsers(); // getAdministratorUsers() returns ['774','535','445'] list of agents
-            $rows = collect($commissioners)->map(function($agentId) use ($pv) {
-                return [
-                    'agent' => $agentId,
-                    'pv_attr' => $pv->id
-                ];
-            })->toArray();
-            if($pv){
-                PvAttrCommissionersConcents::upsert(
-                    $rows,
-                    ['agent', 'pv_attr'], // unique key columns
-                    ['updated_at']         // columns to update if exists
-                );
-                logger("PV Attribution initiated for PV ID: ".$pv->id);
-            }
-        });
+        // DB::afterCommit(function() use ($pv){
+        //     $commissioners = getAdministratorUsers(); // getAdministratorUsers() returns ['774','535','445'] list of agents
+        //     $rows = collect($commissioners)->map(function($agentId) use ($pv) {
+        //         return [
+        //             'agent' => $agentId,
+        //             'pv_attr' => $pv->id
+        //         ];
+        //     })->toArray();
+        //     if($pv){
+        //         PvAttrCommissionersConcents::upsert(
+        //             $rows,
+        //             ['agent', 'pv_attr'], // unique key columns
+        //             ['updated_at']         // columns to update if exists
+        //         );
+        //         logger("PV Attribution initiated for PV ID: ".$pv->id);
+        //     }
+        // });
 
         return true;
 

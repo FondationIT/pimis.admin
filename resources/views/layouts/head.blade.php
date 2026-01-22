@@ -64,6 +64,7 @@
     
     
     <link href="{{ asset('vendors/partnerSelect/partnerSelect.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendors/status/status.css')}}" rel="stylesheet" type="text/css">
 
 
 

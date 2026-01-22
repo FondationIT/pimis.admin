@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\UserRole;
 use App\Models\DemAch;
 use App\Models\PvAttr;
+use App\Models\Et_bes;
 use App\Models\signaturePv;
 use App\Models\SignaturePVAttr;
 use Illuminate\Support\Facades\Auth;
@@ -90,35 +91,72 @@ class Cpvattr extends LivewireDatatable
 
     public function builder()
     {
-        $pvInstance = PVAttr::query()
-        ->leftJoin('pv_attr_commissioners_concents as pacc', 'pacc.pv_attr', '=', 'pv_attrs.id')
-        ->leftJoin('users as u', 'u.agent', '=', 'pacc.agent')
-        ->select([
-            'pv_attrs.id',
-            'pv_attrs.da',
-            'pv_attrs.reference',
-            'pv_attrs.created_at',
-            'pv_attrs.updated_at',
+        $EbInstance = Et_bes::where('agent', Auth::user()->agent)->pluck('id')->toArray();
+        $userDaBasedOnEb = DemAch::where('eb', $EbInstance)->pluck('id')->toArray();
+        $allowedViewAllPvAttr = ['LOG1', 'D.G', 'D.A.F', 'D.O', 'D.P','ADMIN','Sup'];
+        if (!in_array(Auth::user()->role, $allowedViewAllPvAttr)) {
+            // User has permission to view all PV Attr
+            $pvInstance = PvAttr::query()
+            ->leftJoin('pv_attr_commissioners_concents as pacc', 'pacc.pv_attr', '=', 'pv_attrs.id')
+            ->leftJoin('users as u', 'u.agent', '=', 'pacc.agent')
+            ->select([
+                'pv_attrs.id',
+                'pv_attrs.da',
+                'pv_attrs.reference',
+                'pv_attrs.created_at',
+                'pv_attrs.updated_at',
 
-            DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.is_approved END) AS do_is_approved"),
-            DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.comment END)     AS do_comment"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.is_approved END) AS do_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.comment END)     AS do_comment"),
 
-            DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.is_approved END) AS daf_is_approved"),
-            DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.comment END)     AS daf_comment"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.is_approved END) AS daf_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.comment END)     AS daf_comment"),
 
-            DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.is_approved END) AS dp_is_approved"),
-            DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.comment END)     AS dp_comment"),
-        ])
-        ->groupBy(
-            'pv_attrs.id',
-            'pv_attrs.da',
-            'pv_attrs.reference',
-            'pv_attrs.created_at',
-            'pv_attrs.updated_at'
-        )
-        ->orderByDesc('pv_attrs.id');
+                DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.is_approved END) AS dp_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.comment END)     AS dp_comment"),
+            ])
+            ->groupBy(
+                'pv_attrs.id',
+                'pv_attrs.da',
+                'pv_attrs.reference',
+                'pv_attrs.created_at',
+                'pv_attrs.updated_at'
+            )
+            ->whereIn('pv_attrs.da', $userDaBasedOnEb)
+            ->orderByDesc('pv_attrs.id');
 
-        return PVAttr::query()->fromSub($pvInstance, 'pv_attrs');
+            return PVAttr::query()->fromSub($pvInstance, 'pv_attrs');
+        }else{
+            $pvInstance = PVAttr::query()
+            ->leftJoin('pv_attr_commissioners_concents as pacc', 'pacc.pv_attr', '=', 'pv_attrs.id')
+            ->leftJoin('users as u', 'u.agent', '=', 'pacc.agent')
+            ->select([
+                'pv_attrs.id',
+                'pv_attrs.da',
+                'pv_attrs.reference',
+                'pv_attrs.created_at',
+                'pv_attrs.updated_at',
+    
+                DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.is_approved END) AS do_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.O'  THEN pacc.comment END)     AS do_comment"),
+    
+                DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.is_approved END) AS daf_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.A.F' THEN pacc.comment END)     AS daf_comment"),
+    
+                DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.is_approved END) AS dp_is_approved"),
+                DB::raw("MAX(CASE WHEN u.role = 'D.P'  THEN pacc.comment END)     AS dp_comment"),
+            ])
+            ->groupBy(
+                'pv_attrs.id',
+                'pv_attrs.da',
+                'pv_attrs.reference',
+                'pv_attrs.created_at',
+                'pv_attrs.updated_at'
+            )
+            ->orderByDesc('pv_attrs.id');
+    
+            return PVAttr::query()->fromSub($pvInstance, 'pv_attrs');
+        }
 
     }
 

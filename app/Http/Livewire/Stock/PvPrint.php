@@ -11,6 +11,7 @@ use App\Models\Bc;
 use App\Models\Proforma;
 use App\Models\Projet;
 use App\Models\Pv;
+use App\Models\PvCommissionersConcents;
 use App\Models\signaturePv;
 use Livewire\Component;
 
@@ -27,10 +28,12 @@ class PvPrint extends Component
     public $bailleur;
     public $ebs;
     public $i = 1;
+    public $commissionMembers = [];
 
     protected $listeners = [
         'printPv'
     ];
+
 
     public function printPv($modelId){
         $this->modelId = $modelId;
@@ -57,6 +60,10 @@ class PvPrint extends Component
         ->get('price')
         ->sum('price');
 
+        $PvComInstance = PvCommissionersConcents::where('pv', $modelId);
+        if($PvComInstance->exists()){
+            $this->commissionMembers = $PvComInstance->join('users', 'users.agent', '=', 'pv_commissioners_concents.agent')->get(['users.name', 'pv_commissioners_concents.is_approved','users.signature']);
+        }
     }
 
     public function render()
