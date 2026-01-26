@@ -243,37 +243,81 @@ commForm.onsubmit = function(e) {
     $("#printBr").print();
 });
 
+// function imprimer(divName) {
+
+//     var printContents = document.getElementById(divName).innerHTML;
+//     const mywindow = window.open('','Print Code');
+//     const headContent = document.head.innerHTML;
+//     mywindow.document.write('<html><body>');
+//     mywindow.document.write(headContent);
+//     mywindow.document.write('<div style="margin:0px auto !important;">');
+//     mywindow.document.write(printContents);
+//     mywindow.document.write('</body></html>');
+
+//     mywindow.document.close();
+//     mywindow.focus();
+//     mywindow.onload = function(){
+//         mywindow.print();
+//         mywindow.close();
+//     }
+
+
+
+
+
+//     //var originalContents = document.body.innerHTML;
+//     //document.body.innerHTML = printContents;
+
+
+//     //window.print();
+//     //document.body.innerHTML = originalContents;
+//     //return false;
+
+// }
 function imprimer(divName) {
 
-    var printContents = document.getElementById(divName).innerHTML;
-    const mywindow = window.open('','Print Code');
-    const headContent = document.head.innerHTML;
-    mywindow.document.write('<html><body>');
-    mywindow.document.write(headContent);
-    mywindow.document.write('<div style="margin:0px auto !important;">');
-    mywindow.document.write(printContents);
-    mywindow.document.write('</body></html>');
+    const printContents = document.getElementById(divName).innerHTML;
+    const mywindow = window.open('', 'Print Code', 'width=800,height=600');
+
+    mywindow.document.write(`
+        <html>
+            <head>
+                <title>Print</title>
+                ${document.head.innerHTML}
+                <style>
+                    body {
+                        margin: 20px;
+                    }
+
+                    /* Prevent collapsing */
+                    header, footer {
+                        display: block;
+                    }
+
+                    @media print {
+                        body {
+                            margin: 0;
+                        }
+                    }
+                </style>
+            </head>
+            <body>
+                <div style="margin: 0 auto;">
+                    ${printContents}
+                </div>
+            </body>
+        </html>
+    `);
 
     mywindow.document.close();
     mywindow.focus();
-    mywindow.onload = function(){
+
+    mywindow.onload = function () {
         mywindow.print();
         mywindow.close();
-    }
+    };
+}
 
-
-
-
-
-    //var originalContents = document.body.innerHTML;
-    //document.body.innerHTML = printContents;
-
-
-    //window.print();
-    //document.body.innerHTML = originalContents;
-    //return false;
-
- }
 
 
 

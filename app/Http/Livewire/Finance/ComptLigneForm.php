@@ -12,14 +12,20 @@ use App\Models\ValidTr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use App\Services\NotificationService;
 
 class ComptLigneForm extends Component
 {
-  
+    protected NotificationService $notificationService;
     public $modelId;
     public $eb;
     public $type=1;
     public $product =[];
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     protected $listeners = [
         'formEbAppr',
@@ -61,8 +67,11 @@ class ComptLigneForm extends Component
         try {
 
             if ($this->type == 1) {
-            
-                Et_bes::find($this->eb)->update([
+                $ebInstance = Et_bes::find($this->eb);
+                if (!$ebInstance) {
+                    throw new \Exception("Etat de Besoin not found.");
+                }
+                $ebInstance->update([
                     'niv1' => 1,
                 ]);
                 ValidEb::create([
@@ -78,6 +87,20 @@ class ComptLigneForm extends Component
                 $this->emit('bonReqUpdated');
                 $this->emit('ebUpdated');
                 $this->dispatchBrowserEvent('formSuccess');
+
+                $this->emit('notificationRead', $ebInstance->reference);
+
+                // Send notification once (using main reference)
+                $Saccountent = getSeniorAccountentUsers();
+                foreach ($Saccountent as $sAccount) {
+                    $this->notificationService->sendNotification([
+                        'agent'        => $sAccount,
+                        'msg_id'       => getDefaultNotificationMessage('attention'),
+                        'task'         => $ebInstance->reference,
+                        'is_delegated' => false,
+                        'delegated_by' => null,
+                    ]);
+                }
 
             }else if ($this->type == 2){
 

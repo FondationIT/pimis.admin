@@ -88,13 +88,13 @@ class PvAttrPrint extends Component
         $this->pvs = PvAttr::where("id", $this->modelId)->first();
         //$this->products = ProductOder::where("etatBes", $this->das[0]->eb)->orderBy("id", "DESC")->first();
 
-        $this->pv = Pv::where("da", $this->pvs[0]->da)->first();
+        $this->pv = Pv::where("da", $this->pvs->da)->first();
 
-        $this->da =DemAch::where("id", $this->pvs[0]->da)->first();
+        $this->da =DemAch::where("id", $this->pvs->da)->first();
 
-        $this->proforma = Proforma::where("da", $this->pvs[0]->da)->first();
+        $this->proforma = Proforma::where("da", $this->pvs->da)->get();
 
-        $this->product = ProductOder::where("etatBes", $this->da[0]->eb)->get();
+        $this->product = ProductOder::where("etatBes", $this->da->eb)->get();
 
         $this->agent = SignaturePVAttr::where("pv", $modelId)->get();
 

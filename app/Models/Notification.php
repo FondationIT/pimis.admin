@@ -11,20 +11,15 @@ class Notification extends Model
 
 
     protected $fillable = [
-        'agents',
+        'agent',
         'msg_id',
         'is_read',
         'task',
         'is_delegated',
-        'delegated_by',
-        'is_niv1',
-        'is_niv2',
-        'is_niv3',
-        'is_niv4',
+        'delegated_by'
     ];
 
     protected $casts = [
-        'agents' => 'array',
         'is_delegated' => 'boolean',
     ];
 }

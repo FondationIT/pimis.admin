@@ -48,7 +48,7 @@ class NotificationService
         }
 
         return Notification::create([
-            'agents'       => $data['agent'],
+            'agent'       => $data['agent'],
             'msg_id'       => $data['msg_id'],
             'task'         => $data['task'],
             'is_delegated' => $data['is_delegated'] ?? false,
@@ -60,15 +60,15 @@ class NotificationService
     {
         try {
             // Base query with join
-            $baseQuery = Notification::whereJsonContains('agents', str($userId))
-                ->join('default_msg', 'default_msg.id', '=', 'notifications.msg_id')
+            $baseQuery = Notification::where('agent', $userId)
+                ->leftJoin('default_msgs', 'default_msgs.id', '=', 'notifications.msg_id')
                 ->select(
                     'notifications.*',
-                    'default_msg.type',
-                    'default_msg.title',
-                    'default_msg.message'
-                );
-            
+                    'default_msgs.type',
+                    'default_msgs.title',
+                    'default_msgs.message'
+            );
+
             $rolCols = $this->notifRoleColms;
 
             return [
@@ -78,18 +78,17 @@ class NotificationService
                     ->get(),
 
                 'unread' => (clone $baseQuery)
-                    ->where('is_read', false)->where(function ($query) use ($rolCols) {
-                        $userRole = auth()->user()->role;
-                        $columns = $rolCols[$userRole] ?? [];
-                        foreach ($columns as $col) {
-                            $query->where($col, false);
-                        }
-                    })
+                    ->where('is_read', false)
+                    ->orderBy('notifications.id', 'DESC')
+                    ->get(),
+
+                'read' => (clone $baseQuery)
+                    ->where('is_read', false)
                     ->orderBy('notifications.id', 'DESC')
                     ->get(),
 
                 'system' => (clone $baseQuery)
-                    ->where('default_msg.type', 'system')
+                    ->where('default_msgs.type', 'system')
                     ->orderBy('notifications.id', 'DESC')
                     ->get(),
             ];
@@ -97,6 +96,7 @@ class NotificationService
             return [
                 'all' => [],
                 'unread' => [],
+                'read' => [],
                 'system' => [],
             ];
         }
@@ -148,30 +148,29 @@ class NotificationService
     public function markRead($task,$userRole=false)
     {
         try {
-            $notification = Notification::where('task', trim($task))->firstOrFail();
+            $notificationInstance = Notification::where('task', trim(str($task)))->where('agent', Auth::user()->agent);
 
-            if(!$userRole){
-                $read_user = $notification->agents;
+            if($notificationInstance->exists()){
 
                 $allDone = true;
 
                 // Mark current agent as read
-                $key = array_search(Auth::user()->agent, $read_user);
-                if ($key !== false) {
-                    $read_user[$key] = $read_user[$key] . '_r';
-                }
+                // $key = array_search(Auth::user()->agent, $read_user);
+                // if ($key !== false) {
+                //     $read_user[$key] = $read_user[$key] . '_r';
+                // }
 
-                foreach ($read_user as $value) {
-                    if (!str_ends_with((string) $value, '_r')) {
-                        $allDone = false;
-                        break;
-                    }
-                }
+                // if (!str_ends_with((string) $value, '_r')) {
+                //     $allDone = false;
+                //     break;
+                // }
+                // // foreach ($read_user as $value) {
+                // // }
 
                 // Update notification
-                Notification::where('task', trim($task))->update([
-                    'agents'  => $read_user,
-                    'is_read' => $allDone,
+                $notificationInstance->update([
+                    'is_read' => true,
+                    'updated_at' => now()
                 ]);
             }
 

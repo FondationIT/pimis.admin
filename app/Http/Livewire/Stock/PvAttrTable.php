@@ -128,10 +128,12 @@ class PvAttrTable extends LivewireDatatable
         //     });
         // }
 
-        $query->where("pv_attrs.type", '!=', 1)
-        ->whereNotIn("pv_attrs.titre", ['Achat directe','Achat direct'])
-        //->whereDate('pv_attrs.created_at', '>=', '2025-08-01')
-        ->orderBy("pv_attrs.created_at", "DESC");
+        $query->orderBy("pv_attrs.created_at", "DESC");
+
+        // $query->where("pv_attrs.type", '!=', 1)
+        // ->whereNotIn("pv_attrs.titre", ['Achat directe','Achat direct'])
+        // //->whereDate('pv_attrs.created_at', '>=', '2025-08-01')
+        // ->orderBy("pv_attrs.created_at", "DESC");
 
         return $query;
         
