@@ -60,50 +60,67 @@
                                     @if ($products)
                                     
                                         @foreach ($products as $prod)
-                                        
+                                            @php
+                                                $user = Auth::user();
+                                                $canEditLigne =
+                                                    ($user->role === 'D.A.F' && !$das[0]->niv4) ||
+                                                    ($user->role === 'COMPT2' && !$das[0]->niv3);
+
+                                                $ligne = $prod->ligne;
+                                                $ligneModel = $ligne ? App\Models\Ligne::firstWhere('code', $ligne) : null;
+
+                                                $article = App\Models\Article::find($prod->description);
+                                                $product = App\Models\Product::find($article->product);
+
+                                                $priceInstance = App\Models\Price::where('product', $prod->description)
+                                                    ->whereDate('debut', '<=', $das[0]->created_at)
+                                                    ->whereDate('fin', '>=', $das[0]->created_at)
+                                                    ->first();
+                                                $prix = $priceInstance ? rtrim(rtrim($priceInstance->prix, '0'), '.') : 0;
+                                                $prixTotal = $prix * $prod->quantite;
+                                            @endphp
                                             <tr>
+                                                <td>{{ $i++ }}</td>
 
-                                                <td>{{$i++}}</td>
+                                                {{-- LIGNE --}}
                                                 <td>
-                                                    @if (Auth::user()->role == 'D.A.F' && $das[0]->niv4 == false)
-                                                        @if($prod->ligne == '')
-                                                            <a href="#" title="Ajouter" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>
-                                                        @else
-                                                    
-                                                            <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
-                                                        @endif
-                                                    @elseif (Auth::user()->role == 'COMPT2' && $das[0]->niv3 == false)
-                                                        @if($prod->ligne == '')
-                                                            <a href="#" title="Ajouter" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">Ajouter</a>
-                                                        @else
-                                                    
-                                                            <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}" class="p-1 text-teal-600 hover:bg-teal-600"  data-toggle="modal" data-target="#ligneArtModalForms"  rounded wire:click="ligneArt({{$prod->id}})" data-toggle="modal" data-target="">{{ $prod->ligne }}</a>
-                                                        @endif
-                                                    @else
-                                                        @if($prod->ligne == '')
-                                                        
-                                                        @else
-                                                        <a href="#" title="{{ App\Models\Ligne::firstWhere('code', $prod->ligne)->libele}}">{{ $prod->ligne }}<a>
-
-                                                        @endif
-                                                        
-                                                            
+                                                    @if ($canEditLigne)
+                                                        <a href="#"
+                                                        class="p-1 text-teal-600 hover:bg-teal-600"
+                                                        title="{{ $ligneModel?->libele ?? 'Ajouter' }}"
+                                                        data-toggle="modal"
+                                                        data-target="#ligneArtModalForms"
+                                                        wire:click="ligneArt({{ $prod->id }})">
+                                                            {{ $ligne ?: 'Ajouter' }}
+                                                        </a>
+                                                    @elseif ($ligne)
+                                                        <a href="#" title="{{ $ligneModel?->libele }}">
+                                                            {{ $ligne }}
+                                                        </a>
                                                     @endif
                                                 </td>
-                                                <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}} {{App\Models\Article::firstWhere('id', $prod->description)->description}}</td>
 
-                                                <td>{{$prod->quantite}}</td><td>{{ App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
+                                                {{-- DESCRIPTION --}}
+                                                <td>
+                                                    {{ $product->name }}
+                                                    {{ $article->marque }}
+                                                    {{ $article->model }}
+                                                    {{ $article->description }}
+                                                </td>
 
-                                                @if(App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->exists())
-                                                    <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix}}</td>
+                                                <td>{{ $prod->quantite }}</td>
+                                                <td>{{ $article->unite }}</td>
 
-                                                    <td>$ {{ App\Models\Price::where('product', $prod->description)->whereDate('debut','<=', $this->das[0]->created_at)->whereDate('fin','>=', $this->das[0]->created_at)->get()[0]->prix * $prod->quantite }}</td>
+                                                {{-- PRICES --}}
+                                                @if ($priceInstance)
+                                                    <td>$ {{ $prix }}</td>
+                                                    <td>$ {{ $prixTotal }}</td>
+                                                @else
+                                                    <td colspan="2">Prix non défini</td>
                                                 @endif
-
-                                                
                                             </tr>
-
                                         @endforeach
+
                                         <tr>
                                             <th><strong>Total</strong></th>
                                             <th></th>
