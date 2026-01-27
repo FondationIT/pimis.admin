@@ -40,7 +40,7 @@ class PrixForm extends Component
     {
 
         $validator = Validator::make($this->state, [
-            'product' => ['required', 'string', 'max:255'],
+            'product' => ['required', 'max:255'],
             'prix' => ['required', 'numeric',],
             'debut' => ['required', 'date'],
             'fin' => ['required', 'date'],
