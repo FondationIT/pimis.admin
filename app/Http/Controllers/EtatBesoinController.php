@@ -78,13 +78,16 @@ class EtatBesoinController extends Controller
             }
 
             // Send notification once (using main reference)
-            $this->notificationService->sendNotification([
-                'agent'        => 3402,
-                'msg_id'       => 2,
-                'task'         => $ref,
-                'is_delegated' => false,
-                'delegated_by' => null,
-            ]);
+            $Jaccountent = getJuniorAccountentUsers();
+            foreach ($Jaccountent as $jAccount) {
+                $this->notificationService->sendNotification([
+                    'agent'        => $jAccount,
+                    'msg_id'       => getDefaultNotificationMessage('attention'),
+                    'task'         => $ref,
+                    'is_delegated' => false,
+                    'delegated_by' => null,
+                ]);
+            }
 
             DB::commit();
 
@@ -458,9 +461,6 @@ class EtatBesoinController extends Controller
         return true;
 
     }
-
-
-
 
     public function br(Request $data)
     {

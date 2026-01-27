@@ -20,7 +20,7 @@
                                     <br>
                                     <h4>PROCES VERBAL D’OUVERTURE, ANALYSE ET <br>ATTRIBUTION DE MARCHE</h4>
                                     <p class="">N<sup>o</sup> : <b>@if ($pvs)
-                                        {{$pvs[0]->reference}}
+                                        {{$pvs->reference}}
                                     @endif</b></p>
                                 </div>
                             </div>
@@ -55,8 +55,7 @@
                                                 <td rowspan="2"><strong>Qté</strong></td>
                                                 <td rowspan="2"><strong>Unite</strong></td>
                                                 @foreach ($proforma as $prof)
-                                                <td colspan="2"><strong>{{App\Models\Fournisseur::where('id', $prof->fournisseur)->first()->name}}</strong></td>
-                                                
+                                                    <td colspan="2"><strong>{{App\Models\Fournisseur::where('id', $prof->fournisseur)->first()->name}}</strong></td>
                                                 @endforeach
                                                 <td rowspan="2"><strong>Attr</strong></td>
                                             </tr>
@@ -115,7 +114,7 @@
                                                             <strong>$ {{App\Models\ProductOder::join('prix_pvs', 'prix_pvs.produit', '=', 'product_oders.description')
                                                             ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
                                                             ->where('prix_pvs.proforma', $prof->id)
-                                                            ->where('product_oders.etatBes', $da[0]->eb)
+                                                            ->where('product_oders.etatBes', $da->eb)
                                                             ->get('price')
                                                             ->sum('price');}}</strong>
                                                         </td>
@@ -134,26 +133,26 @@
                         
                         <div class="col-lg-12">
                             <br>
-                            <p>L’an <strong>{{date('Y', strtotime($pv[0]->dateC))}}</strong>, le <strong>{{$pvs[0]->created_at->format('d')}}<sup>èm</sup></strong> jour du mois de <strong>{{$pvs[0]->created_at->format('F')}}</strong>,<br>
-                                Nous membres de la commission de <strong>{{$pvs[0]->titre}}</strong> réunis, nous avons procédé a (l’ouverture), a (l’analyse), a (l’attribution) du marché <strong>{{$pvs[0]->titre}}</strong>. (d’entreprises), (des firmes) ont été consultées.
+                            <p>L’an <strong>{{date('Y', strtotime($pv->dateC))}}</strong>, le <strong>{{$pvs->created_at->format('d')}}<sup>èm</sup></strong> jour du mois de <strong>{{$pvs->created_at->format('F')}}</strong>,<br>
+                                Nous membres de la commission de <strong>{{$pvs->titre}}</strong> réunis, nous avons procédé a (l’ouverture), a (l’analyse), a (l’attribution) du marché <strong>{{$pvs->titre}}</strong>. (d’entreprises), (des firmes) ont été consultées.
                             </p><br>
 
                             <p>
-                                A la date de clôture, <strong>{{date('d-m-Y', strtotime($pv[0]->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés. 
+                                A la date de clôture, <strong>{{date('d-m-Y', strtotime($pv->dateC))}}</strong> ont répondu favorablement en déposant leurs offres sous plis fermés. 
                             </p>
 
                             <p>
                                 La commission constituée a cet effet s’est réunie pour tabler sur les dossiers et a fait des observations suivantes :
                             </p>
                             <p>
-                                {{$pvs[0]->observation}}
+                                {{$pvs->observation}}
                             </p><br>
 
                             <p>
-                                Etant donne ce qui précède, se basant sur le rapport (qualité-prix), (expérience), évaluation (administrative), (technique), (financière), (disponibilité), la commission (propose), (recommande), (décide): {{$pvs[0]->justification}} 
+                                Etant donne ce qui précède, se basant sur le rapport (qualité-prix), (expérience), évaluation (administrative), (technique), (financière), (disponibilité), la commission (propose), (recommande), (décide): {{$pvs->justification}} 
                             </p><br><br>
 
-                            <p>Ainsi fait à Bukavu, le {{$pvs[0]->created_at->format('d-m-y')}}</p><br>
+                            <p>Ainsi fait à Bukavu, le {{$pvs->created_at->format('d-m-y')}}</p><br>
 
                             <h5>Les membres de la commission:</h5><br>
 

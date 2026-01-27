@@ -123,7 +123,8 @@
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0">
                                 <tr>
-                                    <th><strong>Directeur Administratif et Financier</strong></th><th><strong>Secrétaire Exécutif(-ve)</strong></th>
+                                    <th><strong>Directeur de Programmes</strong></th>
+                                    <th><strong>Directeur Administratif et Financier</strong></th>
                                 </tr>
                                 <tr>
                                     <td>

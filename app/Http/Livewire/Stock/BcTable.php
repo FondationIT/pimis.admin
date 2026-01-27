@@ -190,18 +190,18 @@ class BcTable extends LivewireDatatable
                         return $delete ;
                     })->unsortable(),
 
-                Column::callback(['id','active','niv1'], function ($id,$active,$niv1) {
+                Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    if ($active == true && $niv1 == true) {
-                        $edit = '';
-                        $edit2 = '';
+                    if ($active == true && $niv1 == true && $niv2 == false) {
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+
+                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
                     }elseif($active == false){
                         $edit = '';
                         $edit2 ='';
                     }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="dApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
-
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        $edit = '';
+                        $edit2 = '';
                     }
 
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
@@ -209,7 +209,8 @@ class BcTable extends LivewireDatatable
             ];
 
 
-        }else if(Auth::user()->role == 'S.E'){
+        }
+        else if(Auth::user()->role == 'S.E'){
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
@@ -267,7 +268,8 @@ class BcTable extends LivewireDatatable
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
             ];
-        }else if(Auth::user()->role == 'MAG'){
+        }
+        else if(Auth::user()->role == 'MAG'){
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';

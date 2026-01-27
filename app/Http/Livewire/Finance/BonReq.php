@@ -61,11 +61,12 @@ class BonReq extends LivewireDatatable
             $this->emit('refreshNotifications');
         }
     }
-    public function cApprEb($modelId, $task)
+    public function cApprEb($modelId)
     {
-        DB::transaction(function () use ($modelId, $task) {
+        DB::transaction(function () use ($modelId) {
 
-            Et_bes::where('id', $modelId)->update([
+            $ebInstance = Et_bes::where('id', $modelId);
+            $ebInstance->update([
                 'niv2' => 1,
             ]);
 
@@ -77,27 +78,33 @@ class BonReq extends LivewireDatatable
                 'niv'       => 2,
                 'motif'     => 'Tout es prevu',
             ]);
+            DB::commit();
+            DB::afterCommit(function () use ($ebInstance) {
+                // logger()->info('EB Approved', [
+                //     'eb_id' => $modelId,
+                //     'user'  => Auth::id(),
+                // ]);
 
-            DB::afterCommit(function () use ($modelId) {
-                logger()->info('EB Approved', [
-                    'eb_id' => $modelId,
-                    'user'  => Auth::id(),
-                ]);
             });
         });
     }
 
 
-    public function refEb($modelId, $task){
+    public function refEb($modelId){
         // logger('Inf Ref',['Task '.$task]);
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
-            Et_bes::find($this->modelId)->update([
+            $ebInstance = Et_bes::find($this->modelId);
+            if (!$ebInstance) {
+                throw new \Exception("Etat de Besoin not found.");
+            }
+            $ebInstance->update([
                 'active' => 0,
             ]);
             ValidEb::create([
                 'user' => Auth::user()->id,
+                'signature' => Auth::user()->id,
                 'eb' => $this->modelId,
                 'resp' => false,
                 'niv' => 3,
@@ -105,10 +112,8 @@ class BonReq extends LivewireDatatable
             ]);
 
             DB::commit();
-
-            // $this->notificationService->markRead(Auth::user()->role,$task);
-
-            // $this->emit('refreshNotifications');
+            $this->emit('notificationRead', $ebInstance->reference);
+            $this->emit('refreshNotifications');
             return true;
             
         } catch (\Throwable $th) {
@@ -300,7 +305,11 @@ class BonReq extends LivewireDatatable
                     }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
                     }else{
-                        $delete = '<span class="badge badge-info">En attente</span>';
+                        if ($active == true && $niv1 == true){
+                            $delete = '<span class="badge badge-info">Validé</span>';
+                        }else{
+                            $delete = '<span class="badge badge-info">En attente</span>';
+                        }
                     }
                         return $delete ;
                 })->unsortable()->label('Etat'),

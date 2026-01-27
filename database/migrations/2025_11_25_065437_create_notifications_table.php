@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->json('agents');
+            $table->foreignId('agent')->constrained('agents');
             $table->foreignId('msg_id')->constrained('default_msg');
             $table->string('task');
-            $table->boolean('is_niv1')->default(false);
-            $table->boolean('is_niv2')->default(false);
-            $table->boolean('is_niv3')->default(false);
-            $table->boolean('is_niv4')->default(false);
             $table->boolean('is_read')->default(false);
             $table->boolean('is_delegated')->default(false);
             $table->foreignId('delegated_by')->nullable()->constrained('agents');
