@@ -59,16 +59,16 @@ class BcPrint extends Component
 
             
 
-            $this->some  = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
-                ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
-                ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
-                ->where("select_pvs.pv", $this->pvAttr[0]->id)
-                ->where("select_pvs.proforma", $this->prof[0]->id)
-                ->where("prix_pvs.pv", $this->pvs[0]->id)
-                ->where("prix_pvs.proforma", $this->prof[0]->id)
-                ->where("product_oders.etatBes", $this->ebs[0]->id)
-                ->get('price')
-                ->sum('price');
+            // $this->some  = PrixPv::join('product_oders', 'prix_pvs.produit', '=', 'product_oders.description')
+            //     ->join('select_pvs', 'prix_pvs.produit', '=', 'select_pvs.produit')
+            //     ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
+            //     ->where("select_pvs.pv", $this->pvAttr[0]->id)
+            //     ->where("select_pvs.proforma", $this->prof[0]->id)
+            //     ->where("prix_pvs.pv", $this->pvs[0]->id)
+            //     ->where("prix_pvs.proforma", $this->prof[0]->id)
+            //     ->where("product_oders.etatBes", $this->ebs[0]->id)
+            //     ->get('price')
+            //     ->sum('price');
         }elseif (FournPrice::where("product", $this->odrs[0]->description)->exists()) {
             
             $this->prof = FournPrice::where("product", $this->odrs[0]->description)->get();

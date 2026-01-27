@@ -68,31 +68,58 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $totalAmount = [];
+                                                foreach($proforma as $prof){
+                                                    $totalAmount[$prof->id] = 0;
+                                                }
+                                            @endphp
                                             @foreach ($product as $prod)
+                                                @php
+                                                    $article = App\Models\Article::find($prod->description);
+                                                    $product = $article ? App\Models\Product::find($article->product) : null;
+                                                @endphp
                                                 <tr>
+                                                    <td>
+                                                        {{ $product->name ?? '' }}
+                                                        {{ $article->marque ?? '' }}
+                                                        {{ $article->model ?? '' }}
+                                                    </td>
+                                                    <td>{{ $prod->quantite }}</td>
+                                                    <td>{{ $article->unite ?? '' }}</td>
 
-                                                    <td>{{App\Models\Product::where('id', App\Models\Article::where('id', $prod->description)->first()->product)->first()->name}} {{App\Models\Article::where('id', $prod->description)->first()->marque}} {{App\Models\Article::where('id', $prod->description)->first()->model}}</td>
-                                                    <td>{{$prod->quantite}}</td>
-                                                    <td>{{App\Models\Article::where('id', $prod->description)->first()->unite}}</td>
                                                     @foreach ($proforma as $prof)
                                                         @php
                                                             try {
+                                                                $prixPv = App\Models\PrixPv::where('produit', $prod->description)
+                                                                            ->where('proforma', $prof->id)
+                                                                            ->first();
+
+                                                                $isSelected = App\Models\SelectPv::where('produit', $prod->description)
+                                                                                ->where('proforma', $prof->id)
+                                                                                ->exists();
+
+                                                                // $bg = $isSelected ? 'background-color: rgba(175, 175, 175, 0.4)' : '';
+                                                                $prixVal = $prixPv ? $prixPv->prix : 0;
+                                                                $prix = rtrim(rtrim($prixVal, '0'), '.');
+                                                                $prixTotal = $prix * $prod->quantite ?? 0;
+                                                                $totalAmount[$prof->id] += $prixTotal;
                                                         @endphp
-                                                            @if(App\Models\SelectPv::where('produit', $prod->description)->where('proforma', $prof->id)->exists())
+                                                            @if($isSelected)
                                                                 <td style="background-color: rgba(175, 175, 175, 0.4) ">
-                                                                $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                $ {{ $prix }}
                                                                 </td>
                                                                 <td style="background-color: rgba(175, 175, 175, 0.4)">
-                                                                    <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                    <strong>$  {{ number_format($prixTotal,0,',','.'); }}</strong>
                                                                 </td>
                                                             
                                                             @else
                                                                 
                                                                 <td>
-                                                                $ {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix}}
+                                                                $ {{ $prix}}
                                                                 </td>
                                                                 <td>
-                                                                    <strong>$  {{ App\Models\PrixPv::where('produit', $prod->description)->where('proforma', $prof->id)->get()[0]->prix * $prod->quantite}}</strong>
+                                                                    <strong>$  {{ number_format($prixTotal,0,',','.'); }}</strong>
                                                                 </td>
                                                             @endif
                                                         @php
@@ -111,12 +138,7 @@
                                                 @foreach ($proforma as $prof)
                                                     @if($da)
                                                         <td style="text-align: center" colspan="2">
-                                                            <strong>$ {{App\Models\ProductOder::join('prix_pvs', 'prix_pvs.produit', '=', 'product_oders.description')
-                                                            ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
-                                                            ->where('prix_pvs.proforma', $prof->id)
-                                                            ->where('product_oders.etatBes', $da->eb)
-                                                            ->get('price')
-                                                            ->sum('price');}}</strong>
+                                                            <strong>$ {{ number_format($totalAmount[$prof->id],0,',','.'); }}</strong>
                                                         </td>
                                                     @endif
                                                 @endforeach

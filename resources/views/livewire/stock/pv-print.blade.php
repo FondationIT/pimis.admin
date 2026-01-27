@@ -159,6 +159,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        $totalAmount = [];
+                                                        foreach($proforma as $prof){
+                                                            $totalAmount[$prof->id] = 0;
+                                                        }
+                                                    @endphp
                                                     @foreach ($product as $prod)
                                                         <tr>
 
@@ -168,19 +174,23 @@
                                                             @foreach ($proforma as $prof)
                                                                 @php
                                                                     try {
-                                                                        $prix = App\Models\PrixPv::where('produit', $prod->description)
+                                                                        $prixPvInstance = App\Models\PrixPv::where('produit', $prod->description)
                                                                             ->where('proforma', $prof->id)
                                                                             ->first();
 
-                                                                        if ($prix) {
+                                                                        if ($prixPvInstance) {
+                                                                            $prix = rtrim(rtrim($prixPvInstance->prix, '0'), '.') ?? 0;
+                                                                            $prixTotal = $prix * $prod->quantite;
+
+                                                                            $totalAmount[$prof->id] += $prixTotal;
                                                                 @endphp
 
                                                                             <td>
-                                                                                $ {{ $prix->prix }}
+                                                                                $ {{ number_format($prix,0,',','.'); }}
                                                                             </td>
 
                                                                             <td>
-                                                                                <strong>$ {{ $prix->prix * $prod->quantite }}</strong>
+                                                                                <strong>$ {{ number_format($prixTotal,0,',','.'); }}</strong>
                                                                             </td>
 
                                                                 @php
@@ -210,12 +220,7 @@
                                                         @foreach ($proforma as $prof)
                                                             @if($da)
                                                                 <td style="text-align: center" colspan="2">
-                                                                    <strong>$ {{App\Models\ProductOder::join('prix_pvs', 'prix_pvs.produit', '=', 'product_oders.description')
-                                                                    ->selectRaw("prix_pvs.prix * product_oders.quantite as price")
-                                                                    ->where('prix_pvs.proforma', $prof->id)
-                                                                    ->where('product_oders.etatBes', $da[0]->eb)
-                                                                    ->get('price')
-                                                                    ->sum('price');}}</strong>
+                                                                    <strong>$ {{ number_format($totalAmount[$prof->id],0,',','.'); }}</strong>
                                                                 </td>
                                                             @endif
                                                         @endforeach
