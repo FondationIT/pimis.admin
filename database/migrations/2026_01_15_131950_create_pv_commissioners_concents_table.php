@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pv_commissioners_concents', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique();
             $table->foreignId('agent')->constrained('agents')
                   ->cascadeOnDelete()
                   ->cascadeOnUpdate();

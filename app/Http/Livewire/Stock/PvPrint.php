@@ -60,9 +60,10 @@ class PvPrint extends Component
         ->get('price')
         ->sum('price');
 
-        $PvComInstance = PvCommissionersConcents::where('pv', $modelId);
+        $PvComInstance = PvCommissionersConcents::where('pv', $modelId)->leftJoin('users', 'users.agent', '=', 'pv_commissioners_concents.agent');
         if($PvComInstance->exists()){
-            $this->commissionMembers = $PvComInstance->join('users', 'users.agent', '=', 'pv_commissioners_concents.agent')->get(['users.name', 'pv_commissioners_concents.is_approved','users.signature']);
+            $this->commissionMembers = $PvComInstance->select('users.name', 'pv_commissioners_concents.is_approved', 'users.signature')
+            ->get();
         }
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use App\Services\NotificationService;
 use App\Models\Notification;
+use App\Models\PvCommissionersConcents;
 use Carbon\Carbon;
 
 class NotificationCenter extends Component
@@ -25,6 +26,7 @@ class NotificationCenter extends Component
         'BC' => 'Bons de Commande',
         'BR' => 'Bons de Réception',
         'DI' => 'Demandes d\'Interne',
+        'CMA' => 'Commissions d\'Analyse',
     ];
     public $tableToEmit = [
         // 'GENERAL' => 'generalNotifications',
@@ -35,6 +37,7 @@ class NotificationCenter extends Component
         'BC' => 'bcUpdated',
         'BR' => 'bonReqUpdated',
         'DI' => 'diUpdated',
+        'CMA' => 'cmaUpdated',
     ];
     public $sectionToOpen = [
         // 'GENERAL' => 'generalS',
@@ -45,6 +48,7 @@ class NotificationCenter extends Component
         'BC' => 'bonComS',
         'BR' => 'bonReqS',
         'DI' => 'diStock',
+        'CMA' => 'usCpv',
     ];
     
     public $focusTask = null;
@@ -55,6 +59,20 @@ class NotificationCenter extends Component
         'requestUnreadCount',
         'notificationRead' => 'MarkReadNotifications',
     ];
+
+    public function isCommissionNotification($task)
+    {
+        if (str_starts_with($task, 'CMA-')) {
+            $pvInstance = PvCommissionersConcents::where('reference', $task)
+            ->leftJoin('pvs', 'pvs.id', '=', 'pv_commissioners_concents.pv')
+            ->select('pv_commissioners_concents.*', 'pvs.reference as pv_reference')
+            ->first();
+            if ($pvInstance->exists()){
+                return $pvInstance->pv_reference;
+            }
+        }
+        return null;
+    }
 
 
     public function boot(NotificationService $notificationService)
@@ -85,14 +103,12 @@ class NotificationCenter extends Component
         if (!$task) {
             logger()->error('No task provided for marking notifications as read.');
         }
-
         $this->notificationService->markRead($task);
-        $this->emitSelf('refreshNotifications');
     }
 
     public function requestUnreadCount()
     {
-        $this->emit('unreadCountResponse', $this->unread);
+        // return $this->unread->count();
     }
 
 

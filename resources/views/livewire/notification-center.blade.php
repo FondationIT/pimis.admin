@@ -71,6 +71,7 @@
                                         $dOpen = 'bFinance';
                                     }
                                 }
+                                
                                 $task = is_array($notif) ? $notif['task'] : $notif->task;
                                 $message = is_array($notif) ? $notif['message'] : $notif->message;
                                 $created_at = is_array($notif) ? $notif['created_at'] : $notif->created_at;

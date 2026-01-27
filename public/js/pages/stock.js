@@ -238,43 +238,70 @@ comm1Form.onsubmit = function(e) {
 
 
    $.ajax({
-    type: 'POST',
-    contentType: 'application/json',
-    url: "/pvReg",
-    dataType: 'json',
+        type: 'POST',
+        contentType: 'application/json',
+        url: "/pvReg",
+        dataType: 'json',
 
-    data: JSON.stringify(pvFormToJSON(daPv,typePv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
-    beforeSend: function() {
-        $('#btnPv').hide();
-        $('#prldPv').show();
-    },
-    success: function(data, textStatus, jqXHR){
+        data: JSON.stringify(pvFormToJSON(daPv,typePv,titrePv,datePv,obsPv,justPv,agPv,prixPv,profPv,prodPv)),
+        beforeSend: function() {
+            $('#btnPv').hide();
+            $('#prldPv').show();
+        },
+        success: function(data, textStatus, jqXHR){
 
+                $('#prldPv').hide();
+                $('#btnPv').show();
+                $('.close').click()
+
+                Livewire.emit('demAchUpdated')
+
+                $.toast().reset('all');
+                $.toast({
+                    text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+                    position: 'top-center',
+                    loaderBg:'#7a5449',
+                    class: 'jq-has-icon jq-toast-success',
+                    hideAfter: 3500,
+                    stack: 6,
+                    showHideTransition: 'fade'
+                    });
+
+
+        },
+        error: function(jqXHR) {
             $('#prldPv').hide();
             $('#btnPv').show();
-            $('.close').click()
 
-            Livewire.emit('demAchUpdated')
+            let errorsHtml = '';
 
-            $.toast().reset('all');
-            $.toast({
-                text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
-                position: 'top-center',
-                loaderBg:'#7a5449',
-                class: 'jq-has-icon jq-toast-success',
-                hideAfter: 3500,
-                stack: 6,
-                showHideTransition: 'fade'
-                });
+            // Laravel validation errors are in jqXHR.responseJSON.errors
+            if (jqXHR.responseJSON && jqXHR.responseJSON.errors) {
+                const errors = jqXHR.responseJSON.errors;
+                errorsHtml = '<ul>';
+                for (const key in errors) {
+                    if (errors.hasOwnProperty(key)) {
+                        errors[key].forEach(msg => {
+                            errorsHtml += `<li>${msg}</li>`;
+                        });
+                    }
+                }
+                errorsHtml += '</ul>';
+            } else if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                // other errors
+                errorsHtml = `<p>${jqXHR.responseJSON.message}</p>`;
+            } else {
+                errorsHtml = '<p>Une erreur est survenue. Veuillez réessayer.</p>';
+            }
 
-
-    },
-    error: function(jqXHR, textStatus, data){
-        $('#prldPv').hide();
-        $('#btnPv').show();
-        $('#messageErrPv').html(messageErr(data))
-    }
-});
+            $('#messageErrPv').html(`
+                <div class="alert alert-danger alert-dismissible fade show">
+                    ${errorsHtml}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `);
+        }
+    });
 
  }
 

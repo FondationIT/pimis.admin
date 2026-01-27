@@ -10,8 +10,14 @@
                 </div>
                 <form id="registerPv" class="needs-validation">
                     <div class="modal-body">
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Erreur :</strong> {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <div id="messageErrPv"></div>
-
+                        
                         <div class="form-row">
                             <div class="col-md-4 mb-10">
                                 <label for="description">Reference DA</label>

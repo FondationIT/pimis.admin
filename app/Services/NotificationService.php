@@ -113,6 +113,7 @@ class NotificationService
             'BC' => [],
             'BR' => [],
             'DI' => [],
+            'CMA' => [],
         ];
 
         foreach ($notifications as $notif) {
@@ -148,10 +149,9 @@ class NotificationService
     public function markRead($task,$userRole=false)
     {
         try {
-            $notificationInstance = Notification::where('task', trim(str($task)))->where('agent', Auth::user()->agent);
+            $notificationInstance = Notification::where('task', $task)->where('agent', Auth::user()->agent);
 
             if($notificationInstance->exists()){
-
                 $allDone = true;
 
                 // Mark current agent as read

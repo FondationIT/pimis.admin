@@ -13,10 +13,21 @@ use Mediconesystems\LivewireDatatables\NumberColumn;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\DateColumn;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use App\Services\NotificationService;
 
 class Cpv extends LivewireDatatable
 {
+    protected NotificationService $notificationService;
     public $modelId;
+
+    protected $listeners = [
+        'cmaUpdated' => '$refresh'
+    ];
+
+    public function boot(NotificationService $notificationService)
+    {
+        $this->notificationService = $notificationService;
+    }
 
     public function printPv($modelId){
         $this->modelId = $modelId;
@@ -35,6 +46,9 @@ class Cpv extends LivewireDatatable
                 $commissioner->update([
                     'is_approved' => 'approved',
                 ]);
+
+                // mark notification as read
+                $this->emit('notificationRead', $commissioner->first()->reference);
             }
 
         } catch (\Throwable $th) {
@@ -61,6 +75,8 @@ class Cpv extends LivewireDatatable
                 $commissioner->update([
                     'is_approved' => 'rejected',
                 ]);
+
+                $this->notificationService->markRead($commissioner->first()->reference);
             }
 
         } catch (\Throwable $th) {

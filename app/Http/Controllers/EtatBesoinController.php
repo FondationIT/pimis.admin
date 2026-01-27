@@ -38,6 +38,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Services\NotificationService;
 
+use Illuminate\Validation\ValidationException;
+
 class EtatBesoinController extends Controller
 {
     protected NotificationService $notificationService;
@@ -175,8 +177,22 @@ class EtatBesoinController extends Controller
 
     }
 
-    public function pv(Request $data)
-    {
+    public function pv(Request $data){
+        if ( !$data['agPv'] || !is_array($data['agPv']) || count($data['agPv'] ) < 3) {
+            throw ValidationException::withMessages([
+                'agPv' => 'Au moins 3 membres de la commission doivent être sélectionnés.'
+            ]);
+        }
+
+        $prixPv = collect($data['prixPv'])->map(fn ($prix) => empty($prix) ? 0 : (float) $prix);
+            
+        if ($prixPv->every(fn ($prix) => $prix == 0)) {
+            throw ValidationException::withMessages([
+                'prixPv' => 'Tous les prix saisis sont nuls ou égaux à zéro. Cette saisie est interdite. Veuillez vérifier vos entrées.'
+            ]);
+        }
+
+
         if ($data['typePv'] == 1){
 
             DB::beginTransaction();
@@ -244,7 +260,7 @@ class EtatBesoinController extends Controller
             //DB::rollback();
 
             $ref = 'PV-'.$this->dat.'-FP'.rand(100,999).$data['daPv'].Auth::user()->id;
-            Pv::create([
+            $newPVInstance = Pv::create([
                 'reference' => $ref,
                 'da' => $data['daPv'],
                 'type' =>$data['typePv'],
@@ -257,11 +273,13 @@ class EtatBesoinController extends Controller
 
             $pvinstance = Pv::where('reference', $ref );
             $pv = $pvinstance->first()->id;
-
+            
             //$data = json_decode($data->getBody());
             foreach ($data['agPv'] as $index => $agent)
             {
+                $cmaRef = 'CMA-'.$this->dat.'-FP'.$index.rand(100,999).'-'.$pv.Auth::user()->id;
                 $pvCom = PvCommissionersConcents::create([
+                    'reference' => $cmaRef,
                     'pv' => $pv,
                     'agent' => $agent,
                 ]);
@@ -270,7 +288,7 @@ class EtatBesoinController extends Controller
                     $this->notificationService->sendNotification([
                         'agent'        => $agent,
                         'msg_id'       => 3,
-                        'task'         => $ref,
+                        'task'         => $cmaRef,
                         'is_delegated' => false,
                         'delegated_by' => null,
                     ]);
@@ -292,18 +310,21 @@ class EtatBesoinController extends Controller
 
             // }
 
-
-            for($count = 0; $count<count($data['prixPv']); $count++)
-            {
-                $ref2 = 'PRPV-'.$ref.$count;
-                PrixPv::create([
-                    'reference' => $ref2,
-                    'pv' => $pv,
-                    'signature' => Auth::user()->id,
-                    'produit' => $data['prodPv'][$count],
-                    'proforma' => $data['profPv'][$count],
-                    'prix' => $data['prixPv'][$count],
-                ]);
+            try {
+                for($count = 0; $count<count($data['prixPv']); $count++)
+                {
+                    $ref2 = 'PRPV-'.$ref.$count;
+                    PrixPv::create([
+                        'reference' => $ref2,
+                        'pv' => $pv,
+                        'signature' => Auth::user()->id,
+                        'produit' => $data['prodPv'][$count],
+                        'proforma' => $data['profPv'][$count],
+                        'prix' => $data['prixPv'][$count],
+                    ]);
+                }
+            } catch (\Throwable $th) {
+                throw $th;
             }
 
             DB::commit();
