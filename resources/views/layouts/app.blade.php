@@ -28,6 +28,35 @@
 
     <!-- Main Content -->
     <div class="hk-pg-wrapper pb-0">
+        <!-- Floating Warning Icon -->
+        <div id="warning-float" class="position-fixed bottom-0 end-0 m-4" style="z-index: 99999;">
+            <!-- Icon button -->
+            <button id="warningBtn"
+                class="btn btn-warning rounded-circle shadow"
+                style="width:56px;height:56px;">
+                ⚠️
+            </button>
+
+            <!-- Message box -->
+            <div id="warningBox"
+                class="card shadow mt-2"
+                style="width:280px; display:none;">
+                <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                    <strong>Avis de maintenance</strong>
+                    <button type="button" class="btn-close" id="closeWarning"></button>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">
+                        Une maintenance est actuellement en cours afin d’améliorer le système.
+                        Si vous rencontrez une erreur, merci d’en informer l’équipe IT.
+                        Restez sereins 😊
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
       @if (session()->has('error'))
           <div class="alert alert-danger alert-dismissible fade show" role="alert" id="flash-error">
               {{ session('error') }}

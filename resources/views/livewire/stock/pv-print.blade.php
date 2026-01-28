@@ -258,7 +258,7 @@
                                 <div class="col-lg-12" style="text-align: center">
                                     <table class="table table-striped table-border mb-0 pv-table">
                                         <tr>
-                                            @if($commissionMembers)
+                                            @if (!empty($commissionMembers) && count($commissionMembers) > 0)
                                                 @foreach ($commissionMembers as $ag)
                                                     <td>
                                                             <p class="center" >{{ $ag->name}}<br>
@@ -273,6 +273,8 @@
 
                                                     </td>
                                                 @endforeach
+                                            @else
+                                                <td>Aucun membre de la commission n'a été assigné.</td>
                                             @endif
                                         </tr>
                                     </table>

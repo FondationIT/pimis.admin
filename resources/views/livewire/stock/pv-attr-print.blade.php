@@ -46,7 +46,7 @@
                                     <table class="table table-striped table-border mb-0 prodT pv-table">
                                         <thead>
                                             <tr>
-                                                <td tb-article rowspan="2"><strong>Articles</strong></td>
+                                                <td class="tb-article" rowspan="2"><strong>Articles</strong></td>
                                                 <td rowspan="2"><strong>Qté</strong></td>
                                                 <td rowspan="2"><strong>Unite</strong></td>
                                                 @foreach ($proforma as $prof)

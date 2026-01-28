@@ -93,6 +93,8 @@
     
     <script src="{{  asset('vendors/partnerSelect/partner-select.js') }}"></script>
 
+    <script src="{{  asset('vendors/worning-popup/worning-popup.js') }}"></script>
+
 
 
 
