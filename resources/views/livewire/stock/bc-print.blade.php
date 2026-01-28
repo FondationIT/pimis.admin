@@ -12,10 +12,7 @@
 
                 <div class="modal-body" id="printBc">
 
-                    <div class="row">
-
-                        
-
+                    <div class="row bheader">
                         <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
@@ -34,7 +31,6 @@
                     </div>
 
                     <hr class="mbtm">
-
 
                     <div class="row">
                         @if ($das)
@@ -175,7 +171,7 @@
 
 
 
-                    <footer >
+                    <footer class="bfooter">
                         <hr>
                         <p>
                             <strong>Fondation Panzi</strong><br>

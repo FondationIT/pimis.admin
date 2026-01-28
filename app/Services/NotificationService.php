@@ -149,7 +149,7 @@ class NotificationService
     public function markRead($task,$userRole=false)
     {
         try {
-            $notificationInstance = Notification::where('task', $task)->where('agent', Auth::user()->agent);
+            $notificationInstance = Notification::where('task', trim((string)$task))->where('agent', Auth::user()->agent);
 
             if($notificationInstance->exists()){
                 $allDone = true;

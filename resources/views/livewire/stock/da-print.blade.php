@@ -12,8 +12,7 @@
 
                 <div class="modal-body" id="printDa">
                     
-                    <div class="row">
-
+                    <div class="row bheader">
                         <div class="col-lg-6 fix" style="">
                             <div>
                                 <br>
@@ -229,7 +228,7 @@
                     </div>
 
                     
-                    <footer >
+                    <footer class="bfooter">
                         <hr>
                         <p>
                             <strong>Fondation Panzi</strong><br>
