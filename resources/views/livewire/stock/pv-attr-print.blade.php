@@ -43,10 +43,10 @@
                             <h5>Tableau comparatif</h5><br>
                             <div class="table-wrap">
                                 <div class="table-responsive" >
-                                    <table class="table table-striped table-border mb-0 prodT">
+                                    <table class="table table-striped table-border mb-0 prodT pv-table">
                                         <thead>
                                             <tr>
-                                                <td rowspan="2"><strong>Articles</strong></td>
+                                                <td tb-article rowspan="2"><strong>Articles</strong></td>
                                                 <td rowspan="2"><strong>Qté</strong></td>
                                                 <td rowspan="2"><strong>Unite</strong></td>
                                                 @foreach ($proforma as $prof)
@@ -75,7 +75,7 @@
                                                     $product = $article ? App\Models\Product::find($article->product) : null;
                                                 @endphp
                                                 <tr>
-                                                    <td>
+                                                    <td class="tb-article">
                                                         {{ $product->name ?? '' }}
                                                         {{ $article->marque ?? '' }}
                                                         {{ $article->model ?? '' }}
@@ -179,7 +179,7 @@
 
 
                         <div class="col-lg-12" style="text-align: center">
-                            <table class="table table-striped table-border mb-0">
+                            <table class="table table-striped table-border mb-0 pv-table">
                                 @php
                                     $signature = null;
                                 @endphp

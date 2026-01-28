@@ -296,6 +296,26 @@ function imprimer(divName) {
                         font-size: 1em; 
                     }
 
+                    /* table styling */
+                    #printWrapper table.pv-table {
+                        width: 100% !important;
+                        table-layout: fixed !important;
+                        border-collapse: collapse !important;
+                    }
+
+                    #printWrapper th, #printWrapper td {
+                        word-wrap: break-word !important;
+                        overflow-wrap: break-word !important;
+                        white-space: normal !important;
+                        padding: 4px 8px;
+                        border: 1px solid #000;
+                    }
+                    #printWrapper th.tb-article, #printWrapper td.tb-article {
+                        min-width: 15% !important;
+                        max-width: 30% !important;
+                        width: 20% !important;
+                    }
+
                     /* your extra print styles */
                     .bheader {
                         font-size: 3em; 

@@ -47,10 +47,10 @@
                                     <h5>Fournisseur: {{App\Models\Fournisseur::firstWhere('id', $proforma[0]->fournisseur)->name}}</h5><br>
                                     <div class="table-wrap">
                                         <div class="table-responsive" >
-                                            <table class="table table-striped table-border mb-0 prodT">
+                                            <table class="table table-striped table-border mb-0 prodT pv-table">
                                                 <thead>
                                                     <tr>
-                                                        <td><strong>Articles</strong></td>
+                                                        <td  class="tb-article"><strong>Articles</strong></td>
                                                         <td><strong>Qté</strong></td>
                                                         <td><strong>Unite</strong></td>
                                                         <td><strong>P.U</strong></td>
@@ -61,7 +61,7 @@
                                                     @foreach ($product as $prod)
                                                         <tr>
 
-                                                            <td>{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
+                                                            <td  class="tb-article">{{App\Models\Product::firstWhere('id', App\Models\Article::firstWhere('id', $prod->description)->product)->name}} {{App\Models\Article::firstWhere('id', $prod->description)->marque}} {{App\Models\Article::firstWhere('id', $prod->description)->model}}</td>
                                                             <td>{{$prod->quantite}}</td>
                                                             <td>{{App\Models\Article::firstWhere('id', $prod->description)->unite}}</td>
                                                             @foreach ($proforma as $prof)
@@ -136,10 +136,10 @@
                                     <h5>Tableau comparatif</h5><br>
                                     <div class="table-wrap">
                                         <div class="table-responsive" >
-                                            <table class="table table-striped table-border mb-0 prodT">
+                                            <table class="table table-striped table-border mb-0 prodT pv-table">
                                                 <thead>
                                                     <tr>
-                                                        <td rowspan="2"><strong>Articles</strong></td>
+                                                        <td class="tb-article" rowspan="2"><strong>Articles</strong></td>
                                                         <td rowspan="2"><strong>Qté</strong></td>
                                                         <td rowspan="2"><strong>Unite</strong></td>
                                                         @foreach ($proforma as $prof)
@@ -256,7 +256,7 @@
 
 
                                 <div class="col-lg-12" style="text-align: center">
-                                    <table class="table table-striped table-border mb-0">
+                                    <table class="table table-striped table-border mb-0 pv-table">
                                         <tr>
                                             @if($commissionMembers)
                                                 @foreach ($commissionMembers as $ag)
