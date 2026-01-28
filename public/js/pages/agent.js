@@ -274,24 +274,36 @@ commForm.onsubmit = function(e) {
 //     //return false;
 
 // }
+
 function imprimer(divName) {
+    // get the content to print
+    const printContents = document.getElementById(divName).outerHTML;
 
-    const printContents = document.getElementById(divName).innerHTML;
-    const mywindow = window.open('', 'Print Code', 'width=800,height=600');
+    // open a new print window
+    const mywindow = window.open('', 'Print Code');
 
+    // copy head content
+    const headContent = document.head.innerHTML;
+
+    // write the HTML into the new window
     mywindow.document.write(`
         <html>
             <head>
-                <title>Print</title>
-                ${document.head.innerHTML}
+                ${headContent}
                 <style>
-                    body {
-                        margin: 20px;
+                    /* global font size for all children */
+                    #printWrapper * {
+                        font-size: 1em; 
                     }
 
-                    /* Prevent collapsing */
-                    header, footer {
-                        display: block;
+                    /* your extra print styles */
+                    .bheader {
+                        font-size: 3em; 
+                        margin-bottom: 8rem !important;
+                    }
+                    hr {
+                        margin-top: 2rem !important;
+                        margin-bottom: 2rem !important;
                     }
 
                     @media print {
@@ -302,7 +314,7 @@ function imprimer(divName) {
                 </style>
             </head>
             <body>
-                <div style="margin: 0 auto;">
+                <div id="printWrapper">
                     ${printContents}
                 </div>
             </body>
@@ -312,11 +324,51 @@ function imprimer(divName) {
     mywindow.document.close();
     mywindow.focus();
 
-    mywindow.onload = function () {
+    mywindow.onload = function() {
         mywindow.print();
         mywindow.close();
-    };
+    }
 }
+
+
+
+// function imprimer(divName) {
+
+    
+//     var printContents = document.getElementById(divName).outerHTML;
+//     const mywindow = window.open('','Print Code');
+//     const headContent = document.head.innerHTML;
+//     console.log(headContent);
+
+//     mywindow.document.write('<html><head> <style> .bheader{ margin-bottom:8rem !important; } hr{ margin-top:2rem !important; margin-bottom:2rem !important; }</style>');
+//     mywindow.document.write(headContent);
+//     mywindow.document.write('</head><body>');
+//     mywindow.document.write(printContents);
+//     mywindow.document.write('</body></html>');
+
+//     mywindow.document.close();
+//     mywindow.focus();
+//     mywindow.onload = function(){
+//         mywindow.print();
+//         mywindow.close();
+//     }
+    
+
+
+
+
+
+//     //var originalContents = document.body.innerHTML;
+//     //document.body.innerHTML = printContents;
+    
+
+//     //window.print();
+//     //document.body.innerHTML = originalContents;
+//     //return false;
+
+// }
+
+
 
 
 

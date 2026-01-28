@@ -15,9 +15,7 @@
                     @if ($bailleur)
                         @if ($bailleur[0]->min1 <= $some && $some <= $bailleur[0]->max1)
                             <header>
-                                <div class="row">
-
-
+                                <div class="row bheader">
                                     <div class="col-lg-6 fix" style="">
                                         <div>
                                             <br>
@@ -106,9 +104,7 @@
                             </div>
                         @else
                             <header>
-                                <div class="row">
-
-
+                                <div class="row bheader">
                                     <div class="col-lg-6 fix" style="">
                                         <div>
                                             <br>
@@ -288,7 +284,7 @@
                     @endif
 
 
-                    <footer >
+                    <footer class="bfooter">
                         <hr>
                         <p>
                             <strong>Fondation Panzi</strong><br>

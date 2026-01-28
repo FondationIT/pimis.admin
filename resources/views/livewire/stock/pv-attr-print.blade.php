@@ -11,28 +11,23 @@
                 </div>
                 
                 <div class="modal-body" id="printPvAttr">
-                    <div>
-                        <div class="row">
-
-
-                            <div class="col-lg-6 fix" style="">
-                                <div>
-                                    <br>
-                                    <h4>PROCES VERBAL D’OUVERTURE, ANALYSE ET <br>ATTRIBUTION DE MARCHE</h4>
-                                    <p class="">N<sup>o</sup> : <b>@if ($pvs)
-                                        {{$pvs->reference}}
-                                    @endif</b></p>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-3 fix" style="text-align: center">
-                            </div>
-
-                            <div class="col-lg-3 fix" style="text-align: center">
-                                <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
+                    <div class="row bheader">
+                        <div class="col-lg-6 fix" style="">
+                            <div>
+                                <br>
+                                <h4>PROCES VERBAL D’OUVERTURE, ANALYSE ET <br>ATTRIBUTION DE MARCHE</h4>
+                                <p class="">N<sup>o</sup> : <b>@if ($pvs)
+                                    {{$pvs->reference}}
+                                @endif</b></p>
                             </div>
                         </div>
-                        
+
+                        <div class="col-lg-3 fix" style="text-align: center">
+                        </div>
+
+                        <div class="col-lg-3 fix" style="text-align: center">
+                            <img src="{{ asset('img/logo/logo1.png')}}" class="droite" style="width: 200px;position: relative;text-align: center" />
+                        </div>
                     </div>
                     <hr class="mbtm">
 
@@ -225,7 +220,7 @@
 
 
 
-                    <footer >
+                    <footer class="bfooter">
                         <hr>
                         <p>
                             <strong>Fondation Panzi</strong><br>
