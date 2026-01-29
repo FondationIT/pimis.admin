@@ -34,6 +34,8 @@ Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr']
 Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
 Route::get('/fp/user/business-card/{id}', [AccessCardManagement::class, 'BusinessCardDisplay'])->name('business_card.show');
 
+Route::post('/tdr-other-agents', [App\Http\Controllers\EtatBesoinController::class, 'tdrOtherAgents'])->name('tdrOtherAgents');
+
 Route::get('/notifications', function (NotificationService $notify) {
     try {
         return response()->json(

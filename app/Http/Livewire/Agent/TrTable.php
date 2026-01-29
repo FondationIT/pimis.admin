@@ -64,14 +64,25 @@ class TrTable extends LivewireDatatable
         DB::beginTransaction();
         try {
             $this->modelId = $modelId;
-            Tr::find($this->modelId)->update([
-                'niv3' => 1,
-            ]);
+            $niv = Auth::user()->role == 'D.P' ? 3 : 4;
+
+            logger()->info('Niv apprTr3 : '.$niv.' ----- '.Auth::user()->id);
+
+            if (Auth::user()->role == 'D.O') {
+                Tr::find($this->modelId)->update([
+                    'niv4' => 1,
+                ]);
+            }else{
+                Tr::find($this->modelId)->update([
+                    'niv3' => 1,
+                ]);
+            }
+            
             ValidTr::create([
                 'user' => Auth::user()->id,
                 'tr' => $this->modelId,
                 'resp' => true,
-                'niv' => 3,
+                'niv' => $niv,
                 'motif' => 'Tout es prevu',
             ]);
 
@@ -123,7 +134,7 @@ class TrTable extends LivewireDatatable
             ->orderBy("id", "DESC");
             return $trs;
 
-        }if (Auth::user()->role == 'D.P') {
+        }if (in_array(Auth::user()->role, ['D.P','D.O'])) {
 
             $trs = Tr::query()
             ->where('niv1', true)
@@ -173,7 +184,7 @@ class TrTable extends LivewireDatatable
 
     public function columns()
     {
-        if (Auth::user()->role == 'D.P' ) {
+        if (in_array(Auth::user()->role, ['D.P','D.O'])) {
 
 
             return [
@@ -194,9 +205,9 @@ class TrTable extends LivewireDatatable
                     return '$ '.$some;
                 })->label('Montant'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
                     }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
@@ -206,12 +217,11 @@ class TrTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2','niv3'], function ($id,$active,$niv1,$niv2,$niv3) {
+                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if($active == true){
 
-                        if($niv1 == true && $niv2 == true && $niv3 == true){
-
+                        if($niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true){
                             return '';
                             
                         }else{
@@ -248,7 +258,7 @@ class TrTable extends LivewireDatatable
                     return '$ '.$some;
                 })->label('Montant'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -260,7 +270,7 @@ class TrTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2','niv3'], function ($id,$active,$niv1,$niv2,$niv3) {
+                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
 
@@ -312,9 +322,9 @@ class TrTable extends LivewireDatatable
                     return '$ '.$some;
                 })->label('Montant'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
                     }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
@@ -390,9 +400,9 @@ class TrTable extends LivewireDatatable
                     return '$ '.$some;
                 })->label('Montant'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
+                    if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
                     }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
@@ -402,7 +412,7 @@ class TrTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2','niv3'], function ($id,$active,$niv1,$niv2,$niv3) {
+                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if($active == true){
 
@@ -441,7 +451,7 @@ class TrTable extends LivewireDatatable
                 Column::name('titre')
                     ->label('Titre'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
@@ -453,7 +463,7 @@ class TrTable extends LivewireDatatable
                         return $delete ;
                 })->unsortable()->label('Etat'),
 
-                Column::callback(['id','active','niv1','niv2','niv3'], function ($id,$active,$niv1,$niv2,$niv3) {
+                Column::callback(['id','active','niv1','niv2','niv3','niv4'], function ($id,$active,$niv1,$niv2,$niv3,$niv4) {
 
                     if (Mission::where("tr", $id)->exists()){
 
@@ -486,7 +496,7 @@ class TrTable extends LivewireDatatable
                     return '$ '.$some;
                 })->label('Montant'),
 
-                Column::callback(['active','niv1','niv2','niv3'], function ($active,$niv1,$niv2,$niv3) {
+                Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
 
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';

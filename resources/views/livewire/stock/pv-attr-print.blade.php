@@ -180,38 +180,54 @@
 
                         <div class="col-lg-12" style="text-align: center">
                             <table class="table table-striped table-border mb-0 pv-table">
-                                @php
-                                    $signature = null;
-                                @endphp
-                                <tr>
-                                    @foreach ($commission_members as $member)
-                                        <td class="fw-bold text-uppercase">{{ $member->name }}</td>
-                                    @endforeach
-                                </tr>
-                                <tr>
-                                    @foreach ($commission_members_validation as $key => $validation)
-                                        @php
-                                            if($key == 'niv_1'){
-                                                $signature=App\Models\User::where('role','D.O')->where('active',1)->value('signature');
-                                            }
-                                            if($key == 'niv_2'){
-                                                $signature=App\Models\User::where('role','D.A.F')->where('active',1)->value('signature');
-                                            }
-                                            if($key == 'niv_3'){
-                                                $signature=App\Models\User::where('role','D.P')->where('active',1)->value('signature');
-                                            }
-                                        @endphp
-                                        <td>
-                                            @if(is_string($validation))
-                                                <span class="secondary" style="font-size: small;">En attente</span>
-                                            @elseif(!is_string($validation) && $validation === true)
-                                                <img class="signn1" src="{{ asset('storage/'.$signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
-                                            @else
-                                                <span class="text-danger" style="font-size: small;">Rejeté</span>
-                                            @endif
-                                        </td>
-                                    @endforeach
-                                </tr>
+                                @if($pvs->created_at->year >= 2026)
+                                    @php
+                                        $signature = null;
+                                    @endphp
+                                    <tr>
+                                        @foreach ($commission_members as $member)
+                                            <td class="fw-bold text-uppercase">{{ $member->name }}</td>
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        @foreach ($commission_members_validation as $key => $validation)
+                                            @php
+                                                if($key == 'niv_1'){
+                                                    $signature=App\Models\User::where('role','D.O')->where('active',1)->value('signature');
+                                                }
+                                                if($key == 'niv_2'){
+                                                    $signature=App\Models\User::where('role','D.A.F')->where('active',1)->value('signature');
+                                                }
+                                                if($key == 'niv_3'){
+                                                    $signature=App\Models\User::where('role','D.P')->where('active',1)->value('signature');
+                                                }
+                                            @endphp
+                                            <td>
+                                                @if(is_string($validation))
+                                                    <span class="secondary" style="font-size: small;">En attente</span>
+                                                @elseif(!is_string($validation) && $validation === true)
+                                                    <img class="signn1" src="{{ asset('storage/'.$signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+                                                @else
+                                                    <span class="text-danger" style="font-size: small;">Rejeté</span>
+                                                @endif
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @else
+                                    <tr>
+                                        @foreach ($agent as $ag)
+                                            <div class="col-lg-12">
+                                                <ol>
+                                                    <li>
+                                                        {{ App\Models\User::firstWhere('agent', $ag->agent)->name}}
+                                                        
+                                                        <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;margin-top:-10px;text-align:left" />
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        @endforeach
+                                    </tr>
+                                @endif
                             </table>
                         </div>
 

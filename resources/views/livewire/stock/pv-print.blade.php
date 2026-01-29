@@ -258,23 +258,48 @@
                                 <div class="col-lg-12" style="text-align: center">
                                     <table class="table table-striped table-border mb-0 pv-table">
                                         <tr>
-                                            @if (!empty($commissionMembers) && count($commissionMembers) > 0)
-                                                @foreach ($commissionMembers as $ag)
-                                                    <td>
-                                                            <p class="center" >{{ $ag->name}}<br>
-                                                            @if(strtolower($ag->is_approved) == 'approved')
-                                                                <img class="signn1" src="{{ asset('storage/'.$ag->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
-                                                            @elseif(strtolower($ag->is_approved) == 'rejected')
-                                                                <span class="text-danger">Rejeté</span>
-                                                            @else
-                                                                <span class="badge badge-warning">En attente</span>
-                                                            @endif
-                                                            </p>
+                                            @if($pvs[0]->created_at->year >= 2026)
+                                                @if (!empty($commissionMembers) && count($commissionMembers) > 0)
+                                                    @foreach ($commissionMembers as $ag)
+                                                        <td>
+                                                                <p class="center" >{{ $ag->name}}<br>
+                                                                @if(strtolower($ag->is_approved) == 'approved')
+                                                                    <img class="signn1" src="{{ asset('storage/'.$ag->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+                                                                @elseif(strtolower($ag->is_approved) == 'rejected')
+                                                                    <span class="text-danger">Rejeté</span>
+                                                                @else
+                                                                    <span class="badge badge-warning">En attente</span>
+                                                                @endif
+                                                                </p>
 
-                                                    </td>
-                                                @endforeach
+                                                        </td>
+                                                    @endforeach
+                                                @else
+                                                    <td>Aucun membre de la commission n'a été assigné.</td>
+                                                @endif
                                             @else
-                                                <td>Aucun membre de la commission n'a été assigné.</td>
+                                                @if($pvs[0]->type == 1)
+                                                    <td>
+                        
+                                                        <p class="center" >{{ App\Models\User::firstWhere('id', Auth::user()->id)->name}}<br>
+                                                        @if($ag->active == true)
+                                                            <img class="signn1" src="{{ asset('storage/'.Auth::user()->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+                                                        @endif
+                                                        </p>
+                                                    </td>
+                                                @else
+                                                    @foreach ($agent as $ag)
+                                                        <td>
+                    
+                                                                <p class="center" >{{ App\Models\User::firstWhere('agent', $ag->agent)->name}}<br>
+                                                                @if($ag->active == true)
+                                                                    <img class="signn1" src="{{ asset('storage/'.App\Models\User::firstWhere('agent', $ag->agent)->signature)}}" style="position: relative;width:200px;text-align: center;margin:auto;margin-top: -20px;" />
+                                                                @endif
+                                                                </p>
+                    
+                                                        </td>
+                                                    @endforeach
+                                                @endif
                                             @endif
                                         </tr>
                                     </table>

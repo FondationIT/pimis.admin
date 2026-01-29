@@ -31,16 +31,48 @@ class HomeController extends Controller
         return view('home');
     }
 
+    public function tdrOtherAgents(Request $request)
+    {
+        // Logic to fetch other TDR agents
+        $otherAgents = [
+            ['id' => 1, 'name' => 'Agent One'],
+            ['id' => 2, 'name' => 'Agent Two'],
+            // Add more agents as needed
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'TDR Other Agents fetched successfully',
+            'service' => [],
+            'data' => $otherAgents,
+        ]);
+    }
+
+    public function tdrNewAgents(Request $request)
+    {
+        // Logic to fetch other TDR agents
+        $otherAgents = [
+            ['id' => 1, 'name' => 'Agent One'],
+            ['id' => 2, 'name' => 'Agent Two'],
+            // Add more agents as needed
+        ];
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $otherAgents,
+        ]);
+    }
+
     public function users(Request $data)
     {
-        DB::beginTransaction();
-        //DB::rollback();
+        // DB::beginTransaction();
+        // //DB::rollback();
 
-        //$data = json_decode($data->getBody());
-        $ref = 'ND-'.rand(10000,99999).'-FP'.rand(100,999);
+        // //$data = json_decode($data->getBody());
+        // $ref = 'ND-'.rand(10000,99999).'-FP'.rand(100,999);
         
 
-        DB::commit();
+        // DB::commit();
 
         return true;
 

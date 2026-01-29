@@ -73,6 +73,30 @@
                         <div class="form-row">
                             <div class="col-md-6 mb-10">
                                 <label>Equipe</label>
+
+                                <div class="team-selector">
+                                    <div class="selected-users" id="selectedUsers"></div>
+
+                                    <div class="team-dropdown" id="team_dropdown">
+                                        <input type="text" class="form-control" id="equipe"
+                                            name="equipe"
+                                            placeholder="Search by name or ID...">
+
+                                        <ul id="userList"></ul>
+
+                                        <!-- Manual input -->
+                                        <div id="manualBox" style="display:none; margin-top:8px;">
+                                            <input type="text"
+                                                class="form-control"
+                                                id="manualNames"
+                                                placeholder="Enter names separated by commas">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- <div class="col-md-6 mb-10">
+                                <label>Equipe</label>
                                 <div class="team-selector">
                                     <div class="selected-users" id="selectedUsers"></div>
                                     <div class="team-dropdown" id="team_dropdown">
@@ -80,7 +104,7 @@
                                         <ul id="userList"></ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6 mb-10">
                                 <label for="dure">Durée</label>
                                 <textarea class="form-control actAct" id="dure" name="dure"></textarea>

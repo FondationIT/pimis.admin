@@ -178,12 +178,6 @@ class EtatBesoinController extends Controller
     }
 
     public function pv(Request $data){
-        if ( !$data['agPv'] || !is_array($data['agPv']) || count($data['agPv'] ) < 3) {
-            throw ValidationException::withMessages([
-                'agPv' => 'Au moins 3 membres de la commission doivent être sélectionnés.'
-            ]);
-        }
-
         $prixPv = collect($data['prixPv'])->map(fn ($prix) => empty($prix) ? 0 : (float) $prix);
             
         if ($prixPv->every(fn ($prix) => $prix == 0)) {
@@ -254,6 +248,11 @@ class EtatBesoinController extends Controller
             return true;
 
         }else{
+            if ( !$data['agPv'] || !is_array($data['agPv']) || count($data['agPv'] ) < 3) {
+                throw ValidationException::withMessages([
+                    'agPv' => 'Au moins 3 membres de la commission doivent être sélectionnés.'
+                ]);
+            }
             
             DB::beginTransaction();
             $this->dat = date('Y-m-d');
