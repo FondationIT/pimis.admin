@@ -82,7 +82,26 @@
                                             name="equipe"
                                             placeholder="Search by name or ID...">
 
-                                        <ul id="userList"></ul>
+                                        <ul id="userList">
+                                            @if(isset($equipe) && $equipe->count() > 0)
+                                                @foreach ($equipe as $agent)
+                                                    <li class='tdr_team_user' data-id="{{ $agent['id'] }}" data-type="{{ $agent['lastname'] }}">
+                                                        @if($agent['type'] == 'external')
+                                                            <strong>
+                                                                {{ $agent['firstname'] }} {{ $agent['lastname'] }}
+                                                                @if (isset($agent['position']))
+                                                                    - {{ $agent['position'] }}
+                                                                @endif
+                                                            </strong>
+                                                        @else
+                                                            {{ $agent['firstname'] }} {{ $agent['lastname'] }}
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            @else
+                                                <li>No agents found.</li>
+                                            @endif
+                                        </ul>
 
                                         <!-- Manual input -->
                                         <div id="manualBox" style="display:none; margin-top:8px;">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Rh;
 use App\Models\Agent;
+use App\Models\TdrExternalAgent;
 use App\Models\Service;
 use App\Models\StatutAgent;
 use App\Models\User;
@@ -16,6 +17,8 @@ class AgentForm extends Component
 {
     public $state = [];
     public $modelId = null;
+    public bool $isExternal = false;
+
     protected $listeners = [
         'agentForm',
         'editAgent',
@@ -58,7 +61,7 @@ class AgentForm extends Component
 
     public function submit()
     {
-
+        logger()->info('Submitting agent form', ['state' => $this->state, 'modelId' => $this->modelId, 'isExternal' => $this->isExternal]);
 
         if ($this->modelId != null) {
 
@@ -131,75 +134,107 @@ class AgentForm extends Component
             }
 
         }else{
+            if(!$this->isExternal){
+                $validator = Validator::make($this->state, [
+                    'name' => ['required', 'string', 'max:255'],
+                    'name2' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'string', 'email', 'max:255', 'unique:agents'],
+                    'phone' => ['required', 'string', 'max:255', 'unique:agents'],
+                    'lieuN' => ['required', 'string', 'max:255'],
+                    'dateN' => ['required', 'date', 'max:255'],
+                    'genre' => ['required', 'string', 'max:255'],
+                    'service' => ['required', 'string', 'max:255'],
+                    'fonction' => ['required', 'string', 'max:255'],
+                    'etatcivil' => ['required', 'string', 'max:255'],
+                    'enfant' => ['required', 'string', 'max:255'],
 
-            $validator = Validator::make($this->state, [
-                'name' => ['required', 'string', 'max:255'],
-                'name2' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:agents'],
-                'phone' => ['required', 'string', 'max:255', 'unique:agents'],
-                'lieuN' => ['required', 'string', 'max:255'],
-                'dateN' => ['required', 'date', 'max:255'],
-                'genre' => ['required', 'string', 'max:255'],
-                'service' => ['required', 'string', 'max:255'],
-                'fonction' => ['required', 'string', 'max:255'],
-                'etatcivil' => ['required', 'string', 'max:255'],
-                'enfant' => ['required', 'string', 'max:255'],
+                    'sociale' => ['required'],
+                    'bus' => ['required'],
 
-                'sociale' => ['required'],
-                'bus' => ['required'],
+                    'nom2' => ['required', 'string', 'max:255'],
+                    'phone2' => ['required', 'string', 'max:255'],
+                ])->validate();
 
-                'nom2' => ['required', 'string', 'max:255'],
-                'phone2' => ['required', 'string', 'max:255'],
-            ])->validate();
+                DB::beginTransaction();
+                try {
 
-            DB::beginTransaction();
-            try {
+                    $matricule = 'FP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
+                    
+                    Agent::create([
+                        'firstname' => $this->state['name'],
+                        'lastname' => $this->state['name2'],
+                        'middlename' => $this->state['name3'],
+                        'matricule' => $matricule,
+                        'gender' => $this->state['genre'],
+                        'email' => $this->state['email'],
+                        'phone' => $this->state['phone'],
+                        'lieu' => $this->state['lieuN'],
+                        'service' => $this->state['service'],
+                        'fonction' => $this->state['fonction'],
+                        'birthdate' => $this->state['dateN'],
+                        'adress' => $this->state['adresse'],
+                        'country' => $this->state['pays'],
+                        'region' => $this->state['region'],
+                        'description' => $this->state['description'],
+                        'nom2' => $this->state['nom2'],
+                        'contact' => $this->state['phone2'],
+                        'signature' => Auth::user()->id,
+                    ]);
 
-                $matricule = 'FP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
-                
-                Agent::create([
-                    'firstname' => $this->state['name'],
-                    'lastname' => $this->state['name2'],
-                    'middlename' => $this->state['name3'],
-                    'matricule' => $matricule,
-                    'gender' => $this->state['genre'],
-                    'email' => $this->state['email'],
-                    'phone' => $this->state['phone'],
-                    'lieu' => $this->state['lieuN'],
-                    'service' => $this->state['service'],
-                    'fonction' => $this->state['fonction'],
-                    'birthdate' => $this->state['dateN'],
-                    'adress' => $this->state['adresse'],
-                    'country' => $this->state['pays'],
-                    'region' => $this->state['region'],
-                    'description' => $this->state['description'],
-                    'nom2' => $this->state['nom2'],
-                    'contact' => $this->state['phone2'],
-                    'signature' => Auth::user()->id,
-                ]);
+                    $agent = Agent::where("matricule", $matricule)->get();
+                    $ref = 'STFP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
 
-                $agent = Agent::where("matricule", $matricule)->get();
-                $ref = 'STFP-'.substr($this->state['name'], 0, 1).''.rand(1000,9999).''.substr($this->state['name2'], 0, 1);
+                    StatutAgent::create([
+                        'reference' => $ref,
+                        'agent' =>$agent[0]->id,
+                        'enfant' => $this->state['enfant'],
+                        'bus' => $this->state['bus'],
+                        'sociale' => $this->state['sociale'],
+                        'etatcivil' => $this->state['etatcivil'],
+                        'signature' => Auth::user()->id,
+                    ]);
 
-                StatutAgent::create([
-                    'reference' => $ref,
-                    'agent' =>$agent[0]->id,
-                    'enfant' => $this->state['enfant'],
-                    'bus' => $this->state['bus'],
-                    'sociale' => $this->state['sociale'],
-                    'etatcivil' => $this->state['etatcivil'],
-                    'signature' => Auth::user()->id,
-                ]);
+                    
+                    DB::commit();
+                    $this->reset('state');
+                    $this->dispatchBrowserEvent('formSuccess');
+                    $this->emit('agentUpdated');
+                } catch (\Throwable $th) {
+                    DB::rollBack();
+                }
+            }else{
+                $validator = Validator::make($this->state, [
+                    'firstname' => ['required', 'string', 'max:255'],
+                    'lastname' => ['required', 'string', 'max:255'],
+                    'position' => ['required', 'string', 'max:255'],
+                    'organization' => ['required', 'string', 'max:255'],
+                    'contact' => ['required', 'string', 'max:255']
+                ])->validate();
 
-                
-                DB::commit();
-                $this->reset('state');
-                $this->dispatchBrowserEvent('formSuccess');
-                $this->emit('agentUpdated');
+                $ref = 'AGEXT-'.substr($this->state['firstname'], 0, 1).''.rand(1000,9999).''.substr($this->state['lastname'], 0, 1);
 
-            } catch (\Throwable $th) {
-                DB::rollBack();
+                DB::beginTransaction();
+                try {
+                    TdrExternalAgent::create([
+                        'reference' => $ref,
+                        'firstname' => $this->state['firstname'],
+                        'lastname' => $this->state['lastname'],
+                        'position' => $this->state['position'],
+                        'organization' => $this->state['organization'],
+                        'contact' => $this->state['contact']
+                    ]);
+                    
+                    DB::commit();
+                    $this->reset('state');
+                    $this->dispatchBrowserEvent('formSuccess');
+                    $this->emit('agentEterneUpdated');
+                } catch (\Throwable $th) {
+                    logger()->error('Error creating external agent', ['error' => $th->getMessage()]);
+                    DB::rollBack();
+                }
             }
+                
+            
         }
 
     }
