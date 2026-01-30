@@ -86,7 +86,7 @@
                                             @if(isset($equipe) && $equipe->count() > 0)
                                                 @foreach ($equipe as $agent)
                                                     <li class='tdr_team_user' data-id="{{ $agent['id'] }}" data-type="{{ $agent['lastname'] }}">
-                                                        @if($agent['type'] == 'external')
+                                                        @if(isset($agent['position']))
                                                             <strong>
                                                                 {{ $agent['firstname'] }} {{ $agent['lastname'] }}
                                                                 @if (isset($agent['position']))
