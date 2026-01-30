@@ -13,25 +13,45 @@
 
         <!-- Content Wrapper. Contains page content -->
          <div class="container">
+            
 
            <!-- Title -->
                <div class="hk-pg-header align-items-top">
-                 <div>
-                   <h3 class="hk-pg-title font-weight-600 mb-10">Agents</h3>
-                 </div>
-                 @if (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup')
-                  <div class="d-flex">
-                    <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('agentForm')" data-target="#nAgentModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
-                  </div>
-                  @endif
+                    <div>
+                    <h3 class="hk-pg-title font-weight-600 mb-10">Agents</h3>
+                    </div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#ag_interne">Interne</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#ag_externe">Externe</a>
+                        </li>
+                    </ul>
+                    @if (Auth::user()->role == 'ADMIN' || Auth::user()->role == 'R.H' || Auth::user()->role == 'Sup')
+                        <div class="d-flex">
+                            <button class="btn btn-sm btn-outline-light btn-wth-icon icon-wthot-bg mr-15 mb-15" data-toggle="modal" wire:click="$emit('agentForm')" data-target="#nAgentModalForms"><span class="icon-label"><i class="fa fa-plus"></i> </span><span class="btn-text">Ajouter</span></button>
+                        </div>
+                    @endif
                </div>
            <!-- /Title -->
 
            <!-- Main content -->
            <!-- Row -->
-                <livewire:rh.agents-table
-                exportable
-                />
+
+               <!-- Tab panes -->
+                <div class="tab-content">
+                    <div id="ag_interne" class="container tab-pane active"><br>
+                        <h5>Agents de la Fondation</h5>
+                        <livewire:rh.agents-table exportable />
+                    </div>
+                    <div id="ag_externe" class="container tab-pane fade"><br>
+                        <h5>Agents Partenaires</h5>
+                        <livewire:rh.agent-externe exportable />
+                    </div>
+                </div>
 
 
            </div>

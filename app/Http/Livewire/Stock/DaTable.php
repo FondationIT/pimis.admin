@@ -453,6 +453,7 @@ class DaTable extends LivewireDatatable
                         $is_pvAttr_exist = $pvAttr_instance->exists();
                         $is_pv_exist = $pv_instance->exists();
                         $is_bc_exist = Bc::where("da", $id)->exists();
+                        $is_direct_purchase = $is_pv_exist ? ($pv_instance->first()->type == 1 ? true : false) : false;
 
                         if($is_pvAttr_exist){
                             $pvAttr_commission_all_consent_signed_instances = PvAttrCommissionersConcents::where('pv_attr', $pvAttr_instance->first()->id)->whereIn('is_approved', ['approved','rejected']);
@@ -491,23 +492,29 @@ class DaTable extends LivewireDatatable
                         }
 
                         if ($is_pv_exist) {
-                            // Have all members signed
-                            if($pv_commission_all_approved_consent_signed_count == $pv_instance->first()->commission_count){
-                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
-                            }elseif($pv_commission_all_rejected_consent_signed_count > 0){
-                                $dsa = '<span class="badge badge-danger p-1 text-teal-600 hover:bg-teal-600 rounded">Rejeté par la Commission</span>';
-                            }else{
-                                $dsa = '<span class="badge badge-warning p-1 text-teal-600 hover:bg-teal-600 rounded">En attente de la Commission</span>';
+                            if(!$is_direct_purchase){
+                                // Have all members signed
+                                if($pv_commission_all_approved_consent_signed_count == $pv_instance->first()->commission_count){
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded" onClick="allFournPlus('.$id.')" wire:click="formPVAttr('.$id.')" data-toggle="modal" data-target="#pvAttrModalForms"><span class="badge badge-info">Attribution</span></a><input type="text"  id="allFournPlus'.$id.'" value=\'{"bad":'.$bb.'}\' class="form-control" hidden>';
+                                }elseif($pv_commission_all_rejected_consent_signed_count > 0){
+                                    $dsa = '<span class="badge badge-danger p-1 text-teal-600 hover:bg-teal-600 rounded">Rejeté par la Commission</span>';
+                                }else{
+                                    $dsa = '<span class="badge badge-warning p-1 text-teal-600 hover:bg-teal-600 rounded">En attente de la Commission</span>';
+                                }
                             }
                         }
 
                         if ($is_pvAttr_exist) {
-                            if(!$pvAttr_commission_all_consent_signed_instances->first()){
-                                $dsa = '<span class="badge badge-info p-1 text-teal-600 hover:bg-teal-600 rounded">En Attente</span>';
-                            }elseif($pvAttr_commission_all_consent_signed_count > 2){
-                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
+                            if(!$is_direct_purchase){
+                                if(!$pvAttr_commission_all_consent_signed_instances->first()){
+                                    $dsa = '<span class="badge badge-info p-1 text-teal-600 hover:bg-teal-600 rounded">En Attente</span>';
+                                }elseif($pvAttr_commission_all_consent_signed_count > 2){
+                                    $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
+                                }else{
+                                    $dsa = '<span class="badge badge-success p-1 text-teal-600 hover:bg-teal-600 rounded">En Deliberation</span>';
+                                }
                             }else{
-                                $dsa = '<span class="badge badge-success p-1 text-teal-600 hover:bg-teal-600 rounded">En Deliberation</span>';
+                                $dsa = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600 rounded"  wire:click="editBC('.$id.')" data-toggle="modal" data-target="#bcEditModalForms"><span class="badge badge-info">Editer BC</span></a>';
                             }
                         }
 

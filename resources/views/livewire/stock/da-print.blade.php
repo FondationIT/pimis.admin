@@ -36,8 +36,19 @@
                         <div class="row" >
                             @if ($ebs)
                                 <div class="col-lg-6" style="text-align: left">
-                                    <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
-                                    <p>Motif : <strong>{{$das[0]->motif}}</strong></p>
+                                    <p class="mb-3">
+                                        <span class="d-block text-muted">Projet:</span>
+                                        <strong class="d-block text-wrap" style="max-width: 600px;">
+                                            {{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name }}
+                                        </strong>
+                                    </p>
+
+                                    <p class="mb-3">
+                                        <span class="d-block text-muted">Motif:</span>
+                                        <strong class="d-block text-wrap" style="max-width: 600px;">
+                                            {{ $das[0]->motif }}
+                                        </strong>
+                                    </p>
                                 
                                 </div>
                                 <div class="col-lg-6 droite" style="text-align: right">

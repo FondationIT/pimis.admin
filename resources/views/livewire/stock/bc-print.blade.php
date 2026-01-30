@@ -36,7 +36,7 @@
                         @if ($das)
                             <div class="col-lg-6" style="text-align: left">
                                 <p>Fournisseur : <strong>{{ App\Models\Fournisseur::firstWhere('id', $prof[0]->fournisseur)->name}}</strong></p>
-                                <p>Projet : <strong>{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
+                                <p>Projet : <strong class="text-wrap" style="max-width: 600px;">{{ App\Models\Projet::firstWhere('id', $ebs[0]->projet)->name}}</strong></p>
                                 <p>Personne de contact : <strong>{{$bcs[0]->personne}}</strong></p>
                                 <p>Lieu de livraison : <strong>{{$bcs[0]->lieu}}</strong></p>
                                 <p>Delai de livraison : <strong>{{$bcs[0]->delai}}</strong></p>
