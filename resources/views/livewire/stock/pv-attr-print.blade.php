@@ -133,7 +133,7 @@
                                                 @foreach ($proforma as $prof)
                                                     @if($da)
                                                         <td style="text-align: center" colspan="2">
-                                                            <strong>$ {{ number_format($totalAmount[$prof->id],0,',','.'); }}</strong>
+                                                            <strong>$ {{ number_format($totalAmount[$prof->id],2,'.',' '); }}</strong>
                                                         </td>
                                                     @endif
                                                 @endforeach

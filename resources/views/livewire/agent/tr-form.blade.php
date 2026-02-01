@@ -88,13 +88,14 @@
                                                     <li class='tdr_team_user' data-id="{{ $agent['id'] }}" data-type="{{ $agent['lastname'] }}">
                                                         @if(isset($agent['position']))
                                                             <strong>
-                                                                {{ $agent['firstname'] }} {{ $agent['lastname'] }}
+                                                                {{ $agent['firstname'] }} {{ $agent['lastname'] }} {{ $agent['middlename'] }}
                                                                 @if (isset($agent['position']))
                                                                     - {{ $agent['position'] }}
                                                                 @endif
+                                                                ({{ $agent['organisation'] ?? 'Externe' }})
                                                             </strong>
                                                         @else
-                                                            {{ $agent['firstname'] }} {{ $agent['lastname'] }}
+                                                            {{ $agent['firstname'] }} {{ $agent['lastname'] }} {{ $agent['middlename'] }}
                                                         @endif
                                                     </li>
                                                 @endforeach

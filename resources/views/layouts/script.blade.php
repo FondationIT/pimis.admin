@@ -95,6 +95,12 @@
 
     <script src="{{  asset('vendors/worning-popup/worning-popup.js') }}"></script>
 
+    <script src="{{  asset('vendors/passwordUpdate/dist/script.js') }}"></script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+    <script src="{{  asset('vendors/qr_scan/dist/js/script.js') }}"></script>
+
 
 
 

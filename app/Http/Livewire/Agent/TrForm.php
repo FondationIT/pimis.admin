@@ -23,7 +23,7 @@ class TrForm extends Component
         //     ->where('active', 1)
         // )->orderBy("firstname", "DESC")->get();
         $internalAgents = Agent::where('active', 1)
-            ->orderBy('firstname', 'DESC')
+            ->orderBy('firstname', 'ASC')
             ->get()
             ->map(fn($a) => [
                 'id' => $a->id,
@@ -33,7 +33,7 @@ class TrForm extends Component
             ]);
 
         $externalAgents = TdrExternalAgent::where('active', 1)
-            ->orderBy('firstname', 'DESC')
+            ->orderBy('firstname', 'ASC')
             ->get()
             ->map(fn($a) => [
                 'id' => $a->id,
@@ -46,7 +46,7 @@ class TrForm extends Component
             ]);
 
         // Merge into a single array
-        $this->equipe = $internalAgents->merge($externalAgents)->sortByDesc('firstname')->values();
+        $this->equipe = $internalAgents->merge($externalAgents)->sortBy('firstname')->values();
     }
 
     public function render()
