@@ -19,6 +19,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/password-update', [App\Http\Controllers\HomeController::class, 'passwordUpdate'])->name('password.update');
 Route::post('/etBesReg', [App\Http\Controllers\EtatBesoinController::class, 'create'])->name('etBesReg');
 Route::post('/etBesApp', [App\Http\Controllers\EtatBesoinController::class, 'approuve'])->name('etBesApp');
 
@@ -33,6 +34,8 @@ Route::post('/msReg', [App\Http\Controllers\EtatBesoinController::class, 'miss']
 Route::post('/ctrReg', [App\Http\Controllers\EtatBesoinController::class, 'ctr'])->name('ctrReg');
 Route::post('/jpReg', [App\Http\Controllers\EtatBesoinController::class, 'jp'])->name('jpReg');
 Route::get('/fp/user/business-card/{id}', [AccessCardManagement::class, 'BusinessCardDisplay'])->name('business_card.show');
+Route::get('/agent-card-validation/{id}', [AccessCardManagement::class, 'SystemCardVerification'])->name('agent_card.scan');
+Route::get('/agent-card-bar-validation/{id}', [AccessCardManagement::class, 'SystemBarCardVerification'])->name('agent_bar_card.scan');
 
 Route::post('/tdr-other-agents', [App\Http\Controllers\EtatBesoinController::class, 'tdrOtherAgents'])->name('tdrOtherAgents');
 

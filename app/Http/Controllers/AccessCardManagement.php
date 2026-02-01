@@ -13,8 +13,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 
 use App\Models\Agent;
+use App\Models\AgentCardDetail;
 use App\Models\User;
 use App\Models\Affectation;
+use App\Models\AgentCardDailyScan;
 use App\Models\Service;
 use App\Models\Contrat;
 use App\Models\ApiKey;
@@ -88,7 +90,6 @@ class AccessCardManagement extends Controller
         $isApiKey_provided = $request->get("api_key_provided");
         $profilePath = '';
         $extensions = ['jpg', 'jpeg', 'png'];
-    
         $apiKey = null;
         
         if (!$id) {
@@ -98,7 +99,6 @@ class AccessCardManagement extends Controller
                 return response()->json(['status' => 'error', 'message' => 'Le numéro de carte est requis'], 400);
             }
         }
-        
         
 
         // 🧠 If no auth and key is not the admin system key → treat as external
@@ -113,6 +113,7 @@ class AccessCardManagement extends Controller
             }
         }
         $dt=[];
+
         
         foreach ($extensions as $ext) {
             $path = public_path("storage/img/employee_images/{$card_user->matricule}.{$ext}");
@@ -155,8 +156,7 @@ class AccessCardManagement extends Controller
             // return response()->json(['status' => 'success', 'message' => 'Redirect to ID Value:'.$hashedId], 200);
         }
         
-
-
+        logger()->info('QR Verification: '.$id);
 
 
         return response()->json([
@@ -165,6 +165,100 @@ class AccessCardManagement extends Controller
             'DT'=>$dt,
             'data' => $card_user
         ]);
+    }
+
+    public function SystemBarCardVerification(Request $request, $id)
+    {
+        if(strlen($id)<18){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Le code saisi est invalide. Merci de vérifier et de réessayer.',
+            ], 404);
+        }
+        try {
+            $card_user = AgentCardDetail::where('barcode',$id)->first();
+            if ($card_user) {
+                $authUser = Auth::user()->agent;
+                $agentInstance = Agent::where('matricule',$card_user->qr)->first();
+                if(!$agentInstance){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'User with such code not found',
+                    ], 404);
+                }
+                if($authUser != $agentInstance->id){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Nous vous remercions, '.strtoupper($agentInstance->firstname).', pour le scan de votre carte. Toutefois, seules les cartes des utilisateurs dûment authentifiés sont autorisées à continuer.',
+                    ], 404);
+                }
+                $cardScannedToday = AgentCardDailyScan::where('card', $card_user->id)
+                ->whereDate('created_at', now())
+                ->exists();
+                if(!$cardScannedToday){
+                    AgentCardDailyScan::create([
+                        'card' => $card_user->id,
+                        'scan_type' => 'barcode'
+                    ]);
+                }
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Nous vous souhaitons une belle journée de travail, restez bénis.',
+                ]);
+            }
+
+            // Optional: handle the "not found" case
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Carte introuvable.',
+            ], 404);
+        } catch (\Throwable $th) {
+            logger('Card Error: For user('.$id.')',[$th]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'System Error!'
+            ]);
+        }
+    }
+    public function SystemCardVerification(Request $request, $id)
+    {
+        try {
+            $agentInstance = Agent::where('matricule',$id)->first();
+            if($agentInstance){
+
+                $card_user = AgentCardDetail::where('qr',$id)->first();
+
+                $authUser = Auth::user()->agent;
+                if(!$agentInstance){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'User with such code not found',
+                    ], 404);
+                }
+                if($authUser != $agentInstance->id){
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => 'Nous vous remercions, '.$agentInstance->firstname.', pour le scan de votre carte. Toutefois, seules les cartes des utilisateurs dûment authentifiés sont autorisées à continuer.',
+                    ], 404);
+                }
+
+                AgentCardDailyScan::create([
+                    'card' => $card_user->id,
+                    'scan_type' => 'qrcode'
+                ]);
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Nous vous souhaitons une belle journée de travail, restez bénis.',
+                ]);
+            }
+        } catch (\Throwable $th) {
+            logger('Card Error: For user('.$id.')',[$th]);
+            return response()->json([
+                'status' => 'error',
+                'message' => 'System Error!'
+            ]);
+        }
+        
     }
 
 }
