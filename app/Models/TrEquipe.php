@@ -11,6 +11,7 @@ class TrEquipe extends Model
 
     protected $fillable = [
         'tr',
-        'agent'
+        'agent',
+        'agent_ex'
     ];
 }
