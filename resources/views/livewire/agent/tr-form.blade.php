@@ -75,7 +75,7 @@
                                 <label>Equipe</label>
 
                                 <div class="team-selector">
-                                    <div class="selected-users" id="selectedUsers"></div>
+                                    <div class="selected-users" id="selectedUsers" tabindex="0"></div>
 
                                     <div class="team-dropdown" id="team_dropdown">
                                         <input type="text" class="form-control" id="equipe"
@@ -85,7 +85,7 @@
                                         <ul id="userList">
                                             @if(isset($equipe) && $equipe->count() > 0)
                                                 @foreach ($equipe as $agent)
-                                                    <li class='tdr_team_user' data-id="{{ $agent['id'] }}" data-type="{{ $agent['lastname'] }}">
+                                                    <li class='tdr_team_user' data-agent-type="{{ isset($agent['position']) ? 'externe' : 'interne' }}" data-id="{{ $agent['id'] }}"  data-name="{{ $agent['firstname'] }} {{ $agent['lastname'] }} {{ $agent['middlename'] }}">
                                                         @if(isset($agent['position']))
                                                             <strong>
                                                                 {{ $agent['firstname'] }} {{ $agent['lastname'] }} {{ $agent['middlename'] }}

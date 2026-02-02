@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tr')->constrained('trs');
             $table->string('date');
-            $table->string('activite');
+            $table->json('activite');
             $table->string('observation')->nullable();
             $table->timestamps();
         });

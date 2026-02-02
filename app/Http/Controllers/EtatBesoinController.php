@@ -714,38 +714,76 @@ class EtatBesoinController extends Controller
 
     public function tr(Request $data)
     {
-        DB::beginTransaction();
-        $this->dat = date('Y-m-d');
-        //DB::rollback();
+        $detailsData = $data['details'];
+        try {
+            DB::beginTransaction();
+                $this->dat = date('Y-m-d');
+                //DB::rollback();
 
-        //$data = json_decode($data->getBody());
-        $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
-        Tr::create([
-            'reference' => $ref,
-            'agent' => $data['agent'],
-            'projet' => $data['projet'],
-            'type' => $data['type'],
-            'titre' => $data['titre'],
-        ]);
-        $tr = Tr::firstWhere('reference', $ref )->id;
-        for($count = 0; $count<count($data['product']); $count++)
-         {
-            $ref1 = 'TR-ODR-'.$ref.$count;
-            TrOder::create([
-                'reference' => $ref1,
-                'libelle' => $data['product'][$count],
-                'tr' => $tr,
-                'unite' => $data['unite'][$count],
-                'prix' => $data['prix'][$count],
-                'quantite' => $data['quantite'][$count],
-                'frequence' => $data['frequence'][$count],
-            ]);
+                //$data = json_decode($data->getBody());
+                $ref = 'TR-'.$this->dat.'-FP'.rand(100,999).$data['projet'].Auth::user()->id;
+                Tr::create([
+                    'reference' => $ref,
+                    'agent' => $data['agent'],
+                    'projet' => $data['projet'],
+                    'type' => $data['type'],
+                    'titre' => $data['titre'],
+                ]);
+                $tr = Tr::firstWhere('reference', $ref )->id;
+                
+                TrDetail::create([
+                    'tr' => $tr,
+                    'objectif' => $detailsData['objectif'],
+                    'resultat' => $detailsData['resultat'],
+                    'dure' => $detailsData['dure'],
+                ]);
 
-         }
+                for($count = 0; $count<count($data['product']); $count++)
+                {
+                    $ref1 = 'TR-ODR-'.$ref.$count;
+                    TrOder::create([
+                        'reference' => $ref1,
+                        'libelle' => $data['product'][$count],
+                        'tr' => $tr,
+                        'unite' => $data['unite'][$count],
+                        'prix' => $data['prix'][$count],
+                        'quantite' => $data['quantite'][$count],
+                        'frequence' => $data['frequence'][$count],
+                    ]);
 
-        DB::commit();
+                }
 
-        return true;
+                
+                foreach($detailsData['equipe'] as $tdr_agent){
+                    $agentId = $tdr_agent['type'] === 'interne' ? $tdr_agent['id'] : null;
+                    $extAgentId = $tdr_agent['type'] === 'externe' ? $tdr_agent['id'] : null;
+                    logger()->info('Test: '.$tdr_agent['id'].' , type: '.$tdr_agent['type'].' agt '.$extAgentId);
+                    TrEquipe::create([
+                        'tr' => $tr,
+                        'agent' => $agentId,
+                        'agent_ex' => $extAgentId,
+                    ]);
+                }
+                foreach ($detailsData['activites'] as $activity) {
+                    $activite = json_encode(array_values($activity['activite']));
+                    TrActivite::create([
+                        'tr' => $tr,
+                        'date' => $activity['jour'],
+                        'activite' => $activite,
+                        'observation' => $activity['observation']
+                    ]);
+                }
+
+            DB::commit();
+            return true;
+        } catch (\Throwable $th) {
+            logger()->info('TDR inseert Error: '.$th);
+            throw $th;
+            return false;
+        }
+        
+
+        
 
     }
 
