@@ -175,18 +175,18 @@
                                                                             ->first();
 
                                                                         if ($prixPvInstance) {
-                                                                            $prix = rtrim(rtrim($prixPvInstance->prix, '0'), '.') ?? 0;
+                                                                            $prix = rtrim(rtrim($prixPvInstance->prix, '0'), ' ') ?? 0;
                                                                             $prixTotal = $prix * $prod->quantite;
 
                                                                             $totalAmount[$prof->id] += $prixTotal;
                                                                 @endphp
 
                                                                             <td>
-                                                                                $ {{ number_format($prix,0,',','.'); }}
+                                                                                $ {{ number_format($prix,2,'.',' '); }}
                                                                             </td>
 
                                                                             <td>
-                                                                                <strong>$ {{ number_format($prixTotal,0,',','.'); }}</strong>
+                                                                                <strong>$ {{ number_format($prixTotal,2,'.',' '); }}</strong>
                                                                             </td>
 
                                                                 @php
@@ -216,7 +216,7 @@
                                                         @foreach ($proforma as $prof)
                                                             @if($da)
                                                                 <td style="text-align: center" colspan="2">
-                                                                    <strong>$ {{ number_format($totalAmount[$prof->id],0,',','.'); }}</strong>
+                                                                    <strong>$ {{ number_format($totalAmount[$prof->id],2,'.',' '); }}</strong>
                                                                 </td>
                                                             @endif
                                                         @endforeach

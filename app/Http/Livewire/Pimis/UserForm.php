@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pimis;
 use App\Models\User;
+use App\Models\PasswordUpdate;
 use App\Models\Agent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -103,7 +104,12 @@ class UserForm extends Component
                     'password' => Hash::make('password'),
                 ]);
 
+                $addedUser = User::findByReference($reference);
 
+                PasswordUpdate::create([
+                    'user' => $addedUser->id,
+                    'last_updated_at' => now(),
+                ]);
 
                 DB::commit();
                 $this->reset('state');

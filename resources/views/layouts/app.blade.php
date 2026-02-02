@@ -5,8 +5,6 @@
 
 
 <body>
-
-
   <!-- Preloader -->
 	<div class="preloader-it">
       <div class="loader-pendulums"></div>
@@ -29,7 +27,7 @@
     <!-- Main Content -->
     <div class="hk-pg-wrapper pb-0">
         <!-- Floating Warning Icon -->
-        <div id="warning-float" class="position-fixed bottom-0 end-0 m-4" style="z-index: 99999;">
+        <div id="warning-float" class="position-fixed bottom-0 end-0 m-4" style="z-index: 999;">
             <!-- Icon button -->
             <button id="warningBtn"
                 class="btn btn-warning rounded-circle shadow"

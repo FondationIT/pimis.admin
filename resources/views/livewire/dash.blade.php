@@ -1,3 +1,153 @@
+
+@if($needsCardVerification || ($isNewUser || $hasPasswordExpired))
+    <!-- Fullscreen Modal -->
+    <!-- BLOCKING MODAL -->
+
+    @if($needsCardVerification)
+        <div class="modal fade" id="qrAuthModal" tabindex="-1"
+            aria-hidden="true"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false">
+
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg">
+
+                    <!-- TITLE -->
+                    <div class="text-center py-3 border-bottom">
+                        <h4 class="fw-bold mb-0">
+                            Vérification de la carte d’agent
+                        </h4>
+                        <small class="text-muted">
+                            Authentification par QR code ou code sécurisé
+                        </small>
+                    </div>
+
+                    <div class="row g-0">
+
+                        <!-- LEFT IMAGE -->
+                        <div class="col-md-6 d-none d-md-block">
+                            <img src="{{ asset('img/mockups/cardmockup.png') }}"
+                                class="img-fluid h-100 w-100"
+                                style="object-fit: contain; padding:5px; "
+                                alt="Vérification carte agent">
+                        </div>
+
+                        <!-- RIGHT CONTENT -->
+                        <div class="col-md-6 p-4 d-flex flex-column">
+
+                            <!-- MODE SWITCH -->
+                            <div class="d-flex gap-2 mb-3">
+                                <button id="scanBtn" class="btn btn-primary me-2 active">
+                                    📷 Scanner QR
+                                </button>
+                                <button id="codeBtn" class="btn btn-outline-primary">
+                                    🔢 Entrer un code
+                                </button>
+                            </div>
+                            <div class="alert alert-danger alert-dismissible fade" role="alert" id="QrModalMessage"></div>
+
+                            <!-- QR SCAN -->
+                            <div id="scanSection" class="flex-grow-1 text-center">
+                                <video id="qrVideo" class="border rounded w-100 mb-3" autoplay></video>
+                                <div class="text-muted">
+                                    Aligner le QR code devant la caméra
+                                </div>
+                            </div>
+
+                            <!-- CODE INPUT -->
+                            <div id="codeSection" class="flex-grow-1 d-none">
+                                <label class="form-label fw-bold">
+                                    Code de vérification
+                                </label>
+                                <input type="text"
+                                    id="codeInput"
+                                    class="form-control form-control-lg mb-3"
+                                    placeholder="Entrer le code">
+
+                                <button id="submitCode"
+                                        class="btn btn-primary w-100 btn-lg">
+                                    Vérifier
+                                </button>
+                            </div>
+
+                            <!-- FOOTER MESSAGE -->
+                            <div class="mt-4 text-center small text-muted">
+                                Veuillez scanner le QR code avec votre caméra ou saisir le code fourni
+                                afin de continuer l’accès au système.
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Verify Authentificated user Password Update -->
+    @if(($isNewUser || $hasPasswordExpired))
+        <!-- Overlay (extra safety layer) -->
+        <div id="hard-lock-overlay"></div>
+
+        <!-- Password Update Modal -->
+        <div class="modal fade" id="forcePasswordModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content shadow-lg border-0">
+                
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">🔒 Mise à jour du mot de passe</h5>
+                </div>
+                {{-- <div class="modal-header bg-primary text-white d-flex align-items-center gap-2">
+                    <img
+                        src="{{ asset('img/icons/lock.png') }}"
+                        alt="Sécurité"
+                        width="32"
+                        height="32"
+                        class="flex-shrink-0"
+                    >
+
+                    <h5 class="modal-title mb-0">
+                        Mise à jour du mot de passe
+                    </h5>
+                </div> --}}
+
+                <div class="modal-body">
+                    <p class="text-muted mb-3">
+                        Afin de garantir la sécurité et la protection des données de <strong>la Fondation Panzi</strong>, 
+                        la création d’un nouveau mot de passe est obligatoire pour tous les nouveaux utilisateurs, 
+                        ainsi que tous les trimestres, avant de pouvoir accéder aux services.
+                    </p>
+
+                    <div class="alert alert-danger alert-dismissible fade" role="alert" id="ModalMessage"></div>
+
+                    <form id="passwordForm">
+                        <div class="mb-3">
+                            <label class="form-label">Nouveau mot de passe</label>
+                            <input type="password" class="form-control" id="password" required minlength="8" placeholder="Entrez votre nouveau mot de passe">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Confirmer le mot de passe</label>
+                            <input type="password" class="form-control" id="password_confirmation" required placeholder="Confirmez votre mot de passe">
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                Enregistrer et continuer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /Password Update Modal -->
+    @endif
+@endif
+
+
+
 <div>
     <section id="home_dash-section" class="section js-section u-category-media is-shown p-2">
         {{-- <!-- Breadcrumb -->
@@ -101,8 +251,16 @@
                                                 </div>
                                             </div>
                                             <div>
-                                                <span class="d-block display-5 text-dark mb-5">73</span>
-                                                <small class="d-block">100 Regular</small>
+                                                <span class="d-block display-5 text-dark mb-5">{{ $myprojetsCount > 0 ? $myprojetsCount : 'Non Affecté' }}</span>
+                                                @php
+                                                    $projetTeeminated = 0;
+                                                    foreach($myprojets as $objet){
+                                                        if(!$objet['is_active']){
+                                                            $projetTeeminated++;
+                                                        }
+                                                    }
+                                                @endphp
+                                                <small class="d-block">{{$projetTeeminated}} Terminé(s)</small>
                                             </div>
                                         </div>
                                     </div>
@@ -132,33 +290,62 @@
                                     <div class="loader-pendulums"></div>
                                 </div>
                                 <div class="card-header card-header-action">
-                                    <h6>user statistics</h6>
-                                    <div class="d-flex align-items-center card-action-wrap">
-                                        <a href="#" class="inline-block refresh mr-15">
-                                            <i class="ion ion-md-radio-button-off"></i>
-                                        </a>
-                                        <div class="inline-block dropdown">
-                                            <a class="dropdown-toggle no-caret" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="ion ion-md-more"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Separated link</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @if($is_not_adminUser)
+                                        <h6>Mes Projets</h6>
+                                    @else
+                                        <h6>Projets de la Fondation</h6>
+                                    @endif
                                 </div>
                                 <div class="card-body">
-                                    <div class="hk-legend-wrap mb-20">
+                                    {{-- <div class="hk-legend-wrap mb-20">
                                         <div class="hk-legend">
                                             <span class="d-10 bg-purple rounded-circle d-inline-block"></span><span>Desktop</span>
                                         </div>
                                         <div class="hk-legend">
                                             <span class="d-10 bg-grey-light-2 rounded-circle d-inline-block"></span><span>Mobile</span>
                                         </div>
+                                    </div> --}}
+                                    <div style="max-height:300px; overflow-y:auto;">
+                                        @if(!empty($myprojets))
+                                            <ul class="list-group">
+                                                @foreach($myprojets as $objet)
+                                                    <li
+                                                        class="list-group-item text-uppercase"
+                                                        style="cursor:pointer"
+                                                        wire:click="toggleProject('{{ $objet['project'] }}')"
+                                                    >
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <span  class="{{ $objet['is_active'] ? '' : 'text-decoration-line-through' }}">{{ $objet['project'] }}</span>
+
+                                                            <span class="badge bg-primary rounded-pill text-white">
+                                                                {{ count($objet['posts']) }}
+                                                            </span>
+                                                        </div>
+
+                                                        {{-- COLLAPSIBLE POSTS --}}
+                                                        @if($openProject === $objet['project'])
+                                                            <div class="mt-2">
+                                                                @forelse($objet['posts'] as $post)
+                                                                    <div class="border rounded p-2 mb-1 bg-light text-dark text-capitalize">
+                                                                        {{ $post['title'] }}
+                                                                    </div>
+                                                                @empty
+                                                                    <div class="text-muted small">
+                                                                        Aucun post pour ce projet.
+                                                                    </div>
+                                                                @endforelse
+                                                            </div>
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p class="text-center text-muted">Aucun projet affecté.</p>
+                                        @endif
                                     </div>
-                                    <div id="e_chart_4" style="height:300px;"></div>
+
+
+
                                 </div>
                             </div>
                             {{-- <div class="card">
