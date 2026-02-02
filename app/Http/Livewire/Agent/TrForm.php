@@ -18,10 +18,6 @@ class TrForm extends Component
 
     public function mount()
     {
-        // $this->equipe = Agent::where("active", "1")->union(
-        //     TdrExternalAgent::select('id', 'firstname', 'lastname','middlename')
-        //     ->where('active', 1)
-        // )->orderBy("firstname", "DESC")->get();
         $internalAgents = Agent::where('active', 1)
             ->orderBy('firstname', 'ASC')
             ->get()

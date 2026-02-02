@@ -666,418 +666,611 @@ $('#trActAdd').on('click', function(e){
 
 
 
-var trForm = document.getElementById('registerTR')
-trForm.onsubmit = function(e) {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+// var trForm = document.getElementById('registerTR')
+// trForm.onsubmit = function(e) {
+//     $.ajaxSetup({
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         }
+//     });
+//   e.preventDefault();
+//     var produit = [];
+//     var qte = [];
+//     var fqc = [];
+//     var unite = [];
+//     var prix = [];
+//     var agent = $('#agentTR').val()
+//     var projet = $('#projetTR').val()
+//     var type = $('#typeTR').val()
+//     var titre = $('#titreTR').val()
+//         // New Data
+//     var equipe = $('#equipe').val()
+//     var objectif = $('#obj_m').val()
+//     var resultat = $('#rslt_m').val()
+//     var dure = $('#dure').val()
+
+//     const activities_container = document.querySelectorAll('.activity_data');
+//     const allActivityData = [];
+
+//     for (const row of activities_container) {
+//         const from_date   = row.querySelector('[name="from-date"]'); // different input
+//         const to_date     = row.querySelector('[name="to-date"]');
+//         const activite    = row.querySelector('[name="actAct"]').value;
+//         const observation = row.querySelector('[name="obsAct"]').value;
+//         const jour = `De ${from_date.value} à ${to_date.value}`;
+
+//         let rowHasError = false;
+
+//         if (!from_date.value) {
+//             from_date.classList.add('error-val');
+//             rowHasError = true;
+//         }
+
+//         if (!to_date.value) {
+//             to_date.classList.add('error-val');
+//             rowHasError = true;
+//         }
+
+//         if (rowHasError) {
+//             $('#messageErrTR').html("Veuillez sélectionner à la fois la date de début et la date de fin.");
+//             $('#messageErrTR').addClass('error-val');
+//             return;
+//         }
+
+//         allActivityData.push({
+//             jour: jour,
+//             activite: activite,
+//             observation: observation
+//         });
+//     }
+
+//    const details = {
+//         "equipe": equipe,
+//         "objectif": objectif,
+//         "resultat": resultat,
+//         "dure": dure,
+//         "activites": allActivityData
+//    };
+
+
+
+
+
+//    $('.prodTR').each(function(){
+//     produit.push($(this).val());
+//    });
+//    $('.QteTR').each(function(){
+//     qte.push($(this).val());
+//    });
+//    $('.FqcTR').each(function(){
+//     fqc.push($(this).val());
+//    });
+//    $('.uniteTR').each(function(){
+//     unite.push($(this).val());
+//    });
+//    $('.prixTR').each(function(){
+//     prix.push($(this).val());
+//    });
+
+// //    const tstDt = {
+
+// //         "product": [
+
+// //             "Rafraichissement_Kaziba",
+
+// //             "Remboursement transport_Kaziba",
+
+// //             "Location salle_Kaziba",
+
+// //             "Facilitation_Kaziba",
+
+// //             "Rafraichissement_Mwenga",
+
+// //             "Remboursement transport_mwenga",
+
+// //             "Locataion salle_Mwenga",
+
+// //             "Facilitation_Mwenga",
+
+// //             "Rafraichissement_Nundu",
+
+// //             "Remboursement transport_Nundu",
+
+// //             "Location salle_Nundu",
+
+// //             "Facilitation_Nundu",
+
+// //             "Rafraichissement_Ibanda",
+
+// //             "Remboursement transport_Ibanda",
+
+// //             "Location salle_Ibanda",
+
+// //             "Facilitation _Ibanda",
+
+// //             "Rame Papier duplicateur A4",
+
+// //             "Flip chart (50 papiers)",
+
+// //             "Marqueurs",
+
+// //             "Stylo",
+
+// //             "Blocs note",
+
+// //             "Perdiem_Kaziba",
+
+// //             "Enveloppe sécuritaire"
+
+// //         ],
+
+// //         "quantite": [
+
+// //             "53",
+
+// //             "53",
+
+// //             "1",
+
+// //             "4",
+
+// //             "51",
+
+// //             "51",
+
+// //             "1",
+
+// //             "4",
+
+// //             "51",
+
+// //             "51",
+
+// //             "1",
+
+// //             "4",
+
+// //             "52",
+
+// //             "52",
+
+// //             "1",
+
+// //             "3",
+
+// //             "8",
+
+// //             "8",
+
+// //             "8",
+
+// //             "4",
+
+// //             "18",
+
+// //             "4",
+
+// //             "1"
+
+// //         ],
+
+// //         "frequence": [
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "3",
+
+// //             "1",
+
+// //             "1",
+
+// //             "1",
+
+// //             "1",
+
+// //             "1",
+
+// //             "3",
+
+// //             "1"
+
+// //         ],
+
+// //         "unite": [
+
+// //             "casse croute",
+
+// //             "courses",
+
+// //             "Pièce",
+
+// //             "Personnes",
+
+// //             "casse croute",
+
+// //             "COURSES",
+
+// //             "Pièce",
+
+// //             "Personnes",
+
+// //             "casse croute",
+
+// //             "COURSES",
+
+// //             "Pièce",
+
+// //             "Personnes",
+
+// //             "casse croute",
+
+// //             "COURSES",
+
+// //             "Pièce",
+
+// //             "Personnes",
+
+// //             "Rame",
+
+// //             "Rame",
+
+// //             "Boite",
+
+// //             "Boite",
+
+// //             "Douzaine",
+
+// //             "Nuités",
+
+// //             "Forfait"
+
+// //         ],
+
+// //         "prix": [
+
+// //             "5",
+
+// //             "5",
+
+// //             "50",
+
+// //             "50",
+
+// //             "5",
+
+// //             "5",
+
+// //             "50",
+
+// //             "50",
+
+// //             "5",
+
+// //             "5",
+
+// //             "50",
+
+// //             "50",
+
+// //             "5",
+
+// //             "5",
+
+// //             "100",
+
+// //             "50",
+
+// //             "6",
+
+// //             "8",
+
+// //             "2",
+
+// //             "7",
+
+// //             "6",
+
+// //             "50",
+
+// //             "503.70"
+
+// //         ],
+
+// //         "agent": "2398",
+
+// //         "projet": "35",
+
+// //         "type": "1",
+
+// //         "titre": "COACHING DES AGENTS DE SANTE COMMUNAUTAIRES INTERVENANT DANS LES SITES D'INTERVENTION DU PROJET TUMAINI (KAZIBA, IBANDA, NUNDU, MWENGA)"
+
+// //     }
+
+
+
+//    $.ajax({
+//     type: 'POST',
+//     contentType: 'application/json',
+//     url: "/trReg",
+//     dataType: 'json',
+
+//     // data: JSON.stringify(tstDt),
+//     data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details)),
+//     beforeSend: function() {
+//         $('#btnTR').hide();
+//         $('#prldTR').show();
+//     },
+//     success: function(data, textStatus, jqXHR){
+
+//             $('#prldTR').hide();
+//             $('#btnTR').show();
+//             $('.close').click()
+
+//             Livewire.emit('dipdated')
+//             Livewire.emit('trUpdated')
+
+//             $.toast().reset('all');
+//             $.toast({
+//                 text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
+//                 position: 'top-center',
+//                 loaderBg:'#7a5449',
+//                 class: 'jq-has-icon jq-toast-success',
+//                 hideAfter: 3500,
+//                 stack: 6,
+//                 showHideTransition: 'fade'
+//                 });
+
+
+//     },
+//     error: function(jqXHR, textStatus, errorThrown){
+//         $('#prldTR').hide();
+//         $('#btnTR').show();
+
+//         // jqXHR.responseJSON has your JSON error
+//         if (jqXHR.responseJSON) {
+//             $('#messageErrTR').html(jqXHR.responseJSON.message);
+//             console.error(jqXHR.responseJSON);
+//         } else {
+//             $('#messageErrTR').html('An unknown error occurred');
+//         }
+//     }
+// });
+
+//  }
+
+// //
+//  function trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details) {
+//    return {
+//      "product":produit,
+//      "quantite": qte,
+//      "frequence": fqc,
+//      "unite": unite,
+//      "prix": prix,
+//      "agent": agent,
+//      "projet": projet,
+//      "type": type,
+//      "titre": titre,
+//      "details":details
+//    };
+//  }
+
+const trForm = document.getElementById('registerTR');
+
+trForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    $('#messageErrTR').html('').removeClass('error-val');
+
+    // =========================
+    // BASIC DATA
+    // =========================
+    const payload = {
+        agent: $('#agentTR').val(),
+        projet: $('#projetTR').val(),
+        type: $('#typeTR').val(),
+        titre: $('#titreTR').val(),
+        product: [],
+        quantite: [],
+        frequence: [],
+        unite: [],
+        prix: [],
+        details: {
+            equipe: [],
+            objectif: $('#obj_m').val(),
+            resultat: $('#rslt_m').val(),
+            dure: $('#dure').val(),
+            activites: []
         }
+    };
+
+    // =========================
+    // VALIDATION (TOP LEVEL)
+    // =========================
+    if (!payload.projet || !payload.type || !payload.titre) {
+        showError("Veuillez remplir tous les champs obligatoires.");
+        return;
+    }
+
+    // =========================
+    // EQUIPE (SELECTED USERS)
+    // =========================
+    // if (!window.selectedUsers || selectedUsers.length === 0) {
+    //     showError("Veuillez sélectionner au moins un membre de l'équipe.");
+    //     return;
+    // }
+
+    // payload.details.equipe = selectedUsers.map(u => ({
+    //     id: u.id,
+    //     name: u.name
+    // }));
+    const equipe = [];
+
+    document
+    .querySelectorAll('#selectedUsers input[name="equipe[]"]')
+    .forEach(input => {
+        equipe.push({
+            id: input.value,
+            type: input.dataset.type
+        });
     });
-  e.preventDefault();
-    var produit = [];
-    var qte = [];
-    var fqc = [];
-    var unite = [];
-    var prix = [];
-    var agent = $('#agentTR').val()
-    var projet = $('#projetTR').val()
-    var type = $('#typeTR').val()
-    var titre = $('#titreTR').val()
-        // New Data
-    var equipe = $('#equipe').val()
-    var objectif = $('#obj_m').val()
-    var resultat = $('#rslt_m').val()
-    var dure = $('#dure').val()
 
-    const activities_container = document.querySelectorAll('.activity_data');
-    const allActivityData = [];
+    if (equipe.length === 0) {
+        $('#messageErrTR')
+            .html("Veuillez sélectionner au moins un membre de l'équipe.")
+            .addClass('error-val');
+        return;
+    }
 
-    for (const row of activities_container) {
-        const from_date   = row.querySelector('[name="from-date"]'); // different input
-        const to_date     = row.querySelector('[name="to-date"]');
-        const activite    = row.querySelector('[name="actAct"]').value;
-        const observation = row.querySelector('[name="obsAct"]').value;
-        const jour = `De ${from_date.value} à ${to_date.value}`;
+    payload.details.equipe = equipe
 
-        let rowHasError = false;
+    // =========================
+    // ACTIVITÉS
+    // =========================
+    let activityError = false;
 
-        if (!from_date.value) {
-            from_date.classList.add('error-val');
-            rowHasError = true;
-        }
+    document.querySelectorAll('.activity_data').forEach(row => {
+        const from = row.querySelector('[name="from-date"]');
+        const to = row.querySelector('[name="to-date"]');
+        const activitiesElement = row.querySelector('[name="actAct"]');
+        const obs = row.querySelector('[name="obsAct"]');
+        let act = []
 
-        if (!to_date.value) {
-            to_date.classList.add('error-val');
-            rowHasError = true;
-        }
+        from.classList.remove('error-val');
+        to.classList.remove('error-val');
 
-        if (rowHasError) {
-            $('#messageErrTR').html("Veuillez sélectionner à la fois la date de début et la date de fin.");
-            $('#messageErrTR').addClass('error-val');
+        if (!from.value || !to.value) {
+            from.classList.add('error-val');
+            to.classList.add('error-val');
+            activityError = true;
             return;
         }
 
-        allActivityData.push({
-            jour: jour,
-            activite: activite,
-            observation: observation
+        if(activitiesElement.value){
+            act = activitiesElement.value
+            .split(/\r?\n/)        // Split by new line (works for Windows & Unix)
+            .map(line => line.trim()) // Remove extra spaces
+            .filter(line => line.length > 0);
+        }
+        if(act.length < 1){
+            from.classList.add('error-val');
+            to.classList.add('error-val');
+
+            showError("Veuillez sélectionner les activités.");
+            return;
+        }
+
+        payload.details.activites.push({
+            jour: `De ${from.value} à ${to.value}`,
+            activite: act,
+            observation: obs.value
         });
+    });
+
+    if (activityError) {
+        showError("Veuillez sélectionner les dates pour toutes les activités.");
+        return;
     }
 
-   const details = {
-        "equipe": equipe,
-        "objectif": objectif,
-        "resultat": resultat,
-        "dure": dure,
-        "activites": allActivityData
-   };
-
-
-
-
-
-   $('.prodTR').each(function(){
-    produit.push($(this).val());
-   });
-   $('.QteTR').each(function(){
-    qte.push($(this).val());
-   });
-   $('.FqcTR').each(function(){
-    fqc.push($(this).val());
-   });
-   $('.uniteTR').each(function(){
-    unite.push($(this).val());
-   });
-   $('.prixTR').each(function(){
-    prix.push($(this).val());
-   });
-
-//    const tstDt = {
-
-//         "product": [
-
-//             "Rafraichissement_Kaziba",
-
-//             "Remboursement transport_Kaziba",
-
-//             "Location salle_Kaziba",
-
-//             "Facilitation_Kaziba",
-
-//             "Rafraichissement_Mwenga",
-
-//             "Remboursement transport_mwenga",
-
-//             "Locataion salle_Mwenga",
-
-//             "Facilitation_Mwenga",
-
-//             "Rafraichissement_Nundu",
-
-//             "Remboursement transport_Nundu",
-
-//             "Location salle_Nundu",
-
-//             "Facilitation_Nundu",
-
-//             "Rafraichissement_Ibanda",
-
-//             "Remboursement transport_Ibanda",
-
-//             "Location salle_Ibanda",
-
-//             "Facilitation _Ibanda",
-
-//             "Rame Papier duplicateur A4",
-
-//             "Flip chart (50 papiers)",
-
-//             "Marqueurs",
-
-//             "Stylo",
-
-//             "Blocs note",
-
-//             "Perdiem_Kaziba",
-
-//             "Enveloppe sécuritaire"
-
-//         ],
-
-//         "quantite": [
-
-//             "53",
-
-//             "53",
-
-//             "1",
-
-//             "4",
-
-//             "51",
-
-//             "51",
-
-//             "1",
-
-//             "4",
-
-//             "51",
-
-//             "51",
-
-//             "1",
-
-//             "4",
-
-//             "52",
-
-//             "52",
-
-//             "1",
-
-//             "3",
-
-//             "8",
-
-//             "8",
-
-//             "8",
-
-//             "4",
-
-//             "18",
-
-//             "4",
-
-//             "1"
-
-//         ],
-
-//         "frequence": [
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "3",
-
-//             "1",
-
-//             "1",
-
-//             "1",
-
-//             "1",
-
-//             "1",
-
-//             "3",
-
-//             "1"
-
-//         ],
-
-//         "unite": [
-
-//             "casse croute",
-
-//             "courses",
-
-//             "Pièce",
-
-//             "Personnes",
-
-//             "casse croute",
-
-//             "COURSES",
-
-//             "Pièce",
-
-//             "Personnes",
-
-//             "casse croute",
-
-//             "COURSES",
-
-//             "Pièce",
-
-//             "Personnes",
-
-//             "casse croute",
-
-//             "COURSES",
-
-//             "Pièce",
-
-//             "Personnes",
-
-//             "Rame",
-
-//             "Rame",
-
-//             "Boite",
-
-//             "Boite",
-
-//             "Douzaine",
-
-//             "Nuités",
-
-//             "Forfait"
-
-//         ],
-
-//         "prix": [
-
-//             "5",
-
-//             "5",
-
-//             "50",
-
-//             "50",
-
-//             "5",
-
-//             "5",
-
-//             "50",
-
-//             "50",
-
-//             "5",
-
-//             "5",
-
-//             "50",
-
-//             "50",
-
-//             "5",
-
-//             "5",
-
-//             "100",
-
-//             "50",
-
-//             "6",
-
-//             "8",
-
-//             "2",
-
-//             "7",
-
-//             "6",
-
-//             "50",
-
-//             "503.70"
-
-//         ],
-
-//         "agent": "2398",
-
-//         "projet": "35",
-
-//         "type": "1",
-
-//         "titre": "COACHING DES AGENTS DE SANTE COMMUNAUTAIRES INTERVENANT DANS LES SITES D'INTERVENTION DU PROJET TUMAINI (KAZIBA, IBANDA, NUNDU, MWENGA)"
-
-//     }
-
-
-
-   $.ajax({
-    type: 'POST',
-    contentType: 'application/json',
-    url: "/trReg",
-    dataType: 'json',
-
-    // data: JSON.stringify(tstDt),
-    data: JSON.stringify(trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details)),
-    beforeSend: function() {
-        $('#btnTR').hide();
-        $('#prldTR').show();
-    },
-    success: function(data, textStatus, jqXHR){
-
-            $('#prldTR').hide();
+    // =========================
+    // BUDGET
+    // =========================
+    $('.prodTR').each(function (i) {
+        const prod = $(this).val();
+        const qte = $('.QteTR').eq(i).val();
+        const fqc = $('.FqcTR').eq(i).val();
+        const unite = $('.uniteTR').eq(i).val();
+        const prix = $('.prixTR').eq(i).val();
+
+        if (!prod || !qte || !fqc || !unite || !prix) {
+            activityError = true;
+            return false;
+        }
+
+        payload.product.push(prod);
+        payload.quantite.push(qte);
+        payload.frequence.push(fqc);
+        payload.unite.push(unite);
+        payload.prix.push(prix);
+    });
+
+    if (activityError) {
+        showError("Veuillez compléter toutes les lignes du budget.");
+        return;
+    }
+
+    // =========================
+    // AJAX
+    // =========================
+    $.ajax({
+        type: 'POST',
+        url: '/trReg',
+        contentType: 'application/json',
+        dataType: 'json',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: JSON.stringify(payload),
+        beforeSend() {
+            $('#btnTR').hide();
+            $('#prldTR').show();
+        },
+        success() {
             $('#btnTR').show();
-            $('.close').click()
+            $('#prldTR').hide();
+            $('.close').click();
 
-            Livewire.emit('dipdated')
-            Livewire.emit('trUpdated')
+            Livewire.emit('dipdated');
+            Livewire.emit('trUpdated');
 
             $.toast().reset('all');
             $.toast({
                 text: '<i class="jq-toast-icon ti-location-pin"></i><p>Enregistrement bien effectué</p>',
                 position: 'top-center',
-                loaderBg:'#7a5449',
+                loaderBg: '#7a5449',
                 class: 'jq-has-icon jq-toast-success',
-                hideAfter: 3500,
-                stack: 6,
-                showHideTransition: 'fade'
-                });
-
-
-    },
-    error: function(jqXHR, textStatus, errorThrown){
-        $('#prldTR').hide();
-        $('#btnTR').show();
-
-        // jqXHR.responseJSON has your JSON error
-        if (jqXHR.responseJSON) {
-            $('#messageErrTR').html(jqXHR.responseJSON.message);
-            console.error(jqXHR.responseJSON);
-        } else {
-            $('#messageErrTR').html('An unknown error occurred');
+                hideAfter: 3500
+            });
+        },
+        error(xhr) {
+            $('#btnTR').show();
+            $('#prldTR').hide();
+            showError(xhr.responseJSON?.message || 'Erreur serveur');
         }
-    }
+    });
 });
 
- }
+// =========================
+// HELPERS
+// =========================
+function showError(msg) {
+    $('#messageErrTR').html(msg).addClass('error-val');
+}
 
-//
- function trFormToJSON(produit,qte,fqc,unite,prix,agent,projet,type,titre,details) {
-   return {
-     "product":produit,
-     "quantite": qte,
-     "frequence": fqc,
-     "unite": unite,
-     "prix": prix,
-     "agent": agent,
-     "projet": projet,
-     "type": type,
-     "titre": titre,
-     "details":details
-   };
- }

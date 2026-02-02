@@ -1,71 +1,78 @@
 .team-selector {
-  /* width: 400px; */
-  position: relative;
+    position: relative;
 }
 
 .selected-users {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  background: #fff;
-  cursor: text;
-  border-radius: 4px;
-  min-height: 40px;
+    min-height: 44px;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    background: #fff;
 }
 
-.team-tag {
-  background: #3e6699;
-  color: #fff;
-  padding: 3px 8px;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-
-.team-tag .remove {
-  margin-left: 5px;
-  cursor: pointer;
-  font-weight: bold;
+.selected-users .placeholder {
+    color: #6c757d;
+    font-size: 14px;
 }
 
 .team-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
-  max-height: 200px;
-  overflow-y: auto;
-  display: none;
-  z-index: 100;
-  border-radius: 0 0 4px 4px;
+    position: absolute;
+    z-index: 1055;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    margin-top: 6px;
+    padding: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-.team-dropdown input {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-bottom: 1px solid #ccc;
-  box-sizing: border-box;
-  outline: none;
+#userList {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    max-height: 220px;
+    overflow-y: auto;
 }
 
-.team-dropdown ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.tdr_team_user {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-.team-dropdown li {
-  padding: 8px;
-  cursor: pointer;
+.tdr_team_user:hover {
+    background: #f1f5ff;
 }
 
-.team-dropdown li:hover {
-  background: #f0f0f0;
+.tdr_team_user.selected {
+    background: #e7f1ff;
+}
+
+.team-tag {
+    background: #0d6efd;
+    color: #fff;
+    border-radius: 16px;
+    padding: 4px 10px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+}
+
+.team-tag button {
+    border: none;
+    background: none;
+    color: #fff;
+    margin-left: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.d-none {
+    display: none !important;
 }

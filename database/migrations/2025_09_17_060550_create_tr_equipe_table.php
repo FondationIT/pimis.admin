@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
+        
         Schema::create('tr_equipes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tr')->constrained('trs');
-            $table->foreignId('agent')->constrained('agents');
+            $table->foreignId('agent')->constrained('agents')->nullable();
+            $table->foreignId('agent_ex')->constrained('tdr_external_agents')->nullable();
             $table->timestamps();
         });
     }
