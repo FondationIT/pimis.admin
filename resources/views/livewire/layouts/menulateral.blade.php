@@ -213,14 +213,16 @@
                                         @endif
 
                                         @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'D.P' || Auth::user()->role == 'LOG1' ||Auth::user()->role == 'LOG2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
-                                            @if(Auth::user()->role != 'D.P' )
+                                            {{-- @if(Auth::user()->role != 'D.P' ) --}}
                                             <li class="nav-item" id="pvS">
                                                 <a class="nav-link" href="#" id="button-pvS" data-active="pvS" data-open="bStock" wire:click="$emit('pvUpdated')" data-section="pvS">Analyse</a>
                                             </li>
-                                            @endif
                                             @if(Auth::user()->role == 'D.P' )
                                                 <li class="nav-item" id="pvAttrS">
                                                     <a class="nav-link" href="#" id="button-pvAttrS" data-active="pvAttrS" data-open="bStock" wire:click="$emit('pvAttrUpdated')" data-section="pvAttrS">Attribution</a>
+                                                </li>
+                                                <li class="nav-item" id="bonComS">
+                                                    <a class="nav-link" href="#" id="button-bonComS" data-active="bonComS" data-open="bStock" wire:click="$emit('bcUpdated')" data-section="bonComS">Bons de commande</a>
                                                 </li>
                                             @else
                                                 <li class="nav-item" id="pvAttrS">
@@ -273,7 +275,7 @@
                         </li>
                     @endif
 
-                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
+                    @if (Auth::user()->role == 'S.E' || Auth::user()->role == 'D.A.F' || Auth::user()->role == 'D.O' || Auth::user()->role == 'COMPT1' ||Auth::user()->role == 'COMPT2' || Auth::user()->role == 'ADMIN' || Auth::user()->role == 'Sup')
                         <li class="nav-item" id="bFinance">
                             <a class="nav-link" href="javascript:void(0);" data-toggle="collapse" data-target="#finance">
                                 <span class="feather-icon"><i data-feather="pocket"></i></span>

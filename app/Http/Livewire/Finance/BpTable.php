@@ -145,7 +145,7 @@ class BpTable extends LivewireDatatable
     public function builder()
     {
 
-        if (Auth::user()->role == 'S.E') {
+        if (Auth::user()->role == 'D.A.F') {
 
 
             $bps = Bp::query()
@@ -155,7 +155,7 @@ class BpTable extends LivewireDatatable
             ->orderBy("id", "DESC");
             return $bps;
 
-        }else if (Auth::user()->role == 'D.A.F') {
+        }else if (Auth::user()->role == 'D.P') {
 
             $bps = Bp::query()
             ->where('niv1', true)

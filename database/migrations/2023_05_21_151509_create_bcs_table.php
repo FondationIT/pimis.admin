@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('lieu');
             $table->string('delai');
             $table->text('comment')->nullable();
-            $table->boolean('niv1')->default(false);
-            $table->boolean('niv2')->default(false);
+            $table->boolean('niv1')->nullable();
+            $table->boolean('niv2')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ class Bc extends Model
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'reference',
         'da',

@@ -127,7 +127,7 @@ class BcTable extends LivewireDatatable
     public function builder()
     {
 
-        if (Auth::user()->role == 'S.E') {
+        if (Auth::user()->role == 'D.A.F') {
 
             $das = Bc::query()
             ->where('niv1', true)
@@ -150,7 +150,7 @@ class BcTable extends LivewireDatatable
 
     public function columns()
     {
-        if(Auth::user()->role == 'D.A.F'){
+        if(Auth::user()->role == 'D.P'){
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
@@ -190,27 +190,25 @@ class BcTable extends LivewireDatatable
                         return $delete ;
                     })->unsortable(),
 
-                Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
-
-                    if ($active == true && $niv1 == true && $niv2 == false) {
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
-
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                Column::callback(['id','active','niv1'], function ($id,$active,$niv1) {
+                    if ($active == true && $niv1 != true){
+                        return '<div class="flex space-x-1 justify-around">
+                        <a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="dApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>
+                        <a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>
+                        </div>';
                     }elseif($active == false){
-                        $edit = '';
-                        $edit2 ='';
+                        return '<i class="bi bi-patch-x-fill text-danger"></i>';
                     }else{
-                        $edit = '';
-                        $edit2 = '';
+                        if($niv1 == true){
+                            return '<i class="bi bi-patch-check-fill text-success"></i>';
+                        }
                     }
-
-                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
             ];
 
 
         }
-        else if(Auth::user()->role == 'S.E'){
+        else if(Auth::user()->role == 'D.A.F'){
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printBc('.$id.')" data-toggle="modal" data-target="#pBcModalForms">'.$reference.'</a>';
@@ -242,7 +240,7 @@ class BcTable extends LivewireDatatable
 
                     if ($active == true && $niv1 == true && $niv2 == true ) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
-                    }elseif($active == false){
+                    }elseif($active === false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
                     }else{
                         $delete = '<span class="badge badge-info">En cours</span>';
@@ -253,16 +251,15 @@ class BcTable extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    if ($active == true && $niv1 == true && $niv2 == true) {
-                        $edit = '';
-                        $edit2 = '';
-                    }elseif($active == false){
+                    if ($active == true && $niv1 == true && $niv2 === false) {
+                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                    }elseif($active === false){
                         $edit = '';
                         $edit2 ='';
                     }else{
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
-
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        $edit = '';
+                        $edit2 ='';
                     }
 
                         return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;

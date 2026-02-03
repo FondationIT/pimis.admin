@@ -66,13 +66,14 @@ class TrTable extends LivewireDatatable
             $this->modelId = $modelId;
             $niv = Auth::user()->role == 'D.P' ? 3 : 4;
 
-            logger()->info('Niv apprTr3 : '.$niv.' ----- '.Auth::user()->id);
-
-            if (Auth::user()->role == 'D.O') {
+            
+            if (trim(strtolower(Auth::user()->role)) == 'd.o') {
+                logger()->info('Niv apprTr4 : '.$niv.' ----- '.Auth::user()->id);
                 Tr::find($this->modelId)->update([
                     'niv4' => 1,
                 ]);
             }else{
+                logger()->info('Niv apprTr3 : '.$niv.' ----- '.Auth::user()->id);
                 Tr::find($this->modelId)->update([
                     'niv3' => 1,
                 ]);
@@ -186,7 +187,6 @@ class TrTable extends LivewireDatatable
     {
         if (in_array(Auth::user()->role, ['D.P','D.O'])) {
 
-
             return [
                 Column::callback(['reference','id'], function ($reference,$id) {
                     return '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="printTr('.$id.')" data-toggle="modal" data-target="#pTrModalForms">'.$reference.'</a>';
@@ -206,13 +206,19 @@ class TrTable extends LivewireDatatable
                 })->label('Montant'),
 
                 Column::callback(['active','niv1','niv2','niv3','niv4'], function ($active,$niv1,$niv2,$niv3,$niv4) {
-
+                    
                     if ($active == true && $niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
                     }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
                     }else{
-                        $delete = '<span class="badge badge-info">En attente</span>';
+                        if((trim(strtolower(Auth::user()->role)) == 'd.p') && $niv3 == true){
+                            $delete = '<span class="badge badge-info">Validé</span>';
+                        }elseif((trim(strtolower(Auth::user()->role)) == 'd.o') && $niv4 == true){
+                            $delete = '<span class="badge badge-info">Validé</span>';
+                        }else{
+                            $delete = '<span class="badge badge-info">En attente</span>';
+                        }
                     }
                         return $delete ;
                 })->unsortable()->label('Etat'),
@@ -221,15 +227,26 @@ class TrTable extends LivewireDatatable
 
                     if($active == true){
 
+
                         if($niv1 == true && $niv2 == true && $niv3 == true && $niv4 == true){
                             return '';
                             
                         }else{
-                            $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="apprTr3('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                            if((trim(strtolower(Auth::user()->role)) == 'd.p') && $niv3 == true){
+                                return '<i class="bi bi-patch-check-fill text-success"></i>';
+                            }elseif((trim(strtolower(Auth::user()->role)) == 'd.o') && $niv4 == true){
+                                return '<i class="bi bi-patch-check-fill text-success"></i>';
+                            }elseif((trim(strtolower(Auth::user()->role)) == 'd.p') && $niv3 === false){
+                                return '<i class="bi bi-patch-x-fill text-danger"></i>';
+                            }elseif((trim(strtolower(Auth::user()->role)) == 'd.o') && $niv4 === false){
+                                return '<i class="bi bi-patch-x-fill text-danger"></i>';
+                            }else{
+                                $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="apprTr3('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
 
-                            $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refTr('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                                $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refTr('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
 
-                            return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>';
+                                return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>';
+                            }
                         }
                     }else if($active == false){
 

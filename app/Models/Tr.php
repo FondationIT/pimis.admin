@@ -18,6 +18,7 @@ class Tr extends Model
         'niv1',
         'niv2',
         'niv3',
+        'niv4',
         'active',
     ];
 }
