@@ -240,7 +240,7 @@ class BcTable extends LivewireDatatable
 
                     if ($active == true && $niv1 == true && $niv2 == true ) {
                         $delete = '<span class="badge badge-success">Approuvé</span>';
-                    }elseif($active === false){
+                    }elseif($active == false){
                         $delete = '<span class="badge badge-danger">Refusé</span>';
                     }else{
                         $delete = '<span class="badge badge-info">En cours</span>';
@@ -251,18 +251,21 @@ class BcTable extends LivewireDatatable
 
                 Column::callback(['id','active','niv1','niv2'], function ($id,$active,$niv1,$niv2) {
 
-                    if ($active == true && $niv1 == true && $niv2 === false) {
-                        $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
-                        $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
-                    }elseif($active === false){
-                        $edit = '';
-                        $edit2 ='';
+                    if ($active == true && $niv1 == true && $niv2 == false) {
+                        // $edit = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>';
+                        // $edit2 = '<a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>';
+                        return '<div class="flex space-x-1 justify-around">
+                        <a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="sApprBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-like txt-danger"></i></a>
+                        <a href="#" class="p-1 text-teal-600 hover:bg-teal-600  rounded" wire:click="refBc('.$id.')" data-toggle="modal" data-target=""><i class="icon-dislike txt-danger"></i></a>
+                        </div>';
+                    }elseif($active == false){
+                        return '<i class="bi bi-patch-x-fill text-danger"></i>';
                     }else{
-                        $edit = '';
-                        $edit2 ='';
+                        if($niv2 == true){
+                            return '<i class="bi bi-patch-check-fill text-success"></i>';
+                        }
+                        return '<i class="bi bi-patch-x-fill text-danger"></i>';
                     }
-
-                        return '<div class="flex space-x-1 justify-around">'. $edit . $edit2 .'</div>'; ;
                 })->unsortable(),
             ];
         }
